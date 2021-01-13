@@ -37,7 +37,7 @@ We'll writing all of our smart contracts in Solidity and writing the rest of our
 
 ## The Task
 We're going to be deploying an ERC20 contract (written in Solidity) to Optimistic Ethereum.
-We've already gone ahead and written that contract for you, which you should be able to locate in [`optimism-tutorial/contracts/ERC20.sol`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/contracts/ERC20.sol).
+We've already gone ahead and written that contract for you, which you should be able to locate in [`optimism-tutorial/contracts/ERC20.sol`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/contracts/ERC20.sol).
 This contract is just a relatively standard (though completely unsafe) ERC20 implementation.
 
 (**Note**: Seriously! This implementation is unsafe! Don't use it in production!)
@@ -49,10 +49,10 @@ yarn compile
 ```
 
 ## The Tests
-We've also written some very basic tests for you, which you can locate in [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/test/erc20.spec.ts).
+We've also written some very basic tests for you, which you can locate in [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.spec.ts).
 Though tests are pretty straight forward, we'd recommend taking a quick read through the test file.
 We're using [Ethers](https://docs.ethers.io/v5/) for the majority of our testing and [Waffle](https://ethereum-waffle.readthedocs.io/en/latest/) for some of its utilities.
-Hardhat provides convenient plugins for both; we've already added these plugins to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/hardhat.config.ts).
+Hardhat provides convenient plugins for both; we've already added these plugins to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts).
 
 Once you've taken a look at the tests, feel free to verify that everything is working correctly by running the following command:
 
@@ -74,7 +74,7 @@ First, add the Optimism plugins package to your project:
 yarn add @eth-optimism/plugins
 ```
 
-Next, add the following line to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/hardhat.config.ts):
+Next, add the following line to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
 
 ```ts
 // hardhat.config.ts
@@ -101,11 +101,11 @@ Now it's time to test this ERC20 again.
 This time, however, we'll be testing our new OVM-compatible smart contract on top of Optimistic Ethereum.
 Luckily, this is almost as easy as compiling the contract!
 
-First, make a copy of [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/test/erc20.spec.ts).
+First, make a copy of [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.spec.ts).
 You can name the copy whatever you'd like, perhaps `optimistic-erc20.spec.ts`.
 We'll modify this copy in just a minute.
 
-Now we're going to add another Hardhat plugin to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/hardhat.config.ts):
+Now we're going to add another Hardhat plugin to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
 
 ```ts
 // hardhat.config.ts
