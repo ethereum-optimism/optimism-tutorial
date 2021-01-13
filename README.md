@@ -134,6 +134,15 @@ Now, replace that line of code with this:
 import { l2ethers as ethers } from 'hardhat'
 ```
 
+You might also want to change the test description so that you can tell the difference between the normal ERC20 and this new test file:
+
+```ts
+// optimistic-ERC20.spec.ts
+
+describe('Optimistic ERC20', () => {
+    ...
+```
+
 You're all set!
 Confirm that everything worked as expected by running:
 
