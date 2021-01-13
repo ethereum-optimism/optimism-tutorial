@@ -49,7 +49,7 @@ yarn compile
 ```
 
 ## The Tests
-We've also written some very basic tests for you, which you can locate in [`optimism-tutorial/test/ERC20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/test/ERC20.spec.ts).
+We've also written some very basic tests for you, which you can locate in [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/test/erc20.spec.ts).
 Though tests are pretty straight forward, we'd recommend taking a quick read through the test file.
 We're using [Ethers](https://docs.ethers.io/v5/) for the majority of our testing and [Waffle](https://ethereum-waffle.readthedocs.io/en/latest/) for some of its utilities.
 Hardhat provides convenient plugins for both; we've already added these plugins to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/hardhat.config.ts).
@@ -101,8 +101,8 @@ Now it's time to test this ERC20 again.
 This time, however, we'll be testing our new OVM-compatible smart contract on top of Optimistic Ethereum.
 Luckily, this is almost as easy as compiling the contract!
 
-First, make a copy of [`optimism-tutorial/test/ERC20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/test/ERC20.spec.ts).
-You can name the copy whatever you'd like, perhaps `optimistic-ERC20.spec.ts`.
+First, make a copy of [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/test/erc20.spec.ts).
+You can name the copy whatever you'd like, perhaps `optimistic-erc20.spec.ts`.
 We'll modify this copy in just a minute.
 
 Now we're going to add another Hardhat plugin to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/master/hardhat.config.ts):
@@ -116,12 +116,12 @@ import '@eth-optimism/plugins/hardhat/ethers'   // Now just add this one!
 
 This plugin adds a new modified version of `ethers` to Hardhat that makes it possible to test the Layer 2 version of your contracts.
 
-Finally, we're going to modify `optimistic-ERC20.spec.ts` (or whatever you named your copy of the original test file).
+Finally, we're going to modify `optimistic-erc20.spec.ts` (or whatever you named your copy of the original test file).
 Don't worry though, we only have to change a single line of code to make everything work!
 Find the line of code that looks like this:
 
 ```ts
-// optimistic-ERC20.spec.ts
+// optimistic-erc20.spec.ts
 
 import { ethers } from 'hardhat'
 ```
@@ -129,7 +129,7 @@ import { ethers } from 'hardhat'
 Now, replace that line of code with this:
 
 ```ts
-// optimistic-ERC20.spec.ts
+// optimistic-erc20.spec.ts
 
 import { l2ethers as ethers } from 'hardhat'
 ```
@@ -137,7 +137,7 @@ import { l2ethers as ethers } from 'hardhat'
 You might also want to change the test description so that you can tell the difference between the normal ERC20 and this new test file:
 
 ```ts
-// optimistic-ERC20.spec.ts
+// optimistic-erc20.spec.ts
 
 describe('Optimistic ERC20', () => {
     ...
