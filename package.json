@@ -21,5 +21,8 @@
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "@eth-optimism/plugins": "^0.0.4"
   }
 }
