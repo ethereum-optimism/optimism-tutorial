@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
-    "test": "yarn clean && hardhat test"
+    "test": "yarn clean && hardhat test",
+    "deploy": "ts-node scripts/deploy-WETH.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
