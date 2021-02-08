@@ -140,7 +140,6 @@ const main = async () => {
   const l1Receipt = await watcher.getL1TransactionReceipt(l2ToL1msgHash)
   console.log('completed Withdrawal! L1 tx hash:', l1Receipt.transactionHash)
   await logBalances()
-  process.exit(0)
 }
 
 main()
