@@ -2,7 +2,7 @@
 
 Hello!
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
-Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform. 
+Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform.
 
 Planned future iterations of this tutorial will include:
 - Communicating between Optimistic Ethereum and Ethereum.
@@ -33,7 +33,7 @@ Go ahead and set up Hardhat by running:
 yarn install
 ```
 
-We'll writing all of our smart contracts in Solidity and writing the rest of our code in TypeScript.
+We'll be writing all of our smart contracts in Solidity and writing the rest of our code in TypeScript.
 
 ## The Task
 We're going to be deploying an ERC20 contract (written in Solidity) to Optimistic Ethereum.
@@ -66,7 +66,7 @@ If everything is going as planned, you should see a bunch of green checkmarks.
 Now that we've gotten that out of the way, it's time to get our ERC20 ready for Optimistic Ethereum.
 Contracts deployed to Optimistic Ethereum are required to replace certain EVM opcodes with custom behavior.
 Since the Solidity compiler doesn't handle this custom behavior, developers have to make sure to use the Optimism fork of the Solidity compiler instead.
-We'll need to add a special plugin to hardhat that enables this custom Optimism Solidity compiler. 
+We'll need to add a special plugin to hardhat that enables this custom Optimism Solidity compiler.
 
 First, add the Optimism plugins package to your project:
 
@@ -91,7 +91,7 @@ yarn compile
 Congrats, you're ready to deploy an application to Optimistic Ethereum!
 It really is that easy.
 
-You can verify that everything went well by checking the `artifacts` folder that should be generated whenever you run `yarn compile`. 
+You can verify that everything went well by checking the `artifacts` folder that should be generated whenever you run `yarn compile`.
 Alongside the normal compiler output located at `artifacts/contracts/ERC20.sol/ERC20.json`, you should also see `artifacts/contracts/ERC20.sol/ERC20.ovm.json`.
 Here, `.ovm.json` signifies that this file has been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
 
