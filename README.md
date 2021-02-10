@@ -2,7 +2,7 @@
 
 Hello!
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
-Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform. 
+Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform.
 
 Planned future iterations of this tutorial will include:
 - Communicating between Optimistic Ethereum and Ethereum.
@@ -33,7 +33,7 @@ Go ahead and set up Hardhat by running:
 yarn install
 ```
 
-We'll writing all of our smart contracts in Solidity and writing the rest of our code in TypeScript.
+We'll be writing all of our smart contracts in Solidity and writing the rest of our code in TypeScript.
 
 ## The Task
 We're going to be deploying an ERC20 contract (written in Solidity) to Optimistic Ethereum.
@@ -66,12 +66,12 @@ If everything is going as planned, you should see a bunch of green checkmarks.
 Now that we've gotten that out of the way, it's time to get our ERC20 ready for Optimistic Ethereum.
 Contracts deployed to Optimistic Ethereum are required to replace certain EVM opcodes with custom behavior.
 Since the Solidity compiler doesn't handle this custom behavior, developers have to make sure to use the Optimism fork of the Solidity compiler instead.
-We'll need to add a special plugin to hardhat that enables this custom Optimism Solidity compiler. 
+We'll need to add a special plugin to hardhat that enables this custom Optimism Solidity compiler.
 
-First, add the Optimism plugins package to your project:
+First, add the Optimism plugins package to your project. Note: the most up-to-date version of the plugins package is not ready to use for testing (you will see your tests fail!). So, make sure to install the following version until further notice:
 
 ```sh
-yarn add @eth-optimism/plugins
+yarn add @eth-optimism/plugins@0.7.0
 ```
 
 Next, add the following line to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
