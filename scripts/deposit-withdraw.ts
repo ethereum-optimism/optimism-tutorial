@@ -18,8 +18,8 @@ const main = async () => {
   const l2MessengerAddress = '0x4200000000000000000000000000000000000007'
 
   // Grab existing addresses if specified
-  let l1ERC20Address = process.env.L1_WETH_ADDRESS
-  const l1ERC20GatewayAddress = process.env.L1_WETH_DEPOSIT_ADDRESS
+  let l1ERC20Address = process.env.L1_ERC20_ADDRESS
+  const l1ERC20GatewayAddress = process.env.L1_ERC20_GATEWAY_ADDRESS
 
   const {
     L1_ERC20,
