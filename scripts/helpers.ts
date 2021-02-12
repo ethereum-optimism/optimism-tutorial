@@ -13,12 +13,14 @@ export type ConfiguredGateway = {
 
 export type ERC20Config = {
     name: string
+    ticker: string
     decimals: number
     initialSupply: number
 }
 
 export const defaultERC20Config: ERC20Config = {
     name: 'REEERC20',
+    ticker: 'REE',
     decimals: 18,
     initialSupply: 1000
 }
@@ -50,8 +52,9 @@ export const deployNewGateway = async (
     const Factory__OVM_L2ERC20Gateway = new ContractFactory(ABI__OVM_L2ERC20Gateway.abi, ABI__OVM_L2ERC20Gateway.bytecode, l2Wallet)
     OVM_L2ERC20Gateway = await Factory__OVM_L2ERC20Gateway.deploy(
         l2MessengerAddress,
+        ERC20Config.decimals,
         'OVM_' + ERC20Config.name,
-        ERC20Config.decimals
+        'ovm' + ERC20Config.ticker
     )
     await OVM_L2ERC20Gateway.deployTransaction.wait()
     console.log('L2_WETH deployed to:', OVM_L2ERC20Gateway.address)
