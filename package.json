@@ -7,7 +7,8 @@
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
     "test": "yarn clean && hardhat test",
-    "deposit-withdraw": "ts-node scripts/deposit-withdraw.ts"
+    "deposit-withdraw": "ts-node scripts/deposit-withdraw.ts",
+    "new-deposit": "ts-node scripts/new-deposit.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
