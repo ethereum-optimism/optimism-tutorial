@@ -4,10 +4,7 @@ import { Watcher } from '@eth-optimism/watcher'
 import * as dotenv from 'dotenv'
 dotenv.config({ path: __dirname + '/../.env' });
 
-import * as ABI__OVM_L1ETHGateway from '@eth-optimism/contracts/build/artifacts/contracts/optimistic-ethereum/OVM/bridge/ETH/OVM_L1ETHGateway.sol/OVM_L1ETHGateway.json'
-import * as ABI__OVM_L2ERC20Gateway from '@eth-optimism/contracts/build/artifacts/contracts/optimistic-ethereum/OVM/bridge/ERC20/OVM_L2ERC20Gateway.sol/OVM_L2ERC20Gateway.ovm.json'
-
-import { setupOrRetrieveGateway } from './helpers'
+import { getContractInterface } from '@eth-optimism/contracts'
 
 
 function sleep(ms) {
@@ -44,8 +41,16 @@ const main = async () => {
     }
   })
 
-  const OVM_L1ETHGateway  = new Contract(l1ETHGatewayAddress, ABI__OVM_L1ETHGateway.abi, l1Wallet)
-  const OVM_L2ERC20Gateway = new Contract('0x4200000000000000000000000000000000000006', ABI__OVM_L2ERC20Gateway.abi, l2Wallet)
+  const OVM_L1ETHGateway  = new Contract(
+    l1ETHGatewayAddress,
+    getContractInterface('OVM_L1ETHGateway'),
+    l1Wallet
+  )
+  const OVM_L2ETHGateway = new Contract(
+    '0x4200000000000000000000000000000000000006',
+    getContractInterface('OVM_L2ERC20Gateway'),
+    l2Wallet
+  )
 
   // console.log('addresses are')
   // console.log([l1ERC20GatewayAddress, OVM_L1ETHGateway.address])
@@ -56,7 +61,7 @@ const main = async () => {
        console.log('L1 balance of l1 wallet ', l1Wallet.address, 'is', l1UserBalance.toString(10))
        const l1GatewayBalance = await l1Provider.send('eth_getBalance', [OVM_L1ETHGateway.address])
        console.log('L1 balance of l1 gateway ', OVM_L1ETHGateway.address, 'is', l1GatewayBalance.toString())
-       const l2Balance = await OVM_L2ERC20Gateway.balanceOf(l2Wallet.address)
+       const l2Balance = await OVM_L2ETHGateway.balanceOf(l2Wallet.address)
        console.log('L2 balance of l2 wallet ', l2Wallet.address, 'is', l2Balance.toString())
      console.log('~'.repeat(description.length) + '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n')
    }
@@ -81,6 +86,20 @@ const main = async () => {
   console.log('completed Deposit! L2 tx hash:', l2Receipt.transactionHash)
   
   await logBalances('Post-deposit:')
+
+  // Withdraw
+  console.log('Withdrawing from L1 deposit contract...')
+  const withdrawalTx = await OVM_L2ETHGateway.withdraw(1, {gasLimit: 5000000})
+  await withdrawalTx.wait()
+  console.log('Withdrawal tx hash:' + withdrawalTx.hash) 
+
+  await logBalances()
+ 
+  const [l2ToL1msgHash] = await watcher.getMessageHashesFromL2Tx(withdrawalTx.hash)
+  console.log('got L2->L1 message hash', l2ToL1msgHash)
+  const l1Receipt = await watcher.getL1TransactionReceipt(l2ToL1msgHash)
+  console.log('completed Withdrawal! L1 tx hash:', l1Receipt.transactionHash)
+  await logBalances()
 
 
   // // Approve
