@@ -48,7 +48,7 @@ const main = async () => {
   )
   const OVM_L2ETHGateway = new Contract(
     '0x4200000000000000000000000000000000000006',
-    getContractInterface('OVM_L2ERC20Gateway'),
+    getContractInterface('OVM_L2DepositedERC20'),
     l2Wallet
   )
 
@@ -125,7 +125,7 @@ const main = async () => {
 
   // // Withdraw
   // console.log('Withdrawing from L1 deposit contract...')
-  // const withdrawalTx = await OVM_L2ERC20Gateway.withdraw(1, {gasLimit: 5000000})
+  // const withdrawalTx = await OVM_L2DepositedERC20.withdraw(1, {gasLimit: 5000000})
   // await withdrawalTx.wait()
   // console.log('Withdrawal tx hash:' + withdrawalTx.hash) 
 
