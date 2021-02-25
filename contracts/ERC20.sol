@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >0.6.0 <0.8.0;
+pragma solidity >=0.6.0 <0.8.0;
 
 /**
  * @title ERC20
@@ -34,6 +34,8 @@ contract ERC20 {
     // Some optional extra goodies.
     uint256 public totalSupply;
     string public name;
+    uint8 public decimals;
+
 
 
     /***************
@@ -46,13 +48,15 @@ contract ERC20 {
      */
     constructor(
         uint256 _initialSupply,
-        string memory _name
+        string memory _name,
+        uint8 _decimalUnits
     )
         public
     {
         balances[msg.sender] = _initialSupply;
         totalSupply = _initialSupply;
         name = _name;
+        decimals = _decimalUnits;
     }
 
 
@@ -192,5 +196,47 @@ contract ERC20 {
         )
     {
         return allowances[_owner][_spender];
+    }
+
+    /**
+     * Mints new coins to an account.
+     * @param _owner Address of the account to mint to.
+     * @param _amount  Amount to mint.
+     * @return true if the mint was successful.
+     */
+    function _mint(
+        address _owner,
+        uint256 _amount
+    )
+        internal
+        returns (
+            bool
+        )
+    {
+        //TODO SafeMath here
+        balances[_owner] += _amount;
+        totalSupply += _amount;
+        return true;
+    }
+
+    /**
+     * Burns coins from an account.
+     * @param _owner Address of the account to mint to.
+     * @param _amount  Amount to mint.
+     * @return true if the mint was successful.
+     */
+    function _burn(
+        address _owner,
+        uint256 _amount
+    )
+        internal
+        returns (
+            bool
+        )
+    {
+        require(balances[_owner] >= _amount, "Account doesn't have enough coins to burn");
+        balances[_owner] -= _amount;
+        totalSupply -= _amount; //TODO SafeMath here
+        return true;
     }
 }

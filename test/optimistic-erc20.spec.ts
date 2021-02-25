@@ -13,12 +13,13 @@ describe('Optimistic ERC20', () => {
 
   const name = 'Some Really Cool Token Name'
   const initialSupply = 10000000
+  const decimals = 1
 
   let ERC20: Contract
   beforeEach(async () => {
     ERC20 = await (await ethers.getContractFactory('ERC20'))
       .connect(account1)
-      .deploy(initialSupply, name)
+      .deploy(initialSupply, name, decimals)
   })
 
   describe('the basics', () => {
