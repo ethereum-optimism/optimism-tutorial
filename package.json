@@ -8,7 +8,7 @@
     "compile": "yarn clean && hardhat compile",
     "test": "yarn clean && hardhat test",
     "native-eth": "ts-node scripts/native-eth.ts",
-    "erc20": "ts-node scripts/deposit-withdraw.ts"
+    "erc20": "ts-node scripts/erc20.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
