@@ -2,7 +2,7 @@ pragma solidity >=0.6.0 <0.8.0;
 
 import { L2ERC20 } from "./L2ERC20.sol";
 import { ERC20 } from "./ERC20.sol";
-import { iAbs_BaseCrossDomainMessenger } from "@eth-optimism/contracts/build/contracts/iOVM/bridge/iAbs_BaseCrossDomainMessenger.sol";
+import { iAbs_BaseCrossDomainMessenger } from "@eth-optimism/contracts/build/contracts/iOVM/bridge/messenging/iAbs_BaseCrossDomainMessenger.sol";
 
 contract L1ERC20Deposit {
 

@@ -30,17 +30,15 @@
     ethers "5.0.0"
     ganache-core "^2.12.1"
 
-"@eth-optimism/contracts@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts/-/contracts-0.1.5.tgz#e1e9b5d1f207c8b627a3ef3e2c509bd4b50a7b68"
-  integrity sha512-moWebiYRk14SOlqB1K1NQOfGiI69C+77KP3uVYepGAkqTrhFa/KqUzdYDI4lOC73xIXIgF3kwu3MaEYf96OU+Q==
+"@eth-optimism/contracts@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts/-/contracts-0.1.9.tgz#01a8b7816b2fcc8408c102d81e455868e4a09bc3"
+  integrity sha512-vLW6vnFymdSWveF7qMUwYNFGSOYI90qosOJLxalOLi2dvJ6Glh7wtnCF6GvXMb3bNQ1fS5eFwHzjhWIbBMvWRA==
   dependencies:
-    "@eth-optimism/solc" "^0.6.12-alpha.1"
     "@ethersproject/abstract-provider" "^5.0.8"
     "@ethersproject/contracts" "^5.0.5"
     "@ethersproject/hardware-wallets" "^5.0.8"
     "@openzeppelin/contracts" "^3.3.0"
-    ethers "5.0.0"
     ganache-core "^2.12.1"
     glob "^7.1.6"
 
