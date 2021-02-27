@@ -7,7 +7,8 @@
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
     "test": "yarn clean && hardhat test",
-    "deposit-withdraw": "ts-node scripts/deposit-withdraw.ts"
+    "native-eth": "ts-node scripts/native-eth.ts",
+    "erc20": "ts-node scripts/erc20.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
@@ -24,6 +25,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@eth-optimism/contracts": "^0.1.9",
     "@eth-optimism/plugins": "^0.0.6",
     "@eth-optimism/watcher": "^0.0.1-alpha.9",
     "dotenv": "^8.2.0"

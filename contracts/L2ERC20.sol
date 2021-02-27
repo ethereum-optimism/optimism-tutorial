@@ -3,11 +3,11 @@ pragma solidity >=0.6.0 <0.8.0;
 
 import { ERC20 } from "./ERC20.sol";
 import { L1ERC20Deposit } from "./L1ERC20Deposit.sol";
-import { iOVM_BaseCrossDomainMessenger } from "@eth-optimism/contracts/build/contracts/iOVM/bridge/iOVM_BaseCrossDomainMessenger.sol";
+import { iAbs_BaseCrossDomainMessenger } from "@eth-optimism/contracts/build/contracts/iOVM/bridge/messenging/iAbs_BaseCrossDomainMessenger.sol";
 
 contract L2ERC20 is ERC20 {
     address l1ERC20DepositAddress;
-    iOVM_BaseCrossDomainMessenger internal messenger;
+    iAbs_BaseCrossDomainMessenger internal messenger;
 
     constructor(
         string memory _tokenName,
@@ -19,7 +19,7 @@ contract L2ERC20 is ERC20 {
         address _L1ERC20DepositAddress
     ) public {
         require(l1ERC20DepositAddress == address(0), "L2ERC20 instance has already been initalized");
-        messenger = iOVM_BaseCrossDomainMessenger(_messenger);
+        messenger = iAbs_BaseCrossDomainMessenger(_messenger);
         l1ERC20DepositAddress = _L1ERC20DepositAddress;
     }
 
