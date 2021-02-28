@@ -1,29 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.8.0;
+import { IERC20 } from "./IERC20.sol";
 
 /**
  * @title ERC20
  * @dev A super simple ERC20 implementation!
  */
-contract ERC20 {
-
-    /**********
-     * Events *
-     **********/
-
-    event Transfer(
-        address indexed _from,
-        address indexed _to,
-        uint256 _value
-    );
-
-    event Approval(
-        address indexed _owner,
-        address indexed _spender,
-        uint256 _value
-    );
-
-
+contract ERC20 is IERC20 {
     /*************
      * Variables *
      *************/
@@ -32,7 +15,7 @@ contract ERC20 {
     mapping (address => mapping (address => uint256)) public allowances;
 
     // Some optional extra goodies.
-    uint256 public totalSupply;
+    uint256 public override totalSupply;
     string public name;
     uint8 public decimals;
 
@@ -50,9 +33,7 @@ contract ERC20 {
         uint256 _initialSupply,
         string memory _name,
         uint8 _decimalUnits
-    )
-        public
-    {
+    ) {
         balances[msg.sender] = _initialSupply;
         totalSupply = _initialSupply;
         name = _name;
@@ -73,6 +54,7 @@ contract ERC20 {
         address _owner
     )
         external
+        override
         view
         returns (
             uint256
@@ -92,6 +74,7 @@ contract ERC20 {
         uint256 _amount
     )
         external
+        override
         returns (
             bool
         )
@@ -127,6 +110,7 @@ contract ERC20 {
         uint256 _amount
     )
         external
+        override
         returns (
             bool
         )
@@ -164,6 +148,7 @@ contract ERC20 {
         uint256 _amount
     )
         external
+        override
         returns (
             bool
         )
@@ -190,6 +175,7 @@ contract ERC20 {
         address _spender
     )
         external
+        override
         view
         returns (
             uint256

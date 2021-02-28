@@ -3,9 +3,8 @@ import { Wallet, ContractFactory, Contract } from 'ethers'
 import { getContractDefinition } from '@eth-optimism/contracts'
 
 import * as ERC20 from '../artifacts/contracts/ERC20.sol/ERC20.json'
-
-const Def__OVM_L1ERC20Gateway = getContractDefinition('OVM_L1ERC20Gateway')
-const Def__OVM_L2DepositedERC20 = getContractDefinition('OVM_L2DepositedERC20', true)
+import * as Def__OVM_L1ERC20Gateway from '../artifacts/contracts/L1ERC20Gateway.sol/OVM_L1ERC20Gateway.json'
+import * as Def__OVM_L2DepositedERC20 from '../artifacts/contracts/L2DepositedERC20.sol/L2DepositedERC20.ovm.json'
 
 
 export type ConfiguredGateway = {
