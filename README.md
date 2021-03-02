@@ -64,7 +64,7 @@ If everything is going as planned, you should see a bunch of green checkmarks.
 
 ## Making it Optimistic
 Now that we've gotten that out of the way, it's time to get our ERC20 ready for Optimistic Ethereum.
-Contracts deployed to Optimistic Ethereum are required to replace certain EVM opcodes with custom behavior.
+Contracts deployed to Optimistic Ethereum are required to [replace certain EVM opcodes with custom behavior](https://community.optimism.io/docs/protocol/evm-comparison.html#missing-replaced-and-custom-opcodes).
 Since the Solidity compiler doesn't handle this custom behavior, developers have to make sure to use the Optimism fork of the Solidity compiler instead.
 We'll need to add a special plugin to hardhat that enables this custom Optimism Solidity compiler.
 
