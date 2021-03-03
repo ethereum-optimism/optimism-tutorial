@@ -1,12 +1,25 @@
-# Tutorial
+# Deposit Withdrawal example
+
+1. Clone the repo
+2. Set up your env:
+`cp .env.example .env`
+
+```
+# LOCAL
+USER_PRIVATE_KEY=0x...
+L1_MESSENGER_ADDRESS=0x6418E5Da52A3d7543d393ADD3Fa98B0795d27736
+L1_WEB3_URL=http://127.0.0.1:9545
+L2_WEB3_URL=http://127.0.0.1:8545
+```
+
+3. Spin up a local network. You can do this by cloning https://github.com/ethereum-optimism/optimism-integration, running `./pull.sh` then `./up.sh`
+4. run `yarn compile`
+5. run `yarn deposit-withdraw`  to deploy some L1 and L2 contracts, do a deposit, and then do a withdrawal against the local network
 
 Hello!
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
 Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform.
 
-Planned future iterations of this tutorial will include:
-- Communicating between Optimistic Ethereum and Ethereum.
-- Using more advanced Optimism tooling.
 
 ## Prerequisite Software
 We make use of some external software throughout this tutorial.

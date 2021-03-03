@@ -3,7 +3,7 @@ import { expect } from './setup'
 import { ethers } from 'hardhat'
 import { Contract, Signer } from 'ethers'
 
-describe('ERC20', () => {
+describe('MyERC20', () => {
   let account1: Signer
   let account2: Signer
   let account3: Signer
@@ -13,12 +13,14 @@ describe('ERC20', () => {
 
   const name = 'Some Really Cool Token Name'
   const initialSupply = 10000000
+  const decimals = 1
+  const symbol = 'ABC'
 
   let ERC20: Contract
   beforeEach(async () => {
-    ERC20 = await (await ethers.getContractFactory('ERC20'))
+    ERC20 = await (await ethers.getContractFactory('MyERC20'))
       .connect(account1)
-      .deploy(initialSupply, name)
+      .deploy(decimals, name, symbol, initialSupply)
   })
 
   describe('the basics', () => {
@@ -46,7 +48,7 @@ describe('ERC20', () => {
       await expect(
         ERC20.connect(sender).transfer(await recipient.getAddress(), amount)
       ).to.be.revertedWith(
-        "You don't have enough balance to make this transfer!"
+        "ds-math-sub-underflow"
       )
     })
 
@@ -81,7 +83,7 @@ describe('ERC20', () => {
           amount
         )
       ).to.be.revertedWith(
-        "Can't transfer from the desired account because it doesn't have enough balance."
+        "ds-math-sub-underflow"
       )
     })
 
@@ -98,7 +100,7 @@ describe('ERC20', () => {
           amount
         )
       ).to.be.revertedWith(
-        "Can't transfer from the desired account because you don't have enough of an allowance."
+        "ds-math-sub-underflow"
       )
     })
 
