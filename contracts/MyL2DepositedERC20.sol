@@ -10,16 +10,16 @@ import { Abs_L2DepositedToken } from "@eth-optimism/contracts/build/contracts/OV
 
 /**
  * @title MyL2DepositedERC20
- * @dev The L2 Deposited ERC20 is an ERC20 implementation which represents L1 assets deposited into L2.
- * This contract mints new tokens when it hears about deposits into the L1 ERC20 gateway.
- * This contract also burns the tokens intended for withdrawal, informing the L1 gateway to release L1 funds.
+ * @dev An L2 Deposited ERC20 is an ERC20 implementation which represents L1 assets deposited into L2, minting and burning on
+ * deposits and withdrawals.
+ * 
+ * `MyL2DepositedERC20` uses the Abs_L2DepositedToken class provided by optimism to link into a standard L1 deposit contract
+ * while using the `MyERC20`implementation I as a developer want to use.
  *
  * Compiler used: optimistic-solc
  * Runtime target: OVM
  */
 contract MyL2DepositedERC20 is Abs_L2DepositedToken, MyERC20 {
-
-    uint32 public constant MY_FINALIZE_WITHDRAWAL_L1_GAS = 100000;
 
     constructor(
         address _l2CrossDomainMessenger,
