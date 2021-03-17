@@ -42,7 +42,8 @@ This contract is just a relatively standard (though completely unsafe) ERC20 imp
 
 (**Note**: Seriously! This implementation is unsafe! Don't use it in production!)
 
-We'd recommend running the following command to compile this ERC20 contract. This will also make sure that Hardhat is installed correctly:
+We'd recommend running the following command to compile this ERC20 contract.
+This will also make sure that Hardhat is installed correctly:
 
 ```sh
 yarn compile
@@ -92,13 +93,67 @@ Congrats, you're ready to deploy an application to Optimistic Ethereum!
 It really is that easy.
 
 You can verify that everything went well by checking the `artifacts` folder that should be generated whenever you run `yarn compile`.
-Alongside the normal compiler output located at `artifacts/contracts/ERC20.sol/ERC20.json`, you should also see `artifacts/contracts/ERC20.sol/ERC20.ovm.json`.
-Here, `.ovm.json` signifies that this file has been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
+Alongside the normal compiler output located at `artifacts/contracts/ERC20.sol/ERC20.json`, you should also see `artifacts/contracts/ERC20.sol/ERC20-ovm.json` (or `artifacts/contracts/ERC20.sol/ERC20.ovm.json` if you're using an older version of `@eth-optimism/plugins`).
+Here, `-ovm.json` signifies that this file has been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
+
+### Running Optimistic Ethereum locally
+
+For the awesome tests that you _really_ came here for, you're going to need to deploy your ERC20 contract to Optimistic Ethereum.
+Fortunately, we have a handy dandy [integrations repo](https://github.com/ethereum-optimism/optimism-integration) all set for you to run your own local instance of Optimistic Ethereum!
+
+Let's get our local instance setup by running these commands:
+
+```sh
+optimism-tutorial % git clone git@github.com:ethereum-optimism/optimism-integration.git --recurse-submodules
+optimism-tutorial % cd optimism-integration
+optimism-tutorial % ./pull.sh
+```
+
+What we're doing here is first cloning the `optimism-integration` repo, then entering top level directory of your newly cloned (local) repo.
+Then, we run the `./pull.sh` command to pull all the docker images to start your local instance.
+
+Lastly, we'll run the `./up.sh` command to start your docker containers up:
+
+```sh
+optimism-tutorial % ./up.sh
+```
+
+(NOTE: These last two commands are provided by shell scripts that we created for you 😊.)
+The containers will take some time to fully spin up, but once they do, you should see something like this flash by in the logs at some point (NOTE: These logs are not important and are only shared to confirm you're running Optimistic Ethereum correctly.):
+
+![Docker containers are running](./assets/optimistic-ethereum-local-instance-log1.png)
+![Docker containers are running](./assets/optimistic-ethereum-local-instance-log2.png)
+
+You now have your very own locally deployed instance of Optimistic Ethereum! 🙌
+Next, let's work on deploying your contract.
+
+### Deploying to Optimistic Ethereum
+
+1. Intro `hardhat-deploy`
+2. Describe how contracts will be deployed with `hardhat-deploy`
+3. Walk through to add `hardhat-deploy`
+4. Config the plugin to deploy the sample ERC20
+5. Fun closing! (and transition to testing)
 
 ### Testing (Again)
 We provided you with an ERC20 test file earlier in this tutorial.
 Now it's time to test this ERC20 again.
 This time, however, we'll be testing our new OVM-compatible smart contract on top of Optimistic Ethereum.
+
+1. Explain integration vs. unit testing
+2. Why we're doing integration testing and not unit testing
+3. Write first unit test!
+4. Another one.
+5. Another one.
+6. Another one.
+
+### SONG Started from the bottom now where here SONG
+
+// Some guidance on additional resources that _go deeper_ (e.g. `deposit-withdrawal`, Synthetix repos)
+
+<!-- 
+LEAVE COMMENTED OUT UNTIL MAINTENANCE FOR `@eth-optimism/plugins` RENEWS
+
 Luckily, this is almost as easy as compiling the contract!
 
 First, make a copy of [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.spec.ts).
@@ -151,3 +206,5 @@ yarn test
 ```
 
 You should see even more green checkmarks this time around.
+
+-->
