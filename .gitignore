@@ -1,6 +1,7 @@
 # Project specific
 deploy
 optimism-integration
+deployments
 
 # environment variables
 .env

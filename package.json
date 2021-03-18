@@ -7,8 +7,8 @@
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
     "test": "yarn clean && hardhat test",
-    "evmDeploy": "yarn hardhat --network localhost deploy --tags",
-    "ovmDeploy": "yarn hardhat --network staging deploy --tags"
+    "evmDeploy": "yarn hardhat --network ethereum_local_L1 deploy --tags",
+    "ovmDeploy": "yarn hardhat --network optimism_local_L2 deploy --tags"
   },
   "devDependencies": {
     "@eth-optimism/dev": "^1.0.0",
