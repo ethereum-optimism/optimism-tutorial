@@ -1,7 +1,7 @@
 # Project specific
-deploy
-optimism-integration
-deployments
+# deploy
+# optimism-integration
+# deployments
 
 # environment variables
 .env
