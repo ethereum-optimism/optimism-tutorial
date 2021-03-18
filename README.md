@@ -159,7 +159,7 @@ import {HardhatRuntimeEnvironment} from 'hardhat/types'
 import {DeployFunction} from 'hardhat-deploy/types'
 ```
 
-Next, we'll start by writing our main deploy function, like so (which we'll show you first, then explain how it works):
+Next, we'll start by writing our deploy script for the EVM, like so (which we'll show you first, then explain how it works):
 ```typescript
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
