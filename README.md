@@ -161,22 +161,28 @@ import {DeployFunction} from 'hardhat-deploy/types'
 
 Next, we'll start by writing our main deploy function, like so (which we'll show you first, then explain how it works):
 ```typescript
+import { HardhatRuntimeEnvironment } from 'hardhat/types'
+import { DeployFunction } from 'hardhat-deploy/types'
+
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
-
   const { deployments, getNamedAccounts } = hre
-  const { deploy} = deployments
+  const { deploy } = deployments
 
-  const { deployer, simpleERC20Beneficiary } = await getNamedAccounts()
+  const { deployer } = await getNamedAccounts()
 
-  await deploy('SimpleERC20', {
+  const _initialSupply = hre.ethers.utils.parseEther('1000000000')
+  const _name = 'My Optimistic Token'
+
+  await deploy('ERC20', {
     from: deployer,
-    args: [simpleERC20Beneficiary, parseEther('1000000000')],
+    args: [_initialSupply, _name],
     log: true,
-  });
-};
+    gasPrice: hre.ethers.BigNumber.from('0'),
+  })
+}
 
 export default func
-func.tags = ['SimpleERC20']
+func.tags = ['ERC20']
 ```
 
 
