@@ -109,8 +109,13 @@ optimism-tutorial % cd optimism-integration
 optimism-tutorial % ./pull.sh
 ```
 
-What we're doing here is first cloning the `optimism-integration` repo, then entering top level directory of your newly cloned (local) repo.
-Then, we run the `./pull.sh` command to pull all the docker images to start your local instance.
+<!-- @platocrat One-liner
+git clone git@github.com:ethereum-optimism/optimism-integration.git --recurse-submodules && cd optimism-integration && ./pull.sh && ./up.sh
+-->
+
+What we're doing here first is cloning the `optimism-integration` repo, which comes with a dockerized sequencer L2 chain (OVM) and a dockerzied L1 chain (EVM).
+Then, we enter the top level directory of your newly cloned (local) repo.
+Next, we run the `./pull.sh` command to pull all the docker images to start your local instance.
 
 Lastly, we'll run the `./up.sh` command to start your docker containers up:
 
@@ -121,31 +126,96 @@ optimism-tutorial % ./up.sh
 (NOTE: These last two commands are provided by shell scripts that we created for you 😊.)
 The containers will take some time to fully spin up, but once they do, you should see something like this flash by in the logs at some point (NOTE: These logs are not important and are only shared to confirm you're running Optimistic Ethereum correctly.):
 
-![Docker containers are running](./assets/optimistic-ethereum-local-instance-log1.png)
-![Docker containers are running](./assets/optimistic-ethereum-local-instance-log2.png)
+![Local OE Network Logs 1](./assets/optimistic-ethereum-local-instance-log1.png)
+![Local OE Network Logs 2](./assets/optimistic-ethereum-local-instance-log2.png)
 
 You now have your very own locally deployed instance of Optimistic Ethereum! 🙌
-Next, let's work on deploying your contract.
+(NOTE: Keep these containers running! We'll be using your new local instance of Optimistic Ethereum to deploy and then test your contract.)
 
 ### Deploying to Optimistic Ethereum
 
-1. Intro `hardhat-deploy`
-2. Describe how contracts will be deployed with `hardhat-deploy`
-3. Walk through to add `hardhat-deploy`
-4. Config the plugin to deploy the sample ERC20
-5. Fun closing! (and transition to testing)
+<!-- 1. Intro `hardhat-deploy` -->
+With your local Optimistic Ethereum network ready to go, we'll now need to deploy our contract to the local (Optimistic) L2 chain instance.
+To do that, we'll be using the helpful [`hardhat-deploy`](https://github.com/wighawag/hardhat-deploy) plugin to simplify contract deployment with deploy scripts (`hardhat-deploy` will also later help with our post-deploy tests).
+
+Let's start by adding `hardhat-deploy` with the following command:
+```sh
+optimism-tutorial % yarn add hardhat-deploy
+```
+
+Now, we're able to start writing our deploy script.
+First, we'll want to create a directory called `deploy` and create our deploy script.
+You can do both with the following commands:
+```sh
+optimism-tutorial % mkdir deploy
+optimism-tutorial % cd deploy
+optimism-tutorial % touch deployERC20.ts
+```
+
+Since we're using TypeScript, we'll start editing our new deploy script by adding types for `hardhat-deploy` and `hardhat` for static type checking.
+So, let's add the following imports to your `deployERC20.ts` like so:
+```typescript
+import {HardhatRuntimeEnvironment} from 'hardhat/types'
+import {DeployFunction} from 'hardhat-deploy/types'
+```
+
+Next, we'll start by writing our main deploy function, like so (which we'll show you first, then explain how it works):
+```typescript
+const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
+
+  const { deployments, getNamedAccounts } = hre
+  const { deploy} = deployments
+
+  const { deployer, simpleERC20Beneficiary } = await getNamedAccounts()
+
+  await deploy('SimpleERC20', {
+    from: deployer,
+    args: [simpleERC20Beneficiary, parseEther('1000000000')],
+    log: true,
+  });
+};
+
+export default func
+func.tags = ['SimpleERC20']
+```
+
+
+
+// import {parseEther} from 'ethers/lib/utils'
+
+<!-- 2. Describe how contracts will be deployed with `hardhat-deploy` -->
+
+
+<!-- 3. Walk through to add `hardhat-deploy` -->
+
+
+<!-- 4. Config the plugin to deploy the sample ERC20 -->
+
+
+<!-- 5. Fun closing! (and transition to testing) -->
 
 ### Testing (Again)
 We provided you with an ERC20 test file earlier in this tutorial.
 Now it's time to test this ERC20 again.
 This time, however, we'll be testing our new OVM-compatible smart contract on top of Optimistic Ethereum.
 
-1. Explain integration vs. unit testing
-2. Why we're doing integration testing and not unit testing
-3. Write first unit test!
-4. Another one.
-5. Another one.
-6. Another one.
+
+<!-- 1. Explain integration vs. unit testing -->
+
+
+<!-- 2. Why we're doing integration testing and not unit testing -->
+
+
+<!-- 3. Write first unit test! -->
+
+
+<!-- 4. Another one. -->
+
+
+<!-- 5. Another one. -->
+
+
+<!-- 6. Another one. -->
 
 ### SONG Started from the bottom now where here SONG
 

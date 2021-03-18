@@ -1,3 +1,11 @@
+# Project specific
+deploy
+optimism-integration
+
+# environment variables
+.env
+.env.local
+
 # Packages
 node_modules/
 

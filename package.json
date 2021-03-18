@@ -6,7 +6,9 @@
   "scripts": {
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
-    "test": "yarn clean && hardhat test"
+    "test": "yarn clean && hardhat test",
+    "evmDeploy": "yarn hardhat --network localhost deploy --tags",
+    "ovmDeploy": "yarn hardhat --network staging deploy --tags"
   },
   "devDependencies": {
     "@eth-optimism/dev": "^1.0.0",
@@ -15,6 +17,7 @@
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.2.0",
     "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.24",
     "hardhat": "^2.0.7",
@@ -22,5 +25,10 @@
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "@eth-optimism/plugins": "^0.0.20",
+    "hardhat-deploy": "^0.7.0-beta.48",
+    "hardhat-gas-reporter": "^1.0.4"
   }
 }
