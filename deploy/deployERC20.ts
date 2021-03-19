@@ -8,9 +8,10 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deployer } = await getNamedAccounts()
 
   const _initialSupply = hre.ethers.utils.parseEther('1000000000')
-  const _name = 'Last But Not Least Token'
+  const _name = 'My Optimisc Token'
 
-  await deploy('LastButNotLeast-Token', {
+  // Have single deploy script that decides whether it's for OVM or EVM
+  await deploy('ERC20', {
     from: deployer,
     args: [_initialSupply, _name],
     log: true,
@@ -19,5 +20,4 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 }
 
 export default func
-func.tags = ['LastButNotLeast']
-func.runAtTheEnd = true // enforces this as last deploy
+func.tags = ['ERC20']
