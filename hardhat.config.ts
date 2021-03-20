@@ -8,7 +8,6 @@ import '@eth-optimism/plugins/hardhat/compiler'
 import 'hardhat-deploy'
 
 const config: any = {
-  defaultNetwork: 'localhost',
   namedAccounts: {
     deployer: 0
   },
