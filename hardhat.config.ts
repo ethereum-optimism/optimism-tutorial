@@ -7,7 +7,7 @@ import 'hardhat-gas-reporter'
 import '@eth-optimism/plugins/hardhat/compiler'
 import 'hardhat-deploy'
 
-const config: HardhatUserConfig = {
+const config: any = {
   defaultNetwork: 'localhost',
   namedAccounts: {
     deployer: 0
@@ -18,13 +18,13 @@ const config: HardhatUserConfig = {
   },
   networks: {
     // NOTE: Network names can be named anything
-    ethereum_local_L1: {
+    l1: {
       url: 'http://127.0.0.1:9545', // EVM L1 Chain
       accounts: {
         mnemonic: 'test test test test test test test test test test test junk'
       }
     },
-    optimism_local_L2: {
+    l2: {
       url: 'http://127.0.0.1:8545', // OVM L2 Chain
       accounts: {
         mnemonic: 'test test test test test test test test test test test junk'

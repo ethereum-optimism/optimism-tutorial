@@ -6,9 +6,7 @@
   "scripts": {
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
-    "test": "yarn clean && hardhat test",
-    "evmDeploy": "yarn hardhat --network ethereum_local_L1 deploy --tags",
-    "ovmDeploy": "yarn hardhat --network optimism_local_L2 deploy --tags"
+    "test": "yarn clean && hardhat test"
   },
   "devDependencies": {
     "@eth-optimism/dev": "^1.0.0",
@@ -28,7 +26,7 @@
   },
   "dependencies": {
     "@eth-optimism/plugins": "^0.0.20",
-    "hardhat-deploy": "^0.7.0-beta.48",
+    "hardhat-deploy": "link: ../../platocrat/hardhat-deploy",
     "hardhat-gas-reporter": "^1.0.4"
   }
 }

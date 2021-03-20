@@ -984,10 +984,10 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-5.46.0.tgz#fc850416716d77090c1c5a8c186118561fbd8d8b"
   integrity sha512-WiFy1uwRhcqkj6aTSha532Nl6Gdsv5GN+Nsbp7pY66Zg+6WUE/SBmpwHEJfEXzEfARI5+A718a3trGinY6Dftg==
 
-"@nomiclabs/ethereumjs-vm@^4.1.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@nomiclabs/ethereumjs-vm/-/ethereumjs-vm-4.2.1.tgz#768a6a071f88a9f3d27e560b899f86191d53bb72"
-  integrity sha512-vVloT6g/QNPasIrGWpR583b9nn1cBjNIQtaVdunEvwVFnEmTpsE0U67OiAiqYZmd0g7zqQrj2jepw0GEgnAz7Q==
+"@nomiclabs/ethereumjs-vm@4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@nomiclabs/ethereumjs-vm/-/ethereumjs-vm-4.2.2.tgz#2f8817113ca0fb6c44c1b870d0a809f0e026a6cc"
+  integrity sha512-8WmX94mMcJaZ7/m7yBbyuS6B+wuOul+eF+RY9fBpGhNaUpyMR/vFIcDojqcWQ4Yafe1tMKY5LDu2yfT4NZgV4Q==
   dependencies:
     async "^2.1.2"
     async-eventemitter "^0.2.2"
@@ -1000,7 +1000,7 @@
     ethereumjs-util "^6.2.0"
     fake-merkle-patricia-tree "^1.0.1"
     functional-red-black-tree "^1.0.1"
-    merkle-patricia-tree "^2.3.2"
+    merkle-patricia-tree "3.0.0"
     rustbn.js "~0.2.0"
     safe-buffer "^5.1.1"
     util.promisify "^1.0.0"
@@ -4022,7 +4022,7 @@ ethereumjs-account@^2.0.3:
     rlp "^2.0.0"
     safe-buffer "^5.1.1"
 
-ethereumjs-block@2.2.2, ethereumjs-block@^2.2.0, ethereumjs-block@^2.2.2, ethereumjs-block@~2.2.0, ethereumjs-block@~2.2.2:
+ethereumjs-block@2.2.2, ethereumjs-block@^2.2.2, ethereumjs-block@~2.2.0, ethereumjs-block@~2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/ethereumjs-block/-/ethereumjs-block-2.2.2.tgz#c7654be7e22df489fda206139ecd63e2e9c04965"
   integrity sha512-2p49ifhek3h2zeg/+da6XpdFR3GlqY3BIEiqxGF8j9aSRIgkb7M1Ky+yULBKJOu8PAZxfhsYA+HxUk2aCQp3vg==
@@ -4991,9 +4991,9 @@ har-validator@~5.1.3:
     ajv "^6.12.3"
     har-schema "^2.0.0"
 
-"hardhat-deploy@github:platocrat/hardhat-deploy#refactor/auto-detect-deployment-network":
+"hardhat-deploy@github:platocrat/hardhat-deploy#feature/allow-ovm-in-deploy-options":
   version "0.7.0-beta.47"
-  resolved "https://codeload.github.com/platocrat/hardhat-deploy/tar.gz/0b9abeea758b63e5778198fc2e72cbdec36c9271"
+  resolved "https://codeload.github.com/platocrat/hardhat-deploy/tar.gz/f0e11a004fff76e6a00e3890155aa9f4ce1dec86"
   dependencies:
     "@ethersproject/abi" "^5.0.2"
     "@ethersproject/abstract-signer" "^5.0.2"
@@ -5025,11 +5025,11 @@ hardhat-gas-reporter@^1.0.4:
     sha1 "^1.1.1"
 
 hardhat@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.0.7.tgz#5b3ab5fab097c397c7421e98c082398925bff246"
-  integrity sha512-do4aigd9pXfHZwxPS2dSFGPT4BSRNOi8wkYkyOKhn2rwGjI3o0RbdcE1xB0V7AezuL0KxkPitSCjpmQD1GDHUw==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.1.1.tgz#bcfed980019672b57011845a1678f714728d6ee7"
+  integrity sha512-55XMqB5QoeRg3m56rBg0NQgU//GPqOC9t4RbRSU3pdBJGHGXFTUh8fjTPxnWJNu9r72Zju++syGcCkPGwftyvw==
   dependencies:
-    "@nomiclabs/ethereumjs-vm" "^4.1.1"
+    "@nomiclabs/ethereumjs-vm" "4.2.2"
     "@sentry/node" "^5.18.1"
     "@solidity-parser/parser" "^0.11.0"
     "@types/bn.js" "^4.11.5"
@@ -5047,10 +5047,10 @@ hardhat@^2.0.7:
     ethereum-cryptography "^0.1.2"
     ethereumjs-abi "^0.6.8"
     ethereumjs-account "^3.0.0"
-    ethereumjs-block "^2.2.0"
+    ethereumjs-block "^2.2.2"
     ethereumjs-common "^1.5.0"
-    ethereumjs-tx "^2.1.1"
-    ethereumjs-util "^6.1.0"
+    ethereumjs-tx "^2.1.2"
+    ethereumjs-util "^6.2.0"
     find-up "^2.1.0"
     fp-ts "1.19.3"
     fs-extra "^7.0.1"
@@ -5058,7 +5058,8 @@ hardhat@^2.0.7:
     immutable "^4.0.0-rc.12"
     io-ts "1.10.4"
     lodash "^4.17.11"
-    merkle-patricia-tree "^3.0.0"
+    merkle-patricia-tree "3.0.0"
+    mnemonist "^0.38.0"
     mocha "^7.1.2"
     node-fetch "^2.6.0"
     qs "^6.7.0"
@@ -6361,7 +6362,7 @@ merge-descriptors@1.0.1:
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
-merkle-patricia-tree@3.0.0, merkle-patricia-tree@^3.0.0:
+merkle-patricia-tree@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/merkle-patricia-tree/-/merkle-patricia-tree-3.0.0.tgz#448d85415565df72febc33ca362b8b614f5a58f8"
   integrity sha512-soRaMuNf/ILmw3KWbybaCjhx86EYeBbD8ph0edQCTed0JN/rxDt1EBN52Ajre3VyGo+91f8+/rfPIRQnnGMqmQ==
@@ -6527,6 +6528,13 @@ mkdirp@0.5.5, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3:
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   dependencies:
     minimist "^1.2.5"
+
+mnemonist@^0.38.0:
+  version "0.38.3"
+  resolved "https://registry.yarnpkg.com/mnemonist/-/mnemonist-0.38.3.tgz#35ec79c1c1f4357cfda2fe264659c2775ccd7d9d"
+  integrity sha512-2K9QYubXx/NAjv4VLq1d1Ly8pWNC5L3BrixtdkyTegXWJIqY+zLNDhhX/A+ZwWt70tB1S8H4BE8FLYEFyNoOBw==
+  dependencies:
+    obliterator "^1.6.1"
 
 mocha@^7.1.1, mocha@^7.1.2:
   version "7.2.0"
@@ -6967,6 +6975,11 @@ object.pick@^1.3.0:
   integrity sha1-h6EKxMFpS9Lhy/U1kaZhQftd10c=
   dependencies:
     isobject "^3.0.1"
+
+obliterator@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/obliterator/-/obliterator-1.6.1.tgz#dea03e8ab821f6c4d96a299e17aef6a3af994ef3"
+  integrity sha512-9WXswnqINnnhOG/5SLimUlzuU1hFJUc8zkwyD59Sd+dPOMf05PmnYG/d6Q7HZ+KmgkZJa1PxRso6QdM3sTNHig==
 
 oboe@2.1.4:
   version "2.1.4"
@@ -7489,7 +7502,7 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-qs@^6.4.0, qs@^6.9.4:
+qs@^6.4.0:
   version "6.9.6"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
   integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
@@ -7498,6 +7511,13 @@ qs@^6.7.0:
   version "6.9.5"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.5.tgz#45859f731392198fbd3f91ea4290e7c4e25232fa"
   integrity sha512-T0SnbxGiMcB09qd3bFcPt8rufxPs7T7TjePk33r1WsJNt12/rWsK/ofKqRHQ0rY/iMGE0mVdkc6Yg9CuL/ty0Q==
+
+qs@^6.9.4:
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.0.tgz#8b6519121ab291c316a3e4d49cecf6d13d8c7fe5"
+  integrity sha512-yjACOWijC6L/kmPZZAsVBNY2zfHSIbpdpL977quseu56/8BZ2LoF5axK2bGhbzhVKt7V9xgWTtpyLbxwIoER0Q==
+  dependencies:
+    side-channel "^1.0.4"
 
 qs@~6.5.2:
   version "6.5.2"
@@ -8103,6 +8123,15 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
+
+side-channel@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
+  integrity sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==
+  dependencies:
+    call-bind "^1.0.0"
+    get-intrinsic "^1.0.2"
+    object-inspect "^1.9.0"
 
 signal-exit@^3.0.0:
   version "3.0.3"
