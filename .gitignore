@@ -2,6 +2,7 @@
 deploy
 optimism-integration
 deployments
+test/optimistic-erc20.spec.ts
 
 # environment variables
 .env

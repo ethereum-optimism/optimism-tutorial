@@ -6,10 +6,12 @@
   "scripts": {
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
-    "test": "yarn clean && hardhat test"
+    "test": "yarn hardhat test",
+    "network": "yarn hardhat --network"
   },
   "devDependencies": {
     "@eth-optimism/dev": "^1.0.0",
+    "@eth-optimism/watcher": "^0.0.1-alpha.9",
     "@nomiclabs/hardhat-ethers": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@types/chai": "^4.2.14",
@@ -19,6 +21,7 @@
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.24",
     "hardhat": "^2.0.7",
+    "hardhat-deploy-ethers": "^0.3.0-beta.7",
     "mocha": "^8.2.1",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",

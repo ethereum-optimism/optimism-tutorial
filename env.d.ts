@@ -4,6 +4,7 @@
 declare namespace NodeJS {
   interface ProcessEnv {
     // LOCAL(optimism-integration repo)
+    USER_PRIVATE_KEY: string
     L1_WEB3_URL: string
     L2_WEB3_URL: string
     // optional, will be deployed for us if unset

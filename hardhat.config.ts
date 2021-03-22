@@ -3,9 +3,11 @@ import { HardhatUserConfig } from 'hardhat/types'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
 import 'dotenv/config'
-import 'hardhat-gas-reporter'
+
 import '@eth-optimism/plugins/hardhat/compiler'
 import 'hardhat-deploy'
+import 'hardhat-gas-reporter'
+import 'hardhat-deploy-ethers'
 
 const config: any = {
   namedAccounts: {
