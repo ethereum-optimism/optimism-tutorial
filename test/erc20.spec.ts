@@ -48,10 +48,12 @@ describe('ERC20', () => {
 
     walletL2_2 = new ethers.Wallet(privateKey3, providerL2)
     walletL2_3 = new ethers.Wallet(privateKey4, providerL2)
-
   })
 
-  /** Should we remove Watcher? */
+  /** 
+   * @dev Should we remove Watcher? (NOTE: this copied from the 
+   * `deposit-withdrawal` branch of the `optimism-tutorial`.)
+   */
   // before('set up watchers', async () => {
   //   const response: any = await fetch('http://localhost:8080/addresses.json')
   //   const addresses = response.data
@@ -68,11 +70,6 @@ describe('ERC20', () => {
   //   })
   // })
 
-  // after('exit', async () => {
-  //   // TODO: Optimism watchers leave the process open, so we explicitely kill it
-  //   process.exit(0)
-  // })
-
   describe('when instances have been deployed to local L1 and L2 chains', () => {
     before('connect to contracts', async () => {
       const l1ABI = deploymentsInfoL1.abi
@@ -83,13 +80,16 @@ describe('ERC20', () => {
       const ERC20_L1_Factory = new ContractFactory(l1ABI, l1Bytecode, walletL1)
       const ERC20_L2_Factory = new ContractFactory(l2ABI, l2Bytecode, walletL2)
 
-      ERC20_L1 = await ERC20_L1_Factory.deploy(initialSupplyL1, name)
-      ERC20_L2 = await ERC20_L2_Factory.deploy(initialSupplyL2, name)
+      ERC20_L1 = await ERC20_L1_Factory
+        .connect(walletL1)
+        .deploy(initialSupplyL1, name)
+      ERC20_L2 = await ERC20_L2_Factory
+        .connect(walletL2)
+        .deploy(initialSupplyL2, name)
 
       await ERC20_L1.deployTransaction.wait()
       await ERC20_L2.deployTransaction.wait()
     })
-
 
     describe('on L1', () => {
       it('should should have a name', async () => {
@@ -123,12 +123,11 @@ describe('ERC20', () => {
       })
     })
 
-    describe('`transfer` on L1', () => {
+    describe('`transfer()` on L1', () => {
       it('should revert when the sender does not have enough balance', async () => {
         const sender = walletL1
         const recipient = walletL1_2
         const amount = initialSupplyL1.add(ethers.BigNumber.from('2500000'))
-
 
         await expect(
           ERC20_L1.connect(sender).transfer(await recipient.getAddress(), amount)
@@ -154,13 +153,9 @@ describe('ERC20', () => {
       })
     })
 
-    describe('`transfer` on L2', () => {
+    describe('`transfer()` on L2', () => {
       it('should revert when the sender does not have enough balance', async () => {
         const sender = walletL2
-        console.log(
-          'Balance of walletL2: ',
-          (await ERC20_L2.connect(sender).balanceOf(sender.getAddress())).toString()
-        )
         const recipient = walletL2_2
         const amount = initialSupplyL2.add(ethers.BigNumber.from('2500000'))
 
@@ -189,17 +184,19 @@ describe('ERC20', () => {
     })
   })
 
-
-
-  // describe('`transferFrom`', () => {
+  /** 
+   * @dev Some of these tests will not work out-of-the-box since they are for
+   * unit tests. Remove or refactor them to work for integration tests
+   */
+  // describe('`transferFrom()` on L1', () => {
   //   it('should revert when the owner account does not have enough balance', async () => {
-  //     const sender = account1
-  //     const owner = account2
-  //     const recipient = account3
+  //     const sender = walletL1
+  //     const owner = walletL1_2
+  //     const recipient = walletL1_3
   //     const amount = 2500000
 
   //     await expect(
-  //       ERC20.connect(sender).transferFrom(
+  //       ERC20_L1.connect(sender).transferFrom(
   //         await owner.getAddress(),
   //         await recipient.getAddress(),
   //         amount
@@ -210,13 +207,13 @@ describe('ERC20', () => {
   //   })
 
   //   it('should revert when the sender does not have enough of an allowance', async () => {
-  //     const sender = account2
-  //     const owner = account1
-  //     const recipient = account3
+  //     const sender = walletL1_2
+  //     const owner = walletL1
+  //     const recipient = walletL1_3
   //     const amount = 2500000
 
   //     await expect(
-  //       ERC20.connect(sender).transferFrom(
+  //       ERC20_L1.connect(sender).transferFrom(
   //         await owner.getAddress(),
   //         await recipient.getAddress(),
   //         amount
@@ -227,24 +224,24 @@ describe('ERC20', () => {
   //   })
 
   //   it('should succeed when the owner has enough balance and the sender has a large enough allowance', async () => {
-  //     const sender = account2
-  //     const owner = account1
-  //     const recipient = account3
-  //     const amount = 2500000
+  //     const sender = walletL1_2
+  //     const owner = walletL1
+  //     const recipient = walletL1_3
+  //     const amount = ethers.BigNumber.from('2500000')
 
-  //     await ERC20.connect(owner).approve(await sender.getAddress(), amount)
+  //     await ERC20_L1.connect(owner).approve(await sender.getAddress(), amount)
 
-  //     await ERC20.connect(sender).transferFrom(
+  //     await ERC20_L1.connect(sender).transferFrom(
   //       await owner.getAddress(),
   //       await recipient.getAddress(),
   //       amount
   //     )
 
-  //     expect(await ERC20.balanceOf(await owner.getAddress())).to.equal(
-  //       initialSupply - amount
+  //     expect(await ERC20_L1.balanceOf(await owner.getAddress())).to.equal(
+  //       initialSupplyL1.sub(amount)
   //     )
 
-  //     expect(await ERC20.balanceOf(await recipient.getAddress())).to.equal(
+  //     expect(await ERC20_L1.balanceOf(await recipient.getAddress())).to.equal(
   //       amount
   //     )
   //   })
