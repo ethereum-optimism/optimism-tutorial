@@ -4,6 +4,8 @@ Hello!
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
 Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform.
 
+> NOTE: We're quickly working to update `@eth-optimism/plugins` to fix several issues to make the development and testing process is easier for everyone! This section will be updated within the next couple of days that will change some of the later steps below that rely on this package.
+
 Planned future iterations of this tutorial will include:
 - Communicating between Optimistic Ethereum and Ethereum.
 - Using more advanced Optimism tooling.
@@ -42,7 +44,8 @@ This contract is just a relatively standard (though completely unsafe) ERC20 imp
 
 (**Note**: Seriously! This implementation is unsafe! Don't use it in production!)
 
-We'd recommend running the following command to compile this ERC20 contract. This will also make sure that Hardhat is installed correctly:
+We'd recommend running the following command to compile this ERC20 contract.
+This will also make sure that Hardhat is installed correctly:
 
 ```sh
 yarn compile
@@ -92,62 +95,9 @@ Congrats, you're ready to deploy an application to Optimistic Ethereum!
 It really is that easy.
 
 You can verify that everything went well by checking the `artifacts` folder that should be generated whenever you run `yarn compile`.
-Alongside the normal compiler output located at `artifacts/contracts/ERC20.sol/ERC20.json`, you should also see `artifacts/contracts/ERC20.sol/ERC20.ovm.json`.
-Here, `.ovm.json` signifies that this file has been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
+Alongside the normal compiler output located at `artifacts/contracts/ERC20.sol/ERC20.json`, you should also see `artifacts/contracts/ERC20.sol/ERC20-ovm.json` (or `artifacts/contracts/ERC20.sol/ERC20.ovm.json` if you're using an older version of `@eth-optimism/plugins`).
+Here, `-ovm.json` signifies that this file has been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
 
-### Testing (Again)
-We provided you with an ERC20 test file earlier in this tutorial.
-Now it's time to test this ERC20 again.
-This time, however, we'll be testing our new OVM-compatible smart contract on top of Optimistic Ethereum.
-Luckily, this is almost as easy as compiling the contract!
+<!-- ### Running Optimistic Ethereum locally
 
-First, make a copy of [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.spec.ts).
-You can name the copy whatever you'd like, perhaps `optimistic-erc20.spec.ts`.
-We'll modify this copy in just a minute.
-
-Now we're going to add another Hardhat plugin to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
-
-```ts
-// hardhat.config.ts
-
-import '@eth-optimism/plugins/hardhat/compiler' // You already had this one.
-import '@eth-optimism/plugins/hardhat/ethers'   // Now just add this one!
-```
-
-This plugin adds a new modified version of `ethers` to Hardhat that makes it possible to test the Layer 2 version of your contracts.
-
-Finally, we're going to modify `optimistic-erc20.spec.ts` (or whatever you named your copy of the original test file).
-Don't worry though, we only have to change a single line of code to make everything work!
-Find the line of code that looks like this:
-
-```ts
-// optimistic-erc20.spec.ts
-
-import { ethers } from 'hardhat'
-```
-
-Now, replace that line of code with this:
-
-```ts
-// optimistic-erc20.spec.ts
-
-import { l2ethers as ethers } from 'hardhat'
-```
-
-You might also want to change the test description so that you can tell the difference between the normal ERC20 and this new test file:
-
-```ts
-// optimistic-erc20.spec.ts
-
-describe('Optimistic ERC20', () => {
-    ...
-```
-
-You're all set!
-Confirm that everything worked as expected by running:
-
-```sh
-yarn test
-```
-
-You should see even more green checkmarks this time around.
+_**COMING IN THE NEXT FEW DAYS!**_ -->
