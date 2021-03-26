@@ -3,6 +3,7 @@ deploy
 deployments
 optimism-integration
 typechain
+test/optimistic-erc20.spec.ts
 
 # environment variables
 .env
