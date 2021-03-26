@@ -19,6 +19,7 @@ describe('ERC20', () => {
   const initialSupply: number = 10_000_000
   const useL2: boolean = (process.env.TARGET === 'ovm')
 
+  // // For the Optimistic test file
   // const privateKey1: string = ethers.Wallet.createRandom().privateKey
   // const privateKey2: string = ethers.Wallet.createRandom().privateKey
   // const privateKey3: string = ethers.Wallet.createRandom().privateKey

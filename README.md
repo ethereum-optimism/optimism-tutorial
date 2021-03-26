@@ -30,7 +30,7 @@ Hardhat is well designed and full of useful features.
 Go ahead and set up Hardhat by running:
 
 ```sh
-yarn install
+yarn
 ```
 
 We'll be writing all of our smart contracts in Solidity and writing the rest of our code in TypeScript.
@@ -42,29 +42,7 @@ This contract is just a relatively standard (though completely unsafe) ERC20 imp
 
 (**Note**: Seriously! This implementation is unsafe! Don't use it in production!)
 
-We'd recommend running the following command to compile this ERC20 contract.
-This will also make sure that Hardhat is installed correctly:
-
-```sh
-yarn compile
-```
-
-## The Tests
-We've also written some very basic tests for you, which you can locate in [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.spec.ts).
-Though tests are pretty straight forward, we'd recommend taking a quick read through the test file.
-We're using [Ethers](https://docs.ethers.io/v5/) for the majority of our testing and [Waffle](https://ethereum-waffle.readthedocs.io/en/latest/) for some of its utilities.
-Hardhat provides convenient plugins for both; we've already added these plugins to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts).
-
-Once you've taken a look at the tests, feel free to verify that everything is working correctly by running the following command:
-
-```sh
-yarn test
-```
-
-If everything is going as planned, you should see a bunch of green checkmarks.
-
-## Making it Optimistic
-Now that we've gotten that out of the way, it's time to get our ERC20 ready for Optimistic Ethereum.
+## Compiling Optimistically
 Contracts deployed to Optimistic Ethereum are required to [replace certain EVM opcodes with custom behavior](https://community.optimism.io/docs/protocol/evm-comparison.html#missing-replaced-and-custom-opcodes).
 Since the Solidity compiler doesn't handle this custom behavior, developers have to make sure to use the Optimism fork of the Solidity compiler instead.
 We'll need to add a special plugin to hardhat that enables this custom Optimism Solidity compiler.
@@ -72,7 +50,7 @@ We'll need to add a special plugin to hardhat that enables this custom Optimism 
 First, add the Optimism plugins package to your project:
 
 ```sh
-yarn add @eth-optimism/plugins
+yarn add @eth-optimism/plugins --dev
 ```
 
 Next, add the following line to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
@@ -89,17 +67,21 @@ Finally, compile it!
 yarn compile
 ```
 
+> **Side note:**  Previously, we had a plain `yarn compile` command that was used to compile your contracts. Since the recent stable release of [`@eth-optimism/plugins`](https://github.com/ethereum-optimism/plugins/releases/tag/v1.0.0-alpha.2), we made some minor changes to the workflow for compiling, deploying, and testing your contracts (all of which we will cover in this tutorial as we progress, so don't worry if it's not clear about how these pieces fit together yet). But, we think these changes profoundly improve the developer experience! So, we hope you enjoy the boost to your workflow from these changes. And as always, if you have any feedback, comments, or concerns, don't be a stranger 😊 and let us know how we can help by posting a message in our [Discord server](https://discord.gg/NypkmfSkkw)!!
+
 Congrats, you're ready to deploy an application to Optimistic Ethereum!
 It really is that easy.
 
-You can verify that everything went well by checking the `artifacts` folder that should be generated whenever you run `yarn compile`.
-Alongside the normal compiler output located at `artifacts/contracts/ERC20.sol/ERC20.json`, you should also see `artifacts/contracts/ERC20.sol/ERC20-ovm.json` (or `artifacts/contracts/ERC20.sol/ERC20.ovm.json` if you're using an older version of `@eth-optimism/plugins`).
-Here, `-ovm.json` signifies that this file has been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
+You can verify that everything went well by checking the two artifact directories (`artifacts` for use on the EVM and `artifacts-ovm` for use on the OVM) and the two cache directories (`cache` and `cache-ovm`) that should be generated whenever you run `yarn compile`.
+
+> **Side note:** Secretly, we hid the logic for this quick command within your `package.json`. There are actually _two_ compilation steps being run here, sequentially. First, `yarn compile` runs `yarn compile:evm` which obviously compiles your ERC20 contract and spits out an artifacts folder for use on the EVM. The second command being run in this step is, of course, 💃 `yarn compile:ovm` 🕺, which has a similar process, but instead uses a different naming of filepaths (which we make use of later 😉).
+
+Here, `artifacts-ovm` signifies that the contracts contained in this directory have been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
 
 ### Running Optimistic Ethereum locally
 
-For the awesome tests that you _really_ came here for, you're going to need to deploy your ERC20 contract to Optimistic Ethereum.
-Fortunately, we have a handy dandy [integrations repo](https://github.com/ethereum-optimism/optimism-integration) all set for you to run your own local instance of Optimistic Ethereum!
+To simulate a development environment that is as close to mainnet Optimistic Ethereum while still being local, you're we recommend replicating the layer 1 Ethereum chain and the layer 2 Optimism chain.
+Fortunately, we have a handy dandy [integrations repo](https://github.com/ethereum-optimism/optimism-integration) all nicely dockerized for you to run your own local instance of Optimistic Ethereum!
 
 Let's get our local instance setup by running these commands:
 
@@ -109,22 +91,19 @@ optimism-tutorial % cd optimism-integration
 optimism-tutorial % ./pull.sh
 ```
 
-<!-- @platocrat One-liner
-git clone git@github.com:ethereum-optimism/optimism-integration.git --recurse-submodules && cd optimism-integration && ./pull.sh && ./up.sh
--->
-
-What we're doing here first is cloning the `optimism-integration` repo, which comes with a dockerized sequencer L2 chain (OVM) and a dockerzied L1 chain (EVM).
+What we're doing here first is cloning the `optimism-integration` repo, which comes with a dockerized L2 chain (OVM) and a dockerzied L1 chain (EVM).
 Then, we enter the top level directory of your newly cloned (local) repo.
 Next, we run the `./pull.sh` command to pull all the docker images to start your local instance.
 
-Lastly, we'll run the `./up.sh` command to start your docker containers up:
+Lastly, we'll run the `./up.sh` command to spin your docker containers up:
 
 ```sh
 optimism-tutorial % ./up.sh
 ```
 
 (NOTE: These last two commands are provided by shell scripts that we created for you 😊.)
-The containers will take some time to fully spin up, but once they do, you should see something like this flash by in the logs at some point (NOTE: These logs are not important and are only shared to confirm you're running Optimistic Ethereum correctly.):
+The containers will take some time to fully spin up, but once they do, you should see something like this flash by in the logs at some point 
+(NOTE: These logs are not important and are only shared to confirm you're running Optimistic Ethereum correctly.):
 
 ![Local OE Network Logs 1](./assets/optimistic-ethereum-local-instance-log1.png)
 ![Local OE Network Logs 2](./assets/optimistic-ethereum-local-instance-log2.png)
@@ -135,146 +114,135 @@ You now have your very own locally deployed instance of Optimistic Ethereum! �
 ### Deploying to Optimistic Ethereum
 
 <!-- 1. Intro `hardhat-deploy` -->
-With your local Optimistic Ethereum network ready to go, we'll now need to deploy our contract to the local (Optimistic) L2 chain instance.
-To do that, we'll be using the helpful [`hardhat-deploy`](https://github.com/wighawag/hardhat-deploy) plugin to simplify contract deployment with deploy scripts (`hardhat-deploy` will also later help with our post-deploy tests).
+With your local Optimistic Ethereum network ready to go, we'll now need to deploy our ERC20 contract to the local (Optimistic) L2 chain instance.
+To do that, we'll be using the helpful [`hardhat-deploy`](https://github.com/wighawag/hardhat-deploy) plugin to simplify contract deployment with deploy scripts.
 
-Let's start by adding `hardhat-deploy` with the following command:
+Let's start by adding `hardhat-deploy` to our list of `devDependencies` with the following command:
 ```sh
-optimism-tutorial % yarn add hardhat-deploy
+optimism-tutorial % yarn add hardhat-deploy --dev
 ```
 
 Now, we're able to start writing our deploy script.
-First, we'll want to create a directory called `deploy` and create our deploy script.
-You can do both with the following commands:
+First, we'll want to create a directory called `deploy` and our deploy script within that directory.
+You can do this with the following command:
 ```sh
-optimism-tutorial % mkdir deploy
-optimism-tutorial % cd deploy
-optimism-tutorial % touch deployERC20.ts
+optimism-tutorial % mkdir deploy && cd deploy && touch deployERC20.ts
 ```
 
-Since we're using TypeScript, we'll start editing our new deploy script by adding types for `hardhat-deploy` and `hardhat` for static type checking.
+Since we're using TypeScript, we'll start editing our new deploy script by adding types for [`hardhat-deploy`](https://github.com/wighawag/hardhat-deploy) and `hardhat` for static type checking of this file.
 So, let's add the following imports to your `deployERC20.ts` like so:
 ```typescript
 import {HardhatRuntimeEnvironment} from 'hardhat/types'
 import {DeployFunction} from 'hardhat-deploy/types'
 ```
 
-Next, we'll start by writing our main deploy function, like so (which we'll show you first, then explain how it works):
+Next, we'll add your deploy function for your ERC20 contract.
+Note that this deploy script (along with a few magic tricks that we'll explain later 🧙‍♂️) will be used to handle contract deployment to both layer 1 Ethereum and layer 2 Optimistic Ethereum.
+Ain't that neat!
+
+First, we'll show you the deploy function and then explain how it works.
+Let's now add this function below our imports that added in the last step:
 ```typescript
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
-
   const { deployments, getNamedAccounts } = hre
-  const { deploy} = deployments
+  const { deploy } = deployments
 
-  const { deployer, simpleERC20Beneficiary } = await getNamedAccounts()
+  const { deployer } = await getNamedAccounts()
 
-  await deploy('SimpleERC20', {
+  const _initialSupply = hre.ethers.utils.parseEther('1000000000')
+  const _name = 'My ERC20 Token'
+
+  await deploy('ERC20', {
     from: deployer,
-    args: [simpleERC20Beneficiary, parseEther('1000000000')],
-    log: true,
-  });
-};
+    args: [_initialSupply, _name],
+    gasPrice: hre.ethers.BigNumber.from('0'),
+    log: true
+  })
+}
 
 export default func
-func.tags = ['SimpleERC20']
+func.tags = ['ERC20']
 ```
 
+If you have used `hardhat-deploy` before, this function will look quite familiar.
+That's because this function is actually from one of `hardhat-deploy`'s [examples for a simple ERC20](https://github.com/wighawag/template-ethereum-contracts/blob/main/deploy/001_deploy_simple_erc20.ts#L5-L18).
+To make this tutorial easy, we decided to add a few things so that using this example script was seamless.
 
+What we do first is extract from `deployments` extension and `getNamedAccounts` method from the `hre`.
+Then, we extract our beloved `deploy` method from the `deployments` extension  and extract the `deployer` account, a named account that is prespecified in your `hardhat.config.ts` as the first address, from the `getNamedAccounts` method.
+Next, we add the name of your contract, in this case it's `ERC20`, as the first argument to the deploy method.
+And here is the exciting part: in the deployment options (the second argument denoting by the `{}`), we specify:
 
-// import {parseEther} from 'ethers/lib/utils'
+1. Which address we want to deploy your ERC20 contract from,
+2. The arguments your contract requires in it's constructor or initializer,
+3. The gas price to deploy your contract (we of course want it to be 0!), and lastly,
+4. Whether we want to display logs when running our deploy script.
 
-<!-- 2. Describe how contracts will be deployed with `hardhat-deploy` -->
+Easy enough right?
 
+> If you're still confused by these deploy options, we recommend reviewing the [Configuration](https://github.com/wighawag/hardhat-deploy#configuration) and [How to Deploy Contracts](https://github.com/wighawag/hardhat-deploy#how-to-deploy-contracts) sections from `hardhat-deploy`'s documentation.
 
-<!-- 3. Walk through to add `hardhat-deploy` -->
+To complete our deploy script, we export our function, `func`, and give it a function tag called `ERC20`.
+This function tag helps us specify which deploy script we want to run when using `hardhat-deploy` in the CLI.
 
+Although we have only one deploy script for now, this simplifies our `yarn` commands.
+So, to deploy your ERC20 contract to your local layer 1 Ethereum _and_ layer 2 Optimistic Ethereum networks, just run `yarn deploy`!
 
-<!-- 4. Config the plugin to deploy the sample ERC20 -->
+You'll see something like the following in your console or terminal if this running the command was successful:
 
+![Console logs after running yarn deploy](./assets/running-yarn-deploy.png)
+
+#### A explainer for beginners
+
+Similar to when we ran `yarn compile`, there's some Node.js script magic going on here, but it's quite simple.
+
+First, `yarn deploy` starts the chain of commands by running `yarn deploy:evm`, which deploys your ERC20 contract with the following command:
+
+```shell
+hardhat --network l1 deploy --tags ERC20
+```
+
+What this command does is specify the deployment network `l1` (which is prespecified for you in your `hardhat.config.ts` 😎), then it uses `deploy` ([the `deploy` task from `hardhat-deploy`](https://github.com/wighawag/hardhat-deploy#the-deploy-task)) to run our deploy function by the function tag we used to specify it (i.e. `ERC20`).
+
+Second in the chain of commands is `yarn compile:ovm` which similarly deploys your ERC20 contract, but instead of deploying to layer 1 Ethereum, it deploys to layer 2 Optimistic Ethereum 🪄 ✨.
+This black magic process comes from `@eth-optimism/plugins` which lets you specify when you are deploying your contracts with `hardhat-deploy`, whether you are deploying to the OVM or to the EVM with this additional flag in the CLI, `TARGET=ovm`.
+
+The full command:
+```shell
+TARGET=ovm hardhat --network l1 deploy --tags ERC20
+```
+
+WAIT, how the heck are my contract ABIs and bytecode being accounted for when deploying to the `l1` or `l2` networks?
+Great question!
+This is more black magic from `hardhat-deploy`'s synergy with `@eth-optimism/plugins`, which tells `hardhat-deploy` if it sees the `TARGET=ovm` flag, "Yo `hardhat-deploy`! We're deploying for the OVM!! Here's the contract deployment info you need to deploy this contract 😎".
+Then, `hardhat-deploy`, having everything it needs to initiate a contract deployment to the OVM, runs the deploy script to deploy the specified contract to the OVM!
+And if `@eth-optimism/plugins` doesn't see the flag, then `hardhat-deploy` carries on its usual path of deploying to the EVM.
+
+------------------------
 
 <!-- 5. Fun closing! (and transition to testing) -->
+💥 BOOM 💥.
+We've now deployed your ERC20 contract to your local layer 1 Ethereum and layer 2 Optimistic Ethereum networks!
 
-### Testing (Again)
-We provided you with an ERC20 test file earlier in this tutorial.
-Now it's time to test this ERC20 again.
-This time, however, we'll be testing our new OVM-compatible smart contract on top of Optimistic Ethereum.
+Now onto the smoothest side of this tutorial.
 
+### Test Prep
+No, this kind of preparation is not anything even remotely similar to exam preparation.
+What we're doing next is preparing the seamless experience of running our contracts tests for both the EVM and OVM.
+
+And this will only take us a max of 3 steps:
+
+1. Duplicate our `erc20.spec.ts` test file and name it `optimistic-erc20.spec.ts`.
+2. Make the necessary changes in `optimistic-erc20.spec.ts`.
+3. Run `yarn test`
+
+
+### 
 
 <!-- 1. Explain integration vs. unit testing -->
-
+Integration
 
 <!-- 2. Why we're doing integration testing and not unit testing -->
 
 
-<!-- 3. Write first unit test! -->
-
-
-<!-- 4. Another one. -->
-
-
-<!-- 5. Another one. -->
-
-
-<!-- 6. Another one. -->
-
-### SONG Started from the bottom now where here SONG
-
-// Some guidance on additional resources that _go deeper_ (e.g. `deposit-withdrawal`, Synthetix repos)
-
-<!-- 
-LEAVE COMMENTED OUT UNTIL MAINTENANCE FOR `@eth-optimism/plugins` RENEWS
-
-Luckily, this is almost as easy as compiling the contract!
-
-First, make a copy of [`optimism-tutorial/test/erc20.spec.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.spec.ts).
-You can name the copy whatever you'd like, perhaps `optimistic-erc20.spec.ts`.
-We'll modify this copy in just a minute.
-
-Now we're going to add another Hardhat plugin to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
-
-```ts
-// hardhat.config.ts
-
-import '@eth-optimism/plugins/hardhat/compiler' // You already had this one.
-import '@eth-optimism/plugins/hardhat/ethers'   // Now just add this one!
-```
-
-This plugin adds a new modified version of `ethers` to Hardhat that makes it possible to test the Layer 2 version of your contracts.
-
-Finally, we're going to modify `optimistic-erc20.spec.ts` (or whatever you named your copy of the original test file).
-Don't worry though, we only have to change a single line of code to make everything work!
-Find the line of code that looks like this:
-
-```ts
-// optimistic-erc20.spec.ts
-
-import { ethers } from 'hardhat'
-```
-
-Now, replace that line of code with this:
-
-```ts
-// optimistic-erc20.spec.ts
-
-import { l2ethers as ethers } from 'hardhat'
-```
-
-You might also want to change the test description so that you can tell the difference between the normal ERC20 and this new test file:
-
-```ts
-// optimistic-erc20.spec.ts
-
-describe('Optimistic ERC20', () => {
-    ...
-```
-
-You're all set!
-Confirm that everything worked as expected by running:
-
-```sh
-yarn test
-```
-
-You should see even more green checkmarks this time around.
-
--->
+### "Started from the bottom now where here"
