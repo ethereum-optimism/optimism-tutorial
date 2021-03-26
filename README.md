@@ -406,6 +406,7 @@ yarn the-kitchen-sink
   <video
     controls='true'
     allowFullscreen='true'
+    height='250'
   >
     <source
       src='./assets/videos/optimism-tutorial-completion.mp4)'
