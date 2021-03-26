@@ -1,14 +1,16 @@
-import { HardhatUserConfig } from 'hardhat/types'
-
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
-import 'dotenv/config'
-import 'hardhat-gas-reporter'
-import '@eth-optimism/plugins/hardhat/compiler'
-import 'hardhat-deploy'
 
-const config: HardhatUserConfig = {
-  defaultNetwork: 'localhost',
+import 'dotenv/config'
+import 'hardhat-deploy'
+import 'hardhat-gas-reporter'
+import 'hardhat-deploy-ethers'
+import '@typechain/hardhat'
+
+import '@eth-optimism/plugins/hardhat/compiler'
+
+
+const config: any = {
   namedAccounts: {
     deployer: 0
   },
@@ -17,23 +19,19 @@ const config: HardhatUserConfig = {
     solcVersion: '0.7.6'
   },
   networks: {
-    localhost: {
+    // NOTE: Network names can be named anything
+    l1: {
       url: 'http://127.0.0.1:9545', // EVM L1 Chain
       accounts: {
         mnemonic: 'test test test test test test test test test test test junk'
-      },
-      tags: ['local', 'L1']
+      }
     },
-    staging: {
+    l2: {
       url: 'http://127.0.0.1:8545', // OVM L2 Chain
       accounts: {
         mnemonic: 'test test test test test test test test test test test junk'
-      },
-      tags: ['local', 'L2']
+      }
     }
-  },
-  mocha: {
-    timeout: 0,
   }
 }
 

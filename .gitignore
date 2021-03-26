@@ -1,6 +1,8 @@
 # Project specific
 deploy
+deployments
 optimism-integration
+typechain
 
 # environment variables
 .env
@@ -11,4 +13,6 @@ node_modules/
 
 # Hardhat build outputs
 artifacts/
+artifacts-ovm/
 cache/
+cache-ovm
