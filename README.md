@@ -72,9 +72,9 @@ yarn compile
 Congrats, you're ready to deploy an application to Optimistic Ethereum!
 It really is that easy.
 
-You can verify that everything went well by checking the two artifact directories (`artifacts` for use on the EVM and `artifacts-ovm` for use on the OVM) and the two cache directories (`cache` and `cache-ovm`) that should be generated whenever you run `yarn compile`.
+You can verify that everything went well by checking the two artifact directories (`artifacts` for the EVM and `artifacts-ovm` for the OVM) and the two cache directories (`cache` and `cache-ovm`) that should be generated whenever you run `yarn compile`.
 
-> **Side-note on the Node.js scripts:** Secretly, we hid the logic for this quick command within your `package.json`. There are actually _two_ compilation steps being run here, sequentially. First, `yarn compile` runs `yarn compile:evm` which obviously compiles your ERC20 contract and spits out an artifacts folder for use on the EVM. The second command being run in this step is, of course, 💃 `yarn compile:ovm` 🕺, which has a similar process, but instead uses a different naming of filepaths (which we make use of later 😉).
+> **Side-note on the Node.js scripts:** Secretly, we hid the logic for this quick command within your `package.json`. There are actually _two_ compilation steps being run here, sequentially. First, `yarn compile` runs `yarn compile:evm` which obviously compiles your ERC20 contract and spits out an artifacts folder for the EVM. The second command being run in this step is, of course, 💃 `yarn compile:ovm` 🕺, which has a similar process, but instead uses a different naming of filepaths (which we make use of later 😉).
 
 Here, `artifacts-ovm` signifies that the contracts contained in this directory have been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
 
@@ -249,7 +249,7 @@ Go ahead and change update line 8 to:
 import deploymentsInfo from '../deployments/l2/ERC20.json'
 ```
 
-Next, we'll quickly borrowing a set [utility functions from our friends at Synthetix](https://github.com/Synthetixio/synthetix/blob/develop/test/optimism/utils/revertOptimism.js) that will help us retreive transaction revert reasons for transactions of contracts that are deployed on the OVM.
+Next, we'll quickly borrowing a set [utility functions from our friends at Synthetix](https://github.com/Synthetixio/synthetix/blob/develop/test/optimism/utils/revertOptimism.js) that will help us retreive transaction revert reasons for transactions of contracts that are deployed to the OVM.
 
 Let's begin this step by adding importing the utility function `assertRevertOptimism` on the line right after `deploymentsInfo`:
 ```ts
