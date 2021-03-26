@@ -232,17 +232,176 @@ What we're doing next is preparing the seamless experience of running our contra
 
 And this will only take us a max of 3 steps:
 
-1. Duplicate our `erc20.spec.ts` test file and name it `optimistic-erc20.spec.ts`.
-2. Make the necessary changes in `optimistic-erc20.spec.ts`.
+1. Duplicate our `erc20.spec.ts` and rename it `optimistic-erc20.spec.ts`.
+2. Make the necessary changes in `optimistic-erc20.spec.ts` and friends.
 3. Run `yarn test`
 
+Step one is quite straightforward, so we'll assume you can do that step without guidance and move on to step 2 ➡️
 
-### 
+#### 2. Make the necessary changes in `optimistic-erc20.spec.ts` and friends
+In your newly named `optimistic-erc20.spec.ts` file, we're first going to update the path for `deploymentsInfo` so that we're retreiving your contract artifact for layer 2 Optimistic Ethereum and _not_ layer 1 Ethereum.
+
+Go ahead and change update line 8 to:
+```typescript
+import deploymentsInfo from '../deployments/l2/ERC20.json'
+```
+
+Next, we'll quickly borrowing a set [utility functions from our friends at Synthetix](https://github.com/Synthetixio/synthetix/blob/develop/test/optimism/utils/revertOptimism.js) that will help us retreive transaction revert reasons for transactions of contracts that are deployed on the OVM.
+
+Let's begin this step by adding importing the utility function `assertRevertOptimism` on the line right after `deploymentsInfo`:
+```ts
+import { assertRevertOptimism } from './utils'
+```
+
+Then, we'll create the `utils.ts` and under the `test` directory and add the following code to it:
+```ts
+import { ethers } from 'hardhat'
+
+function _hexToString(hex: string) {
+  let str = ''
+
+  const terminator = '**zÛ'
+
+  for (var i = 0; i < hex.length; i += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16))
+
+    if (str.includes(terminator)) {
+      break
+    }
+  }
+
+  return str.substring(0, str.length - 4)
+}
+
+async function getOptimismRevertReason({ tx, provider }) {
+  try {
+    let code: any = await provider.call(tx)
+    code = code.substr(138)
+
+    // Try to parse the revert reason bytes.
+    let reason: string
+
+    if (code.length === 64) {
+      reason = ethers.utils.parseBytes32String(`0x${ code }`)
+    } else {
+      reason = _hexToString(`0x${ code }`)
+    }
+
+    return reason
+  } catch (suberror) {
+    throw new Error(`Unable to parse revert reason: ${ suberror }`)
+  }
+}
+
+async function assertRevertOptimism({ tx, reason, provider }) {
+  let receipt: any,
+    revertReason: string | any[]
+
+  try {
+    receipt = await tx.wait()
+  } catch (error) {
+    revertReason = await getOptimismRevertReason({ tx, provider })
+  }
+
+  if (receipt) {
+    throw new Error(`Transaction was expected to revert with "${ reason }", but it did not revert.`)
+  } else {
+    if (!revertReason.includes(reason)) {
+      throw new Error(
+        `Transaction was expected to revert with "${ reason }", but it reverted with "${ revertReason }" instead.`
+      )
+    }
+  }
+}
+
+export { assertRevertOptimism }
+```
+
+This code might look a bit overwhelming, but trust us, it isn't!
+Simply, [what Synthetix has done here](https://github.com/Synthetixio/synthetix/blob/develop/test/optimism/withdrawals.test.js#L131-L140) is create a function called `assertRevertOptimism` that will show us revert reasons when we run our integration tests against the OVM that require to return a revert reason.
+
+<!-- ADD SHORT EXPLAINER ABOUT REVERT REASONS! -->
+
+Now with that out of the way, let's get back to finishing changes to `optimistic-erc20.spec.ts`.
+
+At the top, you'll notice a commented code block of `privateKey` variables.
+Uncomment this line so that we can use it to create our 3 accounts.
+
+Next, remove the instantiation of 3 accounts with `getSigners()` (line 35-36 in `erc20.spec.ts`). 
+Instead of this line, create 3 new accounts, synchronously, right above the before-statement called `'connect to contracts'`, like so:
+```ts
+// Signers
+const account1: Signer = new ethers.Wallet(privateKey1, provider)
+const account2: Signer = new ethers.Wallet(privateKey2, provider)
+const account3: Signer = new ethers.Wallet(privateKey3, provider)
+
+before('connect to contracts', async () => {
+// ...
+```
+
+On to the tests!
+With our OVM-compatible ERC20 contract now setup to be deployed to the OVM, let's move on to using that `assertRevertOptimism` function we borrowed from Synthetix.
+
+In your test file there are 3 different it-statements that have revert checks that need to be updated to run properly (so our tests pass!).
+What we'll do first here is add an `await` to the very front of each of these contract calls.
+These 3 it-statements are called:
+
+1. `'should revert the sender does not have enough balance'`, line 88 in `erc20.spec.ts`
+2. `'should revert when the owner account does not have enough balance'`, line 138 in `erc20.spec.ts`
+3. `'should revert when the sender does not have enough of an allowance'`, line 155 in `erc20.spec.ts`
+
+These additions of `await` will ensure that the contract calls complete before running our assertion checks with `assertRevertOptimism`.
+
+Now, let's add our assertion checks!
+Going through the same list of 3 it-statements, we'll change the `await expect(tx).to.be.revertedWith()` lines to:
+```ts
+// Test whether the call on Optimism reverts with the following reason.
+await assertRevertOptimism({
+  tx,
+  reason: "<REVERT_REASON",
+  provider: provider
+})
+```
+
+where the revert `reason` is equal to:
+1. `"You don't have enough balance to make this transfer!"`
+2. `"Can't transfer from the desired account because you don't have enough of an allowance."`
+3. `"Can't transfer from the desired account because you don't have enough of an allowance."`
+
+respectively, for each it-statement's assertion.
+
+Way to go!
+You're now set to run your integration tests! 🙌
+
+#### 3. Run `yarn test`
+> "Started from the bottom now where here"
+
+And now...for the moment you've all been waiting for...
+Please, put your fingers together for...
+```sh
+yarn test
+```
+
+(Don't forget to enter the above command in your terminal!)
+
+If you've been following this tutorial closely (but not too closely because this tutorial is claustrophic 😷), and have made no errors along the way, you'll see console logs like this:
+
+![The Beautiful EVM Test Logs](./assets/the-beautiful-evm-tests.png)
+![The Breathtaking EVM Test Logs](./assets/the-breathtaking-ovm-tests.png)
+
+<!-- MUST FIX L1 AND L2 LABELING IN TEST STATEMENTS -->
+
+And there you have it.
+If that didn't take your breath away, I'd suggest running the following command while listening to some suitable music:
+```sh
+yarn the-kitchen-sink
+```
+
+[![Take my Breath Away ](https://img.youtube.com/vi/Bx51eegLTY8&t/0.jpg)](https://www.youtube.com/watch?v=Bx51eegLTY8&t=48s)
+
+
+## Until next time...
 
 <!-- 1. Explain integration vs. unit testing -->
-Integration
 
 <!-- 2. Why we're doing integration testing and not unit testing -->
-
-
-### "Started from the bottom now where here"
