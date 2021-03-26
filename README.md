@@ -402,7 +402,17 @@ If that didn't take your breath away, I'd suggest running the following command 
 yarn the-kitchen-sink
 ```
 
-![Congrats! You have completed the official Optimism Tutorial!](./assets/optimism-tutorial-completion.mp4)
+<figure class="video_container">
+  <video
+    controls='true'
+    allowFullscreen='true'
+  >
+    <source
+      src='./assets/videos/optimism-tutorial-completion.mp4)'
+      type='video/mp4'
+    />
+  </video>
+</figure>
 
 ## Until next time...
 
