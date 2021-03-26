@@ -1,6 +1,7 @@
 import { Provider } from '@ethersproject/providers'
 import { Wallet, ContractFactory, Contract } from 'ethers'
-import { getContractFactory } from '@eth-optimism/contracts'
+import { getContractFactory, getContractDefinition } from '@eth-optimism/contracts'
+
 
 import * as MyERC20 from '../artifacts/contracts/MyERC20.sol/MyERC20.json'
 import * as Def__MyL2DepositedERC20 from '../artifacts/contracts/MyL2DepositedERC20.sol/MyL2DepositedERC20.ovm.json'
@@ -113,8 +114,9 @@ export const setupOrRetrieveGateway = async (
         OVM_L1ERC20Gateway = newGateway.OVM_L1ERC20Gateway
         OVM_L2DepositedERC20 = newGateway.OVM_L2DepositedERC20
     } else {
-        OVM_L1ERC20Gateway = new Contract(l1ERC20GatewayAddress, Def__MyL2DepositedERC20.abi, l1Wallet)
-        const l2ERC20GatewayAddress = await OVM_L1ERC20Gateway.l2ERC20Gateway()
+        const OVM_L1ERC20Gateway_Def = getContractDefinition('OVM_L1ERC20Gateway', false);
+        OVM_L1ERC20Gateway = new Contract(l1ERC20GatewayAddress, OVM_L1ERC20Gateway_Def.abi, l1Wallet)
+        const l2ERC20GatewayAddress = await OVM_L1ERC20Gateway.l2DepositedToken()
         OVM_L2DepositedERC20 = new Contract(l2ERC20GatewayAddress, Def__MyL2DepositedERC20.abi, l2Wallet)
     }
 
