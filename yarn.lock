@@ -23,6 +23,13 @@
   resolved "https://registry.yarnpkg.com/@eth-optimism/dev/-/dev-1.0.0.tgz#6a8ba479abe9a87fc689ba7bc6d23365f90b3a00"
   integrity sha512-btafO+VcHrWND3giztLo08LAaVx7k9UIODU0NEgw6NR2XvSZpcTbXf0xb4RDCMxwpmkbZc5gpyHrP72Uk9xSxw==
 
+"@eth-optimism/plugins@^1.0.0-alpha.2":
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/plugins/-/plugins-1.0.0-alpha.2.tgz#dc5ad1395944d63e6a592832b2360be59481e092"
+  integrity sha512-OrwMtgJuO4gZjCJX9rtZZQr3Fn+ksbhF9nKyB4+qggJXoatkJmj1+2UHNzuhfG2LaRu35PmJQYiV316K1YTyeg==
+  dependencies:
+    node-fetch "^2.6.1"
+
 "@ethereum-waffle/chai@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@ethereum-waffle/chai/-/chai-3.2.1.tgz#5cb542b2a323adf0bc2dda00f48b0eb85944d8ab"
@@ -5059,7 +5066,7 @@ node-fetch@2.1.2:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
   integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
 
-node-fetch@^2.6.0:
+node-fetch@^2.6.0, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
