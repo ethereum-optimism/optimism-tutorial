@@ -17,7 +17,6 @@
     "the-kitchen-sink": "yarn compile && yarn deploy && yarn test"
   },
   "devDependencies": {
-    "@eth-optimism/dev": "^1.0.0",
     "@eth-optimism/plugins": "^1.0.0-alpha.2",
     "@eth-optimism/core-utils": "^0.1.10",
     "@nomiclabs/hardhat-ethers": "^2.0.1",
