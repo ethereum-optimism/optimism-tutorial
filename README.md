@@ -71,7 +71,7 @@ We'll need to add a special plugin to hardhat that enables this custom Optimism 
 First, add the Optimism plugins package to your project:
 
 ```sh
-yarn add @eth-optimism/plugins
+yarn add @eth-optimism/plugins@v0.0.20
 ```
 
 Next, add the following line to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
