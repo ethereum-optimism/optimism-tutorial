@@ -400,15 +400,10 @@ and running it while listening to some suitable music (play the video after runn
 yarn all
 ```
 
-<figure class='video_container'>
-  <iframe
-    width='100%'
-    allowfullscreen
-    frameborder='0'
-    src="./assets/videos/optimism-tutorial-completion.mp4"
-    type="video/mp4"
-  >
-  </iframe>
-</figure>
+<iframe
+  width='100%'
+  src="./assets/videos/optimism-tutorial-completion.mp4"
+>
+</iframe>
 
 ## Until next time...
