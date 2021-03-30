@@ -7,17 +7,12 @@
     "clean": "rimraf ./cache-ovm && rimraf ./cache-ovm && rimraf ./artifacts && rimraf ./artifacts-ovm && rimraf ./deployments",
     "compile:evm": "hardhat compile",
     "compile:ovm": "TARGET=ovm hardhat compile",
-    "compile": "yarn clean && yarn compile:evm && yarn compile:ovm",
     "deploy:evm": "hardhat --network l1 deploy --tags ERC20",
     "deploy:ovm": "TARGET=ovm hardhat --network l2 deploy --tags ERC20",
-    "deploy": "yarn deploy:evm && yarn deploy:ovm",
-    "test:evm": "hardhat test",
-    "test:ovm": "TARGET=ovm hardhat test",
-    "test": "yarn test:evm test/erc20.spec.ts && yarn test:ovm test/optimistic-erc20.spec.ts",
-    "the-kitchen-sink": "yarn compile && yarn deploy && yarn test"
+    "test:evm": "hardhat test test/erc20.spec.ts",
+    "test:ovm": "TARGET=ovm hardhat test test/optimistic-erc20.spec.ts"
   },
   "devDependencies": {
-    "@eth-optimism/plugins": "^1.0.0-alpha.2",
     "@eth-optimism/core-utils": "^0.1.10",
     "@nomiclabs/hardhat-ethers": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
