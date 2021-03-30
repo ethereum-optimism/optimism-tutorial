@@ -20,8 +20,8 @@ We've structured this tutorial as a follow-along exercise where we'll be writing
 Please clone and enter [this repository](https://github.com/ethereum-optimism/optimism-tutorial):
 
 ```sh
-git clone https://github.com/ethereum-optimism/optimism-tutorial
-cd optimism-tutorial
+your-preferred-home-directory % git clone https://github.com/ethereum-optimism/optimism-tutorial
+optimism-tutorial % cd optimism-tutorial
 ```
 
 We're using an Ethereum development framework called [Hardhat](https://hardhat.org) to make our lives a lot easier.
@@ -50,7 +50,7 @@ We'll need to add a special plugin to hardhat that enables this custom Optimism 
 First, add the Optimism plugins package to your project:
 
 ```sh
-yarn add @eth-optimism/plugins --dev
+optimism-tutorial % yarn add @eth-optimism/plugins --dev
 ```
 
 Next, add the following line to [`optimism-tutorial/hardhat.config.ts`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/hardhat.config.ts):
@@ -64,7 +64,7 @@ import '@eth-optimism/plugins/hardhat/compiler'
 Finally, compile it!
 
 ```sh
-yarn compile
+optimism-tutorial % yarn compile
 ```
 
 > **Side-note on `@eth-optimism/plugins` changes:** Previously, we had a plain `yarn compile` command that was used to compile your contracts. Since the recent stable release of [`@eth-optimism/plugins`](https://github.com/ethereum-optimism/plugins/releases/tag/v1.0.0-alpha.2), we made some minor changes to the workflow for compiling, deploying, and testing your contracts (all of which we will cover in this tutorial as we progress, so don't worry if it's not clear about how these pieces fit together yet). But, we think these changes profoundly improve the developer experience! So, we hope you enjoy the boost to your workflow from these changes. And as always, if you have any feedback, comments, or concerns, don't be a stranger 😊 and let us know how we can help by posting a message in our [Discord server](https://discord.gg/NypkmfSkkw)!!
@@ -88,7 +88,7 @@ Let's get our local instance setup by running these commands:
 ```sh
 optimism-tutorial % git clone git@github.com:ethereum-optimism/optimism-integration.git --recurse-submodules
 optimism-tutorial % cd optimism-integration
-optimism-tutorial % ./pull.sh
+optimism-integration % ./pull.sh
 ```
 
 What we're doing here first is cloning the `optimism-integration` repo, which comes with a dockerized L2 chain (OVM) and a dockerzied L1 chain (EVM).
@@ -98,7 +98,7 @@ Next, we run the `./pull.sh` command to pull all the docker images to start your
 Lastly, we'll run the `./up.sh` command to spin your docker containers up:
 
 ```sh
-optimism-tutorial % ./up.sh
+optimism-integration % ./up.sh
 ```
 
 (NOTE: These last two commands are provided by shell scripts that we created for you 😊.)
@@ -200,7 +200,7 @@ Similar to when we ran `yarn compile`, there's some Node.js script magic going o
 First, `yarn deploy` starts the chain of commands by running `yarn deploy:evm`, which deploys your ERC20 contract with the following command:
 
 ```shell
-hardhat --network l1 deploy --tags ERC20
+optimism-tutorial % hardhat --network l1 deploy --tags ERC20
 ```
 
 What this command does is specify the deployment network `l1` (which is prespecified for you in your `hardhat.config.ts` 😎), then it uses `deploy` ([the `deploy` task from `hardhat-deploy`](https://github.com/wighawag/hardhat-deploy#the-deploy-task)) to run our deploy function by the function tag we used to specify it (i.e. `ERC20`).
@@ -211,7 +211,7 @@ This black magic process comes from `@eth-optimism/plugins` which lets you speci
 The full command:
 
 ```shell
-TARGET=ovm hardhat --network l1 deploy --tags ERC20
+optimism-tutorial % TARGET=ovm hardhat --network l1 deploy --tags ERC20
 ```
 
 WAIT, how the heck are my contract ABIs and bytecode being accounted for when deploying to the `l1` or `l2` networks?
@@ -384,7 +384,7 @@ You're now set to run your integration tests! 🙌
 And now...for the moment you've all been waiting for...
 Please, put your fingers together for...
 ```sh
-yarn test
+optimism-tutorial % yarn test
 ```
 
 (Don't forget to enter the above command in your terminal!)
@@ -399,7 +399,7 @@ If you've been following this tutorial closely (but not too closely because this
 And there you have it.
 If that didn't take your breath away, I'd suggest running the following command while listening to some suitable music:
 ```sh
-yarn the-kitchen-sink
+optimism-tutorial % yarn the-kitchen-sink
 ```
 
 <figure class='video_container'>
