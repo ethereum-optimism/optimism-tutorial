@@ -400,6 +400,4 @@ and running it while listening to some suitable music (play the video after runn
 yarn all
 ```
 
-![Take my breath away gif](./assets/videos/optimism-tutorial-completion.mp4)
-
 ## Until next time...
