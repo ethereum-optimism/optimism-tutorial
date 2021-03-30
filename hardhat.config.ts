@@ -7,9 +7,6 @@ import 'hardhat-gas-reporter'
 import 'hardhat-deploy-ethers'
 import '@typechain/hardhat'
 
-import '@eth-optimism/plugins/hardhat/compiler'
-
-
 const config: any = {
   namedAccounts: {
     deployer: 0
