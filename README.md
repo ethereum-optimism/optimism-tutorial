@@ -394,7 +394,7 @@ If that didn't take your breath away, I'd suggest adding this Node script to you
 }
 ```
 
-and running it while listening to some suitable music (play the video after running the command):
+and running it while listening to some suitable music:
 
 ```sh
 yarn all
