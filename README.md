@@ -400,10 +400,6 @@ and running it while listening to some suitable music (play the video after runn
 yarn all
 ```
 
-<iframe
-  width='100%'
-  src="./assets/videos/optimism-tutorial-completion.mp4"
->
-</iframe>
+![Take my breath away gif](./assets/videos/optimism-tutorial-completion.mp4)
 
 ## Until next time...
