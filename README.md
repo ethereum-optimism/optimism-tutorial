@@ -401,13 +401,14 @@ yarn all
 ```
 
 <figure class='video_container'>
-  <video width='100%' controls='true' allowFullscreen='true'>
-    <source
-      src="./assets/videos/optimism-tutorial-completion.mp4"
-      type="video/mp4"
-    >
-    Your browser does not support the video tag.
-  </video>
+  <iframe
+    width='100%'
+    allowfullscreen
+    frameborder='0'
+    src="./assets/videos/optimism-tutorial-completion.mp4"
+    type="video/mp4"
+  >
+  </iframe>
 </figure>
 
 ## Until next time...
