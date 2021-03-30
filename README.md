@@ -16,6 +16,7 @@ Please make sure you've installed the following before continuing:
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [Node.js](https://nodejs.org/en/download/)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable)
 
 ## Setting Up
 
