@@ -344,12 +344,10 @@ const privateKey2: string = ethers.Wallet.createRandom().privateKey
 const privateKey3: string = ethers.Wallet.createRandom().privateKey
 ```
 
-
 Next, remove the instantiation of 3 accounts with `getSigners()` -- line 35-36 in `erc20.spec.ts`.
 Instead of this line, create 3 new accounts, synchronously, right above the before-statement called `'connect to contracts'`, like so:
 
 ```ts
-// Signers
 const account1: Signer = new ethers.Wallet(privateKey1, provider)
 const account2: Signer = new ethers.Wallet(privateKey2, provider)
 const account3: Signer = new ethers.Wallet(privateKey3, provider)
