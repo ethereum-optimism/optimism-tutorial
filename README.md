@@ -156,6 +156,8 @@ Let's duplicate the `compile`, `deploy`, and `test` scripts in your `package.jso
 }
 ```
 
+Notice that for the OVM scripts, we specify that we're targeting the Optimistic Virtual Machine with the flag, `TARGET=ovm`.
+
 Now with your new scripts added to your `package.json`, you can run through a similar workflow to compile, deploy, and test your ERC20 contract to and in Optimistic Ethereum! 🎉
 
 ### Compiling a contract for the OVM
