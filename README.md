@@ -400,4 +400,6 @@ and running it while listening to some suitable music (play the video after runn
 yarn all
 ```
 
+![optimism-tutorial-completion](https://user-images.githubusercontent.com/37757724/113066106-96189680-917f-11eb-9580-69eb71c31b83.gif)
+
 ## Until next time...
