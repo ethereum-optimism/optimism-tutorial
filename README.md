@@ -24,6 +24,11 @@ git clone https://github.com/ethereum-optimism/optimism-tutorial
 cd optimism-tutorial
 ```
 
+Next, copy `.env-example` and rename it to `.env`, like so:
+```sh
+cp .env-example .env
+```
+
 We're using an Ethereum development framework called [Hardhat](https://hardhat.org) to make our lives a lot easier.
 If you haven't used Hardhat before, we hope you'll be pleasantly surprised!
 Hardhat is well designed and full of useful features.
@@ -80,10 +85,13 @@ Here, `artifacts-ovm` signifies that the contracts contained in this directory h
 
 ## Running Optimistic Ethereum locally
 
-To simulate a development environment that is as close to mainnet Optimistic Ethereum while still being local, you're we recommend replicating the layer 1 Ethereum chain and the layer 2 Optimism chain.
+To simulate a development environment that is as close to mainnet Optimistic Ethereum while still being local, we recommend replicating the layer 1 Ethereum chain and the layer 2 Optimism chain.
 Fortunately, we have a handy dandy [integrations repo](https://github.com/ethereum-optimism/optimism-integration) all nicely dockerized for you to run your own local instance of Optimistic Ethereum!
 
-Let's get our local instance setup by running these commands:
+Since we're using Docker here, make sure that Docker is installed on your machine prior to spinning up the integrations repo.
+Info on how to do that is [here](https://docs.docker.com/engine/install/)!
+
+Now, let's get our local instance setup by running these commands:
 
 ```sh
 git clone git@github.com:ethereum-optimism/optimism-integration.git --recurse-submodules
@@ -101,15 +109,15 @@ Lastly, we'll run the `./up.sh` command to spin your docker containers up:
 ./up.sh
 ```
 
-(NOTE: These last two commands are provided by shell scripts that we created for you 😊.)
-The containers will take some time to fully spin up, but once they do, you should see something like this flash by in the logs at some point 
-(NOTE: These logs are not important and are only shared to confirm you're running Optimistic Ethereum correctly.):
+These last two commands are provided by shell scripts that we created for you 😊.
+The containers will take some time to fully spin up, but once they do, you should see something like this flash by in the logs at some point.
+These logs are not important and are only shared to confirm you're running Optimistic Ethereum correctly.:
 
 ![Local OE Network Logs 1](./assets/optimistic-ethereum-local-instance-log1.png)
 ![Local OE Network Logs 2](./assets/optimistic-ethereum-local-instance-log2.png)
 
 You now have your very own locally deployed instance of Optimistic Ethereum! 🙌
-(NOTE: Keep these containers running! We'll be using your new local instance of Optimistic Ethereum to deploy and then test your contract.)
+Keep these containers running! We'll be using your new local instance of Optimistic Ethereum to deploy and then test your contract.
 
 ## Deploying to Optimistic Ethereum
 
@@ -137,7 +145,7 @@ import {DeployFunction} from 'hardhat-deploy/types'
 ```
 
 Next, we'll add your deploy function for your ERC20 contract.
-Note that this deploy script (along with a few magic tricks that we'll explain later 🧙‍♂️) will be used to handle contract deployment to both layer 1 Ethereum and layer 2 Optimistic Ethereum.
+Note that this deploy script, along with a few magic tricks that we'll explain later 🧙‍♂️, will be used to handle contract deployment to both layer 1 Ethereum and layer 2 Optimistic Ethereum.
 Ain't that neat!
 
 First, we'll show you the deploy function and then explain how it works.
@@ -172,7 +180,7 @@ To make this tutorial easy, we decided to add a few things so that using this ex
 What we do first is extract from `deployments` extension and `getNamedAccounts` method from the `hre`.
 Then, we extract our beloved `deploy` method from the `deployments` extension  and extract the `deployer` account, a named account that is prespecified in your `hardhat.config.ts` as the first address, from the `getNamedAccounts` method.
 Next, we add the name of your contract, in this case it's `ERC20`, as the first argument to the deploy method.
-And here is the exciting part: in the deployment options (the second argument denoting by the `{}`), we specify:
+And here is the exciting part: in the deployment options (the second argument denoted by the `{}`), we specify:
 
 1. Which address we want to deploy your ERC20 contract from,
 2. The arguments your contract requires in it's constructor or initializer,
@@ -203,7 +211,7 @@ First, `yarn deploy` starts the chain of commands by running `yarn deploy:evm`, 
 hardhat --network l1 deploy --tags ERC20
 ```
 
-What this command does is specify the deployment network `l1` (which is prespecified for you in your `hardhat.config.ts` 😎), then it uses `deploy` ([the `deploy` task from `hardhat-deploy`](https://github.com/wighawag/hardhat-deploy#the-deploy-task)) to run our deploy function by the function tag we used to specify it (i.e. `ERC20`).
+What this command does is specify the deployment network `l1`, which is prespecified for you in your `hardhat.config.ts` 😎, then it uses `deploy` -- [the `deploy` task from `hardhat-deploy`](https://github.com/wighawag/hardhat-deploy#the-deploy-task) -- to run our deploy function by the function tag we used to specify it (i.e. `ERC20`).
 
 Second in the chain of commands is `yarn compile:ovm` which similarly deploys your ERC20 contract, but instead of deploying to layer 1 Ethereum, it deploys to layer 2 Optimistic Ethereum 🪄 ✨.
 This black magic process comes from `@eth-optimism/plugins` which lets you specify when you are deploying your contracts with `hardhat-deploy`, whether you are deploying to the OVM or to the EVM with this additional flag in the CLI, `TARGET=ovm`.
@@ -256,7 +264,7 @@ Let's begin this step by adding importing the utility function `assertRevertOpti
 import { assertRevertOptimism } from './utils'
 ```
 
-Then, we'll create the `utils.ts` and under the `test` directory, add the following code to it! (don't worry, too much about the logic going on here for now):
+Then, we'll create the `utils.ts` and under the `test` directory, add the following code to it! Don't worry too much about the logic going on here for now:
 ```ts
 import { ethers } from 'hardhat'
 
@@ -327,10 +335,17 @@ Simply, [what Synthetix has done here](https://github.com/Synthetixio/synthetix/
 
 Now with that out of the way, let's get back to finishing changes to `optimistic-erc20.spec.ts`.
 
-At the top, you'll notice a commented code block of `privateKey` variables.
-Uncomment this line so that we can use it to create our 3 accounts.
+At the top, you'll want to add this code block of `privateKey` variables.
+We will use these private keys for creating our accounts for the specified provider:
 
-Next, remove the instantiation of 3 accounts with `getSigners()` (line 35-36 in `erc20.spec.ts`).
+```typescript
+const privateKey1: string = ethers.Wallet.createRandom().privateKey
+const privateKey2: string = ethers.Wallet.createRandom().privateKey
+const privateKey3: string = ethers.Wallet.createRandom().privateKey
+```
+
+
+Next, remove the instantiation of 3 accounts with `getSigners()` -- line 35-36 in `erc20.spec.ts`.
 Instead of this line, create 3 new accounts, synchronously, right above the before-statement called `'connect to contracts'`, like so:
 
 ```ts
@@ -350,9 +365,9 @@ In your test file there are 3 different it-statements that have revert checks th
 What we'll do first here is add an `await` to the very front of each of these contract calls.
 These 3 it-statements are called:
 
-1. `'should revert the sender does not have enough balance'` (line 88 in `erc20.spec.ts`)
-2. `'should revert when the owner account does not have enough balance'` (line 138 in `erc20.spec.ts`)
-3. `'should revert when the sender does not have enough of an allowance'` (line 155 in `erc20.spec.ts`)
+1. `'should revert the sender does not have enough balance'` -- line 88 in `erc20.spec.ts`
+2. `'should revert when the owner account does not have enough balance'` -- line 138 in `erc20.spec.ts`
+3. `'should revert when the sender does not have enough of an allowance'` -- line 155 in `erc20.spec.ts`
 
 These additions of `await` will ensure that the contract calls complete before running our assertion checks with `assertRevertOptimism`.
 
@@ -389,7 +404,7 @@ yarn test
 
 (Don't forget to enter the above command in your terminal!)
 
-If you've been following this tutorial closely (but not too closely because this tutorial is claustrophic 😷), and have made no errors along the way, you'll see console logs like this:
+If you've been following this tutorial closely, but not too closely because this tutorial is claustrophic 😷, and have made no errors along the way, you'll see console logs like this:
 
 ![The Beautiful EVM Test Logs](./assets/the-beautiful-evm-tests.png)
 ![The Breathtaking EVM Test Logs](./assets/the-breathtaking-ovm-tests.png)

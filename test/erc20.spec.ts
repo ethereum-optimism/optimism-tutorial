@@ -19,20 +19,14 @@ describe('ERC20', () => {
   const initialSupply: number = 10_000_000
   const useL2: boolean = (process.env.TARGET === 'ovm')
 
-  // // For the Optimistic test file
-  // const privateKey1: string = ethers.Wallet.createRandom().privateKey
-  // const privateKey2: string = ethers.Wallet.createRandom().privateKey
-  // const privateKey3: string = ethers.Wallet.createRandom().privateKey
-
   // Set network provider
   if (useL2 == true) {
-    provider = new ethers.providers.JsonRpcProvider(process.env.L2_WEB3_URL)
+    provider = new ethers.providers.JsonRpcProvider(process.env.OPTIMISM_JSON_RPC_ENDPOINT)
   } else {
-    provider = new ethers.providers.JsonRpcProvider(process.env.L1_WEB3_URL)
+    provider = new ethers.providers.JsonRpcProvider(process.env.ETHEREUM_JSON_RPC_ENDPOINT)
   }
 
   before('connect to contracts', async () => {
-    // Signers
     ;[account1, account2, account3] = await ethers.getSigners()
 
     const ERC20_Factory: ContractFactory = new ContractFactory(
