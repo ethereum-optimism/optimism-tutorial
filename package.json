@@ -4,13 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf ./cache-ovm ./cache ./artifacts-ovm ./artifacts ./deployments",
-    "compile:evm": "hardhat compile",
-    "compile:ovm": "TARGET=ovm hardhat compile",
-    "deploy:evm": "hardhat deploy",
-    "deploy:ovm": "TARGET=ovm hardhat --network optimism deploy",
-    "test:evm": "hardhat test",
-    "test:ovm": "TARGET=ovm hardhat --network optimism test"
+    "clean": "rimraf ./cache-ovm ./cache ./artifacts-ovm ./artifacts ./deployments"
   },
   "devDependencies": {
     "@eth-optimism/dev": "^1.1.1",
