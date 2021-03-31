@@ -1,6 +1,19 @@
+# Project specific
+deployments
+optimism-integration
+typechain
+test/utils.ts
+test/optimistic-erc20.spec.ts
+
+# environment variables
+.env
+.env.local
+
 # Packages
 node_modules/
 
 # Hardhat build outputs
 artifacts/
+artifacts-ovm/
 cache/
+cache-ovm

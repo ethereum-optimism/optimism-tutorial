@@ -1,3 +1,0 @@
-{
-  "extends": "@eth-optimism/dev/tslint.json"
-}
