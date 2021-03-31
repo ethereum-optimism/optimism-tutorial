@@ -1,7 +1,12 @@
 # The Official™ Optimism Tutorial
 
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
-We'll take you through the process of building, testing, deploying, and interacting with an Optimistic Solidity smart contract.
+We'll take you through the process of compiling, testing, and deploying a smart contract.
+
+This tutorial aims to highlighting the similarities and differences between Ethereum and Optimistic Ethereum.
+To that end, we've set the tutorial up so that you'll perform the same compile/test/deploy process on both systems at the same time.
+This is *not* necessary for you to build an application on Optimistic Ethereum -- it's purely to give a side-by-side comparison.
+With that said, let's dive in!
 
 ## Prerequisite Software
 
