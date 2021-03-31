@@ -1,17 +1,10 @@
-# Tutorial
+# The Official™ Optimism Tutorial
 
-Hello!
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
-Specifically, we'll take you through the process of building, testing, deploying, and interacting with a Solidity smart contract on top of the platform.
-
-Planned future iterations of this tutorial will include:
-
-- Communicating between Optimistic Ethereum and Ethereum.
-- Using more advanced Optimism tooling.
+We'll take you through the process of building, testing, deploying, and interacting with an Optimistic Solidity smart contract.
 
 ## Prerequisite Software
 
-We make use of some external software throughout this tutorial.
 Please make sure you've installed the following before continuing:
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
