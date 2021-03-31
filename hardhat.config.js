@@ -1,7 +1,6 @@
 require('@nomiclabs/hardhat-ethers')
 require('@nomiclabs/hardhat-waffle')
 require('hardhat-deploy')
-require('@eth-optimism/plugins/hardhat/compiler')
 
 module.exports = {
   networks: {

@@ -104,12 +104,13 @@ If everything is going as planned, you should see a bunch of green checkmarks.
 ### Testing an Optimistic Ethereum contract
 
 Woot! It's finally time to test our contract on top of Optimistic Ethereum.
-But first we'll need to get a local version of Optimistic Ethereum node running.
+But first we'll need to get a local version of Optimistic Ethereum node running...
 
 ---
 
-Fortunately, we have a [handy dandy repository](https://github.com/ethereum-optimism/optimism-integration) that makes it easy to spin up a local Optimistic Ethereum node.
-Since we're using Docker, make sure that Docker is installed on your machine prior to spinning up the integrations repo (info on how to do that [here](https://docs.docker.com/engine/install/)).
+Fortunately, we have a [handy dandy repository](https://github.com/ethereum-optimism/optimism-integration) that makes it easy to spin up a local Optimistic Ethereum node!
+
+Since we're going to be using Docker, make sure that Docker is installed on your machine prior to moving on (info on how to do that [here](https://docs.docker.com/engine/install/)).
 
 Now we just need to install our Optimistic Ethereum node by running:
 
@@ -121,24 +122,24 @@ cd optimism-integration
 
 `./pull.sh` will pull the latest version of all of our docker images and make sure everything else is up to date.
 
-Lastly, we'll run the  `./up.sh` command to spin up both chains:
+Then we'll run the  `./up.sh` command to spin up our node:
 
 ```sh
 ./up.sh
 ```
 
-Give `./up.sh` a little bit to fully start up (about ~30 seconds maximum).
+Give `./up.sh` a little bit to fully start up (could be up to ~30 seconds).
 We'll need to keep this terminal running for the rest of this tutorial (it's your Optimistic Ethereum node).
 Go ahead and open up a second terminal so that you can run more commands while the other terminal is still running.
 
-You now have your very own locally deployed instances of Ethereum and Optimistic Ethereum! 🙌
+You now have your very own locally deployed instance of Optimistic Ethereum! 🙌
 
 ---
 
 With your local instance of Ethereum up and running, let's go test your contracts!
 We'll first have to add `optimism` to your list of networks within `hardhat.config.ts`:
 
-```sh
+```js
 // hardhat.config.js
 
 module.exports = {
@@ -168,7 +169,7 @@ TARGET=ovm npx hardhat --network optimism test
 ```
 
 Again we're using the `TARGET=ovm` flag to let hardhat know that we want to use the Optimistic Ethereum solidity compiler.
-We also use the `--network optimism` option so that transactions are sent to our local node.
+We also use the `--network optimism` option so that transactions are sent to our L2 node (instead of hardhat's local L1 node).
 
 Go ahead and run that command.
 You should see another set of passing tests.
@@ -182,7 +183,7 @@ It really is that easy.
 
 Going through this routine one more time.
 Now we're going to deploy an Ethereum contract using hardhat.
-We've set up a tool called `hardhat-deploy` to manage this mini deployment.
+We've installed and set up a tool called `hardhat-deploy` to manage this mini deployment.
 You'll need to run:
 
 ```sh
@@ -191,6 +192,9 @@ npx hardhat deploy
 
 This should do a deployment against a local (in-memory) Ethereum node.
 Cool.
+You'll see something like this in your terminal:
+
+![deploy on evm](./assets/deploy-evm.png)
 
 ### Deploying an Optimistic Ethereum contract
 
@@ -203,3 +207,25 @@ TARGET=ovm npx hardhat --network optimism deploy
 
 And once again we're adding `TARGET=ovm` and using the `--network optimism` option.
 After a few seconds your contract should be deployed!
+Now you'll see this in your terminal:
+
+![deploy on ovm](./assets/deploy-ovm.png)
+
+And uh... yeah.
+That's pretty much it. 
+Contracts deployed!
+Tutorial complete.
+Hopefully now you know the basics of working with Optimistic Ethereum.
+
+The primary goal of this tutorial was to try to highlight the similarities between the process of working with Ethereum and of working with Optimistic Ethereum.
+Did we do a decent job?
+Could this tutorial be improved?
+Please let us know by creating an issue on GitHub or by leaving a message over on [discord](https://discord.com/invite/jrnFEvq).
+
+Want to try deploying contracts to the Optimistic Ethereum testnet next?
+[Check out the full integration guide](https://community.optimism.io/docs/developers/integration.html) on the Optimism community hub.
+
+
+## Until next time...
+
+![optimism-tutorial-completion](https://user-images.githubusercontent.com/37757724/113066106-96189680-917f-11eb-9580-69eb71c31b83.gif)
