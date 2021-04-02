@@ -102,7 +102,7 @@ module.exports = {
 ```
 
 And we're ready to compile!
-All you hae to do is add the `--network optimism` option to your hardhat command.
+All you have to do is add the `--network optimism` option to your hardhat command.
 
 ```sh
 npx hardhat --network optimism compile
