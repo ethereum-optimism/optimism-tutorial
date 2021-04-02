@@ -1,5 +1,5 @@
 /* External Imports */
-const { ethers } = require('hardhat')
+const { ethers, network } = require('hardhat')
 const chai = require('chai')
 const { solidity } = require('ethereum-waffle')
 const chaiAsPromised = require('chai-as-promised')
@@ -58,7 +58,7 @@ describe(`ERC20`, () => {
       )
 
       // Temporarily necessary, should be fixed soon.
-      if (process.env.TARGET === 'ovm') {
+      if (network.ovm) {
         await expect(
           (await tx).wait()
         ).to.be.rejected
@@ -104,7 +104,7 @@ describe(`ERC20`, () => {
       )
 
       // Temporarily necessary, should be fixed soon.
-      if (process.env.TARGET === 'ovm') {
+      if (network.ovm) {
         await expect(
           (await tx).wait()
         ).to.be.rejected
