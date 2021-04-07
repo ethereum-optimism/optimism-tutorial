@@ -3,7 +3,7 @@
 This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
 We'll take you through the process of compiling, testing, and deploying a smart contract.
 
-This tutorial aims to highlighting the similarities and differences between Ethereum and Optimistic Ethereum.
+This tutorial aims to highlight the similarities and differences between Ethereum and Optimistic Ethereum.
 To that end, we've set the tutorial up so that you'll perform the same compile/test/deploy process on both systems at the same time.
 This is *not* necessary for you to build an application on Optimistic Ethereum -- it's purely to give a side-by-side comparison.
 With that said, let's dive in!
@@ -216,7 +216,7 @@ Now you'll see this in your terminal:
 ![deploy on ovm](./assets/deploy-ovm.png)
 
 And uh... yeah.
-That's pretty much it. 
+That's pretty much it.
 Contracts deployed!
 Tutorial complete.
 Hopefully now you know the basics of working with Optimistic Ethereum.
