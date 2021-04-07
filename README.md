@@ -76,11 +76,36 @@ Next we just need to add this line to `hardhat.config.js`:
 require('@eth-optimism/plugins/hardhat/compiler')
 ```
 
+We'll also have  to add `optimism` to your list of networks within `hardhat.config.ts`:
+
+```js
+// hardhat.config.js
+
+module.exports = {
+  networks: {
+    hardhat: {
+      accounts: {
+        mnemonic: 'test test test test test test test test test test test junk'
+      }
+    },
+    // Add this network to your config!
+    optimism: {
+      url: 'http://127.0.0.1:8545',
+      accounts: {
+        mnemonic: 'test test test test test test test test test test test junk'
+      },
+      ovm: true // this set the network as using the ovm and ensure contract will be compiled against that.
+    }
+  },
+  ...
+}
+```
+
 And we're ready to compile!
-All you have to do is add `TARGET=ovm` to the beginning of your command:
+All you have to do is add the `--network optimism` option to your hardhat command.
 
 ```sh
-TARGET=ovm npx hardhat compile
+npx hardhat --network optimism compile
 ```
 
 Yep, it's that easy.
@@ -142,39 +167,13 @@ You now have your very own locally deployed instance of Optimistic Ethereum! ðŸ™
 ---
 
 With your local instance of Ethereum up and running, let's go test your contracts!
-We'll first have to add `optimism` to your list of networks within `hardhat.config.ts`:
-
-```js
-// hardhat.config.js
-
-module.exports = {
-  networks: {
-    hardhat: {
-      accounts: {
-        mnemonic: 'test test test test test test test test test test test junk'
-      }
-    },
-    // Add this network to your config!
-    optimism: {
-      url: 'http://127.0.0.1:8545',
-      accounts: {
-        mnemonic: 'test test test test test test test test test test test junk'
-      }
-    }
-  },
-  ...
-}
-```
-
-Nice.
-Now we're ready to test:
 
 ```sh
-TARGET=ovm npx hardhat --network optimism test
+npx hardhat --network optimism test
 ```
 
-Again we're using the `TARGET=ovm` flag to let hardhat know that we want to use the Optimistic Ethereum solidity compiler.
-We also use the `--network optimism` option so that transactions are sent to our L2 node (instead of hardhat's local L1 node).
+Again we're using the `--network optimism` option to let hardhat know that we want to use the Optimistic Ethereum solidity compiler.
+This also ensure that transactions are sent to our L2 node (instead of hardhat's local L1 node).
 
 Go ahead and run that command.
 You should see another set of passing tests.
@@ -207,10 +206,10 @@ Next we'll do the same thing on Optimistic Ethereum.
 Let's go ahead and deploy this contract:
 
 ```sh
-TARGET=ovm npx hardhat --network optimism deploy
+npx hardhat --network optimism deploy
 ```
 
-And once again we're adding `TARGET=ovm` and using the `--network optimism` option.
+And once again we're using the `--network optimism` option.
 After a few seconds your contract should be deployed!
 Now you'll see this in your terminal:
 
