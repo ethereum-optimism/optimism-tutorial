@@ -76,7 +76,7 @@ Next we just need to add this line to `hardhat.config.js`:
 require('@eth-optimism/plugins/hardhat/compiler')
 ```
 
-We'll also have  to add `optimism` to your list of networks within `hardhat.config.ts`:
+We'll also have  to add `optimism` to your list of networks within `hardhat.config.js`:
 
 ```js
 // hardhat.config.js
