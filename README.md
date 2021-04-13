@@ -157,7 +157,6 @@ docker-compose build
 docker-compose up
 ```
 
-Give the `docker-compose up -d` command a little bit to fully start up (could be up to ~30 seconds).
 We'll need to keep this terminal running for the rest of this tutorial (it's your Optimistic Ethereum node).
 Go ahead and open up a second terminal so that you can run more commands while the other terminal is still running.
 
