@@ -62,10 +62,10 @@ If you can see this folder you're ready to move onto the next section!
 ### Compiling an Optimistic Ethereum contract
 
 Compiling a contract for Optimistic Ethereum is pretty easy!
-First we'll need to install the `@eth-optimism/plugins` package:
+First we'll need to install the `@eth-optimism/hardhat-ovm` package:
 
 ```sh
-yarn add @eth-optimism/plugins
+yarn add @eth-optimism/hardhat-ovm
 ```
 
 Next we just need to add this line to `hardhat.config.js`:
@@ -73,10 +73,10 @@ Next we just need to add this line to `hardhat.config.js`:
 ```js
 // hardhat.config.js
 
-require('@eth-optimism/plugins/hardhat/compiler')
+require('@eth-optimism/hardhat-ovm')
 ```
 
-We'll also have  to add `optimism` to your list of networks within `hardhat.config.js`:
+We'll also have to add `optimism` to your list of networks within `hardhat.config.js`:
 
 ```js
 // hardhat.config.js
@@ -94,7 +94,11 @@ module.exports = {
       accounts: {
         mnemonic: 'test test test test test test test test test test test junk'
       },
-      ovm: true // this set the network as using the ovm and ensure contract will be compiled against that.
+      // This sets the gas price to 0 for all transactions on L2. We do this
+      // because account balances are not automatically initiated with an ETH
+      // balance.
+      gasPrice: 0,
+      ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
     }
   },
   ...
@@ -138,27 +142,22 @@ But first we'll need to get a local version of Optimistic Ethereum node running.
 
 ---
 
-Fortunately, we have a [handy dandy repository](https://github.com/ethereum-optimism/optimism-integration) that makes it easy to spin up a local Optimistic Ethereum node!
+Fortunately, we have a [handy dandy monorepo](https://github.com/ethereum-optimism/optimism) that makes it easy to spin up a local Optimistic Ethereum node!
 
 Since we're going to be using Docker, make sure that Docker is installed on your machine prior to moving on (info on how to do that [here](https://docs.docker.com/engine/install/)).
 
 Now we just need to install our Optimistic Ethereum node by running:
 
 ```sh
-git clone git@github.com:ethereum-optimism/optimism-integration.git --recurse-submodules
-cd optimism-integration
-./pull.sh
+git clone git@github.com:ethereum-optimism/optimism.git
+cd optimism
+yarn
+yarn build
+cd ops
+docker-compose build
+docker-compose up
 ```
 
-`./pull.sh` will pull the latest version of all of our docker images and make sure everything else is up to date.
-
-Then we'll run the  `./up.sh` command to spin up our node:
-
-```sh
-./up.sh
-```
-
-Give `./up.sh` a little bit to fully start up (could be up to ~30 seconds).
 We'll need to keep this terminal running for the rest of this tutorial (it's your Optimistic Ethereum node).
 Go ahead and open up a second terminal so that you can run more commands while the other terminal is still running.
 

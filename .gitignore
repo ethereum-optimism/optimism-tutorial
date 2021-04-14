@@ -1,9 +1,6 @@
 # Project specific
 deployments
-optimism-integration
-typechain
-test/utils.ts
-test/optimistic-erc20.spec.ts
+optimism
 
 # environment variables
 .env
