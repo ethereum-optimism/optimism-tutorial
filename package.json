@@ -7,8 +7,6 @@
     "clean": "rimraf ./cache-ovm ./cache ./artifacts-ovm ./artifacts ./deployments"
   },
   "devDependencies": {
-    "@eth-optimism/dev": "^1.1.1",
-    "@eth-optimism/plugins": "latest",
     "@nomiclabs/hardhat-ethers": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.2.0",

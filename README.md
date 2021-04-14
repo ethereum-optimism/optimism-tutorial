@@ -122,7 +122,7 @@ You'll probably want to test your contracts before you deploy them (lol).
 Let's see how you'd do that with Hardhat for a standard Ethereum contract.
 
 Testing with Hardhat is easy.
-We've included a simple set of ERC20 tests inside [`optimism-tutorial/test/erc20.spec.js`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.test.js).
+We've included a simple set of ERC20 tests inside [`optimism-tutorial/test/erc20.test.js`](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/test/erc20.test.js).
 Let's run these tests with hardhat:
 
 ```sh
