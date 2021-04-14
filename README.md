@@ -153,6 +153,7 @@ git clone git@github.com:ethereum-optimism/optimism.git
 cd optimism
 yarn
 yarn build
+cd ops
 docker-compose build
 docker-compose up
 ```
