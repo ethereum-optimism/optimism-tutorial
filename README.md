@@ -3,7 +3,7 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This tutorial is an introduction to the process of developing applications on Optimistic Ethereum.
+This tutorial is an introduction to the process of developing applications on [Optimistic Ethereum](community.optimism.io).
 We'll take you through the process of compiling, testing, and deploying a smart contract.
 
 This tutorial aims to highlight the similarities and differences between Ethereum and Optimistic Ethereum.
@@ -65,7 +65,7 @@ If you can see this folder you're ready to move onto the next section!
 ### Compiling an Optimistic Ethereum contract
 
 Compiling a contract for Optimistic Ethereum is pretty easy!
-First we'll need to install the `@eth-optimism/hardhat-ovm` package:
+First we'll need to install the `@eth-optimism/hardhat-ovm` package (`ovm` stands for the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine):
 
 ```sh
 yarn add @eth-optimism/hardhat-ovm
@@ -77,6 +77,9 @@ Next we just need to add this line to `hardhat.config.js`:
 // hardhat.config.js
 
 require('@eth-optimism/hardhat-ovm')
+
+module.exports = {
+  ...
 ```
 
 We'll also have to add `optimism` to your list of networks within `hardhat.config.js`:
@@ -84,13 +87,12 @@ We'll also have to add `optimism` to your list of networks within `hardhat.confi
 ```js
 // hardhat.config.js
 
+require('@eth-optimism/hardhat-ovm')
+
 module.exports = {
   networks: {
-    hardhat: {
-      accounts: {
-        mnemonic: 'test test test test test test test test test test test junk'
-      }
-    },
+    ...
+
     // Add this network to your config!
     optimism: {
       url: 'http://127.0.0.1:8545',
@@ -99,17 +101,18 @@ module.exports = {
       },
       // This sets the gas price to 0 for all transactions on L2. We do this
       // because account balances are not automatically initiated with an ETH
-      // balance.
+      // balance (yet, sorry!).
       gasPrice: 0,
       ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
     }
   },
+
   ...
 }
 ```
 
 And we're ready to compile!
-All you have to do is add the `--network optimism` option to your hardhat command.
+You'll just need to add the `--network optimism` option to `hardhat compile`:
 
 ```sh
 npx hardhat --network optimism compile
@@ -117,7 +120,7 @@ npx hardhat --network optimism compile
 
 Yep, it's that easy.
 You can verify that everything went well by looking for the `artifacts-ovm` and `cache-ovm` directories.
-Here, `artifacts-ovm` signifies that the contracts contained in this directory have been compiled for the OVM, the **O**ptimistic **V**irtual **M**achine, as opposed to the Ethereum Virtual Machine.
+Here, `artifacts-ovm` signifies that the contracts contained in this directory have been compiled for the OVM.
 Now let's move on to testing!
 
 ## Step 2: Testing your contracts
@@ -145,24 +148,25 @@ But first we'll need to get a local version of Optimistic Ethereum node running.
 
 ---
 
-Fortunately, we have a [handy dandy monorepo](https://github.com/ethereum-optimism/optimism) that makes it easy to spin up a local Optimistic Ethereum node!
+Fortunately, we have some handy dandy tools that make it easy to spin up a local Optimistic Ethereum node!
 
 Since we're going to be using Docker, make sure that Docker is installed on your machine prior to moving on (info on how to do that [here](https://docs.docker.com/engine/install/)).
+**We recommend opening up a second terminal for this part.**
+This way you'll be able to keep the Optimistic Ethereum node running so you can execute some contract tests.
 
-Now we just need to install our Optimistic Ethereum node by running:
+Now we just need to download, build, and install our Optimistic Ethereum node by running the following commands.
+Please note that `docker-compose build` *will* take a while.
+We're working on improving this (sorry)!
 
 ```sh
 git clone git@github.com:ethereum-optimism/optimism.git
 cd optimism
-yarn
+yarn install
 yarn build
 cd ops
 docker-compose build
 docker-compose up
 ```
-
-We'll need to keep this terminal running for the rest of this tutorial (it's your Optimistic Ethereum node).
-Go ahead and open up a second terminal so that you can run more commands while the other terminal is still running.
 
 You now have your very own locally deployed instance of Optimistic Ethereum! 🙌
 
