@@ -8,7 +8,11 @@ We'll take you through the process of compiling, testing, and deploying a smart 
 
 This tutorial aims to highlight the similarities and differences between Ethereum and Optimistic Ethereum.
 To that end, we've set the tutorial up so that you'll perform the same compile/test/deploy process on both systems at the same time.
-This is *not* necessary for you to build an application on Optimistic Ethereum -- it's purely to give a side-by-side comparison.
+This process is *not* necessary for you to build an application on Optimistic Ethereum -- it's purely to give a side-by-side comparison.
+
+Lastly, this tutorial does not cover topics such as message passing between Ethereum (layer 1) and Optimistic Ethereum (layer 2).
+So, if you'd like to see an implementation on message passing, check out our [`l1-l2-deposit-withdrawal`](https://github.com/ethereum-optimism/l1-l2-deposit-withdrawal) example repository.
+
 With that said, let's dive in!
 
 ## Prerequisite Software
