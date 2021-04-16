@@ -45,7 +45,7 @@ class OptimismEnv {
     this.ctc = args.ctc
   }
 
-  async new () {
+  static async new () {
     const addressManager = getAddressManager(l1Wallet)
     const watcher = await initWatcher(l1Provider, l2Provider, addressManager)
     const gateway = await getGateway(l1Wallet, addressManager)

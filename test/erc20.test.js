@@ -23,10 +23,12 @@ describe(`ERC20`, () => {
   before(`load accounts`, async () => {
     let optimismEnv = new OptimismEnv()
     console.log('Optimism Environment: ', optimismEnv)
+    
     const env = await optimismEnv.newEnvironment()
 
     console.log('Address Manager from environment: ', env.addressManager)
     console.log('Optimism Env Instance: ', env)
+
     account1 = env.l2Wallet
     account2 = ethers.Wallet.createRandom().connect(ethers.provider)
     Factory__ERC20 = await ethers.getContractFactory('ERC20', account1)
