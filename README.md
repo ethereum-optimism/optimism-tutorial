@@ -176,14 +176,14 @@ You now have your very own locally deployed instance of Optimistic Ethereum! ðŸ™
 
 ---
 
-With your local instance of Ethereum up and running, let's go test your contracts!
+With your local instance of Optimistic Ethereum up and running, let's go test your contracts!
 
 ```sh
 npx hardhat --network optimism test
 ```
 
 Again we're using the `--network optimism` option to let hardhat know that we want to use the Optimistic Ethereum solidity compiler.
-This also ensure that transactions are sent to our L2 node (instead of hardhat's local L1 node).
+This also ensures that transactions are sent to our L2 node (instead of hardhat's local L1 node).
 
 Go ahead and run that command.
 You should see another set of passing tests.
