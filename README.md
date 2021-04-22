@@ -206,9 +206,6 @@ npx hardhat deploy
 
 This should do a deployment against a local (in-memory) Ethereum node.
 Cool.
-You'll see something like this in your terminal:
-
-![deploy on evm](./assets/deploy-evm.png)
 
 ### Deploying an Optimistic Ethereum contract
 
@@ -221,9 +218,6 @@ npx hardhat --network optimism deploy
 
 And once again we're using the `--network optimism` option.
 After a few seconds your contract should be deployed!
-Now you'll see this in your terminal:
-
-![deploy on ovm](./assets/deploy-ovm.png)
 
 And uh... yeah.
 That's pretty much it.
