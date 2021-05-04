@@ -15,7 +15,7 @@ describe(`ERC20`, () => {
   let account1
   let account2
   before(`load accounts`, async () => {
-    ;[account1, account2] = await ethers.getSigners()
+    ;[ account1, account2 ] = await ethers.getSigners()
   })
 
   let ERC20
@@ -23,10 +23,7 @@ describe(`ERC20`, () => {
     const Factory__ERC20 = await ethers.getContractFactory('ERC20')
     ERC20 = await Factory__ERC20.connect(account1).deploy(
       INITIAL_SUPPLY,
-      TOKEN_NAME,
-      {
-        gasLimit: 8999999
-      }
+      TOKEN_NAME
     )
 
     await ERC20.deployTransaction.wait()
@@ -51,10 +48,7 @@ describe(`ERC20`, () => {
     it(`should revert when the sender does not have enough balance`, async () => {
       const tx = ERC20.connect(account1).transfer(
         await account2.getAddress(),
-        INITIAL_SUPPLY + 1,
-        {
-          gasLimit: 8999999
-        }
+        INITIAL_SUPPLY + 1
       )
 
       // Temporarily necessary, should be fixed soon.
@@ -72,10 +66,7 @@ describe(`ERC20`, () => {
     it(`should succeed when the sender has enough balance`, async () => {
       const tx = await ERC20.connect(account1).transfer(
         await account2.getAddress(),
-        INITIAL_SUPPLY,
-        {
-          gasLimit: 8999999
-        }
+        INITIAL_SUPPLY
       )
       await tx.wait()
 
@@ -97,10 +88,7 @@ describe(`ERC20`, () => {
       const tx = ERC20.connect(account2).transferFrom(
         await account1.getAddress(),
         await account2.getAddress(),
-        INITIAL_SUPPLY,
-        {
-          gasLimit: 8999999
-        }
+        INITIAL_SUPPLY
       )
 
       // Temporarily necessary, should be fixed soon.
@@ -118,22 +106,16 @@ describe(`ERC20`, () => {
     it(`should succeed when the owner has enough balance and the sender has a large enough allowance`, async () => {
       const tx1 = await ERC20.connect(account1).approve(
         await account2.getAddress(),
-        INITIAL_SUPPLY,
-        {
-          gasLimit: 8999999
-        }
+        INITIAL_SUPPLY
       )
       await tx1.wait()
 
       const tx2 = await ERC20.connect(account2).transferFrom(
         await account1.getAddress(),
         await account2.getAddress(),
-        INITIAL_SUPPLY,
-        {
-          gasLimit: 8999999
-        }
+        INITIAL_SUPPLY
       )
-      await tx2.wait() 
+      await tx2.wait()
 
       expect(
         (await ERC20.balanceOf(
