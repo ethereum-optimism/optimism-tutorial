@@ -46,21 +46,12 @@ describe(`ERC20`, () => {
 
   describe(`transfer(...)`, () => {
     it(`should revert when the sender does not have enough balance`, async () => {
-      const tx = ERC20.connect(account1).transfer(
-        await account2.getAddress(),
-        INITIAL_SUPPLY + 1
-      )
-
-      // Temporarily necessary, should be fixed soon.
-      if (network.ovm) {
-        await expect(
-          (await tx).wait()
-        ).to.be.rejected
-      } else {
-        await expect(
-          tx
-        ).to.be.rejected
-      }
+      await expect(
+        ERC20.connect(account1).transfer(
+          await account2.getAddress(),
+          INITIAL_SUPPLY + 1
+        )
+      ).to.be.revertedWith(`You don't have enough balance to make this transfer!`)
     })
 
     it(`should succeed when the sender has enough balance`, async () => {
@@ -85,22 +76,13 @@ describe(`ERC20`, () => {
 
   describe(`transferFrom(...)`, () => {
     it(`should revert when the sender does not have enough of an allowance`, async () => {
-      const tx = ERC20.connect(account2).transferFrom(
-        await account1.getAddress(),
-        await account2.getAddress(),
-        INITIAL_SUPPLY
-      )
-
-      // Temporarily necessary, should be fixed soon.
-      if (network.ovm) {
-        await expect(
-          (await tx).wait()
-        ).to.be.rejected
-      } else {
-        await expect(
-          tx
-        ).to.be.rejected
-      }
+      await expect(
+        ERC20.connect(account2).transferFrom(
+          await account1.getAddress(),
+          await account2.getAddress(),
+          INITIAL_SUPPLY
+        )
+      ).to.be.revertedWith(`Can't transfer from the desired account because you don't have enough of an allowance.`)
     })
 
     it(`should succeed when the owner has enough balance and the sender has a large enough allowance`, async () => {
