@@ -1,5 +1,6 @@
 require('@nomiclabs/hardhat-ethers')
 require('@nomiclabs/hardhat-waffle')
+require('@eth-optimism/hardhat-ovm')
 require('hardhat-deploy')
 
 module.exports = {
