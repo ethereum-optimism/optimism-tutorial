@@ -50,17 +50,7 @@ describe(`ERC20`, () => {
         await account2.getAddress(),
         INITIAL_SUPPLY + 1
       )
-
-      // Temporarily necessary, should be fixed soon.
-      if (network.ovm) {
-        await expect(
-          (await tx).wait()
-        ).to.be.rejected
-      } else {
-        await expect(
-          tx
-        ).to.be.rejected
-      }
+      await expect(tx).to.be.rejectedWith("You don't have enough balance to make this transfer!")
     })
 
     it(`should succeed when the sender has enough balance`, async () => {
@@ -90,17 +80,7 @@ describe(`ERC20`, () => {
         await account2.getAddress(),
         INITIAL_SUPPLY
       )
-
-      // Temporarily necessary, should be fixed soon.
-      if (network.ovm) {
-        await expect(
-          (await tx).wait()
-        ).to.be.rejected
-      } else {
-        await expect(
-          tx
-        ).to.be.rejected
-      }
+      await expect(tx).to.be.rejectedWith("Can't transfer from the desired account because you don't have enough of an allowance.")
     })
 
     it(`should succeed when the owner has enough balance and the sender has a large enough allowance`, async () => {
