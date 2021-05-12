@@ -163,7 +163,7 @@ Please note that `docker-compose build` *will* take a while.
 We're working on improving this (sorry)!
 
 ```sh
-git clone git@github.com:ethereum-optimism/optimism.git
+git clone https://github.com/ethereum-optimism/optimism.git
 cd optimism
 yarn install
 yarn build
