@@ -23,6 +23,7 @@ Please make sure you've installed the following before continuing:
 - [Node.js](https://nodejs.org/en/download/)
 - [Yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable)
 - [Docker](https://docs.docker.com/engine/install/)
+- [Docker-compose](https://docs.docker.com/compose/install/)
 
 ## Setting Up
 
