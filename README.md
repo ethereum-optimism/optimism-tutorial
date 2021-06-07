@@ -3,7 +3,9 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-> Disclaimer: For the most part, our development happens in our [`optimism`](https://github.com/ethereum-optimism/optimism) monorepo. Thus, while we periodically check and update this `optimism-tutorial` repository, we recommend to reference our code [`examples`](https://github.com/ethereum-optimism/optimism/tree/develop/examples) for up-to-date code examples on integrating with Optimistic Ethereum.
+> **Disclaimer:** 
+>
+> For the most part, our development happens in our [`optimism`](https://github.com/ethereum-optimism/optimism) monorepo. Thus, while we periodically check and update this `optimism-tutorial` repository, we recommend to reference our code [`examples`](https://github.com/ethereum-optimism/optimism/tree/develop/examples) for up-to-date code examples on integrating with Optimistic Ethereum.
 
 This tutorial is an introduction to the process of developing applications on [Optimistic Ethereum](community.optimism.io).
 We'll take you through the process of compiling, testing, and deploying a smart contract.
