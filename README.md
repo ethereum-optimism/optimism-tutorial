@@ -10,34 +10,57 @@ top of Optimism are about as secure as those running on the underlying Ethereum 
 
 ## Building an Optimism Server
 
-### Prerequisite Software
 To test and debug on Optimism you need to have a running Optimism server, so the first step is to build one. The directions in this section are for a Debian 10
 VM running on GCP with a 50 GB disk (10 GB is not enough), but they should be similar for other Linux versions running on other platforms.
 
+### Prerequisite Software
+
 1. Install packages.
 ```
-sudo apt install -y wget git docker docker.io
+sudo apt install -y wget git docker docker.io build-essential docker-compose
 ```
 
 2. Install Node.js. The version in the Docker repository is out of date, so we'll use one from a different source.
 ```
-curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
 sudo apt install -y nodejs
 ```
 
+3. Install yarn.
+```
+sudo npm install -g yarn
+```
+
+4. Add yourself to the docker group.
+```
+sudo usermod -a -G docker `whoami`
+```
+
+5. Start a new terminal window.
 
 
-4. 
+### Start an Optimism Server (with Docker)
 
-=
+This process downloads, compiles, and builds an Optimism network. Note that it takes a long time.
 
-Please make sure you've installed the following before continuing:
+```sh
+git clone https://github.com/ethereum-optimism/optimism.git
+cd optimism
+yarn install
+yarn build
+cd ops
+docker-compose build
+```
 
-- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Node.js](https://nodejs.org/en/download/)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable)
-- [Docker](https://docs.docker.com/engine/install/)
+When you get the **done** message from `docker-compose` you might need to stop it manually.
+
+```
+docker-compose up
+```
+
+
+
 
 ## Setting Up
 
@@ -161,21 +184,6 @@ npx hardhat test
 If everything is going as planned, you should see a bunch of green checkmarks.
 
 ### Testing an Optimistic Ethereum contract
-
-Woot! It's finally time to test our contract on top of Optimistic Ethereum.
-But first we'll need to get a local version of Optimistic Ethereum node running...
-
----
-
-Fortunately, we have some handy dandy tools that make it easy to spin up a local Optimistic Ethereum node!
-
-Since we're going to be using Docker, make sure that Docker is installed on your machine prior to moving on (info on how to do that [here](https://docs.docker.com/engine/install/)).
-**We recommend opening up a second terminal for this part.**
-This way you'll be able to keep the Optimistic Ethereum node running so you can execute some contract tests.
-
-Now we just need to download, build, and install our Optimistic Ethereum node by running the following commands.
-Please note that `docker-compose build` *will* take a while.
-We're working on improving this (sorry)!
 
 ```sh
 git clone git@github.com:ethereum-optimism/optimism.git
