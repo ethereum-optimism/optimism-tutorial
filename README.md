@@ -1,21 +1,36 @@
-# The Official™ Optimism Tutorial
+# The Unofficial™ Optimism Tutorial
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This tutorial is an introduction to the process of developing applications on [Optimistic Ethereum](community.optimism.io).
-We'll take you through the process of compiling, testing, and deploying a smart contract.
+This tutoriakl aims to help you get started with developing decentralized applications on [Optimism](https://optimism.io/). Applications running on
+top of Optimism are about as secure as those running on the underlying Ethereum mainnet itself, but are
+[significantly cheaper](https://optimism.io/gas-comparison).
 
-This tutorial aims to highlight the similarities and differences between Ethereum and Optimistic Ethereum.
-To that end, we've set the tutorial up so that you'll perform the same compile/test/deploy process on both systems at the same time.
-This process is *not* necessary for you to build an application on Optimistic Ethereum -- it's purely to give a side-by-side comparison.
 
-Lastly, this tutorial does not cover topics such as message passing between Ethereum (layer 1) and Optimistic Ethereum (layer 2).
-So, if you'd like to see an implementation on message passing, check out our [`l1-l2-deposit-withdrawal`](https://github.com/ethereum-optimism/l1-l2-deposit-withdrawal) example repository.
+## Building an Optimism Server
 
-With that said, let's dive in!
+### Prerequisite Software
+To test and debug on Optimism you need to have a running Optimism server, so the first step is to build one. The directions in this section are for a Debian 10
+VM running on GCP with a 50 GB disk (10 GB is not enough), but they should be similar for other Linux versions running on other platforms.
 
-## Prerequisite Software
+1. Install packages.
+```
+sudo apt install -y wget git docker docker.io
+```
+
+2. Install Node.js. The version in the Docker repository is out of date, so we'll use one from a different source.
+```
+curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+sudo bash nodesource_setup.sh
+sudo apt install -y nodejs
+```
+
+
+
+4. 
+
+=
 
 Please make sure you've installed the following before continuing:
 
