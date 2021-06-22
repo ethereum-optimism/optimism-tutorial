@@ -59,27 +59,8 @@ When you get the **done** message from `docker-compose` you might need to stop i
 docker-compose up
 ```
 
+When start seeing log entries scrolling on the console it means the system is now running. 
 
-
-
-## Setting Up
-
-We've structured this tutorial as a follow-along exercise where we'll be writing code in tandem.
-Please clone and enter [this repository](https://github.com/ethereum-optimism/optimism-tutorial):
-
-```sh
-git clone https://github.com/ethereum-optimism/optimism-tutorial
-cd optimism-tutorial
-```
-
-We're using an Ethereum development framework called [Hardhat](https://hardhat.org) to make our lives a lot easier.
-If you haven't used Hardhat before, we hope you'll be pleasantly surprised!
-Hardhat is well designed and full of useful features.
-Go ahead and set up Hardhat by running (along with our other dependencies):
-
-```sh
-yarn install
-```
 
 ## The Task
 
