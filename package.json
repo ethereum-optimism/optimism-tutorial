@@ -9,6 +9,7 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^4.1.0",
     "chai": "4.3.4",
     "chai-as-promised": "^7.1.1",
     "ethereum-waffle": "^3.2.1",
@@ -16,5 +17,8 @@
     "hardhat": "^2.0.7",
     "hardhat-deploy": "^0.7.0-beta.49",
     "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "@eth-optimism/hardhat-ovm": "^0.2.2"
   }
 }

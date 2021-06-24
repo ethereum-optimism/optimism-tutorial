@@ -18,6 +18,13 @@
   resolved "https://registry.yarnpkg.com/@ensdomains/resolver/-/resolver-0.2.4.tgz#c10fe28bf5efbf49bff4666d909aed0265efbc89"
   integrity sha512-bvaTH34PMCbv6anRa9I/0zjLJgY4EuznbEMgbV77JBCQ9KNC46rzi0avuxpOfu+xDjPEtSFGqVEOr5GlUSGudA==
 
+"@eth-optimism/hardhat-ovm@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/hardhat-ovm/-/hardhat-ovm-0.2.2.tgz#55fafaa6b8277447abaf132602c1c6d14a2a18a2"
+  integrity sha512-QLzqawYCzC/m6K/Oaj/tCZQlu6kZTgnleg1cJad8kVYA5E+JWZQ6ZJrcStoJoJrco9RIroPUjAFEhFM8YiCc7Q==
+  dependencies:
+    node-fetch "^2.6.1"
+
 "@ethereum-waffle/chai@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@ethereum-waffle/chai/-/chai-3.3.1.tgz#3f20b810d0fa516f19af93c50c3be1091333fa8e"
@@ -5471,7 +5478,7 @@ node-fetch@2.1.2:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
   integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
 
-node-fetch@^2.6.0:
+node-fetch@^2.6.0, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
