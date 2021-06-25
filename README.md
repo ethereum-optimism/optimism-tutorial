@@ -50,7 +50,7 @@ cd optimism
 yarn install
 yarn build
 cd ops
-sudo docker-compose build
+docker-compose build
 ```
 
 When you get the **done** message from `docker-compose` you might need to stop it manually.
