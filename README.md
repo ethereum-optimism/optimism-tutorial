@@ -29,8 +29,7 @@ VM running on GCP with a 13 GB disk (the default, 10 GB, is not enough), but the
 
 3. Install npm packages
    ```sh
-   sudo npm install -g yarn
-   sudo npm install -g hardhat
+   sudo npm install -g yarn hardhat
    ```
 
 4. Add yourself to the docker group.
