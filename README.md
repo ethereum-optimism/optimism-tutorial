@@ -1,4 +1,4 @@
-# The Unofficial™ Optimism Tutorial
+# Using Optimism with the Hardhat Development Environment
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
@@ -11,7 +11,7 @@ top of Optimism are about as secure as those running on the underlying Ethereum 
 ## Building an Optimism Server
 
 To test and debug on Optimism you need to have a running Optimism server, so the first step is to build one. The directions in this section are for a Debian 10
-VM running on GCP with a 50 GB disk (10 GB is not enough), but they should be similar for other Linux versions running on other platforms.
+VM running on GCP with a 13 GB disk (the default, 10 GB, is not enough), but they should be similar for other Linux versions running on other platforms.
 
 ### Prerequisite Software
 
@@ -161,14 +161,11 @@ Now that we have a running Optimism server, and an a dapp to run on it, we can r
    npx hardhat --network optimism console
    ```
    
-This is it, to run on Optimism you just install the package, modify the configuration file, and run the 
-commands with `--network optimism`.
-   
+
    
 
-[Check out the full integration guide](https://community.optimism.io/docs/developers/integration.html) on the Optimism community hub.
+## Conclusion
 
-
-## Until next time...
-
-![optimism-tutorial-completion](https://user-images.githubusercontent.com/37757724/113066106-96189680-917f-11eb-9580-69eb71c31b83.gif)
+This tutorial has only touched the most basic points of Optimism development. For more information, you can 
+[check out the full integration guide](https://community.optimism.io/docs/developers/integration.html) on the Optimism community hub.
+Go read it, and then write a dapp that will amaze us.
