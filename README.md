@@ -20,7 +20,7 @@ VM running on GCP with a 13 GB disk (the default, 10 GB, is not enough), but the
    sudo apt install -y wget git docker docker.io build-essential docker-compose
    ```
 
-2. Install Node.js. The version in the Docker repository is out of date, so we'll use one from a different source.
+2. Install Node.js. The version in the Debian repository is out of date, so we'll use one from a different source.
    ```sh
    curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
    sudo bash nodesource_setup.sh
