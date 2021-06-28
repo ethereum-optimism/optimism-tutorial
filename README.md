@@ -53,7 +53,7 @@ cd ops
 docker-compose build
 ```
 
-When you get the **done** message from `docker-compose` you might need to stop it manually.
+When you get the **done** message from `docker-compose` you need to stop it manually with ctrl-c.
 
 ```sh
 docker-compose up
