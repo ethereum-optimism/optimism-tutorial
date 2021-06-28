@@ -13,8 +13,6 @@ top of Optimism are about as secure as those running on the underlying Ethereum 
 To test and debug on Optimism you need to have a running Optimism server, so the first step is to build one. The directions in this section are for a Debian 10
 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), but they should be similar for other Linux versions running on other platforms.
 
-I know 13 GB is too low and 20 is sufficient. 
-
 ### Prerequisite Software
 
 1. Install packages.
