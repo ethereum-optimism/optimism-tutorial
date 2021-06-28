@@ -77,8 +77,8 @@ The easiest way is to start with a sample application.
    cd dapp
    npx hardhat
    ```
-3 Select **Create a sample project** and accept all the defaults.
-4 Verify the sample application.
+3. Select **Create a sample project** and accept all the defaults.
+4. Verify the sample application.
    ```sh
    npx hardhat test
    ```
