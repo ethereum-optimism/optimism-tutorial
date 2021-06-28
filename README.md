@@ -113,6 +113,8 @@ If you want to be more hands on, you can interact with the contract manually.
 
 ### Migrating the Sample App to Optimism
 
+# Change solidity ver to 0.7.6
+
 Now that we have a running Optimism server, and an a dapp to run on it, we can run on Optimism.
 
 1. Install the Optimism package in the application.
