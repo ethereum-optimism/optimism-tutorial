@@ -8,6 +8,8 @@ top of Optimism are about as secure as those running on the underlying Ethereum 
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 
+# Add a finished DAPP so they can clone and use.
+
 ## Building an Optimism Server
 
 To test and debug on Optimism you need to have a running Optimism server, so the first step is to build one. The directions in this section are for a Debian 10
