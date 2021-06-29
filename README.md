@@ -53,7 +53,9 @@ cd ops
 docker-compose build
 ```
 
-When you get the **done** message from `docker-compose` you need to stop it manually with ctrl-c.
+Note that you will see a **Done** message at some point during the build process. Ignore it - it means
+that a specific section is done, and even though you do not see program at that moment the build is 
+continuing.
 
 ```sh
 docker-compose up
