@@ -172,7 +172,6 @@ Now that we have a running Optimism server, and an a dapp to run on it, we can r
    ```
 
 5. If you want to interact with the app manually, use the console. You can use the same JavaScript commands
-
    to control it you used above.
    ```sh
    npx hardhat --network optimism console
