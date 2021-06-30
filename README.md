@@ -43,7 +43,7 @@ versions and other platforms
    group and authorized to create and manage Docker images and containers.
 
 
-### Start an Optimism Server on Docker
+### Start an Optimism Server
 
 This process downloads, compiles, and builds an Optimism network. Note that it takes a long time.
 
@@ -119,10 +119,13 @@ If you want to be more hands on, you can interact with the contract manually.
    ```javascript
    await greeter.greet()
    ```
+   
+6. Leave the console.
+   ``javascript
+   .exit
+   ```
 
 ### Migrating the Sample App to Optimism
-
-# Change solidity ver to 0.7.6
 
 Now that we have a running Optimism server, and an a dapp to run on it, we can run on Optimism.
 
@@ -161,18 +164,34 @@ Now that we have a running Optimism server, and an a dapp to run on it, we can r
      }
    }
    ```
+
 4. Test the contract on Optimism. Hardhat will recognize it has not been compiled and compile it for you.
+
    ```sh
    npx hardhat --network optimism test
    ```
+
 5. If you want to interact with the app manually, use the console. You can use the same JavaScript commands
+
    to control it you used above.
    ```sh
    npx hardhat --network optimism console
    ```
    
-
    
+#### Changing the Solidity Version
+
+To run on Optimism a contract needs to be compiled with a variant Solidity compiler. Sometimes
+the latest version of Solidity supported by Optimism is not the same as the version used by the
+sample app in HardHat. When that is the case, the `npx hardhat --network optimism test` command
+fails with this error message:
+
+```
+```
+
+# GOON GOON GOON
+
+## Testing
 
 ## Conclusion
 
