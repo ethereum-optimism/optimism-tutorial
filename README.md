@@ -181,7 +181,7 @@ Now that we have a running Optimism server, and an a dapp to run on it, we can r
 To run on Optimism a contract needs to be compiled with a variant Solidity compiler. Sometimes
 the latest version of Solidity supported by Optimism is not the same as the version used by the
 sample app in HardHat. When that is the case, the `npx hardhat --network optimism test` command
-fails with this error message:
+fails with an error message similar to:
 
 ```
 OVM Compiler Error (insert "// @unsupported: ovm" if you don't want this file to be compiled for the OVM):
@@ -192,7 +192,19 @@ pragma solidity ^0.8.0;
 Error HH600: Compilation failed
 ```
 
-# GOON GOON GOON
+To solve this problem:
+
+1. Edit the `hardhat.config.js` file to change `module.exports.solidity` to the supported version.
+2. Edit `contracts/Greeter.sol` to change the `pragma solidity` line to the supported version.
+3. Check the application still works on normal Ethereum.
+   ```sh
+   npx hardhat console
+   ```
+4. Check the application works on Optimism.
+   ```sh
+   npx hardhat --network optimism console
+   ```
+
 
 ## Testing
 
