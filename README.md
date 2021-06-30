@@ -29,8 +29,8 @@ versions and other platforms
    ```
  
 
-2. Install Node.js and a number of npm packages. The version in the OS repository is 
-  out of date, so we'll use one  from a different source.
+2. Install [Node.js](https://nodejs.org/en/) and a number of npm packages. The version in the OS repository is 
+  out of date, so we'll get the package from a different source.
 
    ```sh
    curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
