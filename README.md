@@ -19,8 +19,15 @@ VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), but the
 
 1. Install packages.
    ```sh
-   sudo apt install -y wget git docker docker.io build-essential docker-compose
+   sudo apt install -y docker.io build-essential docker-compose
    ```
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+ sudo sh get-docker.sh
+https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script
+
+   sudo usermod -a -G docker `whoami`
+
 
 2. Install Node.js. The version in the Debian repository is out of date, so we'll use one from a different source.
    ```sh
