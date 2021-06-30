@@ -8,13 +8,13 @@ top of Optimism are about as secure as those running on the underlying Ethereum 
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 
-## Building an Optimism Server
+## Build an Optimism Server
 
 To test and debug on Optimism you need to have a running Optimism server, so the first step is to build one. The directions in this section are 
 for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), but they should be similar for other Linux 
 versions and other platforms
 
-### Prerequisite Software
+### Install Prerequisite Software
 
 1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script, [read the documentation
    to learn other methods to install](https://docs.docker.com/engine/install/ubuntu).
@@ -65,7 +65,7 @@ docker-compose up
 When start seeing log entries scrolling on the console it means the system is now running. 
 
 
-## Migrating a Dapp to Optimism
+## Migrate a Dapp to Optimism
 
 Now that we have Optimism running, it is time to run a distributed application (dapp) on it.
 
@@ -123,7 +123,7 @@ If you want to be more hands on, you can interact with the contract manually.
    .exit
    ```
 
-### Migrating the Sample App to Optimism
+### Migrate the Sample App to Optimism
 
 Now that we have a running Optimism server, and an a dapp to run on it, we can run on Optimism.
 
@@ -176,7 +176,7 @@ Now that we have a running Optimism server, and an a dapp to run on it, we can r
    ```
    
    
-#### Changing the Solidity Version
+#### Change the Solidity Version if Needed
 
 To run on Optimism a contract needs to be compiled with a variant Solidity compiler. Sometimes
 the latest version of Solidity supported by Optimism is not the same as the version used by the
@@ -206,7 +206,7 @@ To solve this problem:
    ```
 
 
-## Testing
+## Run Tests
 
 ## Conclusion
 
