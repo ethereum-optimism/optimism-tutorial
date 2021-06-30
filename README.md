@@ -184,6 +184,12 @@ sample app in HardHat. When that is the case, the `npx hardhat --network optimis
 fails with this error message:
 
 ```
+OVM Compiler Error (insert "// @unsupported: ovm" if you don't want this file to be compiled for the OVM):
+ contracts/Greeter.sol:2:1: ParserError: Source file requires different compiler version (current compiler is 0.7.6) - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.8.0;
+^---------------------^
+
+Error HH600: Compilation failed
 ```
 
 # GOON GOON GOON
