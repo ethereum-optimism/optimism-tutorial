@@ -121,7 +121,7 @@ If you want to be more hands on, you can interact with the contract manually.
    ```
    
 6. Leave the console.
-   ``javascript
+   ```javascript
    .exit
    ```
 
