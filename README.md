@@ -3,8 +3,8 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This tutorial aims to help you get started with developing decentralized applications on [Optimism](https://optimism.io/). Applications running on
-top of Optimism are about as secure as those running on the underlying Ethereum mainnet itself, but are
+This tutorial aims to help you get started with developing decentralized applications on [Optimism](https://optimism.io/) using HardHat. Applications 
+running on top of Optimism are about as secure as those running on the underlying Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 
@@ -37,7 +37,7 @@ versions and other platforms
    sudo npm install -g yarn hardhat
    ```
    
-3. Start a new terminal window, to ensure the OS knows you are now a member of the `docker` 
+3. Start a new terminal window to ensure the OS knows you are now a member of the `docker` 
    group and authorized to create and manage Docker images and containers.
 
 
@@ -206,7 +206,12 @@ To solve this problem:
    ```
 
 
-## Run Tests
+## How to Run Tests
+
+As you may have noticed, in this tutorial we ran all the tests first on the HardHat EVM and only then on Optimism. This is
+important, because it lets you isolate contract problems from problems that are the result of using Optimism rather than 
+vanilla Ethereum.
+
 
 ## Conclusion
 
