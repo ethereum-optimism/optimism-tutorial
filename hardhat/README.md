@@ -145,7 +145,7 @@ Now that we have a running Optimstic Ethereum server, and an a dapp to run on it
 
    ...
    ```
-3. In the same file, add `optimism` to the list of networks:
+3. In the same file, add `optimistic` to the list of networks:
    ```js
    // hardhat.config.js
 
@@ -155,7 +155,7 @@ Now that we have a running Optimstic Ethereum server, and an a dapp to run on it
      solidity: "0.8.4",   // or whatever you get from HardHat
      networks: {
        // Add this network to your config!
-       optimism: {
+       optimistic: {
           url: 'http://127.0.0.1:8545',
           accounts: {
              mnemonic: 'test test test test test test test test test test test junk'
@@ -176,13 +176,13 @@ Now that we have a running Optimstic Ethereum server, and an a dapp to run on it
 4. Test the contract on Optimstic Ethereum. Hardhat will recognize it has not been compiled and compile it for you.
 
    ```sh
-   npx hardhat --network optimism test
+   npx hardhat --network optimistic test
    ```
 
 5. If you want to interact with the app manually, use the console. You can use the same JavaScript commands
    to control it you used above.
    ```sh
-   npx hardhat --network optimism console
+   npx hardhat --network optimistic console
    ```
    
    
@@ -190,7 +190,7 @@ Now that we have a running Optimstic Ethereum server, and an a dapp to run on it
 
 To run on Optimstic Ethereum a contract needs to be compiled with a variant Solidity compiler. Sometimes
 the latest version of Solidity supported by Optimstic Ethereum is not the same as the version used by the
-sample app in HardHat. When that is the case, the `npx hardhat --network optimism test` command
+sample app in HardHat. When that is the case, the `npx hardhat --network optimistic test` command
 fails with an error message similar to:
 
 ```
@@ -212,7 +212,7 @@ To solve this problem:
    ```
 4. Check the application works on Optimstic Ethereum.
    ```sh
-   npx hardhat --network optimism test
+   npx hardhat --network optimistic test
    ```
 
 
