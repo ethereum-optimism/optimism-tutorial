@@ -6,6 +6,6 @@
 This repository includes two separate tutorials, so you can choose whichever
 development environment you prefer.
 
-- [Hardhat]<hardhat>
-- [Truffle]<truffle>
+- [Hardhat](hardhat)
+- [Truffle](truffle)
 
