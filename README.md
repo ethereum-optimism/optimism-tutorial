@@ -146,7 +146,6 @@ Now that we have a running Optimism server, and an a dapp to run on it, we can r
    
    module.exports = {
      networks: {
-       ...
        // Add this network to your config!
        optimism: {
           url: 'http://127.0.0.1:8545',
