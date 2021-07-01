@@ -16,8 +16,8 @@ versions and other platforms
 
 ### Install Prerequisite Software
 
-1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script, [read the documentation
-   to learn other methods to install](https://docs.docker.com/engine/install/ubuntu).
+1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script, 
+   [there are other installation methods](https://docs.docker.com/engine/install/ubuntu).
 
    ```sh
    curl -fsSL https://get.docker.com -o get-docker.sh
@@ -52,12 +52,17 @@ yarn build
 cd ops
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
-docker-compose build --parallel
+docker-compose build # --parallel
 ```
+
+# NEED TO CHECK WHICH IS FASTER, the exports of the --parallel (or both)
 
 Note that you will see a **Done** message at some point during the build process. Ignore it,
 it means that a specific section is done, and even though you do not see progress at that 
 moment the build is continuing.
+
+This process is time consuming. You can continue the tutorial for now, I will note when you
+need to stop and wait for it to finish.
 
 ```sh
 docker-compose up
@@ -147,6 +152,7 @@ Now that we have a running Optimstic Ethereum server, and an a dapp to run on it
    ...
    
    module.exports = {
+     solidity: "0.8.4",   // or whatever you get from HardHat
      networks: {
        // Add this network to your config!
        optimism: {
@@ -163,6 +169,9 @@ Now that we have a running Optimstic Ethereum server, and an a dapp to run on it
      }
    }
    ```
+
+   At this point you need to wait until the `docker-compose build` ends, if it hasn't yet, and then run
+   `cd ~/optimism/ops ; docker-compose up`.
 
 4. Test the contract on Optimstic Ethereum. Hardhat will recognize it has not been compiled and compile it for you.
 
@@ -199,11 +208,11 @@ To solve this problem:
 2. Edit `contracts/Greeter.sol` to change the `pragma solidity` line to the supported version.
 3. Check the application still works on normal Ethereum.
    ```sh
-   npx hardhat console
+   npx hardhat test
    ```
 4. Check the application works on Optimstic Ethereum.
    ```sh
-   npx hardhat --network optimism console
+   npx hardhat --network optimism test
    ```
 
 
