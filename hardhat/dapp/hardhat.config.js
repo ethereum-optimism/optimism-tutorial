@@ -22,7 +22,7 @@ module.exports = {
   solidity: "0.7.6",
   networks: {
     // Add this network to your config!
-    optimism: {
+    optimistic: {
        url: 'http://127.0.0.1:8545',
        accounts: {
           mnemonic: 'test test test test test test test test test test test junk'
