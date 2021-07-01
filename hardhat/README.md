@@ -70,7 +70,8 @@ When start seeing log entries scrolling on the console it means the system is no
 Now that we have Optimism running, it is time to run a distributed application (dapp) on it.
 
 **Note:** If you don't need the explanations and just want to see running code, 
-[click here](https://github.com/ethereum-optimism/optimism-tutorial/). The dapp directory
+[click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
+`hardhat/dapp` directory
 is just an `npm install` away from being a working example.
 
 ### Get a Sample Application
