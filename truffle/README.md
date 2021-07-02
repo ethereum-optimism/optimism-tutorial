@@ -90,58 +90,64 @@ is just an `npm install` away from being a working example.
 
 ### Get a Sample Application
 
-
-
 The easiest way is to start with a sample application. 
 
 1. Open a second command line terminal
-2. Run `truffle`, the development environment we use in this tutorial
+2. Run `truffle`, the development environment we use in this tutorial, to unbox an Optimistic Ethernet application.
    ```sh
    mkdir dapp
    cd dapp
    truffle unbox optimism
    ```
-   
-GOON   
-   
-3. Select **Create a sample project** and accept all the defaults.
-4. Verify the sample application.
+3. In a separate command line window, run Ganache to have a normal Ethereum network to test against.
    ```sh
-   npx hardhat test
+   ganache-cli -v -p 7545
    ```
+4. Test the contract on normal Ethereum.
+   ```sh
+   truffle test
+   ```
+   
+   Note: If you get a `Db.connect` error it is because the Truffle database is not installed. The easiest way to remove this error is to
+   edit `truffle-config.js` and specify that `module.exports.db` is not enabled:
+   ```javascript
+     db: {
+        enabled: false
+     }
+   ```
+
    
 #### Interact with the Sample App Manually (optional)   
    
 If you want to be more hands on, you can interact with the contract manually.
 
-1. Start the console
+1. Compile the contract and then start the console
    ```sh
-   npx hardhat console
+   truffle compile
+   truffle console
    ```
-2. Deploy the greeter contract.
+2. Deploy the sample contract (`SimpleStorage`).
    ```javascript
-   const Greeter = await ethers.getContractFactory("Greeter")
-   const greeter = await Greeter.deploy("Hello, world!")
-   await greeter.deployed()
+   storage = await SimpleStorage.new()
    ```
-3. Get the current greeting.
+3. Get the current value (which should be zero)
    ```javascript
-   await greeter.greet()
+   (await storage.get()).toString()
    ```
-4. Modify the greeting.
+4. Modify the value
    ```javascript
-   const tx = await greeter.setGreeting("Hola, mundo")
-   await tx.wait()
+   storage.set(31415)
    ```
-5. Verify the greeting got modified.
+5. Verify the value got modified.
    ```javascript
-   await greeter.greet()
+   (await storage.get()).toString()
    ```
-   
 6. Leave the console.
    ```javascript
    .exit
    ```
+
+# GOON GOON GOON
 
 ### Migrate the Sample App to Optimstic Ethereum
 
