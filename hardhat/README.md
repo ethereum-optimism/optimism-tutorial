@@ -55,8 +55,6 @@ export DOCKER_BUILDKIT=1
 docker-compose build # --parallel
 ```
 
-# NEED TO CHECK WHICH IS FASTER, the exports of the --parallel (or both)
-
 Note that you will see a **Done** message at some point during the build process. Ignore it,
 it means that a specific section is done, and even though you do not see progress at that 
 moment the build is continuing.
