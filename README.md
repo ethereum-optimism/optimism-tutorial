@@ -5,4 +5,5 @@
 
 ## Getting Started with Optimistic Ethereum
 - [Hardhat](hardhat)
+- [Truffle](truffle)
 
