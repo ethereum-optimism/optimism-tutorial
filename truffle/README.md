@@ -26,12 +26,16 @@ versions and other platforms
    ```sh
    curl -fsSL https://get.docker.com -o get-docker.sh
    sudo sh get-docker.sh
-   sudo apt install -y docker-compose
-   sudo usermod -a -G docker `whoami`
    ```
- 
 
-2. Install [Node.js](https://nodejs.org/en/) and a number of npm packages. The version in the OS repository is 
+2. Configure Docker settings:
+
+   ```sh
+   sudo usermod -a -G docker `whoami`
+   sudo apt install -y docker-compose
+    ```
+
+3. Install [Node.js](https://nodejs.org/en/) and a number of npm packages. The version in the OS repository is 
   out of date, so we'll get the package from a different source.
 
    ```sh
@@ -41,7 +45,7 @@ versions and other platforms
    sudo npm install -g yarn truffle ganache-cli
    ```
    
-3. Log out and log back in to refresh the group information.
+4. Log out and log back in to refresh the group information.
 
 
 ### Start an Optimstic Ethereum Server
