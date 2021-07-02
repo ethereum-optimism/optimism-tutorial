@@ -85,7 +85,7 @@ Now that we have Optimstic Ethereum running, it is time to run a distributed app
 
 **Note:** If you don't need the explanations and just want to see running code, 
 [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
-`/dapp` directory
+`/truffle/dapp` directory
 is just an `npm install` away from being a working example.
 
 ### Get a Sample Application
@@ -95,12 +95,15 @@ is just an `npm install` away from being a working example.
 The easiest way is to start with a sample application. 
 
 1. Open a second command line terminal
-2. Run `hardhat`, the development environment we use in this tutorial
+2. Run `truffle`, the development environment we use in this tutorial
    ```sh
    mkdir dapp
    cd dapp
-   npx hardhat
+   truffle unbox optimism
    ```
+   
+GOON   
+   
 3. Select **Create a sample project** and accept all the defaults.
 4. Verify the sample application.
    ```sh
