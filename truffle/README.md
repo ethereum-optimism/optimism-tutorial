@@ -42,10 +42,14 @@ versions and other platforms
    curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
    sudo bash nodesource_setup.sh
    sudo apt install -y nodejs
+   ```
+   
+4. Install the Node.js packages we need.
+   ```sh   
    sudo npm install -g yarn truffle ganache-cli
    ```
    
-4. Log out and log back in to refresh the group information.
+5. Log out and log back in to refresh the group information.
 
 
 ### Start an Optimstic Ethereum Server
