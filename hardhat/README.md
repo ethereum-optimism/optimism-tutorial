@@ -138,7 +138,7 @@ If you want to be more hands on, you can interact with the contract manually.
 
 ### Migrate the Sample App to Optimstic Ethereum
 
-Now that we have a running Optimstic Ethereum server, and an a dapp to run on it, we can run on Optimstic Ethereum.
+Now that we have a running Optimstic Ethereum server, and a dapp to run on it, we can run on Optimstic Ethereum.
 
 1. Install the Optimstic Ethereum package in the application.
    ```sh
