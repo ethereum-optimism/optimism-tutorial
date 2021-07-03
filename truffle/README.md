@@ -36,7 +36,7 @@ versions and other platforms
     ```
 
 3. Install [Node.js](https://nodejs.org/en/) and a number of npm packages. The version in the OS repository is 
-  out of date, so we'll get the package from a different source.
+   out of date, so we'll get the package from a different source.
 
    ```sh
    curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
@@ -45,6 +45,7 @@ versions and other platforms
    ```
    
 4. Install the Node.js packages we need.
+
    ```sh   
    sudo npm install -g yarn truffle ganache-cli
    ```
@@ -153,7 +154,13 @@ If you want to be more hands on, you can interact with the contract manually.
 
 ### Migrate the Sample App to Optimistic Ethereum
 
-Now that we have a running Optimistic Ethereum server, and an dapp to run on it, we can run a test on Optimistic Ethereum:
+Now that we have a running Optimistic Ethereum server, and an dapp to run on it, we can run a test on 
+Optimistic Ethereum. 
+
+Note: By this point we need the `docker-compose build` process to be finished, and to run `docker-compose up`.
+If the build process hasn't finished yet, you need to wait until it does.
+
+The command to run the contract tests on Optimistic Ethereum is:
 
 ```sh
 truffle test --config truffle-config.ovm.js --network optimistic_ethereum
