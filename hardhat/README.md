@@ -8,7 +8,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 
-## Build an Optimistic Ethereum Server
+## Build an Optimistic Ethereum Node
 
 The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
 The directions in this section are for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), 
@@ -158,9 +158,9 @@ If you want to be more hands on, you can interact with the contract manually.
 
 ### Migrate the Sample App to Optimistic Ethereum
 
-Now that we have a running Optimistic Ethereum server, and a dapp to run on it, we can run on Optimistic Ethereum.
+Now that we have a running Optimistic Ethereum node and a dapp to run on it, we can deploy to Optimistic Ethereum.
 
-1. Install the Optimistic Ethereum package in the application.
+1. Install the Optimistic Ethereum hardhat plugin.
    ```sh
    yarn add @eth-optimism/hardhat-ovm
    ```
@@ -183,29 +183,22 @@ Now that we have a running Optimistic Ethereum server, and a dapp to run on it, 
        // Add this network to your config!
        optimistic: {
           url: 'http://127.0.0.1:8545',
-          accounts: {
-             mnemonic: 'test test test test test test test test test test test junk'
-          },
-          // This sets the gas price to 0 for all transactions on L2. We do this
-          // because account balances are not automatically initiated with an ETH
-          // balance (yet, sorry!).
-          gasPrice: 0,
           ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
        }
      }
    }
    ```
 
-   At this point you need to wait until the `docker-compose build` ends, if it hasn't yet, and then run
+4. At this point you need to wait until the `docker-compose build` ends, if it hasn't yet, and then run
    `cd ~/optimism/ops ; docker-compose up`.
 
-4. Test the contract on Optimistic Ethereum. Hardhat will recognize it has not been compiled and compile it for you.
+5. Test the contract on Optimistic Ethereum. Hardhat will recognize it has not been compiled and compile it for you.
 
    ```sh
    npx hardhat --network optimistic test
    ```
 
-5. If you want to interact with the app manually, use the console. You can use the same JavaScript commands
+6. If you want to interact with the app manually, use the console. You can use the same JavaScript commands
    to control it you used above.
    ```sh
    npx hardhat --network optimistic console
@@ -242,7 +235,7 @@ To solve this problem:
    ```
 
 
-## How to Run Tests
+## Best Practices for Running Tests
 
 As you may have noticed, in this tutorial we ran all the tests first on the HardHat EVM and only then on Optimistic Ethereum. This is
 important, because it lets you isolate contract problems from problems that are the result of using Optimistic Ethereum rather than 
