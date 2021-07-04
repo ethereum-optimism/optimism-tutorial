@@ -51,10 +51,10 @@ but they should be similar for other Linux versions and other platforms
    sudo npm install -g yarn hardhat
    ```
    
-6. Log out and log back in to refresh the group information.
+6. Log out and log back in to complete the Docker installation (required).
 
 
-### Start an Optimistic Ethereum Server
+### Start an Optimistic Ethereum Node
 
 This process downloads, compiles, and builds an Optimistic Ethereum network. Note that it takes a long time.
 
@@ -66,21 +66,19 @@ yarn build
 cd ops
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
-docker-compose build # --parallel
+docker-compose build && echo Build complete
 ```
 
-Note that you will see a **Done** message at some point during the build process. Ignore it,
-it means that a specific section is done, and even though you do not see progress at that 
-moment the build is continuing.
-
-This process is time consuming. You can continue the tutorial for now, I will note when you
-need to stop and wait for it to finish.
+The build process is time consuming, and you do not need to wait for it to finish before you continue the tutorial.
+I will note the point in the tutorial where you need to have a running Optimistic Ethereum Node. Hopefully it will
+be finished by then (you will know when the build process is done because you'll see a **Build complete** message).
+After that you just need to start the node using:
 
 ```sh
 docker-compose up
 ```
 
-When start seeing log entries scrolling on the console it means the system is now running. 
+When you start seeing log entries scrolling on the console it means the node is now running. 
 
 
 ## Migrate a Dapp to Optimistic Ethereum
