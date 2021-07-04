@@ -10,9 +10,9 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 
 ## Build an Optimistic Ethereum Server
 
-To test and debug on Optimistic Ethereum you need to have a running Optimistic Ethereum server, so the first step is to build one. The directions in this section are 
-for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), but they should be similar for other Linux 
-versions and other platforms
+The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
+The directions in this section are for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), 
+but they should be similar for other Linux versions and other platforms
 
 ### Install Prerequisite Software
 
@@ -24,28 +24,34 @@ versions and other platforms
    sudo sh get-docker.sh
    ```
 
-2. Configure Docker settings:
+2. Configure Docker settings.
 
    ```sh
    sudo usermod -a -G docker `whoami`
+   ```
+   
+3. Install [Docker Compose](https://docs.docker.com/compose/install/).
+  
+   ```sh
    sudo apt install -y docker-compose
-    ```
+   ```
 
-3. Install [Node.js](https://nodejs.org/en/) and a number of npm packages. The version in the OS repository is 
-  out of date, so we'll get the package from a different source.
-
+4. Install [Node.js](https://nodejs.org/en/). The version in the OS repository is 
+  out of date, so we'll get the package from a different source. 
+  
    ```sh
    curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
    sudo bash nodesource_setup.sh
    sudo apt install -y nodejs
    ```
    
-4. Install the Node.js packages we need.
+5. Install the Node.js packages we need. [See here](https://github.com/sindresorhus/guides/blob/main/npm-global-without-sudo.md)
+   if you'd rather install these packages without root permissions.
    ```sh   
    sudo npm install -g yarn hardhat
    ```
    
-5. Log out and log back in to refresh the group information.
+6. Log out and log back in to refresh the group information.
 
 
 ### Start an Optimistic Ethereum Server
