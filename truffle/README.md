@@ -19,8 +19,15 @@ similar for other Linux
 versions and other platforms
 
 ### Install Prerequisite Software
+## Build an Optimistic Ethereum Node
 
-1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script, 
+The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
+The directions in this section are for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), 
+but they should be similar for other Linux versions and other platforms
+
+### Install Prerequisite Software
+
+1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script shown below, 
    [there are other installation methods](https://docs.docker.com/engine/install/ubuntu).
 
    ```sh
@@ -28,58 +35,79 @@ versions and other platforms
    sudo sh get-docker.sh
    ```
 
-2. Configure Docker settings:
+2. Configure Docker settings.
 
    ```sh
    sudo usermod -a -G docker `whoami`
+   ```
+   
+3. Install [Docker Compose](https://docs.docker.com/compose/install/).
+  
+   ```sh
    sudo apt install -y docker-compose
-    ```
+   ```
 
-3. Install [Node.js](https://nodejs.org/en/) and a number of npm packages. The version in the OS repository is 
-   out of date, so we'll get the package from a different source.
-
+4. Install [Node.js](https://nodejs.org/en/). The version in the OS repository is 
+  out of date, so we'll get the package from a different source. 
+  
    ```sh
    curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
    sudo bash nodesource_setup.sh
    sudo apt install -y nodejs
    ```
    
-4. Install the Node.js packages we need.
-
+5. Install the Node.js packages we need. [See here](https://github.com/sindresorhus/guides/blob/main/npm-global-without-sudo.md)
+   if you'd rather install these packages without root permissions.
    ```sh   
    sudo npm install -g yarn truffle ganache-cli
    ```
    
-5. Log out and log back in to refresh the group information.
+6. Log out and log back in to complete the Docker installation (required).
 
-
-### Start an Optimistic Ethereum Server
+### Start an Optimistic Ethereum Node
 
 This process downloads, compiles, and builds an Optimistic Ethereum network. Note that it takes a long time.
 
-```sh
-git clone https://github.com/ethereum-optimism/optimism.git
-cd optimism
-yarn install
-yarn build
-cd ops
-export COMPOSE_DOCKER_CLI_BUILD=1
-export DOCKER_BUILDKIT=1
-docker-compose build # --parallel
-```
+1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
 
-Note that you will see a **Done** message at some point during the build process. Ignore it,
-it means that a specific section is done, and even though you do not see progress at that 
-moment the build is continuing.
+   ```sh
+   git clone https://github.com/ethereum-optimism/optimism.git
+   cd optimism
+   ```
+   
+2. Build the Optimistic Ethereum software.   
+   
+   ```sh
+   yarn install
+   yarn build
+   ```
+   
+3. Build the Docker containers
 
-This process is time consuming. You can continue the tutorial for now, I will note when you
-need to stop and wait for it to finish.
+   ```sh
+   cd ops
+   export COMPOSE_DOCKER_CLI_BUILD=1
+   export DOCKER_BUILDKIT=1
+   docker-compose build && echo Build complete
+   ```
 
-```sh
-docker-compose up
-```
+The build process is time consuming, and you do not need to wait for it to finish before you continue the tutorial.
+I will note the point in the tutorial where you need to have a running Optimistic Ethereum Node. Hopefully it will
+be finished by then (you will know when the build process is done because you'll see a **Build complete** message).
 
-When start seeing log entries scrolling on the console it means the system is now running. 
+4. Once the build process is finally done, start the Optimistic Ethereum node:
+
+   ```sh
+   docker-compose up
+   ```
+
+5. To see when the Optimistic Ethereum node starts, run (in a separate terminal):
+   
+   ```sh
+   ~/optimism/ops/scripts/wait-for-sequencer.sh
+   ```
+
+
 
 
 ## Migrate a Dapp to Optimistic Ethereum
@@ -154,12 +182,11 @@ If you want to be more hands on, you can interact with the contract manually.
 
 ### Migrate the Sample App to Optimistic Ethereum
 
-Now that we have a running Optimistic Ethereum server, and an dapp to run on it, we can run a test on 
-Optimistic Ethereum. 
+Now that we have a running Optimistic Ethereum node and a dapp to run on it, we can deploy to Optimistic Ethereum.
 
-Note: By this point we need the `docker-compose build` process to be finished, and to run `docker-compose up`.
-If the build process hasn't finished yet, you need to wait until it does.
-
+At this point you need to wait until the `docker-compose build` ends, if it hasn't yet, and then run
+`cd ~/optimism/ops ; docker-compose up`.
+   
 The command to run the contract tests on Optimistic Ethereum is:
 
 ```sh
@@ -185,7 +212,7 @@ If you do, edit `truffle-config.ovm.js` to specify the mnemonic for `optimistic_
 const mnemonic = 'test test test test test test test test test test test junk' // process.env["MNEMONIC"];
 ```
 
-## How to Run Tests
+## Best Practices for Running Tests
 
 As you may have noticed, in this tutorial we ran all the tests first on the Ganache EVM and only then on Optimistic Ethereum. This is
 important, because it lets you isolate contract problems from problems that are the result of using Optimistic Ethereum rather than 
