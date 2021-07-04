@@ -58,28 +58,44 @@ but they should be similar for other Linux versions and other platforms
 
 This process downloads, compiles, and builds an Optimistic Ethereum network. Note that it takes a long time.
 
-```sh
-git clone https://github.com/ethereum-optimism/optimism.git
-cd optimism
-yarn install
-yarn build
-cd ops
-export COMPOSE_DOCKER_CLI_BUILD=1
-export DOCKER_BUILDKIT=1
-docker-compose build && echo Build complete
-```
+1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
+
+   ```sh
+   git clone https://github.com/ethereum-optimism/optimism.git
+   cd optimism
+   ```
+   
+2. Build the Optimistic Ethereum software.   
+   
+   ```sh
+   yarn install
+   yarn build
+   ```
+   
+3. Build the Docker containers
+
+   ```sh
+   cd ops
+   export COMPOSE_DOCKER_CLI_BUILD=1
+   export DOCKER_BUILDKIT=1
+   docker-compose build && echo Build complete
+   ```
 
 The build process is time consuming, and you do not need to wait for it to finish before you continue the tutorial.
 I will note the point in the tutorial where you need to have a running Optimistic Ethereum Node. Hopefully it will
 be finished by then (you will know when the build process is done because you'll see a **Build complete** message).
-After that you just need to start the node using:
 
-```sh
-docker-compose up
-```
+4. Once the build process is finally done, start the Optimistic Ethereum node:
 
-When you start seeing log entries scrolling on the console it means the node is now running. 
+   ```sh
+   docker-compose up
+   ```
 
+5. To see when the Optimistic Ethereum node starts, run (in a separate terminal):
+   
+   ```sh
+   ~/optimism/ops/scripts/wait-for-sequencer.sh
+   ```
 
 ## Migrate a Dapp to Optimistic Ethereum
 
