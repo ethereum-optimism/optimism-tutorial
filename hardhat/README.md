@@ -16,7 +16,7 @@ versions and other platforms
 
 ### Install Prerequisite Software
 
-1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script, 
+1. Install [Docker](https://www.docker.com/). If you prefer not to use the convenience script shown below, 
    [there are other installation methods](https://docs.docker.com/engine/install/ubuntu).
 
    ```sh
