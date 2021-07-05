@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
 The most common L1-L2 communication requirement is to move assets, especially ERC-20 tokens, between the underlying L1 network and the L2
-solution. Optimisitc Ethereum provides you with a simple mechanism to do that:
+solution. Optimisitc Ethereum provides you with a simple mechanism to do exactly that.
 
 1. On Optimistic Ethereum create an ERC-20 contract that inherits from 
    [L2StandardERC20](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol).
@@ -15,13 +15,20 @@ solution. Optimisitc Ethereum provides you with a simple mechanism to do that:
    1. Do A
    2. Do b
 
-## Prerequisites
+
+## Setup
+
+### Prerequisites
 
 I am going to assume you already have a Hardhat development environment, as explained in 
-[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat).
+[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat). Most of 
+these directions should also work with Truffle if you prefer that development environment, but there
+might be a few minor differences.
+
+### The L1 ERC-20 Contract
+
+On the L1 network you can use any ERC-20 compliant contract. 
+
 
 ## Conclusion
 
-This tutorial has only touched the most basic points of Optimistic Ethereum development. For more information, you can 
-[check out the full integration guide](https://community.optimism.io/docs/developers/integration.html) on the Optimism community hub.
-Go read it, and then write a dapp that will amaze us.
