@@ -52,16 +52,19 @@ this command to find it:
 curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1StandardBridge
 ```
 
-You also need the address of the cross domain messenger on L2, but in Optimistic Ethereum that value 
+You also need the address of the token bridge on L2, but in Optimistic Ethereum that value 
 is always 0x4200000000000000000000000000000000000007.
 
-Also, you need the standard bridge's ABI. The easiest way is to copy the already compiled bridge
+Also, you need the standard bridges' ABIs. The easiest way is to copy the already compiled bridge
 contract from `/optimism` (run these commands from the `dapp` directory):
 
 ```sh
 mkdir -p artifacts/contracts
 cd artifacts/contracts
 (cd ~/optimism/packages/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L1StandardBridge.sol) | tar xf -
+cd ../..
+mkdir -p artifacts-ovm/contracts
+(cd ~/optimism/packages/contracts/artifacts-ovm/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L2StandardBridge.sol) | tar xf -
 ```
 
 ### The L1 ERC-20 Contract
@@ -91,10 +94,10 @@ l1factory = await ethers.getContractFactory("L1_ERC20")
 l1contract = await l1factory.deploy("L1 Token", "L1T")
 await l1contract.deployed()
 await l1contract.faucet()
-addr = (await ethers.getSigner()).address
-balance = (await l1contract.balanceOf(addr)).toString()
+l1userAddr = (await ethers.getSigner()).address
+balance = (await l1contract.balanceOf(l1userAddr)).toString()
 console.log(`L1 ERC-20 contract address ${l1contract.address}`)
-console.log(`Address ${addr} has ${balance} L1 tokens`)
+console.log(`Address ${l1userAddr} has ${balance} L1 tokens`)
 ```
 
 Leave the console open, you'll need it again soon.
@@ -129,14 +132,14 @@ npx hardhat console --network optimistic
 In the console, run these commands. 
 
 ```javascript
-l1erc20addr = <address of the L1 ERC20>
+l1contractAddr = <address of the L1 ERC20>
 l2factory = await ethers.getContractFactory("L2StandardERC20")
-l2contract = await l2factory.deploy("0x4200000000000000000000000000000000000007", l1erc20addr, "L2 Token", "L2T")
+l2contract = await l2factory.deploy("0x4200000000000000000000000000000000000007", l1contractAddr, "L2 Token", "L2T")
 await l2contract.deployed()
-addr = (await ethers.getSigner()).address
-balance = (await l2contract.balanceOf(addr)).toString()
+l2userAddr = (await ethers.getSigner()).address
+balance = (await l2contract.balanceOf(l2userAddr)).toString()
 console.log(`L2 ERC-20 contract address ${l2contract.address}`)
-console.log(`Address ${addr} has ${balance} L2 tokens`)
+console.log(`Address ${l2userAddr} has ${balance} L2 tokens`)
 ```
 
 Leave the console open, you'll need it again soon.
@@ -152,21 +155,25 @@ You do this from the L1 console (the one you ran with `--network underlying`).
    await l1contract.approve(l1bridgeAddr, 5000000)
    ```
 
-2. Tell the bridge to transfer the allowance to L2 and see the lower L1 balance:
+2. Tell the bridge to transfer the allowance to L2 and see the lower L1 balance (still in the L1 console):
 
    ```javascript
    l2contractAddr = <address of l2 ERC-20 contract>
-   l2userAddr = <address of the user in L2, type addr in the L2 console to see the value>
-   bridgeFactory = await ethers.getContractFactory("OVM_L1StandardBridge")
-   bridge = await bridgeFactory.attach(l1bridgeAddr)
-   result = await bridge.depositERC20To(l1contract.address, l2contractAddr, l2userAddr, 5000000, 1000000, [])
-   console.log(`Address ${addr} has ${(await l1contract.balanceOf(addr))} L1 tokens`)
+   l2userAddr = <address of the user in L2, type l2userAddr in the L2 console to see the value>
+   l1bridgeFactory = await ethers.getContractFactory("OVM_L1StandardBridge")
+   l1bridge = await l1bridgeFactory.attach(l1bridgeAddr)
+   result = await l1bridge.depositERC20To(l1contract.address, l2contractAddr, l2userAddr, 5000000, 1000000, [])
+   console.log(`Address ${l1userAddr} has ${(await l1contract.balanceOf(l1userAddr))} L1 tokens`)
    ```
    
-3. In the L2 console see that the new balance is higher.
+3. In the L2 console finalize the transfer and see it actually happened.
 
    ```javascript
-   console.log(`Address ${addr} has ${(await l2contract.balanceOf(addr))} L2 tokens`) 
+   l2bridgeAddr = '0x4200000000000000000000000000000000000007'
+   l2bridgeFactory = await ethers.getContractFactory("OVM_L2StandardBridge")
+   l2bridge = await l2bridgeFactory.attach(l2bridgeAddr)   
+   
+   console.log(`Address ${l2userAddr} has ${(await l2contract.balanceOf(l2userAddr))} L2 tokens`) 
    ```
       
       
