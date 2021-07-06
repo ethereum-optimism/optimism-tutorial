@@ -9,6 +9,7 @@
     "hardhat": "^2.4.1"
   },
   "dependencies": {
-    "@eth-optimism/hardhat-ovm": "^0.2.2"
+    "@eth-optimism/hardhat-ovm": "^0.2.2",
+    "@openzeppelin/contracts": "^4.2.0"
   }
 }

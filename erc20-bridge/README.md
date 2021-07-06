@@ -43,14 +43,17 @@ use it, edit `hardhat.config.js` to add to `module.exports.networks`:
 ```
 
 
-### The address of the L1 cross domain messenger
+### Contract Addresses
 
 To send messages from L1 to L2 you need to know the address of the cross domain messenger on L1. Use
 this command to find it:
 
 ```sh
-curl http://localhost:8080/addresses.json | grep Proxy__OVM
+curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1CrossDomainMessenger
 ```
+
+You also need the address of the cross domain messenger on L2, but in Optimistic Ethereum that value 
+is always 0x4200000000000000000000000000000000000007.
 
 
 ### The L1 ERC-20 Contract
@@ -73,6 +76,26 @@ addr = (await ethers.getSigner()).address
 (await l1contract.balanceOf(addr)).toString()
 ```
 
+
+### The L2 ERC-20 Contract
+
+The L2 ERC-20 contract needs a bit more functionality than a standard ERC-20 contract:
+
+1. Store the addresses of the L2 bridge and the corresponding L1 token.
+2. Allow the bridge to mint tokens when they are transferred from L1 to L2.
+3. Allow the bridge to burn tokens when they are transferred back to L1.
+
+To do this we can use the [L2StandardERC20
+](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol)
+contract, possibly modified (directly or through inheritence) for custom business logic. In this tutorial we 
+do not need any custom logic, so we just use the original version. 
+
+L2StandardERC20 requires the [OpenZeppelin contract library](https://openzeppelin.com/contracts/), which
+you can install using this command: 
+
+```sh
+npm install @openzeppelin/contracts
+```
 
 ## Conclusion
 
