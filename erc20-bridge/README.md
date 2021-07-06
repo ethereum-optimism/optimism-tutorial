@@ -29,6 +29,7 @@ might be a few minor differences.
 
 On the L1 network you can use any ERC-20 compliant contract. 
 
+TEST
 
 ## Conclusion
 
