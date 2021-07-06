@@ -27,9 +27,10 @@ might be a few minor differences.
 
 ### The L1 ERC-20 Contract
 
-On the L1 network you can use any ERC-20 compliant contract. 
+On the L1 network you can use any ERC-20 compliant contract. For the purposes of this tutorial, I 
+am going to use [this contract]() which is a slightly modified version of 
+[the OpenZeppelin ERC-20 contract](https://ethereum.org/en/developers/tutorials/erc20-annotated-code/).
 
-TEST
 
 ## Conclusion
 
