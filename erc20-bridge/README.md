@@ -94,7 +94,7 @@ L2StandardERC20 requires the [OpenZeppelin contract library](https://openzeppeli
 you can install using this command: 
 
 ```sh
-npm install @openzeppelin/contracts
+npm install @openzeppelin/contracts@3.3.0 --save
 ```
 
 ## Conclusion
