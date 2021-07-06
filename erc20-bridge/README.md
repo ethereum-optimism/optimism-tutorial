@@ -8,10 +8,10 @@ solution. Optimisitc Ethereum provides you with a simple mechanism to do exactly
 
 1. On Optimistic Ethereum create an ERC-20 contract that inherits from 
    [L2StandardERC20](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol).
-2. Transfer from an address in L1 to the same address in L2:
+2. Transfer from L1 to L2:
    1. Do A
    2. Do b
-4. Transfer from an address in L2 to the same address L1:
+3. Transfer from L2 to L1:
    1. Do A
    2. Do b
 
@@ -43,18 +43,26 @@ use it, edit `hardhat.config.js` to add to `module.exports.networks`:
 ```
 
 
-### Contract Addresses
+### The Standard Bridge
 
-To send messages from L1 to L2 you need to know the address of the cross domain messenger on L1. Use
+To send ERC-20 tokens from L1 to L2 you need to know the address of the standard token bridge on L1. Use
 this command to find it:
 
 ```sh
-curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1CrossDomainMessenger
+curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1StandardBridge
 ```
 
 You also need the address of the cross domain messenger on L2, but in Optimistic Ethereum that value 
 is always 0x4200000000000000000000000000000000000007.
 
+Also, you need the standard bridge's ABI. The easiest way is to copy the already compiled bridge
+contract from `/optimism` (run these commands from the `dapp` directory):
+
+```sh
+mkdir -p artifacts/contracts
+cd artifacts/contracts
+(cd ~/optimism/packages/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L1StandardBridge.sol) | tar xf -
+```
 
 ### The L1 ERC-20 Contract
 
@@ -89,6 +97,7 @@ console.log(`L1 ERC-20 contract address ${l1contract.address}`)
 console.log(`Address ${addr} has ${balance} L1 tokens`)
 ```
 
+Leave the console open, you'll need it again soon.
 
 
 ### The L2 ERC-20 Contract
@@ -130,9 +139,37 @@ console.log(`L2 ERC-20 contract address ${l2contract.address}`)
 console.log(`Address ${addr} has ${balance} L2 tokens`)
 ```
 
+Leave the console open, you'll need it again soon.
+
 ## Transfering Tokens from L1 to L2
 
+You do this from the L1 console (the one you ran with `--network underlying`).
 
+1. Give the bridge on L1 (the Proxy__OVM_L1StandardBridge address you found above) an allowance of ERC-20 tokens.
+
+   ```javascript
+   l1bridgeAddr = <address of Proxy__OVM_L1StandardBridge>
+   await l1contract.approve(l1bridgeAddr, 5000000)
+   ```
+
+2. Tell the bridge to transfer the allowance to L2 and see the lower L1 balance:
+
+   ```javascript
+   l2contractAddr = <address of l2 ERC-20 contract>
+   l2userAddr = <address of the user in L2, type addr in the L2 console to see the value>
+   bridgeFactory = await ethers.getContractFactory("OVM_L1StandardBridge")
+   bridge = await bridgeFactory.attach(l1bridgeAddr)
+   result = await bridge.depositERC20To(l1contract.address, l2contractAddr, l2userAddr, 5000000, 1000000, [])
+   console.log(`Address ${addr} has ${(await l1contract.balanceOf(addr))} L1 tokens`)
+   ```
+   
+3. In the L2 console see that the new balance is higher.
+
+   ```javascript
+   console.log(`Address ${addr} has ${(await l2contract.balanceOf(addr))} L2 tokens`) 
+   ```
+      
+      
 
 ## Transfering Tokens from L2 to L1
 
