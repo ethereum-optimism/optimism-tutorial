@@ -64,8 +64,19 @@ contract](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/erc20
 which is a slightly modified version of [the OpenZeppelin ERC-20 
 contract](https://ethereum.org/en/developers/tutorials/erc20-annotated-code/).
 
-To use this contract and give yourself one L1T token, run `npx hardhat console --network underlying` and
-type these commands:
+As part of the setup we need to do two things with things with this contract:
+
+1. Deploy it on L1 and get the address
+2. Mint tokens for our account so we'll be able to transfer them.
+
+To do this, run these commands:
+
+```sh
+npx hardhat compile --network underlying
+npx hardhat console --network underlying
+```
+
+Type these commands in the console:
 
 ```javascript
 l1factory = await ethers.getContractFactory("L1_ERC20")
@@ -73,8 +84,11 @@ l1contract = await l1factory.deploy("L1 Token", "L1T")
 await l1contract.deployed()
 await l1contract.faucet()
 addr = (await ethers.getSigner()).address
-(await l1contract.balanceOf(addr)).toString()
+balance = (await l1contract.balanceOf(addr)).toString()
+console.log(`L1 ERC-20 contract address ${l1contract.address}`)
+console.log(`Address ${addr} has ${balance} L1 tokens`)
 ```
+
 
 
 ### The L2 ERC-20 Contract
@@ -91,11 +105,31 @@ contract, possibly modified (directly or through inheritence) for custom busines
 do not need any custom logic, so we just use the original version. 
 
 L2StandardERC20 requires the [OpenZeppelin contract library](https://openzeppelin.com/contracts/), which
-you can install using this command: 
+you can install using this command:
 
 ```sh
 npm install @openzeppelin/contracts@3.3.0 --save
 ```
+
+Then, to compile and enter the console, type:
+```sh
+npx hardhat compile --network optimistic
+npx hardhat console --network optimistic
+```
+
+In the console, run these commands. 
+
+```javascript
+l1erc20addr = <address of the L1 ERC20>
+l2factory = await ethers.getContractFactory("L2StandardERC20")
+l2contract = await l2factory.deploy("0x4200000000000000000000000000000000000007", l1erc20addr, "L2 Token", "L2T")
+await l2contract.deployed()
+addr = (await ethers.getSigner()).address
+balance = (await l2contract.balanceOf(addr)).toString()
+console.log(`L2 ERC-20 contract address ${l2contract.address}`)
+console.log(`Address ${addr} has ${balance} L2 tokens`)
+```
+
 
 ## Conclusion
 
