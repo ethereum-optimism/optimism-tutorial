@@ -11,7 +11,7 @@ solution. Optimisitc Ethereum provides you with a simple mechanism to do exactly
 2. Transfer from an address in L1 to the same address in L2:
    1. Do A
    2. Do b
-3. Transfer from an address in L2 to the same address L1:
+4. Transfer from an address in L2 to the same address L1:
    1. Do A
    2. Do b
 
@@ -129,6 +129,12 @@ balance = (await l2contract.balanceOf(addr)).toString()
 console.log(`L2 ERC-20 contract address ${l2contract.address}`)
 console.log(`Address ${addr} has ${balance} L2 tokens`)
 ```
+
+## Transfering Tokens from L1 to L2
+
+
+
+## Transfering Tokens from L2 to L1
 
 
 ## Conclusion
