@@ -53,7 +53,7 @@ curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1StandardBridge
 ```
 
 You also need the address of the token bridge on L2, but in Optimistic Ethereum that value 
-is always 0x4200000000000000000000000000000000000007.
+is always 0x4200000000000000000000000000000000000010.
 
 Also, you need the standard bridges' ABIs. The easiest way is to copy the already compiled bridge
 contract from `/optimism` (run these commands from the `dapp` directory):
@@ -64,6 +64,7 @@ cd artifacts/contracts
 (cd ~/optimism/packages/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L1StandardBridge.sol) | tar xf -
 cd ../..
 mkdir -p artifacts-ovm/contracts
+cd artifacts-ovm/contracts
 (cd ~/optimism/packages/contracts/artifacts-ovm/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L2StandardBridge.sol) | tar xf -
 ```
 
@@ -134,7 +135,7 @@ In the console, run these commands.
 ```javascript
 l1contractAddr = <address of the L1 ERC20>
 l2factory = await ethers.getContractFactory("L2StandardERC20")
-l2contract = await l2factory.deploy("0x4200000000000000000000000000000000000007", l1contractAddr, "L2 Token", "L2T")
+l2contract = await l2factory.deploy("0x4200000000000000000000000000000000000010", l1contractAddr, "L2 Token", "L2T")
 await l2contract.deployed()
 l2userAddr = (await ethers.getSigner()).address
 balance = (await l2contract.balanceOf(l2userAddr)).toString()
@@ -152,7 +153,8 @@ You do this from the L1 console (the one you ran with `--network underlying`).
 
    ```javascript
    l1bridgeAddr = <address of Proxy__OVM_L1StandardBridge>
-   await l1contract.approve(l1bridgeAddr, 5000000)
+   transferAmt = 5000000
+   await l1contract.approve(l1bridgeAddr, transferAmt)
    ```
 
 2. Tell the bridge to transfer the allowance to L2 and see the lower L1 balance (still in the L1 console):
@@ -162,14 +164,14 @@ You do this from the L1 console (the one you ran with `--network underlying`).
    l2userAddr = <address of the user in L2, type l2userAddr in the L2 console to see the value>
    l1bridgeFactory = await ethers.getContractFactory("OVM_L1StandardBridge")
    l1bridge = await l1bridgeFactory.attach(l1bridgeAddr)
-   result = await l1bridge.depositERC20To(l1contract.address, l2contractAddr, l2userAddr, 5000000, 1000000, [])
+   result = await l1bridge.depositERC20To(l1contract.address, l2contractAddr, l2userAddr, transferAmt, 1000000, [])
    console.log(`Address ${l1userAddr} has ${(await l1contract.balanceOf(l1userAddr))} L1 tokens`)
    ```
    
 3. In the L2 console finalize the transfer and see it actually happened.
 
    ```javascript
-   l2bridgeAddr = '0x4200000000000000000000000000000000000007'
+   l2bridgeAddr = '0x4200000000000000000000000000000000000010'
    l2bridgeFactory = await ethers.getContractFactory("OVM_L2StandardBridge")
    l2bridge = await l2bridgeFactory.attach(l2bridgeAddr)   
    
