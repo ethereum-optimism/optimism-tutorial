@@ -42,32 +42,6 @@ use it, edit `hardhat.config.js` to add to `module.exports.networks`:
     }
 ```
 
-
-### The Standard Bridge
-
-To send ERC-20 tokens from L1 to L2 you need to know the address of the standard token bridge on L1. Use
-this command to find it:
-
-```sh
-curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1StandardBridge
-```
-
-You also need the address of the token bridge on L2, but in Optimistic Ethereum that value 
-is always 0x4200000000000000000000000000000000000010.
-
-Also, you need the standard bridges' ABIs. The easiest way is to copy the already compiled bridge
-contract from `/optimism` (run these commands from the `dapp` directory):
-
-```sh
-mkdir -p artifacts/contracts
-cd artifacts/contracts
-(cd ~/optimism/packages/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L1StandardBridge.sol) | tar xf -
-cd ../..
-mkdir -p artifacts-ovm/contracts
-cd artifacts-ovm/contracts
-(cd ~/optimism/packages/contracts/artifacts-ovm/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L2StandardBridge.sol) | tar xf -
-```
-
 ### The L1 ERC-20 Contract
 
 On the L1 network you can use any ERC-20 compliant contract. For the purposes of this tutorial, I 
@@ -145,11 +119,36 @@ console.log(`Address ${l2userAddr} has ${balance} L2 tokens`)
 
 Leave the console open, you'll need it again soon.
 
+### The Bridge ABIs
+
+You need the standard bridges' ABIs. The easiest way is to copy the already compiled bridge
+contract from `/optimism` (run these commands from the `dapp` directory):
+
+```sh
+mkdir -p artifacts/contracts
+cd artifacts/contracts
+(cd ~/optimism/packages/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L1StandardBridge.sol) | tar xf -
+cd ../..
+mkdir -p artifacts-ovm/contracts
+cd artifacts-ovm/contracts
+(cd ~/optimism/packages/contracts/artifacts-ovm/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L2StandardBridge.sol) | tar xf -
+```
+
+Note that this step has to happen *after* the compilation, because when you run `npx hardhat compile` it deletes the artifacts for 
+contracts without source code.
+
+
 ## Transfering Tokens from L1 to L2
 
 You do this from the L1 console (the one you ran with `--network underlying`).
 
-1. Give the bridge on L1 (the Proxy__OVM_L1StandardBridge address you found above) an allowance of ERC-20 tokens.
+1. Get the address of the L1 bridge:
+
+   ```sh
+   curl http://localhost:8080/addresses.json | grep Proxy__OVM_L1StandardBridge
+   ```
+
+2. Give the bridge on L1 an allowance of ERC-20 tokens.
 
    ```javascript
    l1bridgeAddr = <address of Proxy__OVM_L1StandardBridge>
@@ -157,7 +156,7 @@ You do this from the L1 console (the one you ran with `--network underlying`).
    await l1contract.approve(l1bridgeAddr, transferAmt)
    ```
 
-2. Tell the bridge to transfer the allowance to L2 and see the lower L1 balance (still in the L1 console):
+3. Tell the bridge to transfer the allowance to L2 and see the lower L1 balance (still in the L1 console):
 
    ```javascript
    l2contractAddr = <address of l2 ERC-20 contract>
@@ -168,7 +167,7 @@ You do this from the L1 console (the one you ran with `--network underlying`).
    console.log(`Address ${l1userAddr} has ${(await l1contract.balanceOf(l1userAddr))} L1 tokens`)
    ```
    
-3. In the L2 console finalize the transfer and see it actually happened.
+4. In the L2 console finalize the transfer and see it actually happened.
 
    ```javascript
    l2bridgeAddr = '0x4200000000000000000000000000000000000010'
