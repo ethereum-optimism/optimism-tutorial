@@ -119,9 +119,17 @@ console.log(`Address ${l2userAddr} has ${balance} L2 tokens`)
 
 Leave the console open, you'll need it again soon.
 
-### The Bridge ABIs
+### Optimistic Ethereum Packages
 
-You need the standard bridges' ABIs. The easiest way is to copy the already compiled bridge
+We need several packages, install them:
+
+```sh
+npm install @eth-optimism/contracts --save
+npm install @eth-optimism/watcher --save
+```
+
+
+<!-- The easiest way is to copy the already compiled bridge
 contract from `/optimism` (run these commands from the `dapp` directory):
 
 ```sh
@@ -134,8 +142,7 @@ cd artifacts-ovm/contracts
 (cd ~/optimism/packages/contracts/artifacts-ovm/contracts/optimistic-ethereum/OVM/bridge/tokens; tar cf - OVM_L2StandardBridge.sol) | tar xf -
 ```
 
-Note that this step has to happen *after* the compilation, because when you run `npx hardhat compile` it deletes the artifacts for 
-contracts without source code.
+-->
 
 
 ## Transfering Tokens from L1 to L2
