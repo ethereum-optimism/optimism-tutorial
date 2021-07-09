@@ -327,7 +327,8 @@ And eventually you'll want to deploy on the main Optimistic Ethereum network.
       version: "node_modules/@eth-optimism/solc",
 ```
 
-
+Because of the way Optimistic Ethereum works, with contract calls replacing certain opcodes to ensure it will be possible to
+replicate the results on L1, it requires a different compiler for Solidity.
 
 ```javascript
       settings:  {
