@@ -196,16 +196,153 @@ truffle compile --config truffle-config.ovm.js --network optimistic_ethereum
 truffle console --config truffle-config.ovm.js --network optimistic_ethereum
 ```
 
-Note: You might this error:
+### Truffle Configuration
 
-```
-Error: Could not create addresses from your mnemonic or private key(s). Please check that your inputs are correct.
-```
-
-If you do, edit `truffle-config.ovm.js` to specify the mnemonic for `optimistic_ethereum`: 
+Most of the Optimistic Ethereum Truffle configuration is in the file `truffle-config.ovm.js`. Let's go over it,
+with explanations for every part that isn't standard Truffle.
 
 ```javascript
+// create a file at the root of your project and name it .env -- there you can set process variables
+// like the mnemomic below. Note: .env is ignored by git in this project to keep your private information safe
+require('dotenv').config();
+```
+
+If you have any private information, such an [mnemonics](https://wolovim.medium.com/ethereum-201-mnemonics-bb01a9108c38) 
+for different networks or your [Infura](https://infura.io/) key, place it in a `.env` file and make sure that file is in
+`.gitignore`. That way you won't share that information, but it will be available for you to develop.
+
+```javascript
+const ganacheMnemonic = process.env["GANACHE_MNEMONIC"];
+const kovanMnemonic = process.env["KOVAN_MNEMONIC"];
 const mnemonic = 'test test test test test test test test test test test junk' // process.env["MNEMONIC"];
+```
+
+This is the mnemonic for an account that was enough assets on both L1 and L2 of the test system you start with
+`docker-compose up`. As this mnemonic is useful only for local testing, there is no reason to keep it a secret.
+
+```javascript
+const infuraKey = process.env["INFURA_KEY"];
+
+//uncomment to use mainnetMnemonic, be sure to set it in the .env file
+//const mainnetMnemonic = process.env["MAINNET_MNEMONIC"]
+
+const { ganache } = require('@eth-optimism/plugins/ganache');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+module.exports = {
+
+  /**
+  * contracts_build_directory tells Truffle where to store compiled contracts
+  */
+  contracts_build_directory: './build/optimism-contracts',
+```
+
+A separate directory so we won't clash if a contract with the same name exists in `build/ethereum-contracts`.
+
+```javascript
+
+  /**
+  *  contracts_directory tells Truffle where to find your contracts
+  */
+  contracts_directory: './contracts/optimism',
+```
+
+Typically the contracts you deploy on Optimistic Ethereum are different from ones you deploy on regular Ethereum, so
+they are placed in a separate directory. If you look in the default, `truffle-config.js`, you'll see that the L1 
+contracts are in `contracts/ethereum` in this project.
+
+
+```javascript
+  networks: {
+    development: {
+      url: "http://127.0.0.1:7545",
+      network_id: "*",
+    },
+    ganache: {
+      network_id: 108,
+      networkCheckTimeout: 100000,
+      provider: function() {
+        return ganache.provider({
+          mnemonic: ganacheMnemonic,
+          network_id: 108,
+          default_balance_ether: 100,
+        })
+      }
+    },
+    //for use with local environment -- use `npm runLocalOptimism` to start
+    optimistic_ethereum: {
+      network_id: 420,
+      gas:  15000000,
+      provider: function() {
+        return new HDWalletProvider({
+          mnemonic: {
+            phrase: mnemonic
+          },
+          providerOrUrl: "http://127.0.0.1:8545/",
+          addressIndex: 0,
+          numberOfAddresses: 1,
+          chainId: 420
+        })
+      }
+    },
+```
+
+This is the local Optimistic Ethereum network.
+
+```javascript
+    optimistic_kovan: {
+      network_id: 69,
+      chain_id: 69,
+      gas:  15000000,
+      provider: function() {
+        return new HDWalletProvider(kovanMnemonic, "https://optimism-kovan.infura.io/v3/"+ infuraKey, 0, 1);
+      }
+    },
+```
+
+You can also run tests on the Kovan test network. 
+
+```javascript
+    // requires a mainnet mnemonic; you can save this in .env or in whatever secure location
+    // you wish to use
+    optimistic_mainnet: {
+      network_id: 10,
+      chain_id: 10,
+      provider: function() {
+        return new HDWalletProvider(mainnetMnemonic, "https://optimism-mainnet.infura.io/v3/" + infuraKey, 0, 1);
+      }
+    }
+```
+
+And eventually you'll want to deploy on the main Optimistic Ethereum network.
+
+```javascript
+  },
+
+  mocha: {
+    timeout: 100000
+  },
+  compilers: {
+    solc: {
+      version: "node_modules/@eth-optimism/solc",
+```
+
+
+
+```javascript
+      settings:  {
+        optimizer: {
+          enabled: true,
+          runs: 800
+        }
+      }
+    },
+  },
+  db: {
+    enabled: false
+  }
+}
+
 ```
 
 ## Best Practices for Running Tests
