@@ -102,11 +102,13 @@ For now you can skip to the next section.
    docker-compose up
    ```
 
-5. To see when the Optimistic Ethereum node starts, run (in a separate terminal) `.../ops/scripts/wait-for-sequencer.sh`. 
-   For you installed the Optimism software on your home directory, the command is:
+5. To see when the Optimistic Ethereum node starts, you can start a separate command line window,
+   change to `.../ops/scripts`, and run `./wait-for-sequencer.sh`.
+   If you installed the Optimism software on your home directory, the commands are:
    
    ```sh
-   ~/optimism/ops/scripts/wait-for-sequencer.sh
+   cd ~/optimism/ops/scripts
+   ./wait-for-sequencer.sh
    ```
 
 
