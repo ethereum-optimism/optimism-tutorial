@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
 This tutorial aims to help you get started with developing decentralized applications on [Optimistic Ethereum](https://optimism.io/) using 
-[Truffle](https://github.com/ethereum-optimism/optimism-tutorial.git). Applications 
+[Truffle](https://www.trufflesuite.com/). Applications 
 running on top of Optimistic Ethereum are about as secure as those running on the underlying 
 Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
@@ -101,7 +101,8 @@ be finished by then (you will know when the build process is done because you'll
    docker-compose up
    ```
 
-5. To see when the Optimistic Ethereum node starts, run (in a separate terminal):
+5. To see when the Optimistic Ethereum node starts, run (in a separate terminal) `.../ops/scripts/wait-for-sequencer.sh`. 
+   For you installed the Optimism software on your home directory, the command is:
    
    ```sh
    ~/optimism/ops/scripts/wait-for-sequencer.sh
@@ -138,14 +139,6 @@ The easiest way is to start with a sample application.
 4. Test the contract on normal Ethereum.
    ```sh
    truffle test
-   ```
-   
-   Note: If you get a `Db.connect` error it is because the Truffle database is not installed. The easiest way to remove this error is to
-   edit `truffle-config.js` and specify that `module.exports.db` is not enabled:
-   ```javascript
-     db: {
-        enabled: false
-     }
    ```
 
    
@@ -185,7 +178,7 @@ If you want to be more hands on, you can interact with the contract manually.
 Now that we have a running Optimistic Ethereum node and a dapp to run on it, we can deploy to Optimistic Ethereum.
 
 At this point you need to wait until the `docker-compose build` ends, if it hasn't yet, and then run
-`cd ~/optimism/ops ; docker-compose up`.
+`cd ~/optimism/ops ; docker-compose up` (assuming you installed it in your home directory).
    
 The command to run the contract tests on Optimistic Ethereum is:
 
@@ -200,7 +193,7 @@ truffle compile --config truffle-config.ovm.js --network optimistic_ethereum
 truffle console --config truffle-config.ovm.js --network optimistic_ethereum
 ```
 
-Note: You might need to disable `module.exports.db` in `truffle-config.ovm.js` too. Also, you might this error:
+Note: You might this error:
 
 ```
 Error: Could not create addresses from your mnemonic or private key(s). Please check that your inputs are correct.
