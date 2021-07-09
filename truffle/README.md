@@ -94,6 +94,7 @@ This process downloads, compiles, and builds an Optimistic Ethereum network. Not
 The build process is time consuming, and you do not need to wait for it to finish before you continue the tutorial.
 I will note the point in the tutorial where you need to have a running Optimistic Ethereum Node. Hopefully it will
 be finished by then (you will know when the build process is done because you'll see a **Build complete** message).
+For now you can skip to the next section.
 
 4. Once the build process is finally done, start the Optimistic Ethereum node:
 
