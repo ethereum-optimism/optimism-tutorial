@@ -20,7 +20,7 @@ jobs:
          cd $CLONE_DIR
          git add src/docs/resources/hardhat.md
          git add src/docs/resources/truffle.md
-         git commit --message 'Automatic update to keep tutorials in sync' | tee /tmp/output
+         git commit --message 'Automatic update to keep tutorials in sync' > tee /tmp/output
          echo =======
          cat /tmp/output
          echo =======
