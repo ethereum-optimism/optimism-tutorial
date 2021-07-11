@@ -4,19 +4,22 @@ on:
     branches:
     - main
 jobs:
-  copy-file:
+  copy-files:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Pushes test file
-      uses: dmnemec/copy_file_to_another_repo_action@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-        source_file: 'hardhat/README.md'
-        destination_repo: 'ethereum-optimism/community-hub'
-        destination_folder: 'src/docs/resources/tutorials/hardhat'
-        user_email: 'ori@optimism.io'
-        user_name: 'Ori Pomerantz'
-        commit_message: 'A custom message for the commit'
+    - name: Clone, copy, and push
+      run: |
+         CLONE_DIR=/tmp/tmp.EDeCom
+         git config --global user.email ori@optimism.io
+         git config --global user.name 'Ori Pomerantz'
+         git clone --single-branch --branch updated-tutorial ***github.com/ethereum-optimism/community-hub.git $CLONE_DIR
+         cp hardhat/README.md $CLONE_DIR/src/docs/resources/hardhat.md
+         cp truffle/README.md $CLONE_DIR/src/docs/resources/truffle.md
+         git add .
+         git status
+         grep -q 'Changes to be committed'
+         git commit --message 'Automatic update to keep tutorials in sync'
+         git push -u origin HEAD:updated-tutorial
+# API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
