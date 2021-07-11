@@ -14,7 +14,7 @@ jobs:
          CLONE_DIR=/tmp/tmp.EDeCom
          git config --global user.email ori@optimism.io
          git config --global user.name 'Ori Pomerantz'
-         git clone --branch updated-tutorial https://${{ secrets.API_TOKEN_GITHUB }}:o-auth-basic@github.com/ethereum-optimism/community-hub.git $CLONE_DIR
+         git clone --branch updated-tutorial https://${{ secrets.API_TOKEN_GITHUB }}:x-oauth-basic@github.com/ethereum-optimism/community-hub.git $CLONE_DIR
          cp hardhat/README.md $CLONE_DIR/src/docs/resources/hardhat.md
          cp truffle/README.md $CLONE_DIR/src/docs/resources/truffle.md
          cd $CLONE_DIR
