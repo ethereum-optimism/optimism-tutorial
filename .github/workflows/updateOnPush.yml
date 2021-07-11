@@ -18,9 +18,8 @@ jobs:
          cp hardhat/README.md $CLONE_DIR/src/docs/resources/hardhat.md
          cp truffle/README.md $CLONE_DIR/src/docs/resources/truffle.md
          cd $CLONE_DIR
-         git add .
-         git status
-         grep -q 'Changes to be committed'
+         git add src/docs/resources/hardhat.md
+         git add src/docs/resources/truffle.md
          git commit --message 'Automatic update to keep tutorials in sync'
          git push -u origin HEAD:updated-tutorial
 # API_TOKEN_GITHUB: 
