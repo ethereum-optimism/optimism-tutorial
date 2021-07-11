@@ -8,6 +8,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 
+
 ## Build an Optimistic Ethereum Node
 
 The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
