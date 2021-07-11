@@ -17,6 +17,7 @@ jobs:
          git clone --branch updated-tutorial https://${{ secrets.API_TOKEN_GITHUB }}:o-auth-basic@github.com/ethereum-optimism/community-hub.git $CLONE_DIR
          cp hardhat/README.md $CLONE_DIR/src/docs/resources/hardhat.md
          cp truffle/README.md $CLONE_DIR/src/docs/resources/truffle.md
+         cd $CLONE_DIR
          git add .
          git status
          grep -q 'Changes to be committed'
