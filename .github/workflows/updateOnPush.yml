@@ -20,9 +20,5 @@ jobs:
          cd $CLONE_DIR
          git add src/docs/resources/hardhat.md
          git add src/docs/resources/truffle.md
-         echo A
          git commit --message 'Automatic update to keep tutorials in sync'
-         echo B
          git push -u origin HEAD:updated-tutorial
-         echo C
-# API_TOKEN_GITHUB: 
