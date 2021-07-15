@@ -100,7 +100,7 @@ be finished by then (you will know when the build process is done because you'll
 
 ## Migrate a Dapp to Optimistic Ethereum
 
-Now that we have Optimistic Ethereum running, it is time to run a distributed application (dapp) on it.
+Now that we have Optimistic Ethereum running, it is time to run a decentralized application (dapp) on it.
 
 **Note:** If you don't need the explanations and just want to see running code, 
 [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
