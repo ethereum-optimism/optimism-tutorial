@@ -3,15 +3,17 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This is a practical guide to getting your ERC20 token deployed on Optimism and bridging that using the 
+This is a practical guide to getting your ERC20 token deployed on Optimism and bridging it using the 
 [Standard Bridge implementation](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
 
-For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement `IL2StandardERC20`. The standard implementation of 
-that is available in `L2StandardERC20` contract as part of the `@eth-optimism/contracts` package.
+For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement 
+[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/IL2StandardERC20.sol). The standard implementation of that is available in 
+[`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package.
 
 ## Deploying a Standard Token
 
-Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on either `optimism-kovan` or `optimism-mainnet` networks.
+Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on 
+`optimism-kovan`, `optimism-mainnet`, or a local development environment.
 
 ### Prerequisites
 
