@@ -3,9 +3,11 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This is a practical guide to getting your ERC20 token deployed on Optimism and bridging that using the (Standard Bridge implementation)[https://community.optimism.io/docs/developers/bridge/standard-bridge.html].
+This is a practical guide to getting your ERC20 token deployed on Optimism and bridging that using the 
+[Standard Bridge implementation](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
 
-For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement `IL2StandardERC20`. The standard implementation of that is available in `L2StandardERC20` contract as part of the `@eth-optimism/contracts` package.
+For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement `IL2StandardERC20`. The standard implementation of 
+that is available in `L2StandardERC20` contract as part of the `@eth-optimism/contracts` package.
 
 ## Deploying a Standard Token
 
@@ -56,5 +58,9 @@ to deploy a standard token on L2. At the end you should get a successful output 
 
 # Deploying a Custom Token
 
-When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation if compliant with `IL2StandardERC20`. You can freely deploy your proposed implementation to `optimism-kovan` network. Once you're ready with a tested kovan deployment, you can request a review via [this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimism-mainnet`.
+When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation 
+if compliant with `IL2StandardERC20`. You can freely deploy your proposed implementation to `optimism-kovan` network. Once you're 
+ready with a tested kovan deployment, you can request a review via 
+[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider 
+whitelisting your deployer address on `optimism-mainnet`.
 
