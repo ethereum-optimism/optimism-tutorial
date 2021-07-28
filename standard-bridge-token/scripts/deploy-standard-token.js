@@ -24,8 +24,7 @@ async function main() {
     l2StandardTokenFactory = new ethers.Contract('0x50EB44e3a68f1963278b4c74c6c343508d31704C', L2StandardTokenFactoryArtifact.abi, signer)  // Kovan instance
   } else if (hre.network.name == 'optimism-mainnet') {
     l2StandardTokenFactory = new ethers.Contract('0x2e985AcD6C8Fa033A4c5209b0140940E24da7C5C', L2StandardTokenFactoryArtifact.abi, signer)  // Mainnet instance
-  } else if (hre.network.name != 'optimism') {
-    // todo
+  } else {
     throw Error("unsupported network")
   }
 

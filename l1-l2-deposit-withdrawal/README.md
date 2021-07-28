@@ -7,17 +7,8 @@ This is a practical guide to getting your ERC20 token deployed on Optimism and b
 
 For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement `IL2StandardERC20`. The standard implementation of that is available in `L2StandardERC20` contract as part of the `@eth-optimism/contracts` package.
 
-# Deploying a Standard Token
 
-To deploy an instance of `L2StandardERC20` - the standard Optimism ERC20 on L2 - you can use our token factory contract `OVM_L2StandardTokenFactory` available at
-`0x50EB44e3a68f1963278b4c74c6c343508d31704C` Optimism Kovan
-`0x2e985AcD6C8Fa033A4c5209b0140940E24da7C5C` Optimism Mainnet
-
-
-# Deploying a Custom Token
-
-
-# Sample L1/L2 deposit withdrawal example
+# L1/L2 deposit withdrawal example
 
 1. On Optimistic Ethereum create an ERC-20 contract that inherits from
    [L2StandardERC20](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol).
