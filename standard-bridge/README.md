@@ -1,12 +1,25 @@
-# Bridging ERC-20 Tokens Between L1 and Optimistic Ethereum
+# Bridging ERC-20 Tokens Between L1 and Optimistic Ethereum using the Standard Bridge
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-The most common L1-L2 communication requirement is to move assets, especially ERC-20 tokens, between the underlying L1 network and the L2
-solution. Optimisitc Ethereum provides you with a simple mechanism to do exactly that.
+This is a practical guide to getting your ERC20 token deployed on Optimism and bridging that using the (Standard Bridge implementation)[https://community.optimism.io/docs/developers/bridge/standard-bridge.html].
 
-1. On Optimistic Ethereum create an ERC-20 contract that inherits from 
+For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement `IL2StandardERC20`. The standard implementation of that is available in `L2StandardERC20` contract as part of the `@eth-optimism/contracts` package.
+
+# Deploying a Standard Token
+
+To deploy an instance of `L2StandardERC20` - the standard Optimism ERC20 on L2 - you can use our token factory contract `OVM_L2StandardTokenFactory` available at
+`0x50EB44e3a68f1963278b4c74c6c343508d31704C` Optimism Kovan
+`0x2e985AcD6C8Fa033A4c5209b0140940E24da7C5C` Optimism Mainnet
+
+
+# Deploying a Custom Token
+
+
+# Sample L1/L2 deposit withdrawal example
+
+1. On Optimistic Ethereum create an ERC-20 contract that inherits from
    [L2StandardERC20](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol).
 2. Transfer from L1 to L2:
    1. Do A
@@ -16,8 +29,8 @@ solution. Optimisitc Ethereum provides you with a simple mechanism to do exactly
    2. Do b
 
 
-**Note:** If you don't need the explanations and just want to see running code, 
-[click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
+**Note:** If you don't need the explanations and just want to see running code,
+[click here](https://github.com/ethereum-optimism/optimism-tutorial/). The
 `erc20-bridge/dapp` directory
 is just an `npm install` away from being a working example.
 
@@ -25,8 +38,8 @@ is just an `npm install` away from being a working example.
 
 ### Prerequisites
 
-I am going to assume you already have a Hardhat development environment, as explained in 
-[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat). Most of 
+I am going to assume you already have a Hardhat development environment, as explained in
+[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat). Most of
 these directions should also work with Truffle if you prefer that development environment, but there
 might be a few minor differences.
 
@@ -44,10 +57,10 @@ use it, edit `hardhat.config.js` to add to `module.exports.networks`:
 
 ### The L1 ERC-20 Contract
 
-On the L1 network you can use any ERC-20 compliant contract. For the purposes of this tutorial, I 
-am going to use [this 
-contract](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/erc20-bridge/dapp/contracts/L1_ERC20.sol) 
-which is a slightly modified version of [the OpenZeppelin ERC-20 
+On the L1 network you can use any ERC-20 compliant contract. For the purposes of this tutorial, I
+am going to use [this
+contract](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/erc20-bridge/dapp/contracts/L1_ERC20.sol)
+which is a slightly modified version of [the OpenZeppelin ERC-20
 contract](https://ethereum.org/en/developers/tutorials/erc20-annotated-code/).
 
 As part of the setup we need to do two things with things with this contract:
@@ -88,8 +101,8 @@ The L2 ERC-20 contract needs a bit more functionality than a standard ERC-20 con
 
 To do this we can use the [L2StandardERC20
 ](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol)
-contract, possibly modified (directly or through inheritence) for custom business logic. In this tutorial we 
-do not need any custom logic, so we just use the original version. 
+contract, possibly modified (directly or through inheritence) for custom business logic. In this tutorial we
+do not need any custom logic, so we just use the original version.
 
 L2StandardERC20 requires the [OpenZeppelin contract library](https://openzeppelin.com/contracts/), which
 you can install using this command:
@@ -104,7 +117,7 @@ npx hardhat compile --network optimistic
 npx hardhat console --network optimistic
 ```
 
-In the console, run these commands. 
+In the console, run these commands.
 
 ```javascript
 l1contractAddr = <address of the L1 ERC20>
@@ -173,21 +186,22 @@ You do this from the L1 console (the one you ran with `--network underlying`).
    result = await l1bridge.depositERC20To(l1contract.address, l2contractAddr, l2userAddr, transferAmt, 1000000, [])
    console.log(`Address ${l1userAddr} has ${(await l1contract.balanceOf(l1userAddr))} L1 tokens`)
    ```
-   
+
 4. In the L2 console finalize the transfer and see it actually happened.
 
    ```javascript
    l2bridgeAddr = '0x4200000000000000000000000000000000000010'
    l2bridgeFactory = await ethers.getContractFactory("OVM_L2StandardBridge")
-   l2bridge = await l2bridgeFactory.attach(l2bridgeAddr)   
-   
-   console.log(`Address ${l2userAddr} has ${(await l2contract.balanceOf(l2userAddr))} L2 tokens`) 
+   l2bridge = await l2bridgeFactory.attach(l2bridgeAddr)
+
+   console.log(`Address ${l2userAddr} has ${(await l2contract.balanceOf(l2userAddr))} L2 tokens`)
    ```
-      
-      
+
+
 
 ## Transfering Tokens from L2 to L1
 
 
 ## Conclusion
 
+Deployment add .env file with PRIVATE_KEY var

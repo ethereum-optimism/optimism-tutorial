@@ -1,0 +1,162 @@
+const ethers = require('ethers')
+const { Watcher } = require('@eth-optimism/watcher')
+const { predeploys, getContractInterface } = require('@eth-optimism/contracts')
+
+// Set up some contract factories. You can ignore this stuff.
+const factory = (name, ovm = false) => {
+  const artifact = require(`./artifacts${ovm ? '-ovm' : ''}/contracts/${name}.sol/${name}.json`)
+  return new ethers.ContractFactory(artifact.abi, artifact.bytecode)
+}
+const erc20L1Artifact = require(`./artifacts/contracts/ERC20.sol/ERC20.json`)
+const factory__L1_ERC20 = new ethers.ContractFactory(erc20L1Artifact.abi, erc20L1Artifact.bytecode)
+//const factory__L1_ERC20 = factory('ERC20')
+const erc20L2Artifact = require('./node_modules/@eth-optimism/contracts/artifacts-ovm/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol/L2StandardERC20.json')
+const factory__L2_ERC20 = new ethers.ContractFactory(erc20L2Artifact.abi, erc20L2Artifact.bytecode)
+
+const l1StandardBridgeArtifact = require(`./node_modules/@eth-optimism/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens/OVM_L1StandardBridge.sol/OVM_L1StandardBridge.json`)
+const factory__L1StandardBridge = new ethers.ContractFactory(l1StandardBridgeArtifact.abi, l1StandardBridgeArtifact.bytecode)
+
+const l2StandardBridgeArtifact = require(`./node_modules/@eth-optimism/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens/OVM_L2StandardBridge.sol/OVM_L2StandardBridge.json`)
+const factory__L2StandardBridge = new ethers.ContractFactory(l2StandardBridgeArtifact.abi, l2StandardBridgeArtifact.bytecode)
+
+//const FINALIZATION_GAS = 1_200_000
+
+const sleep = async (ms) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(null)
+    }, ms)
+  })
+}
+
+async function main() {
+  // Set up our RPC provider connections.
+  const l1RpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:9545')
+  const l2RpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:8545')
+
+  // Set up our wallets (using a default private key with 10k ETH allocated to it).
+  // Need two wallets objects, one for interacting with L1 and one for interacting with L2.
+  // Both will use the same private key.
+  const key = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
+  const l1Wallet = new ethers.Wallet(key, l1RpcProvider)
+  const l2Wallet = new ethers.Wallet(key, l2RpcProvider)
+
+
+  // L1 messenger address depends on the deployment, this is default for our local deployment.
+  //const l1MessengerAddress = '0x59b670e9fA9D0A427751Af201D676719a970857b'
+  const l2AddressManager = new ethers.Contract(
+    predeploys.Lib_AddressManager,
+    getContractInterface('Lib_AddressManager'),
+    l2RpcProvider
+  )
+
+  console.log("predeploys.Lib_AddressManager", predeploys.Lib_AddressManager)
+    console.log("l2AddressManager", l2AddressManager.address)
+  const l1Messenger = new ethers.Contract(
+    await l2AddressManager.getAddress('OVM_L1CrossDomainMessenger'),
+    getContractInterface('OVM_L1CrossDomainMessenger'),
+    l1RpcProvider
+  )
+  console.log("l1MessengerAddress", l1Messenger.address)
+  const l1MessengerAddress = l1Messenger.address
+  // L2 messenger address is always the same.
+  const l2MessengerAddress = '0x4200000000000000000000000000000000000007'
+
+  // Tool that helps watches and waits for messages to be relayed between L1 and L2.
+  const watcher = new Watcher({
+    l1: {
+      provider: l1RpcProvider,
+      messengerAddress: l1MessengerAddress
+    },
+    l2: {
+      provider: l2RpcProvider,
+      messengerAddress: l2MessengerAddress
+    }
+  })
+
+  // Deploy an ERC20 token on L1.
+  console.log('Deploying L1 ERC20...')
+
+  const L1_ERC20 = await factory__L1_ERC20.connect(l1Wallet).deploy(
+    1234, //initialSupply
+    'L1 ERC20', //name
+  )
+  await L1_ERC20.deployTransaction.wait()
+
+  // Deploy the paired ERC20 token to L2.
+  console.log('Deploying L2 ERC20...')
+  const L2_ERC20 = await factory__L2_ERC20.connect(l2Wallet).deploy(
+    '0x4200000000000000000000000000000000000010',
+    L1_ERC20.address,
+    'L2 ERC20', //name
+    'L2T', // symbol
+  )
+  await L2_ERC20.deployTransaction.wait()
+
+  const L2StandardBridge = factory__L2StandardBridge
+      .connect(l2Wallet)
+      .attach('0x4200000000000000000000000000000000000010')
+
+  const L1StandardBridgeAddress = await L2StandardBridge.l1TokenBridge();
+  console.log("L1StandardBridgeAddress", L1StandardBridgeAddress)
+  // Create a gateway that connects the two contracts.
+  console.log('Deploying L1 Standard Bridge...')
+  const L1StandardBridge = factory__L1StandardBridge.connect(l1Wallet).attach(L1StandardBridgeAddress)
+
+
+  // Initial balances.
+  console.log(`Balance on L1: ${await L1_ERC20.balanceOf(l1Wallet.address)}`) // 1234
+  console.log(`Balance on L2: ${await L2_ERC20.balanceOf(l1Wallet.address)}`) // 0
+
+  // Allow the gateway to lock up some of our tokens.
+  console.log('Approving tokens for ERC20 gateway...')
+  const tx1 = await L1_ERC20.approve(L1StandardBridge.address, 1234)
+  await tx1.wait()
+
+  // Lock the tokens up inside the gateway and ask the L2 contract to mint new ones.
+  console.log('Depositing tokens into L2 ERC20...')
+  const tx2 = await L1StandardBridge.depositERC20(
+    L1_ERC20.address,
+    L2_ERC20.address,
+    1234,
+    2000000,
+    '0x')
+  await tx2.wait()
+
+  // Wait for the message to be relayed to L2.
+  console.log('Waiting for deposit to be relayed to L2...')
+  const [ msgHash1 ] = await watcher.getMessageHashesFromL1Tx(tx2.hash)
+
+  const receipt = await watcher.getL2TransactionReceipt(msgHash1, true)
+  //console.log("receipt", receipt)
+
+  // Log some balances to see that it worked!
+  console.log(`Balance on L1: ${await L1_ERC20.balanceOf(l1Wallet.address)}`) // 0
+  console.log(`Balance on L2: ${await L2_ERC20.balanceOf(l1Wallet.address)}`) // 1234
+
+  // Burn the tokens on L2 and ask the L1 contract to unlock on our behalf.
+  console.log(`Withdrawing tokens back to L1 ERC20...`)
+  const tx3 = await L2StandardBridge.withdraw(
+    L2_ERC20.address,
+    1234,
+    0,
+    '0x'
+  )
+  await tx3.wait()
+
+  // Wait for the message to be relayed to L1.
+  console.log(`Waiting for withdrawal to be relayed to L1...`)
+  const [ msgHash2 ] = await watcher.getMessageHashesFromL2Tx(tx3.hash)
+  await watcher.getL1TransactionReceipt(msgHash2)
+
+  // Log balances again!
+  console.log(`Balance on L1: ${await L1_ERC20.balanceOf(l1Wallet.address)}`) // 1234
+  console.log(`Balance on L2: ${await L2_ERC20.balanceOf(l1Wallet.address)}`) // 0
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
