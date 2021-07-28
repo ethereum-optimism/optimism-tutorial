@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "compile": "hardhat compile && hardhat --network optimism compile"
+    "clean": "rimraf ./cache && rimraf ./artifacts",
+    "compile": "yarn clean && hardhat compile && hardhat --network optimism compile"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -16,6 +17,7 @@
   "dependencies": {
     "@eth-optimism/contracts": "^0.4.5",
     "@eth-optimism/hardhat-ovm": "^0.2.2",
-    "dotenv": "^10.0.0"
+    "@eth-optimism/watcher": "^0.0.1-alpha.9",
+    "rimraf": "^3.0.2"
   }
 }
