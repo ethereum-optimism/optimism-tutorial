@@ -21,7 +21,7 @@ In this tutorial we need to access both Optimistic Ethereum and the underlying L
 ## Transfering Tokens from L1 to L2 and back
 
 ```sh
-yarn run compile
+yarn && yarn run compile
 ```
 
 You can run the script that demostracted that via
