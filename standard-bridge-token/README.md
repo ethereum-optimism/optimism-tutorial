@@ -13,7 +13,7 @@ For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has
 ## Deploying a Standard Token
 
 Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on 
-`optimism-kovan`, `optimism-mainnet`, or a local development environment.
+`optimism-kovan` or `optimism-mainnet`.
 
 ### Prerequisites
 
