@@ -54,7 +54,7 @@ The script uses our token factory contracts `OVM_L2StandardTokenFactory` availab
 
 `0x2e985AcD6C8Fa033A4c5209b0140940E24da7C5C` Optimism Mainnet
 
-to deploy a standard token on L2. At the end you should get a successful output confirming your token was creagted and the L2 address:
+to deploy a standard token on L2. At the end you should get a successful output confirming your token was created and the L2 address:
 
 `L2StandardERC20 deployed to: 0x5CFE8703A62E3a80ab7233263C074698b722d48b`
 
