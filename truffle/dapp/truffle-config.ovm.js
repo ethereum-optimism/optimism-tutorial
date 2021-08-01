@@ -62,7 +62,8 @@ module.exports = {
     optimistic_kovan: {
       network_id: 69,
       chain_id: 69,
-      gas:  15000000,
+      gas:  1650000,
+      gasPrice: 15000000,
       provider: function() {
         return new HDWalletProvider(kovanMnemonic, "https://optimism-kovan.infura.io/v3/"+ infuraKey, 0, 1);
       }
