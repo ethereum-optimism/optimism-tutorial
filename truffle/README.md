@@ -10,15 +10,6 @@ Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 
-## Build an Optimistic Ethereum Server
-
-To test and debug on Optimistic Ethereum you need to have a running Optimistic Ethereum server, so the first step is to build one. The directions 
-in this section are 
-for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), but they should be 
-similar for other Linux 
-versions and other platforms
-
-### Install Prerequisite Software
 ## Build an Optimistic Ethereum Node
 
 The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
