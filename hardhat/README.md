@@ -239,6 +239,20 @@ To solve this problem:
    npx hardhat --network optimistic test
    ```
 
+## Deploying to a Real Network
+
+To deploy to a real network (Optimistic Ethereum or Optimistic Kovan),
+edit `hardhat.config.js`'s `modules.export.networks` to add a definition
+similar to this one:
+
+```javascript
+    optimisticKovan: {
+       url: 'https://kovan.optimism.io',
+       accounts: { mnemonic: <your account mnemonic goes here> },
+       gasPrice: 15000000,
+       ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
+    }
+```    
 
 ## Best Practices for Running Tests
 
