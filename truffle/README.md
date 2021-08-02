@@ -9,6 +9,11 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
+> **Note:** There is [currently an issue](https://github.com/trufflesuite/truffle/issues/4217)
+> that makes it difficult to use Truffle to run deployments or tests on Optimistic
+> Kovan or the main Optimistic Ethereum network.
+>
+> You can still do it, but you need to add the gas costs of transactions manually.
 
 ## Build an Optimistic Ethereum Node
 
