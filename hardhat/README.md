@@ -11,9 +11,11 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 
 ## Build an Optimistic Ethereum Node
 
-The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
-The directions in this section are for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), 
-but they should be similar for other Linux versions and other platforms
+The fastest way to test and debug apps on Optimistic Ethereum is to run a 
+local Optimistic Ethereum node, so we'll build one.
+The directions in this section are for an Ubuntu 20.04 VM running on GCP with 
+a 20 GB disk (the default, 10 GB, is not enough) and 16 GB RAM
+but they should be similar for other Linux versions and other platforms.
 
 ### Install Prerequisite Software
 
