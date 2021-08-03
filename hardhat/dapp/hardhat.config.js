@@ -27,7 +27,14 @@ module.exports = {
        accounts: { mnemonic: 'test test test test test test test test test test test junk' },
        gasPrice: 15000000,      
        ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
-    }
+    },
+    optimisticKovan: {
+      url: 'https://kovan.optimism.io',
+      // ********* Replace with your own mnemonic
+      accounts: { mnemonic: 'test test test test test test test test test test test junk' },
+      gasPrice: 15000000,
+      ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
+   }    
   }
 };
 

@@ -9,12 +9,19 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
+> **Note:** There is [currently an issue](https://github.com/trufflesuite/truffle/issues/4217)
+> that makes it difficult to use Truffle to run deployments or tests on Optimistic
+> Kovan or the main Optimistic Ethereum network.
+>
+> You can still do it, but you need to add the gas costs of transactions manually.
 
 ## Build an Optimistic Ethereum Node
 
-The fastest way to test and debug apps on Optimistic Ethereum is to run a local Optimistic Ethereum node, so we'll build one.
-The directions in this section are for an Ubuntu 20.04 VM running on GCP with a 20 GB disk (the default, 10 GB, is not enough), 
-but they should be similar for other Linux versions and other platforms
+The fastest way to test and debug apps on Optimistic Ethereum is to run a 
+local Optimistic Ethereum node, so we'll build one.
+The directions in this section are for an Ubuntu 20.04 VM running on GCP with 
+a 20 GB disk (the default, 10 GB, is not enough) and 16 GB RAM
+but they should be similar for other Linux versions and other platforms.
 
 ### Install Prerequisite Software
 
