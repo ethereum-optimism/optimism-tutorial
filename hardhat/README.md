@@ -228,13 +228,14 @@ Error HH600: Compilation failed
 
 To solve this problem:
 
-1. Edit the `hardhat.config.js` file to change `module.exports.solidity` to the supported version.
-2. Edit `contracts/Greeter.sol` to change the `pragma solidity` line to the supported version.
-3. Check the application still works on normal Ethereum.
+1. [See the list of supported Soldity versions](https://github.com/ethereum-optimism/solc-bin/tree/gh-pages/bin).
+2. Edit the `hardhat.config.js` file to change `module.exports.solidity` to a supported version.
+3. Edit `contracts/Greeter.sol` to change the `pragma solidity` line to that  version.
+4. Check the application still works on normal Ethereum.
    ```sh
    npx hardhat test
    ```
-4. Check the application works on Optimistic Ethereum.
+5. Check the application works on Optimistic Ethereum.
    ```sh
    npx hardhat --network optimistic test
    ```
