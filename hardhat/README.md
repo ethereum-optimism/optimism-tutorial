@@ -247,7 +247,7 @@ edit `hardhat.config.js`'s `modules.export.networks` to add a definition
 similar to this one:
 
 ```javascript
-    optimisticKovan: {
+    "optimistic-kovan": {
        url: 'https://kovan.optimism.io',
        accounts: { mnemonic: <your account mnemonic goes here> },
        gasPrice: 15000000,
