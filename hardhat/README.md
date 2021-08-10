@@ -59,15 +59,29 @@ but they should be similar for other Linux versions and other platforms.
 
 ### Start an Optimistic Ethereum Node
 
-This process downloads, compiles, and builds an Optimistic Ethereum network. Note that it takes a long time.
+This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism.git
-   cd optimism
+   cd optimism/ops
    ```
-   
+
+2. Start the Optimistic Ethereum node. This process downloads the images
+   from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and it
+   typically takes about ten minutes.
+
+   ```sh
+   cd optimism/ops
+   docker-compose -f docker-compose-nobuild.yml up -t 60
+   ``` 
+
+   You might get a timeout at first. If that is the case, just run the 
+   `docker-compose` command again.
+
+<!--   
+
 2. Build the Optimistic Ethereum software.   
    
    ```sh
@@ -79,6 +93,7 @@ This process downloads, compiles, and builds an Optimistic Ethereum network. Not
 
    ```sh
    cd ops
+   docker-compose -f docker-compose-nobuild.yml up
    export COMPOSE_DOCKER_CLI_BUILD=1
    export DOCKER_BUILDKIT=1
    docker-compose build && echo Build complete
@@ -99,6 +114,8 @@ be finished by then (you will know when the build process is done because you'll
    ```sh
    ~/optimism/ops/scripts/wait-for-sequencer.sh
    ```
+
+--> 
 
 ## Migrate a Dapp to Optimistic Ethereum
 

@@ -64,51 +64,25 @@ but they should be similar for other Linux versions and other platforms.
 
 ### Start an Optimistic Ethereum Node
 
-This process downloads, compiles, and builds an Optimistic Ethereum network. Note that it takes a long time.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism.git
-   cd optimism
+   cd optimism/ops
    ```
-   
-2. Build the Optimistic Ethereum software.   
-   
-   ```sh
-   yarn install
-   yarn build
-   ```
-   
-3. Build the Docker containers
+
+2. Start the Optimistic Ethereum node. This process downloads the images
+   from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and it
+   typically takes about ten minutes.
 
    ```sh
-   cd ops
-   export COMPOSE_DOCKER_CLI_BUILD=1
-   export DOCKER_BUILDKIT=1
-   docker-compose build && echo Build complete
-   ```
+   cd optimism/ops
+   docker-compose -f docker-compose-nobuild.yml up -t 60
+   ``` 
 
-The build process is time consuming, and you do not need to wait for it to finish before you continue the tutorial.
-I will note the point in the tutorial where you need to have a running Optimistic Ethereum Node. Hopefully it will
-be finished by then (you will know when the build process is done because you'll see a **Build complete** message).
-For now you can skip to the next section.
-
-4. Once the build process is finally done, start the Optimistic Ethereum node:
-
-   ```sh
-   docker-compose up
-   ```
-
-5. To see when the Optimistic Ethereum node starts, you can start a separate command line window,
-   change to `.../ops/scripts`, and run `./wait-for-sequencer.sh`.
-   If you installed the Optimism software on your home directory, the commands are:
-   
-   ```sh
-   cd ~/optimism/ops/scripts
-   ./wait-for-sequencer.sh
-   ```
-
+   You might get a timeout at first. If that is the case, just run the 
+   `docker-compose` command again.
 
 
 
