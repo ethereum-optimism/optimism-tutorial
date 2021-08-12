@@ -69,12 +69,11 @@ but they should be similar for other Linux versions and other platforms.
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism.git
-   cd optimism/ops
    ```
 
 2. Start the Optimistic Ethereum node. This process downloads the images
-   from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and it
-   typically takes about ten minutes.
+   from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
+   depending on the hardware it can take up to ten minutes.
 
    ```sh
    cd optimism/ops
