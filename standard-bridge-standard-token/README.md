@@ -1,18 +1,18 @@
-# Bridging your ERC20 token to Optimism using the Standard Bridge
+# Bridging your Standard ERC20 token to Optimism using the Standard Bridge
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This is a practical guide to getting your ERC20 token deployed on Optimism and bridging it using the 
+This is a practical guide to getting your ERC20 token deployed on Optimism and bridging it using the
 [Standard Bridge implementation](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
 
-For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement 
-[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/IL2StandardERC20.sol). The standard implementation of that is available in 
+For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement
+[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/IL2StandardERC20.sol). The standard implementation of that is available in
 [`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package.
 
 ## Deploying a Standard Token
 
-Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on 
+Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on
 `optimism-kovan` or `optimism-mainnet`.
 
 ### Prerequisites
@@ -26,7 +26,7 @@ The hardhat config here `hardhat.config.js` is already setup to run against `opt
 
 ### The .env File
 
-Create an .env file in the root of `standard-bridge-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20.
+Create an .env file in the root of `standard-bridge-standard-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20.
 
 ### Update the deploy script
 
@@ -60,9 +60,5 @@ to deploy a standard token on L2. At the end you should get a successful output 
 
 # Deploying a Custom Token
 
-When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation 
-if compliant with `IL2StandardERC20`. You can freely deploy your proposed implementation to `optimism-kovan` network. Once you're 
-ready with a tested kovan deployment, you can request a review via 
-[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider 
-whitelisting your deployer address on `optimism-mainnet`.
+When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation. See this [tutorial on getting a custom token implemented and deployed](../standard-bridge-custom-token/README.md) to Optimistic Ethereum.
 
