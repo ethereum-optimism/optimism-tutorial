@@ -1,0 +1,63 @@
+# Bridging your Custom ERC20 token to Optimism using the Standard Bridge
+
+[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
+[![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
+
+This is a practical guide to customising the [`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol) implementation for use on the [Standard Bridge infrastructure](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
+
+For an L1/L2 token pair to work on the Standard Bridge the L2 token contract must implement
+[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/IL2StandardERC20.sol) interface. The standard implementation of that is available in
+[`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package, see [detailed instructions](../standard-bridge-standard-token/README.md) on using that as your L2 token.
+
+## Customizing the `L2StandardERC20` implementation
+
+Our example here implements a custom token [`L2CustomERC20`](contracts/L2CustomERC20.sol) based on the `L2StandardERC20` but with `8` decimal points, rather than `18`.
+
+For the purpose we import the `L2StandardERC20` from the `@eth-optimism/contracts` package. This standard token implementation is based on the OpenZeppelin ERC20 contract and implements the required `IL2StandardERC20` interface.
+
+```
+import { L2StandardERC20 } from "@eth-optimism/contracts/libraries/standards/L2StandardERC20.sol";
+```
+
+Then the only thing we need to do is call the internal `_setupDecimals(8)` method to alter the token `decimals` property from the default `18` to `8`.
+
+## Deploying the Custom Token
+
+Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimistic-kovan`.
+
+Once you're ready with a tested kovan deployment, you can request a review via
+[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimistic-mainnet`.
+
+### Prerequisites
+
+You should already have a Hardhat development environment, as explained in
+[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat).
+
+### The Configuration File
+
+The hardhat config here `hardhat.config.js` is already setup to run against local dev environment, `optimistic-kovan` and `optimistic-mainnet` networks.
+
+### The .env File
+
+To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of `standard-bridge-custom-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
+
+### Update the deploy script
+
+Before you run the `scripts/deploy-custom-token.js` you need to update it with your L1 token details for the different networks in the `TODO` placeholders:
+```
+  l1Token = 'TODO'
+```
+
+### Running the deploy script
+
+Run the following script
+
+```sh
+yarn hardhat run scripts/deploy-custom-token.js --network optimistic-kovan
+```
+
+At the end you should get a successful output confirming your token was created and the L2 address:
+
+`L2CustomERC20 deployed to: 0x5CFE8703A62E3a80ab7233263C074698b722d48b`
+
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../l1-l2-deposit-withdrawal/README.md).
