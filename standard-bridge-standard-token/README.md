@@ -26,7 +26,7 @@ The hardhat config here `hardhat.config.js` is already setup to run against `opt
 
 ### The .env File
 
-Create an .env file in the root of `standard-bridge-standard-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20.
+To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of `standard-bridge-standard-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
 
 ### Update the deploy script
 
@@ -58,7 +58,8 @@ to deploy a standard token on L2. At the end you should get a successful output 
 
 `L2StandardERC20 deployed to: 0x5CFE8703A62E3a80ab7233263C074698b722d48b`
 
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../l1-l2-deposit-withdrawal/README.md).
+
 # Deploying a Custom Token
 
 When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation. See this [tutorial on getting a custom token implemented and deployed](../standard-bridge-custom-token/README.md) to Optimistic Ethereum.
-

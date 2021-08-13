@@ -23,7 +23,7 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 
 ## Deploying the Custom Token
 
-Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` both on a local dev node or on `optimism-kovan`.
+Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimism-kovan`.
 
 Once you're ready with a tested kovan deployment, you can request a review via
 [this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimism-mainnet`.
@@ -39,7 +39,7 @@ The hardhat config here `hardhat.config.js` is already setup to run against loca
 
 ### The .env File
 
-Create an .env file in the root of `standard-bridge-custom-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20.
+To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of `standard-bridge-custom-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
 
 ### Update the deploy script
 
@@ -60,3 +60,4 @@ At the end you should get a successful output confirming your token was created 
 
 `L2CustomERC20 deployed to: 0x5CFE8703A62E3a80ab7233263C074698b722d48b`
 
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../l1-l2-deposit-withdrawal/README.md).
