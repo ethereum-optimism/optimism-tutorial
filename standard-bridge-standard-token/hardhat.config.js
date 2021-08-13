@@ -7,14 +7,14 @@ require('dotenv').config();
 
 module.exports = {
   networks: {
-    'optimism-kovan': {
+    'optimistic-kovan': {
       chainId: 69,
       url: 'https://kovan.optimism.io',
       accounts: [process.env.PRIVATE_KEY],
       gasPrice: 15000000,
       ovm: true
     },
-    'optimism-mainnet': {
+    'optimistic-mainnet': {
       chainId: 10,
       url: 'https://mainnet.optimism.io',
       accounts: [process.env.PRIVATE_KEY],

@@ -13,7 +13,7 @@ For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has
 ## Deploying a Standard Token
 
 Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on
-`optimism-kovan` or `optimism-mainnet`.
+`optimistic-kovan` or `optimistic-mainnet`.
 
 ### Prerequisites
 
@@ -22,7 +22,7 @@ You should already have a Hardhat development environment, as explained in
 
 ### The Configuration File
 
-The hardhat config here `hardhat.config.js` is already setup to run against `optimism-kovan` and `optimism-mainnet` networks.
+The hardhat config here `hardhat.config.js` is already setup to run against `optimistic-kovan` and `optimistic-mainnet` networks.
 
 ### The .env File
 
@@ -45,7 +45,7 @@ Set the `L2TokenName` and `L2TokenSymbol` to the desired properties of the L2 to
 Run the following script
 
 ```sh
-yarn hardhat run scripts/deploy-standard-token.js --network optimism-kovan
+yarn hardhat run scripts/deploy-standard-token.js --network optimistic-kovan
 ```
 
 The script uses our token factory contracts `OVM_L2StandardTokenFactory` available at

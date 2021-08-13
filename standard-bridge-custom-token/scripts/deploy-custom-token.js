@@ -6,9 +6,9 @@ async function main() {
   let l1Token;
   if (hre.network.name == 'optimism') {
     l1Token = 'TODO'  // Dev L1 token address
-  } else if (hre.network.name == 'optimism-kovan') {
+  } else if (hre.network.name == 'optimistic-kovan') {
     l1Token = 'TODO'  // Kovan L1 token address
-  } else if (hre.network.name == 'optimism-mainnet') {
+  } else if (hre.network.name == 'optimistic-mainnet') {
     l1Token = 'TODO'  // Mainnet L1 token address
   } else {
     throw Error("unsupported network")

@@ -23,10 +23,10 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 
 ## Deploying the Custom Token
 
-Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimism-kovan`.
+Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimistic-kovan`.
 
 Once you're ready with a tested kovan deployment, you can request a review via
-[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimism-mainnet`.
+[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimistic-mainnet`.
 
 ### Prerequisites
 
@@ -35,7 +35,7 @@ You should already have a Hardhat development environment, as explained in
 
 ### The Configuration File
 
-The hardhat config here `hardhat.config.js` is already setup to run against local dev environment, `optimism-kovan` and `optimism-mainnet` networks.
+The hardhat config here `hardhat.config.js` is already setup to run against local dev environment, `optimistic-kovan` and `optimistic-mainnet` networks.
 
 ### The .env File
 
@@ -53,7 +53,7 @@ Before you run the `scripts/deploy-custom-token.js` you need to update it with y
 Run the following script
 
 ```sh
-yarn hardhat run scripts/deploy-custom-token.js --network optimism-kovan
+yarn hardhat run scripts/deploy-custom-token.js --network optimistic-kovan
 ```
 
 At the end you should get a successful output confirming your token was created and the L2 address:
