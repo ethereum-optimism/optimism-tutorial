@@ -327,5 +327,5 @@ vanilla Ethereum.
 ## Conclusion
 
 This tutorial has only touched the most basic points of Optimistic Ethereum development. For more information, you can 
-[check out the full integration guide](https://community.optimism.io/docs/developers/integration.html) on the Optimism community hub.
+[check out the full integration guide](https://community.optimism.io/docs/developers/l2/convert.html) on the Optimism community hub.
 Go read it, and then write a dapp that will amaze us.
