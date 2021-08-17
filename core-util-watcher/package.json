@@ -1,0 +1,10 @@
+{
+  "name": "tx-watcher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@eth-optimism/watcher": "^0.0.1-alpha.9",
+    "@ethersproject/providers": "^5.4.3"    
+  }
+}
