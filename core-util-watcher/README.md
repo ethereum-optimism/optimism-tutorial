@@ -58,7 +58,7 @@ And get back the receipt for the destination layer transaction.
 
 ## Limitations
 
-1. A transaction can call `CTC.enqueue`[https://github.com/ethereum-optimism/optimism/blob/796dbda597bf249cf31dfe4feb026c9968e26aaf/packages/contracts/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L252] 
+1. A transaction can call [`CTC.enqueue`](https://github.com/ethereum-optimism/optimism/blob/796dbda597bf249cf31dfe4feb026c9968e26aaf/packages/contracts/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L252)
    directly and bypass the messenger contracts. In that case the messenger
    contracts won't be able to trace that message.
 2. If the message hasn't been relayed yet, the `Promise` to get the transaction
