@@ -3,14 +3,11 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-Optimistic Ethereum lets you send messages between L1 and L2, in either direction.
-L1 to L2 messages, for example, can be "this address locked asset X in the bridge
-here L1, please give it the equivalent asset on L2". L2 to L1 messages, for
-example, can be "this address just burned asset Y on L2, please release to it the
-equivalent asset on L1".
+Optimistic Ethereum lets you send messages between L1 and L2, in either direction. There are always two transactions involved - one on each layer.
+For example when sending a token balance from L1 to L2 there is a transaction which locks the token balance in the bridge on L1 and a 
+second which mints the equivalent token amount on L2. For withdrawals the opposite occurs, again in two steps, the token 
+amount is burned on L2, then the equivalent amount (previously locked) is transferred out of the bridge to the user on L1.
 
-Each message of this type involves two transactions, one on each layer. In this guide you learn how to match the transaction on the source layer to the
-transaction on the destination.
 
 ## Setup
 
