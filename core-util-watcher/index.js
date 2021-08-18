@@ -24,7 +24,7 @@ const kovanWatcher = new Watcher({
 
   const mainnetWatcher = new Watcher({
     l1: {
-      provider: new JsonRpcProvider(`https://mainnnet.infura.io/${infuraID}`),
+      provider: new JsonRpcProvider(`https://mainnet.infura.io/${infuraID}`),
       // On Kovan, the value for mainnet is
       messengerAddress: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1'
     },
@@ -44,10 +44,6 @@ const lookupL1toL2 = async () => {
     const l1ToL2_L2Receipt = await watcher.getL2TransactionReceipt(l1ToL2_Hash)
     console.log(`L1ToL2 L2 TX hash: ${l1ToL2_L2Receipt.transactionHash}`)
 }
-
-
-
-
 
 
 const lookupL2toL1 = async () => {
