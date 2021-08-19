@@ -19,15 +19,6 @@ with these command line arguments:
 * `-i` / `--infuraID`: Your infura ID for the layer 1 connection
 * `--hash`: The hash of the transaction on the source layer
 
-
-      --version   Show version number                                  [boolean]
-  -n, --network   Network to use
-                              [choices: "kovan", "mainnet"] [default: "mainnet"]
-  -l, --layer     Origin layer of the transaction   [choices: 1, 2] [default: 1]
-  -i, --infuraID  Infura ID                                  [string] [required]
-      --hash      Hash of origin transaction                 [string] [required]
-      --help      Show help    
-
 ## How does it work?
 
 First you create a `Watcher` object. This watcher needs:
