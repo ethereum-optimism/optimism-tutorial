@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@eth-optimism/watcher": "^0.0.1-alpha.9",
-    "@ethersproject/providers": "^5.4.3"    
+    "@ethersproject/providers": "^5.4.3",
+    "yargs": "^17.1.1"
   }
 }

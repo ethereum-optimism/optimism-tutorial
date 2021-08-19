@@ -9,17 +9,24 @@ second which mints the equivalent token amount on L2. For withdrawals the opposi
 amount is burned on L2, then the equivalent amount (previously locked) is transferred out of the bridge to the user on L1.
 
 
-## Setup
+## Tracing a transaction
 
-The code that finds this match is at [index.js](index.js) in this directory. There
-are several lines you might want to change before you use it:
+The code that finds this match is at [index.js](index.js) in this directory. You run it
+with these command line arguments:
 
-| Line number | Value              |
-| ----------- | ------------------ |
-|           9 | Your [Infura](https://infura.io/) ID (get a free account if you don't have one) |
-|          10 | For an L1 -> L2 message, the L1 transaction hash |
-|          11 | For an L2 -> L1 message, the L2 transaction hash |
-|          38 | Whether you're looking in Optimistic Kovan or the main Optimistic Ethereum network |
+* `-n` / `--network`: The network to use, either **mainnet** (the default) or **kovan**.
+* `-l` / `--layer`: The network layer from which the message originates, either **1** or **2**
+* `-i` / `--infuraID`: Your infura ID for the layer 1 connection
+* `--hash`: The hash of the transaction on the source layer
+
+
+      --version   Show version number                                  [boolean]
+  -n, --network   Network to use
+                              [choices: "kovan", "mainnet"] [default: "mainnet"]
+  -l, --layer     Origin layer of the transaction   [choices: 1, 2] [default: 1]
+  -i, --infuraID  Infura ID                                  [string] [required]
+      --hash      Hash of origin transaction                 [string] [required]
+      --help      Show help    
 
 ## How does it work?
 
