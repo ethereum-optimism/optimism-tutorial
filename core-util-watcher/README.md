@@ -56,8 +56,11 @@ And get back the receipt for the destination layer transaction.
 1. A transaction can call [`CTC.enqueue`](https://github.com/ethereum-optimism/optimism/blob/796dbda597bf249cf31dfe4feb026c9968e26aaf/packages/contracts/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L252)
    directly and bypass the messenger contracts. In that case the messenger
    contracts won't be able to trace that message.
-2. If the message hasn't been relayed yet, the `Promise` to get the transaction
+1. If the message hasn't been relayed yet, the `Promise` to get the transaction
    receipt won't be fulfilled until it is. That is not a problem for L1->L2
    messages, which are relayed in a few minutes, but L2->L1 messages require 
    a week for the challenge period and then they need to be finalized on L1.
    That could take a long time.
+1. This package uses `eth_getLogs`, which is limited to 10,000 blocks. If you need to trace
+   a message that is older than that you'll need to use 
+   [a different API](https://docs.etherscan.io/api-endpoints/logs).
