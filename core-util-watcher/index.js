@@ -3,7 +3,7 @@
 // For the package whose source code is at
 // https://github.com/ethereum-optimism/optimism/blob/develop/packages/core-utils/src/watcher.ts
 
-const Watcher = require('@eth-optimism/watcher').Watcher
+const Watcher = require('@eth-optimism/core-utils').Watcher
 const JsonRpcProvider = require('@ethersproject/providers').JsonRpcProvider
 
 const yargs = require('yargs');
@@ -56,7 +56,7 @@ switch (argv.network) {
         messengerAddress: '0x4361d0F75A0186C05f971c566dC6bEa5957483fD'
       },
       l2: {
-        provider: new JsonRpcProvider(`https://kovan.optimism.io`),
+        provider: new JsonRpcProvider(`https://optimism-kovan.infura.io/v3/${infuraID}`),
         messengerAddress: '0x4200000000000000000000000000000000000007'
       }
     })
@@ -70,7 +70,7 @@ switch (argv.network) {
         messengerAddress: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1'
       },
       l2: {
-        provider: new JsonRpcProvider(`https://mainnet.optimism.io`),
+        provider: new JsonRpcProvider(`https://optimism-mainnet.infura.io/v3/${infuraID}`),
         messengerAddress: '0x4200000000000000000000000000000000000007'
       }
     })  
