@@ -1,5 +1,5 @@
 const ethers = require('ethers')
-const { Watcher } = require('@eth-optimism/watcher')
+const { Watcher } = require('@eth-optimism/core-utils')
 const { predeploys, getContractInterface } = require('@eth-optimism/contracts')
 
 // Set up some contract factories. You can ignore this stuff.
