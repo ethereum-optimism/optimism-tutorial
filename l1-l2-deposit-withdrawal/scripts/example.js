@@ -63,16 +63,21 @@ async function main() {
     'L1 ERC20', //name
   )
   await L1_ERC20.deployTransaction.wait()
+  console.log(`   @addr ${L1_ERC20.address}`)
 
   // Deploy the paired ERC20 token to L2.
   console.log('Deploying L2 ERC20...')
   const L2_ERC20 = await factory__L2_ERC20.connect(l2Wallet).deploy(
     '0x4200000000000000000000000000000000000010',
+    // The first value is to check the case of an invalid L1. The second value
+    // (L1_ERC20.address) is the correct one.
+    // '0x1111111111000000000000000000000000000000',
     L1_ERC20.address,
     'L2 ERC20', //name
     'L2T', // symbol
   )
   await L2_ERC20.deployTransaction.wait()
+  console.log(`   @addr ${L2_ERC20.address}`)
 
   const L2StandardBridge = factory__L2StandardBridge
       .connect(l2Wallet)
@@ -90,6 +95,17 @@ async function main() {
   console.log('Approving tokens for Standard Bridge...')
   const tx1 = await L1_ERC20.approve(L1StandardBridge.address, 1234)
   await tx1.wait()
+
+  // Sanity check, is the L2 address really the correct IL2StandardERC20 for this
+  // L1 token. If the contract doesn't implement IL2StandardERC20 we'll have an exception
+  // and the transfer will also fail.
+  //
+  // DO NOT remove this test. Without it a transfer might get blocked, and you won't get the
+  // assets back until seven days have passed. It might even be possible assets will be lost.
+  if (await L2_ERC20.l1Token() != L1_ERC20.address) {
+    console.log(`L2 token does not correspond to L1 token: L2_ERC20.l1Token() = ${await L2_ERC20.l1Token()}`)
+    process.exit(0)
+  }
 
   // Lock the tokens up inside the gateway and ask the L2 contract to mint new ones.
   console.log('Depositing tokens into L2 ...')
