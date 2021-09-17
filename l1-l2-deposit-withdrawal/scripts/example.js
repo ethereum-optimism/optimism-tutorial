@@ -96,10 +96,6 @@ async function main() {
   const tx1 = await L1_ERC20.approve(L1StandardBridge.address, 1234)
   await tx1.wait()
 
-  // Sanity check, is the L2 address really the correct IL2StandardERC20 for this
-  // L1 token. If the contract doesn't implement IL2StandardERC20 we'll have an exception
-  // and the transfer will also fail.
-  //
   // DO NOT remove this check.
   // It ensures L2 token compliance and validity. If the L2 token contract doesn't implement
   // IL2StandardERC20 or it does not correspond to the L1 token being deposited, an exception
