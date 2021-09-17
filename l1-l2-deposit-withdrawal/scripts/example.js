@@ -69,9 +69,9 @@ async function main() {
   console.log('Deploying L2 ERC20...')
   const L2_ERC20 = await factory__L2_ERC20.connect(l2Wallet).deploy(
     '0x4200000000000000000000000000000000000010',
-    // The first value is to check the case of an invalid L1. The second value
-    // (L1_ERC20.address) is the correct one.
+    // Use this (\/) value to check what happens when the L1 ERC20 address is invalid
     // '0x1111111111000000000000000000000000000000',
+    // Use this (\/) value to check what happens when the L1 ERC20 address is valid
     L1_ERC20.address,
     'L2 ERC20', //name
     'L2T', // symbol
