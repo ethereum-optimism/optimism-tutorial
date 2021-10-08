@@ -7,6 +7,10 @@ This tutorial aims to help you get started with developing decentralized applica
 running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
+> :warning: We are currently in the process of upgrading to OVM 2.0, but that
+> is still work in progress (excepted to end 28 OCT 2021). This tutorial is
+> already upgraded for OVM 2.0, but parts of it will change during the upgrade
+> process.
 
 
 ## Build an Optimistic Ethereum Node
