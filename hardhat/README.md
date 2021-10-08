@@ -226,6 +226,10 @@ Now that we have a running Optimistic Ethereum node and a dapp to run on it, we 
 
 ## Deploying to a Real Network
 
+> :warning: Until we deploy to the Kovan test network (planned for 14 OCT 2021), 
+> this section is not relevant
+   <!-- TEMO-OVM2.0 -->
+
 To deploy to a real network (Optimistic Ethereum or Optimistic Kovan),
 edit `hardhat.config.js`'s `modules.export.networks` to add a definition
 similar to this one:
@@ -233,9 +237,8 @@ similar to this one:
 ```javascript
     "optimistic-kovan": {
        url: 'https://kovan.optimism.io',
-       accounts: { mnemonic: <your account mnemonic goes here> },
-       gasPrice: 15000000,
-       ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
+       accounts: { mnemonic: <your account mnemonic goes here> }
+
     }
 ```    
 
