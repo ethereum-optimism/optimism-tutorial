@@ -12,6 +12,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 > already upgraded for OVM 2.0, but parts of it will change during the upgrade
 > process.
 
+   <!-- TEMO-OVM2.0 -->
 
 ## Build an Optimistic Ethereum Node
 
@@ -68,17 +69,26 @@ This process downloads and starts an Optimistic Ethereum network of one node.
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
 
    ```sh
-   git clone https://github.com/ethereum-optimism/optimism.git
+   git clone https://github.com/ethereum-optimism/optimism.git -b experimental
    ```
+   <!-- TEMO-OVM2.0 -->
 
-2. Start the Optimistic Ethereum node. This process downloads the images
+1. Copy a docker-compose file for OVM 2.0:
+
+   ```sh
+   cd optimism/ops
+   wget https://raw.githubusercontent.com/ethereum-optimism/optimism-tutorial/20211008-ovm20/ovm20-temp/docker-compose-ovm20.yml
+   ```
+   <!-- TEMO-OVM2.0 -->
+
+1. Start the Optimistic Ethereum node. This process downloads the images
    from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
    depending on the hardware it can take up to ten minutes.
 
    ```sh
-   cd optimism/ops
-   docker-compose -f docker-compose-nobuild.yml up -t 60
+   docker-compose -f docker-compose-ovm20.yml up -t 3600
    ``` 
+   <!-- TEMO-OVM2.0 -->
 
    You might get a timeout at first. If that is the case, just run the 
    `docker-compose` command again.
@@ -134,14 +144,14 @@ is just an `npm install` away from being a working example.
 The easiest way is to start with a sample application. 
 
 1. Open a second command line terminal
-2. Run `hardhat`, the development environment we use in this tutorial
+1. Run `hardhat`, the development environment we use in this tutorial
    ```sh
    mkdir dapp
    cd dapp
    npx hardhat
    ```
-3. Select **Create a sample project** and accept all the defaults.
-4. Verify the sample application.
+1. Select **Create a basic sample project** and accept all the defaults.
+1. Verify the sample application.
    ```sh
    npx hardhat test
    ```
