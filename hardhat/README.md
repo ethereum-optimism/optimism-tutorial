@@ -67,6 +67,8 @@ but they should be similar for other Linux versions and other platforms.
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
+   Not that until we officially release OVM 2.0 you need to clone the `experimental`
+   branch.
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism.git -b experimental
