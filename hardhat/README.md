@@ -73,22 +73,13 @@ This process downloads and starts an Optimistic Ethereum network of one node.
    ```
    <!-- TEMO-OVM2.0 -->
 
-1. Copy a docker-compose file for OVM 2.0:
-
-   ```sh
-   cd optimism/ops
-   wget https://raw.githubusercontent.com/ethereum-optimism/optimism-tutorial/20211008-ovm20/ovm20-temp/docker-compose-ovm20.yml
-   ```
-   <!-- TEMO-OVM2.0 -->
-
 1. Start the Optimistic Ethereum node. This process downloads the images
    from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
    depending on the hardware it can take up to ten minutes.
 
    ```sh
-   docker-compose -f docker-compose-ovm20.yml up -t 3600
+   docker-compose -f docker-compose-nobuild.yml up -t 3600
    ``` 
-   <!-- TEMO-OVM2.0 -->
 
    You might get a timeout at first. If that is the case, just run the 
    `docker-compose` command again.
