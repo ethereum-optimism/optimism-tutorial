@@ -7,7 +7,12 @@ This tutorial aims to help you get started with developing decentralized applica
 running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
+> :warning: We are currently in the process of upgrading to OVM 2.0, but that
+> is still work in progress (excepted to end 28 OCT 2021). This tutorial is
+> already upgraded for OVM 2.0, but parts of it will change during the upgrade
+> process.
 
+   <!-- TEMP-OVM2.0 -->
 
 ## Build an Optimistic Ethereum Node
 
@@ -62,18 +67,20 @@ but they should be similar for other Linux versions and other platforms.
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
+   Note that until we officially release OVM 2.0 you need to clone the `regenesis/0.5.0`
+   branch.
 
    ```sh
-   git clone https://github.com/ethereum-optimism/optimism.git
+   git clone https://github.com/ethereum-optimism/optimism.git -b regenesis/0.5.0
    ```
+   <!-- TEMP-OVM2.0 -->
 
-2. Start the Optimistic Ethereum node. This process downloads the images
+1. Start the Optimistic Ethereum node. This process downloads the images
    from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
    depending on the hardware it can take up to ten minutes.
 
    ```sh
-   cd optimism/ops
-   docker-compose -f docker-compose-nobuild.yml up -t 60
+   docker-compose -f docker-compose-nobuild.yml up -t 3600
    ``` 
 
    You might get a timeout at first. If that is the case, just run the 
@@ -130,14 +137,14 @@ is just an `npm install` away from being a working example.
 The easiest way is to start with a sample application. 
 
 1. Open a second command line terminal
-2. Run `hardhat`, the development environment we use in this tutorial
+1. Run `hardhat`, the development environment we use in this tutorial
    ```sh
    mkdir dapp
    cd dapp
    npx hardhat
    ```
-3. Select **Create a sample project** and accept all the defaults.
-4. Verify the sample application.
+1. Select **Create a basic sample project** and accept all the defaults.
+1. Verify the sample application.
    ```sh
    npx hardhat test
    ```
@@ -179,84 +186,42 @@ If you want to be more hands on, you can interact with the contract manually.
 
 Now that we have a running Optimistic Ethereum node and a dapp to run on it, we can deploy to Optimistic Ethereum.
 
-1. Install the Optimistic Ethereum hardhat plugin.
-   ```sh
-   yarn add @eth-optimism/hardhat-ovm
-   ```
-2. Edit `hardhat.config.js` to use the Optimistic Ethereum package.
-   ```js
-   require("@nomiclabs/hardhat-waffle");
-   require('@eth-optimism/hardhat-ovm')
-
-   ...
-   ```
-3. In the same file, add `optimistic` to the list of networks:
+1. Edit `hardhat.config.js` to add `optimistic` to the list of networks:
    ```js
    // hardhat.config.js
 
    ...
    
    module.exports = {
-     solidity: "0.8.4",   // or whatever you get from HardHat
+     solidity: "0.8.4",
      networks: {
-       // Add this network to your config!
        optimistic: {
-          url: 'http://127.0.0.1:8545',
-          accounts: { mnemonic: 'test test test test test test test test test test test junk' },
-          gasPrice: 15000000,          
-          ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
+         url: 'http://127.0.0.1:8545',
+         accounts: { mnemonic: 'test test test test test test test test test test test junk' }
        }
      }
-   }
+   };
    ```
 
-4. At this point you need to wait until the `docker-compose build` ends, if it hasn't yet, and then run
-   `cd ~/optimism/ops ; docker-compose up`.
-
-5. Test the contract on Optimistic Ethereum. Hardhat will recognize it has not been compiled and compile it for you.
+1. Test the contract on Optimistic Ethereum. 
 
    ```sh
    npx hardhat --network optimistic test
    ```
 
-6. If you want to interact with the app manually, use the console. You can use the same JavaScript commands
-   to control it you used above.
+1. If you want to interact with the app manually, use the console. You can use 
+   the same JavaScript commands to control it you used above.
    ```sh
    npx hardhat --network optimistic console
    ```
    
    
-#### Change the Solidity Version if Needed
-
-To run on Optimistic Ethereum a contract needs to be compiled with a variant Solidity compiler. Sometimes
-the latest version of Solidity supported by Optimistic Ethereum is not the same as the version used by the
-sample app in HardHat. When that is the case, the `npx hardhat --network optimistic test` command
-fails with an error message similar to:
-
-```
-OVM Compiler Error (insert "// @unsupported: ovm" if you don't want this file to be compiled for the OVM):
- contracts/Greeter.sol:2:1: ParserError: Source file requires different compiler version (current compiler is 0.7.6) - note that nightly builds are considered to be strictly less than the released version
-pragma solidity ^0.8.0;
-^---------------------^
-
-Error HH600: Compilation failed
-```
-
-To solve this problem:
-
-1. [See the list of supported Soldity versions](https://github.com/ethereum-optimism/solc-bin/tree/gh-pages/bin).
-2. Edit the `hardhat.config.js` file to change `module.exports.solidity` to a supported version.
-3. Edit `contracts/Greeter.sol` to change the `pragma solidity` line to that  version.
-4. Check the application still works on normal Ethereum.
-   ```sh
-   npx hardhat test
-   ```
-5. Check the application works on Optimistic Ethereum.
-   ```sh
-   npx hardhat --network optimistic test
-   ```
 
 ## Deploying to a Real Network
+
+> :warning: Until we deploy to the Kovan test network (planned for 14 OCT 2021), 
+> this section is not relevant
+   <!-- TEMO-OVM2.0 -->
 
 To deploy to a real network (Optimistic Ethereum or Optimistic Kovan),
 edit `hardhat.config.js`'s `modules.export.networks` to add a definition
@@ -265,9 +230,8 @@ similar to this one:
 ```javascript
     "optimistic-kovan": {
        url: 'https://kovan.optimism.io',
-       accounts: { mnemonic: <your account mnemonic goes here> },
-       gasPrice: 15000000,
-       ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
+       accounts: { mnemonic: <your account mnemonic goes here> }
+
     }
 ```    
 
@@ -281,5 +245,5 @@ vanilla Ethereum.
 ## Conclusion
 
 This tutorial has only touched the most basic points of Optimistic Ethereum development. For more information, you can 
-[check out the full integration guide](https://community.optimism.io/docs/developers/l2/convert.html) on the Optimism community hub.
+[check out the full integration guide](https://community.optimism.io/docs/developers/l2/convert-2.0.html) on the Optimism community hub.
 Go read it, and then write a dapp that will amaze us.
