@@ -12,7 +12,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 > already upgraded for OVM 2.0, but parts of it will change during the upgrade
 > process.
 
-   <!-- TEMO-OVM2.0 -->
+   <!-- TEMP-OVM2.0 -->
 
 ## Build an Optimistic Ethereum Node
 
@@ -67,13 +67,13 @@ but they should be similar for other Linux versions and other platforms.
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
-   Not that until we officially release OVM 2.0 you need to clone the `regenesis/0.5.0`
+   Note that until we officially release OVM 2.0 you need to clone the `regenesis/0.5.0`
    branch.
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism.git -b regenesis/0.5.0
    ```
-   <!-- TEMO-OVM2.0 -->
+   <!-- TEMP-OVM2.0 -->
 
 1. Start the Optimistic Ethereum node. This process downloads the images
    from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
