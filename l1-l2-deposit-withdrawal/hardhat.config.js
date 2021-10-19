@@ -1,6 +1,5 @@
 // Plugins
 require('@nomiclabs/hardhat-ethers')
-require('@eth-optimism/hardhat-ovm')
 
 module.exports = {
   networks: {
@@ -14,12 +13,8 @@ module.exports = {
       accounts: {
         mnemonic: 'test test test test test test test test test test test junk'
       },
-      gasPrice: 0,
-      ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
+      gasPrice: 0
     }
   },
-  solidity: '0.7.6',
-  ovm: {
-    solcVersion: '0.7.6'
-  }
+  solidity: '0.7.6'
 }
