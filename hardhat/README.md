@@ -8,7 +8,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 > :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (excepted to end 28 OCT 2021). This tutorial is
+> is still work in progress (expected to end 28 OCT 2021). This tutorial is
 > already upgraded for OVM 2.0, but parts of it will change during the upgrade
 > process.
 
@@ -67,7 +67,7 @@ but they should be similar for other Linux versions and other platforms.
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
-   Not that until we officially release OVM 2.0 you need to clone the `regenesis/0.5.0`
+   Note that until we officially release OVM 2.0 you need to clone the `regenesis/0.5.0`
    branch.
 
    ```sh
