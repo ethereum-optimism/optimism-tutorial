@@ -27,19 +27,23 @@ async function main() {
   const l1Wallet = new ethers.Wallet(key, l1RpcProvider)
   const l2Wallet = new ethers.Wallet(key, l2RpcProvider)
 
-  console.log(`addrMngr: ${JSON.stringify(predeploys, null, 2)}`)
+  console.log(JSON.stringify(predeploys.L2CrossDomainMessenger))
 
-  const l2AddressManager = new ethers.Contract(
-    predeploys.Lib_AddressManager,
-    getContractInterface('Lib_AddressManager'),
+  const l2Messenger = new ethers.Contract(
+    predeploys.L2CrossDomainMessenger,
+    getContractInterface('L2CrossDomainMessenger'),
     l2RpcProvider
   )
 
+  console.log(l2Messenger.address)
+
   const l1Messenger = new ethers.Contract(
-    await l2AddressManager.getAddress('OVM_L1CrossDomainMessenger'),
-    getContractInterface('OVM_L1CrossDomainMessenger'),
+    await l2Messenger.l1CrossDomainMessenger(),
+    getContractInterface('L1CrossDomainMessenger'),
     l1RpcProvider
   )
+
+  console.log(l1Messenger.address)
 
   const l1MessengerAddress = l1Messenger.address
   // L2 messenger address is always the same.
