@@ -6,13 +6,13 @@ const { predeploys, getContractInterface } = require('@eth-optimism/contracts')
 const erc20L1Artifact = require(`../artifacts/contracts/ERC20.sol/ERC20.json`)
 const factory__L1_ERC20 = new ethers.ContractFactory(erc20L1Artifact.abi, erc20L1Artifact.bytecode)
 //const factory__L1_ERC20 = factory('ERC20')
-const erc20L2Artifact = require('../node_modules/@eth-optimism/contracts/artifacts-ovm/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol/L2StandardERC20.json')
+const erc20L2Artifact = require('../node_modules/@eth-optimism/contracts/artifacts/contracts/standards/L2StandardERC20.sol/L2StandardERC20.json')
 const factory__L2_ERC20 = new ethers.ContractFactory(erc20L2Artifact.abi, erc20L2Artifact.bytecode)
 
-const l1StandardBridgeArtifact = require(`../node_modules/@eth-optimism/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens/OVM_L1StandardBridge.sol/OVM_L1StandardBridge.json`)
+const l1StandardBridgeArtifact = require(`../node_modules/@eth-optimism/contracts/artifacts/contracts/L1/messaging/L1StandardBridge.sol/L1StandardBridge.json`)
 const factory__L1StandardBridge = new ethers.ContractFactory(l1StandardBridgeArtifact.abi, l1StandardBridgeArtifact.bytecode)
 
-const l2StandardBridgeArtifact = require(`../node_modules/@eth-optimism/contracts/artifacts/contracts/optimistic-ethereum/OVM/bridge/tokens/OVM_L2StandardBridge.sol/OVM_L2StandardBridge.json`)
+const l2StandardBridgeArtifact = require(`../node_modules/@eth-optimism/contracts/artifacts/contracts/L2/messaging/L2StandardBridge.sol/L2StandardBridge.json`)
 const factory__L2StandardBridge = new ethers.ContractFactory(l2StandardBridgeArtifact.abi, l2StandardBridgeArtifact.bytecode)
 
 async function main() {
@@ -27,21 +27,21 @@ async function main() {
   const l1Wallet = new ethers.Wallet(key, l1RpcProvider)
   const l2Wallet = new ethers.Wallet(key, l2RpcProvider)
 
-  const l2AddressManager = new ethers.Contract(
-    predeploys.Lib_AddressManager,
-    getContractInterface('Lib_AddressManager'),
+  const l2Messenger = new ethers.Contract(
+    predeploys.L2CrossDomainMessenger,
+    getContractInterface('L2CrossDomainMessenger'),
     l2RpcProvider
   )
 
   const l1Messenger = new ethers.Contract(
-    await l2AddressManager.getAddress('OVM_L1CrossDomainMessenger'),
-    getContractInterface('OVM_L1CrossDomainMessenger'),
+    await l2Messenger.l1CrossDomainMessenger(),
+    getContractInterface('L1CrossDomainMessenger'),
     l1RpcProvider
   )
 
   const l1MessengerAddress = l1Messenger.address
-  // L2 messenger address is always the same.
-  const l2MessengerAddress = '0x4200000000000000000000000000000000000007'
+  // L2 messenger address is always the same, 0x42.....07
+  const l2MessengerAddress = l2Messenger.address
 
   // Tool that helps watches and waits for messages to be relayed between L1 and L2.
   const watcher = new Watcher({

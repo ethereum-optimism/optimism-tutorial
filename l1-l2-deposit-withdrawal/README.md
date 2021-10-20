@@ -24,7 +24,7 @@ In this tutorial we need to access both Optimistic Ethereum and the underlying L
 yarn && yarn run compile
 ```
 
-You can run the script that demostracted that via
+You can run the script that demonstrated that via
 
 ```sh
 node scripts/example.js

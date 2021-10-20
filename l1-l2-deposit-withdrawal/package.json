@@ -15,9 +15,8 @@
     "hardhat": "^2.4.1"
   },
   "dependencies": {
-    "@eth-optimism/contracts": "^0.4.5",
-    "@eth-optimism/core-utils": "^0.5.3",
-    "@eth-optimism/hardhat-ovm": "^0.2.2",
+    "@eth-optimism/contracts": "canary",
+    "@eth-optimism/core-utils": "canary",
     "rimraf": "^3.0.2"
   }
 }
