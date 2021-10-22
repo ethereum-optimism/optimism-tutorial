@@ -87,7 +87,7 @@ This process downloads and starts an Optimistic Ethereum network of one node.
    You might get a timeout at first. If that is the case, just run the 
    `docker-compose` command again.
 
-> :info: It takes a few minutes for all the processes to start and communicate
+> :information_source: It takes a few minutes for all the processes to start and communicate
 > with each other. If at first you see `curl` failure to connect errors wait
 > a few minutes.
 
@@ -132,7 +132,7 @@ be finished by then (you will know when the build process is done because you'll
 
 Now that we have Optimistic Ethereum running, it is time to run a decentralized application (dapp) on it.
 
-> :info: If you don't need the explanations and just want to see running code, 
+> ::information_source:: If you don't need the explanations and just want to see running code, 
 > [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
 > `hardhat/dapp` directory only requires these steps to run:
 > 1. `yarn`
