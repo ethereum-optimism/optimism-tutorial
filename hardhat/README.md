@@ -132,7 +132,7 @@ be finished by then (you will know when the build process is done because you'll
 
 Now that we have Optimistic Ethereum running, it is time to run a decentralized application (dapp) on it.
 
-> ::information_source:: If you don't need the explanations and just want to see running code, 
+> :information_source: If you don't need the explanations and just want to see running code, 
 > [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
 > `hardhat/dapp` directory only requires these steps to run:
 > 1. `yarn`
