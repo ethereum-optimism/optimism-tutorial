@@ -8,8 +8,8 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 > :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (expected to end 28 OCT 2021). This tutorial is
-> already upgraded for OVM 2.0, but parts of it will change during the upgrade
+> is still work in progress (expected to end 11 NOV 2021). This tutorial is
+> already upgraded for OVM 2.0, but parts of it might change during the upgrade
 > process.
 
    <!-- TEMP-OVM2.0 -->
@@ -67,8 +67,8 @@ but they should be similar for other Linux versions and other platforms.
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
-   Note that until we officially release OVM 2.0 you need to clone the `regenesis/0.5.0`
-   branch.
+   Note that until we upgrade the production network to OVM 2.0 you need 
+   to clone the `regenesis/0.5.0` branch.
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism.git -b regenesis/0.5.0
@@ -80,11 +80,16 @@ This process downloads and starts an Optimistic Ethereum network of one node.
    depending on the hardware it can take up to ten minutes.
 
    ```sh
+   cd optimism/ops
    docker-compose -f docker-compose-nobuild.yml up -t 3600
    ``` 
 
    You might get a timeout at first. If that is the case, just run the 
    `docker-compose` command again.
+
+> :info: It takes a few minutes for all the processes to start and communicate
+> with each other. If at first you see `curl` failure to connect errors wait
+> a few minutes.
 
 <!--   
 
@@ -127,10 +132,12 @@ be finished by then (you will know when the build process is done because you'll
 
 Now that we have Optimistic Ethereum running, it is time to run a decentralized application (dapp) on it.
 
-**Note:** If you don't need the explanations and just want to see running code, 
-[click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
-`hardhat/dapp` directory
-is just an `npm install` away from being a working example.
+> :info: If you don't need the explanations and just want to see running code, 
+> [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
+> `hardhat/dapp` directory only requires these steps to run:
+> 1. `yarn`
+> 1. `npx hardhat test --network optimistic`
+
 
 ### Get a Sample Application
 
