@@ -12,9 +12,13 @@ These are already updated for OVM 2.0
 
 ## The Standard Bridge
 
-These are still OVM 1.0
+This one has been updated for OVM 2.0
 
 - [L1/L2 deposit withdrawal example](l1-l2-deposit-withdrawal)
+
+
+These ones are still waiting
+
 - [Bridging your Standard ERC20 token to Optimism using the Standard Bridge](standard-bridge-standard-token)
 - [Bridging your Custom ERC20 token to Optimism using the Standard Bridge](standard-bridge-custom-token)
 
