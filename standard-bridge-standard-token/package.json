@@ -14,8 +14,7 @@
     "hardhat": "^2.4.1"
   },
   "dependencies": {
-    "@eth-optimism/contracts": "^0.4.5",
-    "@eth-optimism/hardhat-ovm": "^0.2.2",
+    "@eth-optimism/contracts": "canary",
     "dotenv": "^10.0.0"
   }
 }
