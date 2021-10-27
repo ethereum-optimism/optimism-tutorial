@@ -9,12 +9,14 @@ module.exports = {
     'optimistic-kovan': {
       chainId: 69,
       url: 'https://kovan.optimism.io',
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.PRIVATE_KEY || 
+       '0x0000000000000000000000000000000000000000000000000000000000000000']
     },
     'optimistic-mainnet': {
       chainId: 10,
       url: 'https://mainnet.optimism.io',
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.PRIVATE_KEY || 
+       '0x0000000000000000000000000000000000000000000000000000000000000000']
     },
     'optimistic-devnode': {
       url: 'http://127.0.0.1:8545',
