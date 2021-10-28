@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "compile": "hardhat compile && hardhat --network optimism compile"
+    "compile": "hardhat compile"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -14,9 +14,8 @@
     "hardhat": "^2.4.1"
   },
   "dependencies": {
-    "@eth-optimism/contracts": "^0.4.5",
-    "@eth-optimism/hardhat-ovm": "^0.2.2",
-    "@openzeppelin/contracts": "3.3.0",
+    "@eth-optimism/contracts": "canary",
+    "@openzeppelin/contracts": "^4.3.0",
     "dotenv": "^10.0.0"
   }
 }
