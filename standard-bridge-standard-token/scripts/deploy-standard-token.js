@@ -72,10 +72,17 @@ const makeL1Token = async () => {
 // 1. The user's balance on L1
 // 2. The user's balance on L2
 // 3. The bridge's balance on L1. This is where the ERC-20 tokens are locked while they are on L2
+//
+// Exit once the L2 balance is correct
 const showBalances = async () => {
+   const l2Balance = (await l2Token.balanceOf(userAddr)).toString()
+
    console.log(`\tL1 balance: ${(await l1Token.balanceOf(userAddr)).toString()}\t` +
-                 `L2 balance: ${(await l2Token.balanceOf(userAddr)).toString()}\t` +
+                 `L2 balance: ${l2Balance}\t` +
                  `L1 Bridge: ${(await l1Token.balanceOf(l1BridgeAddr)).toString()}`)
+
+  if (l2Balance == "337")
+    process.exit(0)
 }
 
 
@@ -119,8 +126,8 @@ const depositTokens = async () => {
   await tx2.wait()
 
   for(var i=1; i<100; i++) {
-    await new Promise(resolve => setTimeout(resolve, 10000))
-    console.log(`after ${i*10} seconds`)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log(`after ${i} seconds`)
     await showBalances()
   }
 
