@@ -17,10 +17,7 @@ For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has
 
 ## Deploying a Standard Token
 
-Deployment script is made available under `scripts/deploy-standard-token.js` that you can 
-use to instantiate `L2StandardERC20` on `optimistic-devnode` right now if you have 
-a development node (as explained [in the basic tutorial](../hardhat/README.md)). Coming 
-soon, directions for deploying on `optimistic-kovan` and `optimistic-mainnet`.
+The deployment script is available under `scripts/deploy-standard-token.js`.
 
 ### Prerequisites
 
@@ -29,7 +26,8 @@ You should already have a Hardhat development environment, as explained in
 
 ### The .env File
 
-To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of `standard-bridge-standard-token` folder and add these keys to it:
+To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of 
+`standard-bridge-standard-token` folder and add these settings to it:
 
 - `PRIVATE_KEY` is the account is going to be used for the script, on both L1 and L2.
   Remember to fund it.
@@ -40,11 +38,13 @@ To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .en
 Run the following script
 
 ```sh
+github clone https://github.com/ethereum-optimism/optimism-tutorial.git
+cd optimism-tutorial/standard-bridge-standard-token
 yarn
 yarn hardhat run scripts/deploy-standard-token.js --network optimistic-devnode
 ```
 
-The script performs the following steps:
+The `deploy-standard-token.js` script performs the following steps:
 
 1. Deploy an ERC-20 contract on L1. If you want to use an existing ERC-20 contract, modify
    the `makeL1Token` function.
