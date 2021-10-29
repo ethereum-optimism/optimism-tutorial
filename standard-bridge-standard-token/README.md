@@ -40,7 +40,7 @@ To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .en
 Run the following script
 
 ```sh
-git clone https://github.com/ethereum-optimism/optimism-tutorial.git -b 20211026-st
+git clone https://github.com/ethereum-optimism/optimism-tutorial.git
 cd optimism-tutorial/standard-bridge-standard-token
 yarn
 yarn hardhat run scripts/deploy-standard-token.js --network optimistic-devnode
