@@ -32,7 +32,7 @@ the additional tokens.
 
 ## Deploying the Custom Token
 
-Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to 
+The deployment script is available under `scripts/deploy-custom-token.js` that you can use to 
 instantiate `L2CustomERC20` either on a local dev node (`optimistic-devnode`) or on `optimistic-kovan`.
 
 Once you're ready with a tested kovan deployment, you can request a review via
@@ -46,12 +46,12 @@ You should already have a Hardhat development environment, as explained in
 ### The Configuration File
 
 The hardhat config here `hardhat.config.js` is already setup to run against local dev environment,
-`optimistic-kovan` and `optimistic-mainnet` networks.
+`optimistic-kovan`, and `optimistic-mainnet` networks.
 
 ### The .env File
 
-
-To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of `standard-bridge-standard-token` folder and add these keys to it:
+To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root 
+of `standard-bridge-standard-token` folder with these settings:
 
 - `PRIVATE_KEY` is the account is going to be used for the script, on both L1 and L2.
   Remember to fund it.
@@ -70,7 +70,7 @@ yarn
 yarn hardhat run scripts/deploy-custom-token.js --network optimistic-devnode
 ```
 
-The script performs these actions:
+The `deploy-custom-token.js` script performs these actions:
 
 1. Deploy an ERC-20 contract on L1. If you want to use an existing ERC-20 contract, modify
    the `makeL1Token` function.
