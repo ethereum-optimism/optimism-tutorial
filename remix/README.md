@@ -24,6 +24,7 @@ To use Remix:
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the ![](https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png | width=50). 
 
+<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="50" />
 
 ## Migrate a Dapp to Optimistic Ethereum
 
