@@ -21,127 +21,13 @@ you need to do is specify [the network information](https://community.optimism.i
 
 To use Remix:
 
+1. Log on with your wallet to Optimistic Ethereum (or Optimistic Kovan).
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="24" valign="top" />).
+1. Select the Environment **Injected Web3 Provider**.
+1. Accept the connection in the wallet.
 
-## Migrate a Dapp to Optimistic Ethereum
-
-Now that we have Optimistic Ethereum running, it is time to run a decentralized application (dapp) on it.
-
-**Note:** If you don't need the explanations and just want to see running code, 
-[click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
-`hardhat/dapp` directory
-is just an `npm install` away from being a working example.
-
-### Get a Sample Application
-
-The easiest way is to start with a sample application. 
-
-1. Open a second command line terminal
-1. Run `hardhat`, the development environment we use in this tutorial
-   ```sh
-   mkdir dapp
-   cd dapp
-   npx hardhat
-   ```
-1. Select **Create a basic sample project** and accept all the defaults.
-1. Verify the sample application.
-   ```sh
-   npx hardhat test
-   ```
-   
-#### Interact with the Sample App Manually (optional)   
-   
-If you want to be more hands on, you can interact with the contract manually.
-
-1. Start the console
-   ```sh
-   npx hardhat console
-   ```
-2. Deploy the greeter contract.
-   ```javascript
-   const Greeter = await ethers.getContractFactory("Greeter")
-   const greeter = await Greeter.deploy("Hello, world!")
-   await greeter.deployed()
-   ```
-3. Get the current greeting.
-   ```javascript
-   await greeter.greet()
-   ```
-4. Modify the greeting.
-   ```javascript
-   const tx = await greeter.setGreeting("Hola, mundo")
-   await tx.wait()
-   ```
-5. Verify the greeting got modified.
-   ```javascript
-   await greeter.greet()
-   ```
-   
-6. Leave the console.
-   ```javascript
-   .exit
-   ```
-
-### Migrate the Sample App to Optimistic Ethereum
-
-Now that we have a running Optimistic Ethereum node and a dapp to run on it, we can deploy to Optimistic Ethereum.
-
-1. Edit `hardhat.config.js` to add `optimistic` to the list of networks:
-   ```js
-   // hardhat.config.js
-
-   ...
-   
-   module.exports = {
-     solidity: "0.8.4",
-     networks: {
-       optimistic: {
-         url: 'http://127.0.0.1:8545',
-         accounts: { mnemonic: 'test test test test test test test test test test test junk' }
-       }
-     }
-   };
-   ```
-
-1. Test the contract on Optimistic Ethereum. 
-
-   ```sh
-   npx hardhat --network optimistic test
-   ```
-
-1. If you want to interact with the app manually, use the console. You can use 
-   the same JavaScript commands to control it you used above.
-   ```sh
-   npx hardhat --network optimistic console
-   ```
-   
-   
-
-## Deploying to a Real Network
-
-> :warning: Until we deploy to the Kovan test network (planned for 14 OCT 2021), 
-> this section is not relevant
-   <!-- TEMO-OVM2.0 -->
-
-To deploy to a real network (Optimistic Ethereum or Optimistic Kovan),
-edit `hardhat.config.js`'s `modules.export.networks` to add a definition
-similar to this one:
-
-```javascript
-    "optimistic-kovan": {
-       url: 'https://kovan.optimism.io',
-       accounts: { mnemonic: <your account mnemonic goes here> }
-
-    }
-```    
-
-## Best Practices for Running Tests
-
-As you may have noticed, in this tutorial we ran all the tests first on the HardHat EVM and only then on Optimistic Ethereum. This is
-important, because it lets you isolate contract problems from problems that are the result of using Optimistic Ethereum rather than 
-vanilla Ethereum.
-
+That's it. 
 
 ## Conclusion
 
