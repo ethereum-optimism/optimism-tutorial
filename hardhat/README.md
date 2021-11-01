@@ -8,7 +8,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 > :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (expected to end 28 OCT 2021). This tutorial is
+> is still work in progress (expected to end 11 NOV 2021). This tutorial is
 > already upgraded for OVM 2.0, but parts of it will change during the upgrade
 > process.
 
@@ -218,10 +218,6 @@ Now that we have a running Optimistic Ethereum node and a dapp to run on it, we 
    
 
 ## Deploying to a Real Network
-
-> :warning: Until we deploy to the Kovan test network (planned for 14 OCT 2021), 
-> this section is not relevant
-   <!-- TEMO-OVM2.0 -->
 
 To deploy to a real network (Optimistic Ethereum or Optimistic Kovan),
 edit `hardhat.config.js`'s `modules.export.networks` to add a definition
