@@ -22,7 +22,7 @@ you need to do is specify [the network information](https://community.optimism.i
 To use Remix:
 
 1. Browse to [Remix](https://remix.ethereum.org/).
-1. Click the run icom (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="20" />).
+1. Click the run icom (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="40" />).
 
 ## Migrate a Dapp to Optimistic Ethereum
 
