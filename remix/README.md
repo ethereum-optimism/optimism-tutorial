@@ -16,7 +16,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 
 ## Setup
 
-In OVM 2.0 there is no more need for the Remix Optimism plugin, please ignore it. All
+In OVM 2.0, there is no need for any custom Remix plugins. All
 you need to do is specify [the network information](https://community.optimism.io/docs/infra/networks.html#optimistic-kovan).
 
 To use Remix:
