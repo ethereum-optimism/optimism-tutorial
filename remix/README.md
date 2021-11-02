@@ -21,7 +21,11 @@ you need to do is specify [the network information](https://community.optimism.i
 
 To use Remix:
 
-1. Log on with your wallet to Optimistic Ethereum (or Optimistic Kovan).
+1. Log on with your wallet to Optimistic Kovan (or, eventually,
+   Optimistic Ethereum). You can do this using chainid.link:
+   - [Optimistic Kovan](https://chainid.link?network=optimism-kovan)
+   - [Optimistic Ethereum](https://chainid.link?network=optimism)
+
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="24" valign="top" />).
 1. Select the Environment **Injected Web3 Provider**.
