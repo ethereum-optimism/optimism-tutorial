@@ -33,8 +33,38 @@ let userAddr, l1BridgeAddr
 // The token contracts on both layers
 let l1Token, l2Token
 
+
+
+// These are tasks that need to happen before we can deploy a custom token to L2
+const priorTasks = async () => {
+   // Deploy an ERC20 token to L1, for use in the rest of the tutorial. We could have used an
+   // existing one, but optimistic-devnode doesn't have one for us.
+   await makeL1Token()
+}  // priorTasks
+
+
+
+// These are tasks that happen after we deploy the custom token, to verify it was deployed
+// and connected to the bridge successfuly
+const postTasks = async () => {
+   await depositTokens()
+
+   for(var i=1; i<100; i++) {
+     await new Promise(resolve => setTimeout(resolve, 1000))
+     console.log(`after ${i} seconds`)
+     checkBalances()
+   }
+}    // postTasks
+
+
+
+
+
+
 // Deploy an ERC20 token to L1, for use in the rest of the tutorial. We could have used an
 // existing one, but optimistic-devnode doesn't have one for us.
+//
+// Not part of the tutorial, something we do prior to prepare the environment
 const makeL1Token = async () => {
    let l1Url, l1Key
 
@@ -72,14 +102,16 @@ const makeL1Token = async () => {
 }      // makeL1Token
 
 
-// Show the balances on both layers. There are three potentially interesting
+// Check the balances on both layers. There are three potentially interesting
 // balances:
 // 1. The user's balance on L1
 // 2. The user's balance on L2
 // 3. The bridge's balance on L1. This is where the ERC-20 tokens are locked while they are on L2
 //
 // Exit once the L2 balance is correct
-const showBalances = async () => {
+//
+// This is not part of the tutorial, it is something we do afterwards to verify it worked
+const checkBalances = async () => {
    const l2Balance = (await l2Token.balanceOf(userAddr)).toString()
    console.log(`\tL1 balance: ${(await l1Token.balanceOf(userAddr)).toString()}\t` +
                  `L2 balance: ${l2Balance}\t` +
@@ -87,10 +119,11 @@ const showBalances = async () => {
 
    if (l2Balance == "10337")
       process.exit(0)
-}
+}  // checkBalances
 
 
-
+// Deposit tokens from L1 to L2
+// This is not part of the tutorial, it is something we do afterwards to verify it worked
 const depositTokens = async () => {
 
   // Get the L2 standard bridge. The only reason we need it is that it knows the L1 address
@@ -112,8 +145,6 @@ const depositTokens = async () => {
   // We need l1BridgeAddr in showBalances() so we can see the balance of tokens locked in the bridge
   l1BridgeAddr = l2StandardBridge.l1TokenBridge()
 
-  await showBalances()
-
   const amt = 337   // The amount to transfer
 
   // First you need to approve the L1 Standard Bridge spending these tokens for you
@@ -128,20 +159,13 @@ const depositTokens = async () => {
      2000000, // gas to use on L2
      '0x')    // call data
   await tx2.wait()
-
-  for(var i=1; i<100; i++) {
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    console.log(`after ${i} seconds`)
-    showBalances()
-  }
-
 } // depositTokens
 
 
 const main = async () => {
 
   // We need an L1 ERC-20 token to bridge. If you prefer you can attach to an existing one
-  await makeL1Token()
+  await priorTasks()
 
   const l2TokenName = "L2 ERC20"
   const l2TokenSymbol = "L2 ERC20"
@@ -162,16 +186,14 @@ const main = async () => {
 
   console.log(`L2 token contract deployed to ${l2Token.address}`)
 
-
   // Sanity check - does this L2 connect to the correct L1? If not, transfering between
   // them is a BAD IDEA
   console.assert(l1Token.address == await l2Token.l1Token(),
     `L1 Token address (${l1Token.address}) != ` +
     `The L1 token L2 thinks it represents (${await l2Token.l1Token()}`)
 
-  // Deposit tokens from L1 to L2, just to see the new contract works as expected
-  await depositTokens()
-
+  // A test to see that the custom token is successfully connected to the bridge
+  await postTasks()
 }  // main
 
 
