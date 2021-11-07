@@ -9,9 +9,7 @@ For an L1/L2 token pair to work on the Standard Bridge the L2 token contract mus
 
 ## Customizing the `L2StandardERC20` implementation
 
-Our example here implements a custom token [`L2CustomERC20`](contracts/L2CustomERC20.sol) based on the `L2StandardERC20` but which mints the deployer 10,000 tokens when it is deployed.
-
-> :warning: This works as an illustration. However, in real life this would be a **very bad** idea. It means that there are no L1 tokens in the bridge to cover those L2 tokens if they are transferred. 
+Our example here implements a custom token [`L2CustomERC20`](contracts/L2CustomERC20.sol) based on the `L2StandardERC20` but which overrides the `decimals` function to return 9 instead of 18. 
 
 For the purpose we import the `L2StandardERC20` from the `@eth-optimism/contracts` package. This standard token implementation is based on the OpenZeppelin ERC20 contract and implements the required `IL2StandardERC20` interface.
 
