@@ -10,7 +10,11 @@ contract L2CustomERC20 is L2StandardERC20 {
     )
         L2StandardERC20(_l2Bridge, _l1Token, "Custom L2 Token", "L2T")
         {
-            // _setupDecimals(8);
-            _mint(msg.sender, 10000);
+
         }
+
+    function decimals() public pure override returns (uint8) {
+        return 9;
+    }
+
 }

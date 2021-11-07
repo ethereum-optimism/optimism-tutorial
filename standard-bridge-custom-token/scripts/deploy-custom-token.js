@@ -117,7 +117,7 @@ const checkBalances = async () => {
                  `L2 balance: ${l2Balance}\t` +
                  `L1 Bridge: ${(await l1Token.balanceOf(l1BridgeAddr)).toString()}`)
 
-   if (l2Balance == "10337")
+   if (l2Balance == "337")
       process.exit(0)
 }  // checkBalances
 
