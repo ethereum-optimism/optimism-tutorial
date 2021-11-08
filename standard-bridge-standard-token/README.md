@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
 > :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (expected to end 11 NOV 2021). This tutorial is
+> is still work in progress. This tutorial is
 > already upgraded for OVM 2.0, but parts of it might change during the upgrade
 > process.
 
