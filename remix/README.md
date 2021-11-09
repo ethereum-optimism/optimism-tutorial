@@ -8,7 +8,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 [significantly cheaper](https://optimism.io/gas-comparison).
 
 > :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (expected to end 11 NOV 2021). This tutorial is
+> is still work in progress. This tutorial is
 > already upgraded for OVM 2.0, but parts of it will change during the upgrade
 > process.
 
@@ -16,8 +16,7 @@ running on top of Optimistic Ethereum are about as secure as those running on th
 
 ## Setup
 
-In OVM 2.0, there is no need for any custom Remix plugins. All
-you need to do is specify [the network information](https://community.optimism.io/docs/infra/networks.html#optimistic-kovan).
+In OVM 2.0, thanks to [EVM equivalence](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306) there is no need for any custom Remix plugins. All you need to do is specify [the network information](https://community.optimism.io/docs/infra/networks.html#optimistic-kovan).
 
 To use Remix:
 
@@ -31,7 +30,7 @@ To use Remix:
 1. Select the Environment **Injected Web3 Provider**.
 1. Accept the connection in the wallet.
 
-That's it. 
+You are now ready to write decentralized applications that use Optimistic Ethereum to run faster at a lower cost with the same security guarantees as L1 Ethereum.
 
 ## Conclusion
 
