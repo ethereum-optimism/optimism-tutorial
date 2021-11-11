@@ -8,12 +8,6 @@ his tutorial aims to help you get started with developing decentralized applicat
 running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
-> :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (expected to end 11 NOV 2021). This tutorial is
-> already upgraded for OVM 2.0, but parts of it might change during the upgrade
-> process.
-
-   <!-- TEMO-OVM2.0 -->
 
 ## Build an Optimistic Ethereum Node
 
@@ -65,18 +59,13 @@ but they should be similar for other Linux versions and other platforms.
 
 ### Start an Optimistic Ethereum Node
 
-### Start an Optimistic Ethereum Node
-
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
-   Note that until we upgrade the production network to OVM 2.0 you need 
-   to clone the `regenesis/0.5.0` branch.
+
 
    ```sh
-   git clone https://github.com/ethereum-optimism/optimism.git -b regenesis/0.5.0
-   ```
-   <!-- TEMP-OVM2.0 -->
+   git clone https://github.com/ethereum-optimism/optimism.git
 
 1. Start the Optimistic Ethereum node. This process downloads the images
    from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
@@ -102,7 +91,7 @@ Now that we have Optimistic Ethereum running, it is time to run a distributed ap
 > [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The 
 > `truffle/dapp` directory only requires these steps to run:
 > 1. `yarn`
-> 1. `truffle test --network optimistic`
+> 1. `npx truffle test --network optimistic`
 
 ### Get a Sample Application
 
