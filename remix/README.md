@@ -7,13 +7,6 @@ This tutorial aims to help you get started with developing decentralized applica
 running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
-> :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress. This tutorial is
-> already upgraded for OVM 2.0, but parts of it will change during the upgrade
-> process.
-
-   <!-- TEMP-OVM2.0 -->
-
 ## Setup
 
 In OVM 2.0, thanks to [EVM equivalence](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306) there is no need for any custom Remix plugins. All you need to do is specify [the network information](https://community.optimism.io/docs/infra/networks.html#optimistic-kovan).

@@ -7,13 +7,6 @@ This tutorial aims to help you get started with developing decentralized applica
 running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
 [significantly cheaper](https://optimism.io/gas-comparison).
 
-> :warning: We are currently in the process of upgrading to OVM 2.0, but that
-> is still work in progress (expected to end 11 NOV 2021). This tutorial is
-> already upgraded for OVM 2.0, but parts of it might change during the upgrade
-> process.
-
-   <!-- TEMP-OVM2.0 -->
-
 ## Build an Optimistic Ethereum Node
 
 The fastest way to test and debug apps on Optimistic Ethereum is to run a 
@@ -67,13 +60,10 @@ but they should be similar for other Linux versions and other platforms.
 This process downloads and starts an Optimistic Ethereum network of one node.
 
 1. Clone the [Optimism monorepo](https://github.com/ethereum-optimism/optimism).
-   Note that until we upgrade the production network to OVM 2.0 you need 
-   to clone the `regenesis/0.5.0` branch.
 
    ```sh
-   git clone https://github.com/ethereum-optimism/optimism.git -b regenesis/0.5.0
+   git clone https://github.com/ethereum-optimism/optimism.git
    ```
-   <!-- TEMP-OVM2.0 -->
 
 1. Start the Optimistic Ethereum node. This process downloads the images
    from [the Docker hub](https://hub.docker.com/u/ethereumoptimism), and 
@@ -91,42 +81,6 @@ This process downloads and starts an Optimistic Ethereum network of one node.
 > with each other. If at first you see `curl` failure to connect errors wait
 > a few minutes.
 
-<!--   
-
-2. Build the Optimistic Ethereum software.   
-   
-   ```sh
-   yarn install
-   yarn build
-   ```
-   
-3. Build the Docker containers
-
-   ```sh
-   cd ops
-   docker-compose -f docker-compose-nobuild.yml up
-   export COMPOSE_DOCKER_CLI_BUILD=1
-   export DOCKER_BUILDKIT=1
-   docker-compose build && echo Build complete
-   ```
-
-The build process is time consuming, and you do not need to wait for it to finish before you continue the tutorial.
-I will note the point in the tutorial where you need to have a running Optimistic Ethereum Node. Hopefully it will
-be finished by then (you will know when the build process is done because you'll see a **Build complete** message).
-
-4. Once the build process is finally done, start the Optimistic Ethereum node:
-
-   ```sh
-   docker-compose up
-   ```
-
-5. To see when the Optimistic Ethereum node starts, run (in a separate terminal):
-   
-   ```sh
-   ~/optimism/ops/scripts/wait-for-sequencer.sh
-   ```
-
---> 
 
 ## Migrate a Dapp to Optimistic Ethereum
 
@@ -225,10 +179,6 @@ Now that we have a running Optimistic Ethereum node and a dapp to run on it, we 
    
 
 ## Deploying to a Real Network
-
-> :warning: Until we deploy to the Kovan test network (planned for 14 OCT 2021), 
-> this section is not relevant
-   <!-- TEMO-OVM2.0 -->
 
 To deploy to a real network (Optimistic Ethereum or Optimistic Kovan),
 edit `hardhat.config.js`'s `modules.export.networks` to add a definition
