@@ -40,6 +40,7 @@ The fastest way to test and debug apps on Optimistic Ethereum is to run a local 
    ```
    
 5. Install Nix if you haven't already:
+
    ```sh   
    # user must be in sudoers
    curl -L https://nixos.org/nix/install | sh
@@ -49,6 +50,7 @@ The fastest way to test and debug apps on Optimistic Ethereum is to run a local 
    ```
 
 6. Then install dapptools:
+
    ```sh
    curl https://dapp.tools/install | sh
    ```
@@ -94,12 +96,15 @@ The easiest way is to start with a sample application.
 
 1. Open a second command line terminal
 1. Run `dapptools`, the development environment we use in this tutorial. The `dapp init` command creates two contracts, `Dapp.sol` and `Dapp.t.sol` in the `src` subdirectory and installs our testing library ds-test in the lib subdirectory.
+
    ```sh
    mkdir dapp
    cd dapp
    dapp init
    ```
+
 1. For the sake of this tutorial, let's change `Dapp.sol` to a simple vault with an eth bounty that can be accessed by giving the password 42:
+
    ```sh
    pragma solidity ^0.8.6;
 
@@ -113,12 +118,16 @@ The easiest way is to start with a sample application.
        }
    }
    ```
+
 1. Compile the contract by running `dapp build`, you should simply see:
    ```sh
+
    + dapp clean
    + rm -rf out
    ```
+
 1. Change `Dapp.t.sol` to the following.
+
    ```sh
    pragma solidity ^0.8.6;
 
@@ -153,6 +162,7 @@ The easiest way is to start with a sample application.
        }
    }
    ```
+   
 1. Test the contract by running `dapp test`
 
 ### Migrate the Sample App to Optimistic Ethereum
