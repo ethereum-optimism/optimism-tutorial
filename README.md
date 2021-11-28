@@ -10,6 +10,7 @@ These are already updated for OVM 2.0
 - [Hardhat](hardhat)
 - [Truffle](truffle)
 - [Remix](remix)
+- [Dapptools](dapptools)
 
 ## The Standard Bridge
 
