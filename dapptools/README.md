@@ -86,7 +86,7 @@ This process downloads and starts an Optimistic Ethereum network of one node.
 Now that we have Optimistic Ethereum running, it is time to run a decentralized application (dapp) on it.
 
 > :information_source: If you don't need the explanations and just want to see running code, [click here](https://github.com/ethereum-optimism/optimism-tutorial/). The `dapptools/dapp` directory only requires these steps to run:
-> 1. `export ETH_RPC_URL=https://127.0.0.1:8545`
+> 1. `export ETH_RPC_URL=http://127.0.0.1:8545`
 > 1. `dapp test --rpc`
 
 
@@ -181,7 +181,7 @@ Now that we have a running Optimistic Ethereum node and a dapp to run on it, we 
 1. Edit `ETH_RPC_URL` to the Optimistic Ethereum dev node we are running.
 
    ```sh
-   export ETH_RPC_URL=https://127.0.0.1:8545
+   export ETH_RPC_URL=http://127.0.0.1:8545
    ```    
 
 1. Test the contract on Optimistic Ethereum. 
