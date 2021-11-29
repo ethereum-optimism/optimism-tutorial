@@ -204,6 +204,7 @@ Enter your private key in 64 hexadecimal digits, make sure it **doesn't** start 
 ```sh
 Private key as 64 hexadecimal digits (not echoed):
 Choose a passphrase (not echoed):
+<your address>
 ```
 
 Edit `ETH_RPC_URL` and `ETH_FROM` and then deploy.
