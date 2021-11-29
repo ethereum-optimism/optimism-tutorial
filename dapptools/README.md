@@ -196,6 +196,19 @@ Now that we have a running Optimistic Ethereum node and a dapp to run on it, we 
 To deploy to a real network (Optimistic Ethereum or Optimistic Kovan), edit `ETH_RPC_URL` and `ETH_FROM`. We assume `ETH_FROM` is an address you own and is part of your keystore. If not, use `ethsign import` to import your private key.
 
 ```sh
+ethsign import
+```
+
+Enter your private key in 64 hexadecimal digits, make sure it **doesn't** start with the `0x` prefix, and create a passphrase for it. You should see: 
+
+```sh
+Private key as 64 hexadecimal digits (not echoed):
+Choose a passphrase (not echoed):
+```
+
+Edit `ETH_RPC_URL` and `ETH_FROM` and then deploy.
+
+```sh
 export ETH_RPC_URL=https://kovan.optimism.io
 export ETH_FROM=<your address>
 dapp create Dapp --rpc
