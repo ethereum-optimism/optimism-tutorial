@@ -56,7 +56,7 @@ The fastest way to test and debug apps on Optimistic Ethereum is to run a local 
    ```
    This configures the dapphub binary cache and installs the `dapp`, `solc`, `seth` and `hevm` executables. For more information on Dapptools [click here](https://github.com/dapphub/dapptools).
    
-7. Log out and log back in to complete the Docker installation (required).
+7. If you haven't already, log out and log back in to complete the Docker installation.
 
 
 ### Start an Optimistic Ethereum Node
