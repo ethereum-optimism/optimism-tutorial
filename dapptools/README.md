@@ -95,6 +95,13 @@ Now that we have Optimistic Ethereum running, it is time to run a decentralized 
 The easiest way is to start with a sample application. 
 
 1. Open a second command line terminal
+
+1. If necessary, configure your identity in git.
+   ```sh
+   git config --global user.email "email@goes.here.com"
+   git config --global user.name "Your Name"
+   ```
+
 1. Run `dapptools`, the development environment we use in this tutorial. The `dapp init` command creates two contracts, `Dapp.sol` and `Dapp.t.sol` in the `src` subdirectory and installs our testing library ds-test in the lib subdirectory.
 
    ```sh
