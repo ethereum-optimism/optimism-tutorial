@@ -110,9 +110,10 @@ The easiest way is to start with a sample application.
    dapp init
    ```
 
-1. For the sake of this tutorial, let's change `Dapp.sol` to a simple vault with an eth bounty that can be accessed by giving the password 42:
+1. For the sake of this tutorial, let's change `src/Dapp.sol` to a simple vault with an eth bounty that can be accessed by giving the password 42:
 
    ```sh
+   // SPDX-License-Identifier: GPL-3.0-or-later
    pragma solidity ^0.8.6;
 
    contract Dapp {
@@ -133,9 +134,10 @@ The easiest way is to start with a sample application.
    + rm -rf out
    ```
 
-1. Change `Dapp.t.sol` to the following.
+1. Change `src/Dapp.t.sol` to the following.
 
    ```sh
+   // SPDX-License-Identifier: GPL-3.0-or-later
    pragma solidity ^0.8.6;
 
    import "ds-test/test.sol";
