@@ -5,7 +5,7 @@
 
 This tutorial aims to help you get started with developing decentralized applications on [Optimistic Ethereum](https://optimism.io/) using [Remix](https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null). Applications 
 running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
-[significantly cheaper](https://optimism.io/gas-comparison).
+[significantly cheaper](https://archive.optimism.io/gas-comparison).
 
 ## Setup
 
@@ -28,5 +28,5 @@ You are now ready to write decentralized applications that use Optimistic Ethere
 ## Conclusion
 
 This tutorial has only touched the most basic points of Optimistic Ethereum development. For more information, you can 
-[check out the full integration guide](https://community.optimism.io/docs/developers/l2/convert-2.0.html) on the Optimism community hub.
+[check out the full integration guide](https://community.optimism.io/docs/developers/tutorials.html) on the Optimism community hub.
 Go read it, and then write a dapp that will amaze us.

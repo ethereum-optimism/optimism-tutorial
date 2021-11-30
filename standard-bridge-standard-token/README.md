@@ -7,8 +7,8 @@ This is a practical guide to getting your ERC20 token deployed on Optimism and b
 [Standard Bridge implementation](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
 
 For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement
-[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/IL2StandardERC20.sol). The standard implementation of that is available in
-[`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package.
+[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol). The standard implementation of that is available in
+[`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package.
 
 ## Deploying a Standard Token
 
