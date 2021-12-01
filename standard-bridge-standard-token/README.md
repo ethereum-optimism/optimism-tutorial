@@ -21,6 +21,7 @@ The hardhat config `hardhat.config.js` is already setup to run against `optimist
 See an example config at [.env.example](.env.example); copy into a `.env` file before running.
 
 `PRIVATE_KEY` - this account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
+`INFURA_ID` - is your Infura ID for using `optimistic-kovan` and `optimistic-mainnet`.
 `L1_TOKEN_ADDRESS` - address of the L1 ERC20 which you want to bridge.
 `L2_TOKEN_NAME` and `L2_TOKEN_SYMBOL` properties of the L2 token instance. These are normally the same as the ERC20 properties on L1.
 
