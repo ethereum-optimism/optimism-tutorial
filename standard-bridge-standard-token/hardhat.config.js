@@ -1,6 +1,5 @@
 // Plugins
 require('@nomiclabs/hardhat-ethers')
-require('@eth-optimism/hardhat-ovm')
 
 // Load environment variables from .env
 require('dotenv').config();
