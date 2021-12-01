@@ -26,12 +26,12 @@ First you create a `Watcher` object. This watcher needs:
 1. A [`Provider`](https://docs.ethers.io/v5/api/providers/) to connect to the
    underlying L1 network
 1. The address of the L1 messenger contract, 
-   [`OVM_L1CrossDomainMessenger`](https://community.optimism.io/docs/protocol/protocol.html#ovm-l1crossdomainmessenger). This address varies between
+   [`OVM_L1CrossDomainMessenger`](https://community.optimism.io/docs/protocol/protocol-2.0.html#l1crossdomainmessenger). This address varies between
    different networks, [you can get it 
    here](https://github.com/ethereum-optimism/optimism/tree/develop/packages/contracts/deployments).
 1. Another `Provider` to connect to the Optimistic network
 1. The address of the L2 messenger contract, 
-   [`OVM_L2CrossDomainMessenger`](https://community.optimism.io/docs/protocol/protocol.html#ovm-l2crossdomainmessenger). This address is always the same,
+   [`OVM_L2CrossDomainMessenger`](https://community.optimism.io/docs/protocol/protocol-2.0.html#l2crossdomainmessenger). This address is always the same,
    `0x4200000000000000000000000000000000000007`.
 
 Then, given a transaction hash at the origin layer, you call:

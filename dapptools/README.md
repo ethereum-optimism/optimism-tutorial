@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
 This tutorial aims to help you get started with developing decentralized applications on [Optimistic Ethereum](https://optimism.io/) using [Dapptools](https://dapp.tools/). Applications running on top of Optimistic Ethereum are about as secure as those running on the underlying Ethereum mainnet itself, but are
-[significantly cheaper](https://optimism.io/gas-comparison).
+[significantly cheaper](https://archive.optimism.io/gas-comparison).
 
 ## Build an Optimistic Ethereum Node
 
@@ -223,4 +223,4 @@ As you may have noticed, in this tutorial we ran all the tests first on the HEVM
 
 ## Conclusion
 
-This tutorial has only touched the most basic points of Optimistic Ethereum development. For more information, you can [check out the full integration guide](https://community.optimism.io/docs/developers/l2/convert-2.0.html) on the Optimism community hub. Go read it, and then write a dapp that will amaze us.
+This tutorial has only touched the most basic points of Optimistic Ethereum development. For more information, you can [check out the full integration guide](https://community.optimism.io/docs/developers/tutorials.html) on the Optimism community hub. Go read it, and then write a dapp that will amaze us.
