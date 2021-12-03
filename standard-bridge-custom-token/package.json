@@ -14,8 +14,8 @@
     "hardhat": "^2.4.1"
   },
   "dependencies": {
-    "@eth-optimism/contracts": "^0.4.5",
-    "@openzeppelin/contracts": "3.3.0",
+    "@eth-optimism/contracts": "0.5.5",
+    "@openzeppelin/contracts": "4.3.2",
     "dotenv": "^10.0.0"
   }
 }

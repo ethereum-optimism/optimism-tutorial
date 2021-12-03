@@ -16,7 +16,7 @@ Our example here implements a custom token [`L2CustomERC20`](contracts/L2CustomE
 For the purpose we import the `L2StandardERC20` from the `@eth-optimism/contracts` package. This standard token implementation is based on the OpenZeppelin ERC20 contract and implements the required `IL2StandardERC20` interface.
 
 ```
-import { L2StandardERC20 } from "@eth-optimism/contracts/libraries/standards/L2StandardERC20.sol";
+import { L2StandardERC20 } from "@eth-optimism/contracts/standards/L2StandardERC20.sol";
 ```
 
 Then the only thing we need to do is call the internal `_setupDecimals(8)` method to alter the token `decimals` property from the default `18` to `8`.
@@ -28,25 +28,15 @@ Deployment script is made available under `scripts/deploy-custom-token.js` that 
 Once you're ready with a tested kovan deployment, you can request a review via
 [this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimistic-mainnet`.
 
-### Prerequisites
+The hardhat config `hardhat.config.js` is already setup to run against `optimistic-kovan` and `optimistic-mainnet` networks.
 
-You should already have a Hardhat development environment, as explained in
-[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat).
+### Configuration
 
-### The Configuration File
+See an example config at [.env.example](.env.example); copy into a `.env` file before running.
 
-The hardhat config here `hardhat.config.js` is already setup to run against local dev environment, `optimistic-kovan` and `optimistic-mainnet` networks.
-
-### The .env File
-
-To use a network (either Optimistic Kovan or Optimistic Ethereum), create an .env file in the root of `standard-bridge-custom-token` folder and add `PRIVATE_KEY` to it. This account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
-
-### Update the deploy script
-
-Before you run the `scripts/deploy-custom-token.js` you need to update it with your L1 token details for the different networks in the `TODO` placeholders:
-```
-  l1Token = 'TODO'
-```
+`PRIVATE_KEY` - this account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
+`INFURA_ID` - is your Infura ID for using `optimistic-kovan` and `optimistic-mainnet`.
+`L1_TOKEN_ADDRESS` - address of the L1 ERC20 which you want to bridge.
 
 ### Running the deploy script
 
