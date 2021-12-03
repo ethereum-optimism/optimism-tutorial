@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.16 <0.8.0;
+pragma solidity >=0.5.16 <0.9.0;
 
-import { L2StandardERC20 } from "@eth-optimism/contracts/libraries/standards/L2StandardERC20.sol";
+import { L2StandardERC20 } from "@eth-optimism/contracts/standards/L2StandardERC20.sol";
 
 contract L2CustomERC20 is L2StandardERC20 {
     constructor(
@@ -10,6 +10,9 @@ contract L2CustomERC20 is L2StandardERC20 {
     )
         L2StandardERC20(_l2Bridge, _l1Token, "Custom L2 Token", "L2T")
         {
-            _setupDecimals(8);
         }
+
+        function decimals() public view override returns (uint8) {
+        return 8;
+    }
 }

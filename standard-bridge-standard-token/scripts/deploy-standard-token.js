@@ -9,24 +9,17 @@ const L2StandardTokenFactoryArtifact = require(`../node_modules/@eth-optimism/co
 
 async function main() {
   // MODIFY TO DESIRED PARAMS
-  const L1TokenAddress = "0x"
-  const L2TokenName = "NAME"
-  const L2TokenSymbol = "SYMBOL"
+  const L1TokenAddress = process.env.L1_TOKEN_ADDRESS
+  const L2TokenName = process.env.L2_TOKEN_NAME
+  const L2TokenSymbol = process.env.L2_TOKEN_SYMBOL
 
   // Instantiate the signer
   const provider = new ethers.providers.JsonRpcProvider(hre.network.config.url)
   const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
 
   console.log("Creating instance of L2StandardERC20 on", hre.network.name, "network")
-  // Instantiate the Standard token factory on respective network
-  let l2StandardTokenFactory;
-  if (hre.network.name == 'optimistic-kovan') {
-    l2StandardTokenFactory = new ethers.Contract('0x50EB44e3a68f1963278b4c74c6c343508d31704C', L2StandardTokenFactoryArtifact.abi, signer)  // Kovan instance
-  } else if (hre.network.name == 'optimistic-mainnet') {
-    l2StandardTokenFactory = new ethers.Contract('0x2e985AcD6C8Fa033A4c5209b0140940E24da7C5C', L2StandardTokenFactoryArtifact.abi, signer)  // Mainnet instance
-  } else {
-    throw Error("unsupported network")
-  }
+  // Instantiate the Standard token factory
+  const l2StandardTokenFactory = new ethers.Contract('0x4200000000000000000000000000000000000012', L2StandardTokenFactoryArtifact.abi, signer)
 
   const tx = await l2StandardTokenFactory.createStandardL2Token(
     L1TokenAddress,
