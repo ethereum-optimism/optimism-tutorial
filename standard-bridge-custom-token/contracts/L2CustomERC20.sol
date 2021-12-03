@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.16 <0.8.0;
+pragma solidity >=0.5.16 <0.9.0;
 
 import { L2StandardERC20 } from "@eth-optimism/contracts/libraries/standards/L2StandardERC20.sol";
 

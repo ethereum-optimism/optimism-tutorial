@@ -31,8 +31,8 @@ module.exports = {
       gasPrice: 15000000
     }
   },
-  solidity: '0.7.6',
+  solidity: '0.8.9',
   ovm: {
-    solcVersion: '0.7.6'
+    solcVersion: '0.8.9'
   }
 }
