@@ -20,7 +20,4 @@ module.exports = {
     }
   },
   solidity: '0.8.9',
-  ovm: {
-    solcVersion: '0.8.9'
-  }
 }
