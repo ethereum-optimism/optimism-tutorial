@@ -1,0 +1,22 @@
+{
+  "name": "standard-bridge-tutorial",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf ./cache && rimraf ./artifacts",
+    "compile": "yarn clean && hardhat compile && hardhat --network optimism compile"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.0",
+    "hardhat": "^2.4.1"
+  },
+  "dependencies": {
+    "@eth-optimism/contracts": "canary",
+    "@eth-optimism/core-utils": "canary",
+    "rimraf": "^3.0.2"
+  }
+}
