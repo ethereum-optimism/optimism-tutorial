@@ -1,31 +1,24 @@
-# L1/L2 deposit withdrawal example
+# Depositing ETH into Optimism
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This tutorial demonstrates how you can use existing Standard bridge infrastructure to deposit and withdraw ERC20 balance between the layers. For the purpose we are making use of the Standard Bridge architecture and creating a sample ERC20 on L1 and its respective representation using the standard token `L2StandardERC20` on L2.
+This tutorial demonstrates how you can use the standard bridge to deposit ETH into L2 programatically. This is important for bridges, centralized exchanges, and fiat on-ramps.
 
 ## Setup
 
-### Prerequisites
+We assume you already have a local development node, as explained in [this tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat).
 
-We assume you already have a Hardhat development environment, as explained in
-[the tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat). Most of
-these directions should also work with Truffle if you prefer that development environment, but there
-might be a few minor differences.
+## Transfering ETH from L1 to L2
 
-### The Configuration File
-
-In this tutorial we need to access both Optimistic Ethereum and the underlying L1 Ethereum. These are already configured in the local hardhat config as `optimism` and `hardhat` networks respectively.
-
-## Transfering Tokens from L1 to L2 and back
-
+Install the necessary packages:
 ```sh
-yarn && yarn run compile
+yarn
 ```
 
-You can run the script that demonstrated that via
-
+To transfer on a local development node:
 ```sh
-node scripts/example.js
+node scripts/depositETH.js
 ```
+
+To transfer on a different network, edit `scripts/depositETH.js` and modify the first three lines.
