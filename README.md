@@ -17,7 +17,7 @@ These are already updated for OVM 2.0
 This one has been updated for OVM 2.0
 
 - [L1/L2 deposit withdrawal example](l1-l2-deposit-withdrawal)
-
+- [ETH deposit from L1 to L2](eth-deposit)
 
 These ones are still waiting
 
