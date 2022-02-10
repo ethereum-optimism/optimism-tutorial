@@ -164,4 +164,4 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 
 1. Make sure your environment is **Injected Web3** and the network ID is **69**.
 
-   ![](remix-env.png | width=300)
+   ![xxx](./remix-env.png | width=300)
