@@ -62,7 +62,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
    - [Optimistic Ethereum](https://chainid.link?network=optimism)
 
 1. Browse to [Remix](https://remix.ethereum.org/).
-1. Click the run icon (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="24" valign="top" />).
+1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 1. Select the Environment **Injected Web3 Provider**.
 1. Accept the connection in the wallet.
 
@@ -160,7 +160,7 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 
-1. Click the run icon (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="24" valign="top" />).
+1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
 1. Make sure your environment is **Injected Web3** and the network ID is **69**.
 
