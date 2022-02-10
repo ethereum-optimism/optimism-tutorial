@@ -166,6 +166,6 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 
    <img src="assets/remix-env.png" width="300" />
 
-1. Click the files icon (<img src="https://remix-ide.ethereum.org/img/fileManager.webp" height="24" valign="top" />).
+1. Click the files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />).
 
 1. Download [Greeter.sol](hardhat/contracts/Greeter.sol) and upload (<img src="assets/remix-upload-icon.png" height="24" valign="top" />) it to Remix under **contracts**.
