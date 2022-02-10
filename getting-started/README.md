@@ -169,3 +169,25 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 1. Click the files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />).
 
 1. Download [Greeter.sol](hardhat/contracts/Greeter.sol) and upload (<img src="assets/remix-upload-icon.png" height="24" valign="top" />) it to Remix under **contracts**.
+
+1. Right-click **contracts > Greeter.sol** and select **Compile**.
+
+1. Open **contracts > artifacts** and see that there's a `Greeter.json` file. This file is the compiled version, the API for the contract, etc.
+
+1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
+
+1. Scroll down. 
+   In the At Address field, type the contract address (`0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c`).
+   Then, click **At Address**. 
+   Expand the contract to see you can interact with it.
+
+   <img src="assets/remix-connect.png" width="300" />
+
+1. Click **greet** and expand the transaction result in the console (bottom right).
+
+   ![](assets/remix-query.png)
+
+1. Type a greeting and then click **setGreeting**. Approve the transaction in your wallet. 
+   Note that if the greeting includes a comma you need to enclose it in quotes.
+
+   <img src="assets/remix-tx.png" width="300" />
