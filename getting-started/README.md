@@ -160,8 +160,10 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 
-1. Click the Run icon (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="24" valign="top" />).
+1. Click the run icon (<img src="https://remix-ide.readthedocs.io/en/latest/_images/a-run-icon.png" height="24" valign="top" />).
 
 1. Make sure your environment is **Injected Web3** and the network ID is **69**.
 
    <img src="remix-env.png" width="300" />
+
+1. Click the files icon (<img src="https://remix.ethereum.org/assets/img/fileManager.webp">).
