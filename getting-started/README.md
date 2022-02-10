@@ -166,4 +166,4 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 
    <img src="remix-env.png" width="300" />
 
-1. Click the files icon (<img src="https://remix.ethereum.org/assets/img/fileManager.webp">).
+1. Click the files icon (<img src="https://remix.ethereum.org/assets/img/fileManager.webp" height="24" valign="top" />).
