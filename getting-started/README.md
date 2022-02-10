@@ -191,3 +191,5 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
    Note that if the greeting includes a comma you need to enclose it in quotes.
 
    <img src="assets/remix-tx.png" width="300" />
+
+1. See the results on the console and then click **greet** again to see the greeting changed.   
