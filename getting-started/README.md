@@ -78,7 +78,7 @@ In [Truffle](https://trufflesuite.com/):
 
 1. Edit the `truffle-config.js` file
 
-   1. Uncomment the this line:
+   1. Uncomment this line:
 
       ```js
       const HDWalletProvider = require('@truffle/hdwallet-provider')
