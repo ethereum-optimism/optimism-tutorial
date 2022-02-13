@@ -5,12 +5,7 @@
 
 ## Getting Started with Optimistic Ethereum
 
-These are already updated for OVM 2.0
-
-- [Hardhat](hardhat)
-- [Truffle](truffle)
-- [Remix](remix)
-- [Dapptools](dapptools)
+- [Getting Started](getting-started)
 
 ## The Standard Bridge
 
@@ -19,10 +14,15 @@ This one has been updated for OVM 2.0
 - [L1/L2 deposit withdrawal example](l1-l2-deposit-withdrawal)
 - [ETH deposit from L1 to L2](eth-deposit)
 
+<!-- 
+
+
 These ones are still waiting
 
 - [Bridging your Standard ERC20 token to Optimism using the Standard Bridge](standard-bridge-standard-token)
 - [Bridging your Custom ERC20 token to Optimism using the Standard Bridge](standard-bridge-custom-token)
+
+
 
 ## L1 <-> L2 Communication
 
@@ -30,4 +30,4 @@ This is also still OVM 1.0
 
 - [Tracing Multilayer Transactions](core-util-watcher)
 
-
+-->
