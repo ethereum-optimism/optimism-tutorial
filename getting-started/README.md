@@ -18,7 +18,7 @@ To access any Ethereum type network you need an endpoint. There are several ways
    * [Infura](https://infura.io/docs/ethereum#section/Choose-a-Network)
    * [QuickNode](https://www.quicknode.com/chains/optimism)
 
-1. If you prefer to keep your code private, you can also [run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
+1. If you prefer to keep your decentralized application development private, you can also [run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
 
 
 ### Network choice
@@ -78,7 +78,7 @@ In [Truffle](https://trufflesuite.com/):
 
 1. Edit the `truffle-config.js` file
 
-   1. Uncomment the this line:
+   1. Uncomment this line:
 
       ```js
       const HDWalletProvider = require('@truffle/hdwallet-provider')
@@ -96,6 +96,7 @@ In [Truffle](https://trufflesuite.com/):
 
 We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimistic Kovan, at address [0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c](https://kovan-optimistic.etherscan.io/address/0xe0a5fe4fd70b6ea4217122e85d213d70766d6c2c). 
 You can verify your development stack configuration by interacting with it.
+<<<<<<< HEAD
 To see it, use the directories in this tutorial to run the console
 
 
@@ -104,6 +105,12 @@ To see it, use the directories in this tutorial to run the console
 These steps vary between different development stacks:
 
 #### Hardhat
+=======
+To see it in action, follow the instructions below for your development stack.
+
+
+### Hardhat
+>>>>>>> 702266194f4a70d13a725b5328a589013e43a5c4
 
 1. Run the console:
    ```sh
@@ -119,25 +126,9 @@ These steps vary between different development stacks:
    greeter = await Greeter.attach("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
    ```   
 
+<<<<<<< HEAD
 #### Truffle
-
-1. Install the software, compile the contract, and run the console:
-
-   ```sh
-   cd truffle
-   yarn
-   yarn truffle compile
-   yarn truffle console --network optimistic-kovan
-   ```
-
-1. Connect to the Greeter contact:
-
-   ```js
-   greeter = await Greeter.at("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
-   ```
-
-### Interact with the contract
-
+=======
 1. Read information from the contact:
 
    ```js
@@ -154,9 +145,59 @@ These steps vary between different development stacks:
    await greeter.greet()
    ```
 
+### Truffle
+>>>>>>> 702266194f4a70d13a725b5328a589013e43a5c4
+
+1. Install the software, compile the contract, and run the console:
+
+   ```sh
+   cd truffle
+   yarn
+   yarn truffle compile
+   yarn truffle console --network optimistic-kovan
+   ```
+
+1. Connect to the Greeter contact:
+
+   ```js
+   greeter = await Greeter.at("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
+   ```
+
+<<<<<<< HEAD
+### Interact with the contract
+
+=======
+>>>>>>> 702266194f4a70d13a725b5328a589013e43a5c4
+1. Read information from the contact:
+
+   ```js
+   await greeter.greet()
+   ```
+
+1. Submit a transaction, wait for it to be processed, and see that it affected the state.
+   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
+   In that case, edit the configuration file to use your own mnemonic.
+
+   ```js
+   tx = await greeter.setGreeting(`Hello ${new Date()}`)
+<<<<<<< HEAD
+   receipt = await tx.wait()   // Doesn't work in Truffle
+   await greeter.greet()
+   ```
+
 ### Remix
 
 The way you interact with Kovan Optimism contracts using [Remix](https://remix.ethereum.org/), which is an [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment), is a bit different.
+=======
+   await greeter.greet()
+   ```
+
+
+### Remix
+
+[Remix](https://remix.ethereum.org/) is an [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment).
+You interact with it through your web browser.
+>>>>>>> 702266194f4a70d13a725b5328a589013e43a5c4
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 
@@ -192,4 +233,64 @@ The way you interact with Kovan Optimism contracts using [Remix](https://remix.e
 
    <img src="assets/remix-tx.png" width="300" />
 
+<<<<<<< HEAD
 1. See the results on the console and then click **greet** again to see the greeting changed.   
+=======
+1. See the results on the console and then click **greet** again to see the greeting changed.   
+
+
+### Dapptools
+
+Dapptools does not give us a JavaScript console. 
+To interact with the blockchain you use the command line.
+
+1. Set the RPC URL and the contract address
+
+   ```sh
+   export ETH_RPC_URL=https://kovan.optimism.io
+   export GREETER=0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c   
+   ```
+
+1. Call `greet()`. Notice that the response is provided in hex.
+
+   ```sh
+   seth call $GREETER "greet()"
+   ```
+
+1. Call `greet()` again, and this time translate to ASCII
+
+   ```sh
+   seth call $GREETER "greet()" | seth --to-ascii
+   ```
+
+1. Run this command to get our wallet's address.
+   This is the same address we used earlier for Hardhat and Truffle.
+   If it is out of ETH you can "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/), the address is `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`.
+
+   ```sh
+   export ETH_FROM=`seth ls | awk '{print $1}'`
+   ```
+
+1. Send a transaction. 
+   When asked for the pass phrase just click Enter.
+
+   ```sh
+   seth send $GREETER "setGreeting(string)" '"hello"'
+   ```
+
+1. Test that the greeting has changed:
+
+   ```sh
+   seth call $GREETER "greet()" | seth --to-ascii
+   ```
+
+## Best practices
+
+It is best to start development with the EVM provided by the development stack. 
+Not only is it faster, but such EVMs often have extra features, such as the [ability to log messages from Solidity](https://hardhat.org/tutorial/debugging-with-hardhat-network.html) or a [graphical user interface](https://trufflesuite.com/ganache/).
+
+After you are done with that development, debug your decentralized application using either a [development node](https://community.optimism.io/docs/developers/build/dev-node/) or the [Kovan test network](https://community.optimism.io/docs/useful-tools/networks/#rpc-endpoints). 
+This lets you debug parts that that are Optimism specific such as calls to bridges to transfer assets between layers.
+
+Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
+>>>>>>> 702266194f4a70d13a725b5328a589013e43a5c4
