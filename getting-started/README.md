@@ -247,6 +247,7 @@ To interact with the blockchain you use the command line.
 1. Set the RPC URL and the contract address
 
    ```sh
+   cd dapptools
    export ETH_RPC_URL=https://kovan.optimism.io
    export GREETER=0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c   
    ```
@@ -268,14 +269,15 @@ To interact with the blockchain you use the command line.
    If it is out of ETH you can "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/), the address is `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`.
 
    ```sh
-   export ETH_FROM=`seth ls | awk '{print $1}'`
+   export ETH_FROM=`seth --keystore=$PWD/keystore ls | awk '{print $1}'`
    ```
+
 
 1. Send a transaction. 
    When asked for the pass phrase just click Enter.
 
    ```sh
-   seth send $GREETER "setGreeting(string)" '"hello"'
+   seth --keystore=$PWD/keystore send $GREETER "setGreeting(string)" '"hello"'
    ```
 
 1. Test that the greeting has changed:
