@@ -11,8 +11,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 });
 
 
-const mnemonic = '<<< your mnemonic here >>>'   
-// "test test test test test test test test test test test junk"
+const mnemonic = '<<< your mnemonic here >>>' 
 
 
 // You need to export an object to set up your config
@@ -29,7 +28,7 @@ module.exports = {
         accounts: { mnemonic: mnemonic }
       },
       "kovan": {
-        url: '<<< your URL here >>>'
+        url: '<<< your URL here >>>',
         accounts: { mnemonic: mnemonic }
       }
   } 
