@@ -117,6 +117,7 @@ This line specifies the acceptable versions of the Solidity programming language
 In this case we only allow 0.7.x and 0.8.x versions. 
 This is important because Solidity is new and still developing rapidly, and therefore [breaking changes](https://docs.soliditylang.org/en/v0.8.11/080-breaking-changes.html) are necessary from time to time.
 
+```solidity
 
 /**
  * @title Storage
@@ -179,7 +180,7 @@ This is another function definition, with a few differences:
 - The function is defined as a `view`, which means it is a read-only function that doesn't change the state.
   As you have seen, calling this kind of function is free.
 
-```
+```solidity
         return number;
     }
 }
@@ -187,16 +188,3 @@ This is another function definition, with a few differences:
 
 To learn more Solidity we have [a list of resources](https://help.optimism.io/hc/en-us/articles/4412777835675-Developer-information#h_01FVSVQ5ZQFJDSRYY6WTY18F0N). 
 If you learn best by reading source code, [try here](https://ethereum.org/en/developers/tutorials/erc20-annotated-code/).
-
-
-
-<!--
-
-Testing with wallet:
-
-
-apple salt around trust remove royal noise rescue pudding way into tube
-
-0xe7ed9445928ad8B258001492d0F9BB1FEBC420aA
-
--->
