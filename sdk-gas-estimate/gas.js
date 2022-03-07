@@ -5,7 +5,7 @@ const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 const fs = require("fs")
 
-const greeterJSON = JSON.parse(fs.readFileSync("artifacts/contracts/Greeter.sol/Greeter.json"))
+const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 
 const network = "kovan"    // "kovan" or "mainnet"
 

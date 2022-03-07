@@ -8,8 +8,6 @@ This tutorial teaches you how to use the Optimism SDK to estimate the gas costs 
 This calculation is complicated by the fact that the major cost is the cost of writing the transaction on L1, it doesn't work to just multiply the gas used by the transaction by the gas price, the same way you would on L1. 
 [You can read the details of the calculation here](https://help.optimism.io/hc/en-us/articles/4411895794715-Transaction-fees).
 
-> **Note:** *The SDK is [still in beta](https://twitter.com/optimismPBC/status/1489378748327768064).*
-> *The results produced by the SDK may not be accurate, and API may change between now and when the SDK is officially released.*
 
 
 ## Prerequisites
@@ -41,7 +39,7 @@ That's it.
 ### Results
 
 The results you get from the script on Kovan look a bit strange, because the L1 gas price is tiny (7 wei) compared to the L2 gas price (1,000,000 wei).
-Here is an example of results from the production Optimism blockchain, where the L2 gas price is still 1,000,000 wei, but the L1 gas price is, as I'm writing this, about 60 Gwei. 
+Here is an example of results from the production Optimism blockchain, where the L2 gas price is still 1,000,000 wei, but the L1 gas price is, at writing, about 60 Gwei. 
 
 
 ```
@@ -99,11 +97,12 @@ const fs = require("fs")
 The packages we need directly.
 
 ```js
-const greeterJSON = JSON.parse(fs.readFileSync("artifacts/contracts/Greeter.sol/Greeter.json"))
+const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 ```
 
 The transaction whose gas costs we'll estimate uses [the Hardhat Greeting.sol contract](https://github.com/NomicFoundation/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol).
 This contract has one function that changes the state and there requires a transaction to call, [`setGreeting(string)`](https://github.com/NomicFoundation/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol#L18-L21).
+
 
 ```js
 const network = "kovan"    // "kovan" or "mainnet"
