@@ -14,7 +14,7 @@
     "hardhat": "^2.4.1"
   },
   "dependencies": {
-    "@eth-optimism/contracts": "^0.4.5",
+    "@eth-optimism/contracts": "^0.5.11",
     "dotenv": "^10.0.0"
   }
 }
