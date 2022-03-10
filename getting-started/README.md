@@ -14,7 +14,8 @@ To access any Ethereum type network you need an endpoint. There are several ways
 
 1. [Run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
 
-1. For the limited number of transactions required for development, rather than QA or production, you can use [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
+1. For *limited* development use, [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
+   Note that these endpoints are rate limited, so they are not for use in QA or production environments.
 
 1. For production use there is a number of service providers that provide Optimism endpoints, usually with a free tier for low usage.
 
@@ -30,7 +31,8 @@ For development purposes we recommend you use either a local development node or
 That way you don't need to spend real money.
 If you need Kovan ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
 
-The tests
+The tests examples below all use Optimistic Kovan.
+
 
 ## Interacting with Optimism contracts
 
@@ -122,8 +124,8 @@ In [Truffle](https://trufflesuite.com/):
    ```sh
    cd truffle
    yarn
-   yarn truffle compile
-   yarn truffle console --network optimistic-kovan
+   truffle compile
+   truffle console --network optimistic-kovan
    ```
 
 1. Connect to the Greeter contact:
