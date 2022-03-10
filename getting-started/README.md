@@ -3,22 +3,25 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This tutorial teaches you the basics of Optimism development. 
-Because of [EVM equivalence](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306) the differences are minor, but [they do exist](https://community.optimism.io/docs/developers/build/differences/#).
+This tutorial teaches you the basics of Optimism development.
+Optimism is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on mainnet.
+Therefore, we the differences between Optimism development and Ethereum development are minor.
+But a few differences [do exist](https://community.optimism.io/docs/developers/build/differences/#).
 
 ## Optimism endpoint URL
 
 To access any Ethereum type network you need an endpoint. There are several ways to get one:
 
+1. [Run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
+
 1. For the limited number of transactions required for development, rather than QA or production, you can use [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
 
-1. There is a number of service providers that provide Optimism endpoints, usually with a free tier for low usage.
+1. For production use there is a number of service providers that provide Optimism endpoints, usually with a free tier for low usage.
 
    * [Alchemy](https://www.alchemy.com/layer2/optimism)
    * [Infura](https://infura.io/docs/ethereum#section/Choose-a-Network)
    * [QuickNode](https://www.quicknode.com/chains/optimism)
 
-1. If you prefer to keep your decentralized application development private, you can also [run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
 
 
 ### Network choice
@@ -27,20 +30,17 @@ For development purposes we recommend you use either a local development node or
 That way you don't need to spend real money.
 If you need Kovan ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
 
+The tests
 
-### Connecting the development stack to Optimism
+## Interacting with Optimism contracts
 
-The exact steps to do this depends on the development stack you're using.
+We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimistic Kovan, at address [0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c](https://kovan-optimistic.etherscan.io/address/0xe0a5fe4fd70b6ea4217122e85d213d70766d6c2c). 
+You can verify your development stack configuration by interacting with it.
 
-#### Dapp tools
 
-In [dapp tools](https://github.com/dapphub/dapptools) use this command:
+## Hardhat
 
-```sh
-export ETH_RPC_URL=<Optimism URL>
-```
-
-#### Hardhat
+### Connecting to Optimism
 
 In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file's `modules.export.networks` to add a definition similar to this one:
 
@@ -52,21 +52,43 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file's `modu
     }
 ```
 
-#### Remix
+### Greeter interaction
 
-In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
+1. Run the console:
+   ```sh
+   cd hardhat
+   yarn
+   yarn hardhat console --network optimistic-kovan
+   ```
 
-1. Log on with your wallet to Optimistic Kovan (or, eventually, Optimistic Ethereum). 
-   If you use the Optimism endpoints, you can do this using [chainid.link](https://chainid.link):
-   - [Optimistic Kovan](https://chainid.link?network=optimism-kovan)
-   - [Optimistic Ethereum](https://chainid.link?network=optimism)
+1. Connect to the Greeter contract:   
 
-1. Browse to [Remix](https://remix.ethereum.org/).
-1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
-1. Select the Environment **Injected Web3 Provider**.
-1. Accept the connection in the wallet.
+   ```js
+   Greeter = await ethers.getContractFactory("Greeter")
+   greeter = await Greeter.attach("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
+   ```   
 
-#### Truffle
+1. Read information from the contact:
+
+   ```js
+   await greeter.greet()
+   ```
+
+1. Submit a transaction, wait for it to be processed, and see that it affected the state.
+   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
+   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
+
+   ```js
+   tx = await greeter.setGreeting(`Hello ${new Date()}`)
+   receipt = await tx.wait()   // Doesn't work in Truffle
+   await greeter.greet()
+   ```
+
+
+## Truffle
+
+### Connecting to Optimism
+
 
 In [Truffle](https://trufflesuite.com/):
 
@@ -92,46 +114,8 @@ In [Truffle](https://trufflesuite.com/):
       }
       ```
 
-## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimistic Kovan, at address [0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c](https://kovan-optimistic.etherscan.io/address/0xe0a5fe4fd70b6ea4217122e85d213d70766d6c2c). 
-You can verify your development stack configuration by interacting with it.
-To see it in action, follow the instructions below for your development stack.
-
-
-### Hardhat
-
-1. Run the console:
-   ```sh
-   cd hardhat
-   yarn
-   yarn hardhat console --network optimistic-kovan
-   ```
-
-1. Connect to the Greeter contract:   
-
-   ```js
-   Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
-   ```   
-
-1. Read information from the contact:
-
-   ```js
-   await greeter.greet()
-   ```
-
-1. Submit a transaction, wait for it to be processed, and see that it affected the state.
-   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
-   In that case, edit the configuration file to use your own mnemonic.
-
-   ```js
-   tx = await greeter.setGreeting(`Hello ${new Date()}`)
-   receipt = await tx.wait()   // Doesn't work in Truffle
-   await greeter.greet()
-   ```
-
-### Truffle
+### Greeter interaction
 
 1. Install the software, compile the contract, and run the console:
 
@@ -156,7 +140,7 @@ To see it in action, follow the instructions below for your development stack.
 
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
    Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
-   In that case, edit the configuration file to use your own mnemonic.
+   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
    ```js
    tx = await greeter.setGreeting(`Hello ${new Date()}`)
@@ -164,12 +148,24 @@ To see it in action, follow the instructions below for your development stack.
    ```
 
 
-### Remix
 
-[Remix](https://remix.ethereum.org/) is an [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment).
-You interact with it through your web browser.
+## Remix
+
+### Connecting to Optimism
+
+In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
+
+1. Log on with your wallet to Optimistic Kovan (or, eventually, Optimistic Ethereum). 
+   If you use the Optimism endpoints, you can do this using [chainid.link](https://chainid.link):
+   - [Optimistic Kovan](https://chainid.link?network=optimism-kovan)
+   - [Optimistic Ethereum](https://chainid.link?network=optimism)
 
 1. Browse to [Remix](https://remix.ethereum.org/).
+1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
+1. Select the Environment **Injected Web3 Provider**.
+1. Accept the connection in the wallet.
+
+### Greeter interaction
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
@@ -186,6 +182,8 @@ You interact with it through your web browser.
 1. Open **contracts > artifacts** and see that there's a `Greeter.json` file. This file is the compiled version, the API for the contract, etc.
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
+
+   If you do not have Kovan ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
 1. Scroll down. 
    In the At Address field, type the contract address (`0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c`).
@@ -206,7 +204,32 @@ You interact with it through your web browser.
 1. See the results on the console and then click **greet** again to see the greeting changed.   
 
 
-### Dapptools
+
+## Dapp tools
+
+### Connecting to Optimism
+
+In [dapp tools](https://github.com/dapphub/dapptools) use this command:
+
+- For a local development node:
+
+  ```sh
+  export ETH_RPC_URL=https://localhost:8545
+  ```
+
+- For the Optimistic Kovan test network:
+
+  ```sh
+  export ETH_RPC_URL=https://kovan.optimism.io:8545
+  ```
+
+- For the Optimism production network:
+
+  ```sh
+  export ETH_RPC_URL=https://mainnet.optimism.io:8545
+  ```
+
+### Greeter interaction
 
 Dapptools does not give us a JavaScript console. 
 To interact with the blockchain you use the command line.
@@ -233,7 +256,7 @@ To interact with the blockchain you use the command line.
 
 1. Run this command to get our wallet's address.
    This is the same address we used earlier for Hardhat and Truffle.
-   If it is out of ETH you can "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/), the address is `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`.
+   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
    ```sh
    export ETH_FROM=`seth --keystore=$PWD/keystore ls | awk '{print $1}'`

@@ -66,9 +66,21 @@ module.exports = {
     // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
     // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     // },
+    "local-devnode": {
+       provider: () => new HDWalletProvider(mnemonic, `http://localhost:8545`),
+       network_id: '*',
+       networkCheckTimeout: 1000000000,
+       timeoutBlocks: 300
+    },
     "optimistic-kovan": {
        provider: () => new HDWalletProvider(mnemonic, `https://kovan.optimism.io`),
-       network_id: 69,   // Kovan, the production network is ten
+       network_id: 69, 
+       networkCheckTimeout: 1000000000,
+       timeoutBlocks: 300
+    },
+    "optimism": {
+       provider: () => new HDWalletProvider(mnemonic, `https://mainnet.optimism.io`),
+       network_id: 10,
        networkCheckTimeout: 1000000000,
        timeoutBlocks: 300
     },
