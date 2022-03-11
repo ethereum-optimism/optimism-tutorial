@@ -34,7 +34,11 @@ You can also use MetaMask in a mobile device (iOS or Android), but for software 
 ### Blockchain
 
 In this tutorial we'll use [Optimism](https://www.optimism.io/), a rollup network, to run our contracts.
+
+[Deploying contracts and interacting with them costs gas, which has to be purchased with Ether (also known as ETH)](https://ethereum.org/en/developers/docs/gas/). 
+On the production network that Ether costs money, it is part of the security mechanism of Ethereum.
 To avoid spending real money, we'll use Optimistic Kovan, a test network built on top of Kovan.
+The test network also requires ETH, but it is test ETH you can get for free.
 
 1. [Go here](https://chainid.link/?network=optimism-kovan) to add Optimistic Kovan to your wallet. 
 Click **Connect** on the web page and then **Approve** in MetaMask.
@@ -52,6 +56,8 @@ Click **Connect** on the web page and then **Approve** in MetaMask.
 
 The most common smart contract development language is called [Solidity](https://docs.soliditylang.org/en/v0.8.11/).
 Here we will use using an integrated development environment (IDE) called [Remix](https://remix.ethereum.org/).
+It has the significant advantage of requiring minimal set up because it runs in your browser.
+
 
 1. Go to [Remix](https://remix.ethereum.org).
 
