@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+require('dotenv').config()
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -25,11 +26,12 @@ module.exports = {
     },
     "optimistic-kovan": {
        url: "https://kovan.optimism.io",
-       accounts: { mnemonic: "test test test test test test test test test test test junk" }
+       accounts: { mnemonic: process.env.MNEMONIC }
+//       accounts: { mnemonic: "test test test test test test test test test test test junk" }
     },
     "optimism": {
        url: "https://mainnet.optimism.io",
-       accounts: { mnemonic: "test test test test test test test test test test test junk" }
+       accounts: { mnemonic: process.env.MNEMONIC }
     }
   }
 };

@@ -9,11 +9,14 @@
     "hardhat": "^2.8.3"
   },
   "scripts": {
-     "compile": "yarn hardhat compile",
-     "test": "yarn hardhat test",
-     "test-kovan": "yarn hardhat test --network optimistic-kovan",     
-     "deploy-devnode": "yarn hardhat run scripts/sample-script.js --network local-devnode",
-     "deploy-kovan": "yarn hardhat run scripts/sample-script.js --network optimistic-kovan",
-     "deploy-production": "yarn hardhat run scripts/sample-script.js --network optimism"          
+    "compile": "yarn hardhat compile",
+    "test": "yarn hardhat test",
+    "test-kovan": "yarn hardhat test --network optimistic-kovan",
+    "deploy-devnode": "yarn hardhat run scripts/deploy-script.js --network local-devnode",
+    "deploy-kovan": "yarn hardhat run scripts/deploy-script.js --network optimistic-kovan",
+    "deploy-production": "yarn hardhat run scripts/deploy-script.js --network optimism"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
   }
 }
