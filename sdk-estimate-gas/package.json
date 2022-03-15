@@ -1,0 +1,12 @@
+{
+  "name": "sdk-gas-estimate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@eth-optimism/sdk": "^1.0.0"
+  },
+  "scripts": {
+    "estimate": "node gas.js" 
+  }  
+}
