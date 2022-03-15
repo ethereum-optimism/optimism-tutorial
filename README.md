@@ -5,19 +5,16 @@
 
 ## Getting Started with Optimistic Ethereum
 
-These are already updated for OVM 2.0
-
-- [Hardhat](hardhat)
-- [Truffle](truffle)
-- [Remix](remix)
-- [Dapptools](dapptools)
+[Getting Started](getting-started)
 
 ## The Standard Bridge
 
-This one has been updated for OVM 2.0
-
 - [L1/L2 deposit withdrawal example](l1-l2-deposit-withdrawal)
 - [ETH deposit from L1 to L2](eth-deposit)
+
+<!--
+
+I decided to comment these out because it's embarrassing they still haven't been updated. The SDK tutorials will fix it. 
 
 These ones are still waiting
 
