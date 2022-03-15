@@ -136,8 +136,8 @@ const getSigner = async () => {
     const l2RpcProvider = optimismSDK.asL2Provider(new ethers.providers.JsonRpcProvider(l2Url))
 ```
 
-The function `optimismSDK.asL2Provider` takes a regular [Ethers.js Provider](https://docs.ethers.io/v5/api/providers/) and adds a few L2 specific functions, which are explained below.
-Because it only adds functions, an `L2Provider` can be used anywhere you use an Ethers `Provider`.
+The function [`optimismSDK.asL2Provider`](https://sdk.optimism.io/modules.html#asL2Provider) takes a regular [Ethers.js Provider](https://docs.ethers.io/v5/api/providers/) and adds a few L2 specific functions, which are explained below.
+Because it only adds functions, an [`L2Provider`](https://sdk.optimism.io/modules.html#L2Provider) can be used anywhere you use an Ethers `Provider`.
 
 ```js
     const privateKey = ethers.utils.HDNode.fromMnemonic(mnemonic).privateKey
@@ -162,20 +162,20 @@ We can't use the `{a: b(), c: d()}` syntax because the `L2Provider` functions co
   retVal.totalCost = await provider.estimateTotalGasCost(tx)
 ```
 
-Estimate the total cost (L1+L2) of running the transaction.
+[Estimate the total cost (L1+L2) of running the transaction](https://sdk.optimism.io/modules.html#estimateTotalGasCost).
 
 ```js
   retVal.l1Cost    = await provider.estimateL1GasCost(tx)
   retVal.l2Cost    = await provider.estimateL2GasCost(tx)
 ```
 
-Estimate the two components of the cost.
+Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.html#estimateL1GasCost) and [L2]()https://sdk.optimism.io/modules.html#estimateL1GasCost.
 
 ```js
   retVal.l1Gas     = await provider.estimateL1Gas(tx)
 ```
 
-Get the amount of gas we expect to use to store the transaction on L1.
+[Get the amount of gas we expect to use to store the transaction on L1](https://sdk.optimism.io/modules.html#estimateL1Gas).
 
 ```js
   return retVal
@@ -207,7 +207,7 @@ const displayResults = (estimated, real) => {
 ```
 
 This function displays the results to show you the estimates and the real information.
-This lets you see how accurate the estimates are.
+This lets you see how accurate the estimates were.
 
 ```js
 const main = async () => {    
@@ -315,6 +315,9 @@ The error message shows that information so the user knows about it.
 It takes a bit of time before the change in the account's balance is processed.
 This loop lets us wait until it is processed so we'll be able to know the full cost.
 
+Note that this is not the only way to wait until a transaction happens.
+You can also use [`crossDomainMessenger.waitForMessageStatus`](https://sdk.optimism.io/interfaces/icrosschainmessenger#waitForMessageStatus). 
+
 ```js
     // Get the real information (cost, etc.) from the transaction response
     real.l1Gas = realTxResp.l1GasUsed
@@ -336,7 +339,7 @@ The gas used on L2 is the gas used for processing.
 ```
 
 This is one way to get the L2 cost of the transaction.
-Another would be to multiple `gasUsed` by `gasPrice`.
+Another would be to multiply `gasUsed` by `gasPrice`.
 
 
 ```js
