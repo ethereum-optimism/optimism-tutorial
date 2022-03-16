@@ -1,11 +1,14 @@
 {
   "name": "view-tx",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "view-tx.js",
   "license": "MIT",
   "dependencies": {
     "@eth-optimism/sdk": "^1.0.0",
     "dotenv": "^16.0.0",
     "ethers": "^5.6.1"
-  }
+  },
+  "scripts": {
+    "script": "node view-tx.js"
+  }  
 }
