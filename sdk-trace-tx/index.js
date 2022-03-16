@@ -15,60 +15,52 @@ const l1Url = "https://eth-mainnet.alchemyapi.io/v2/CLpekP96ZEbnzo0PoQZWr4pZMvwo
 // Global variable because we need them almost everywhere
 let crossChainMessenger
 
-const getProviders = async () => {
-    let l1Provider
-
-    if (l1Url) {
-      l1Provider = new ethers.providers.JsonRpcProvider(l1Url)    
-    } else  {
-      l1Provider = new ethers.providers.getDefaultProvider(network)
-    }
-
-
-    const l2Provider = new ethers.providers.JsonRpcProvider(l2Url)
-
-    return [l1Provider, l2Provider]
-}   // getProviders
-
 
 const setup = async() => {
-  const [l1Provider, l2Provider] = await getProviders()
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: network === "kovan" ? 42 : 1,    
-      l1SignerOrProvider: l1Provider,
-      l2SignerOrProvider: l2Provider
+      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(l1Url),
+      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url)
   })
-}
+}    // setup
 
 
 
+
+// Describe a cross domain transaction, either deposit or withdrawal
+const describeTx = async tx => {
+  console.log(`tx:${tx.transactionHash}`)
+  // Assume all tokens have decimals = 18
+  console.log(`\tAmount: ${tx.amount/1e18} of ${tx.l1Token}`)
+  console.log(`\tRelayed: ${await crossChainMessenger.getMessageStatus(tx.transactionHash)  
+                              == optimismSDK.MessageStatus.RELAYED}`)
+  console.log(`\n`)
+}  // describeTx
 
 
 const main = async () => {    
     await setup()
 
     // The address we trace
-    const addr = "0x5030a9280a75cB91cc70d0Bf3B02c14d3b01d327"
+    const addr = "0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F"
 
     const deposits = await crossChainMessenger.getDepositsByAddress(addr)
-    const depositHash = deposits[0].transactionHash
-    console.log(`${deposits.length}  ${depositHash}`)
-    console.log(deposits[0])
+    console.log(`Deposits by address ${addr}`)
+    for (var i=0; i<deposits.length; i++)
+      describeTx(deposits[i])
 
+    const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(addr)
+    console.log(`\n\n\nWithdrawals by address ${addr}`)
+    for (var i=0; i<withdrawals.length; i++)
+      describeTx(withdrawals[i])
 
-    const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(addr, /*
-      {
-          fromBlock: 15000,
-          toBlock: 24000
-      } */ )
-    const withdrawalHash = withdrawals[0].transactionHash      
-    console.log(`${withdrawals.length} ${withdrawalHash}`)   
-    
-    const L1toL2msgs = await crossChainMessenger.getMessagesByTransaction(depositHash)
-    console.log(L1toL2msgs)    
+    // Some extra fields compared to the get<verb>ByAddress results
+//    const l1toL2msg = (await crossChainMessenger.getMessagesByTransaction(depositHash))[0]
+//    const l2toL1msg = (await crossChainMessenger.getMessagesByTransaction(withdrawalHash))[0]
 
-    const L2toL1msgs = await crossChainMessenger.getMessagesByTransaction(withdrawalHash)
-    console.log(L2toL1msgs)     
+    // Get the status to see if the messages are fully processed
+//    const depositStatus = await crossChainMessenger.getMessageStatus(depositHash)
+//    console.log(`Relayed? ${depositStatus == optimismSDK.MessageStatus.RELAYED}`)
 }  // main
 
 
