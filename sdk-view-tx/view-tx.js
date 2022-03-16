@@ -1,6 +1,6 @@
 #! /usr/local/bin/node
 
-// Trace transfers between L1 and L2 using the Optimism SDK
+// View transfers between L1 and L2 using the Optimism SDK
 
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
@@ -75,14 +75,7 @@ const main = async () => {
     console.log(`\n\n\nWithdrawals by address ${addr}`)
     for (var i=0; i<withdrawals.length; i++)
       await describeTx(withdrawals[i])
-
-    // Some extra fields compared to the get<verb>ByAddress results
-//    const l1toL2msg = (await crossChainMessenger.getMessagesByTransaction(depositHash))[0]
-//    const l2toL1msg = (await crossChainMessenger.getMessagesByTransaction(withdrawalHash))[0]
-
-    // Get the status to see if the messages are fully processed
-//    const depositStatus = await crossChainMessenger.getMessageStatus(depositHash)
-//    console.log(`Relayed? ${depositStatus == optimismSDK.MessageStatus.RELAYED}`)
+      
 }  // main
 
 
