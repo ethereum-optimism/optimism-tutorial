@@ -3,13 +3,11 @@
 // Trace transfers between L1 and L2 using the Optimism SDK
 
 const ethers = require("ethers")
-
 const optimismSDK = require("@eth-optimism/sdk")
+require('dotenv').config()
 
 const network = "mainnet"    // "kovan" or "mainnet"
 
-const l2Url = "https://opt-mainnet.g.alchemy.com/v2/EHUzqY2-7spMMmNp7am0vKmnhb5YCZ9x" // `https://${network}.optimism.io`
-const l1Url = "https://eth-mainnet.alchemyapi.io/v2/CLpekP96ZEbnzo0PoQZWr4pZMvwoz1_m"
 
 
 // Global variable because we need them almost everywhere
@@ -19,8 +17,8 @@ let crossChainMessenger
 const setup = async() => {
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: network === "kovan" ? 42 : 1,    
-      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(l1Url),
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url)
+      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
+      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
   })
 }    // setup
 
