@@ -47,7 +47,7 @@ Click **Connect** on the web page and then **Approve** in MetaMask.
 
 1. Go to [this faucet](https://faucet.paradigm.xyz/) to get ETH on the Optimistic Kovan network.
 
-1. Paste your address, select **Drip on additional network**, and click **Claim**.
+1. Paste your address, select **Drip on additional networks**, and click **Claim**.
 
 1. [Go to Etherscan](https://kovan-optimistic.etherscan.io/), search for your address, and see that you now have 1 ETH.
 
