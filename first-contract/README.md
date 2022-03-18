@@ -33,7 +33,7 @@ You can also use MetaMask in a mobile device (iOS or Android), but for software 
 
 ### Blockchain
 
-In this tutorial we'll use [Optimism](https://www.optimism.io/), a rollup network, to run our contracts.
+In this tutorial we'll use [Optimism](https://www.optimism.io/), an Ethereum Layer 2 blockchain, to run our contracts.
 
 [Deploying contracts and interacting with them costs gas, which has to be purchased with Ether (also known as ETH)](https://ethereum.org/en/developers/docs/gas/). 
 On the production network that Ether costs money, it is part of the security mechanism of Ethereum.
