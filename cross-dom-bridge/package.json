@@ -1,0 +1,12 @@
+{
+  "name": "l1-to-l2-comm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@eth-optimism/sdk": "^1.0.0"
+  },
+  "scripts": {
+    "script": "node index.js"
+  }
+}
