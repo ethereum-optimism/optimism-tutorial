@@ -34,7 +34,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Copy `.env.example` to `.env` and edit it:
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Kovan test network. 
-   1. Set `KOVAN-URL` to point to a URL that accesses the Kovan test network.
+   1. Set `KOVAN_URL` to point to a URL that accesses the Kovan test network.
 
 1. Install the necessary packages.
 
