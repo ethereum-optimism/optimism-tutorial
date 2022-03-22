@@ -86,6 +86,10 @@ const reportERC20Balances = async () => {
   console.log(`DAI on L1:${l1Balance}     DAI on L2:${l2Balance}`)  
 }    // reportERC20Balances
 
+
+
+
+
 const depositETH = async () => {
 
   console.log("Deposit ETH")
