@@ -26,15 +26,11 @@ It covers both deposits (Ethereum to Optimism) and withdrawals (Optimism to Ethe
    yarn
    ```
 
-1. Edit `index.js` to your configuration:
+1. Copy `.env.example` to `.env` and edit it:
 
-   | line | value |
-   | ---: | ----- |
-   |    9 | network (either `kovan` or `mainnet`) |
-   |   11 | mnemonic for an account with sufficient ETH and DAI for the transfers |
-   |   12 | URL for [an Optimism endpoint](https://community.optimism.io/docs/useful-tools/networks/)
-   |   13 | URL for an Ethereum endpoint, or leave it commented for the default Ethers provider
-   | 18-20 | Address of an ERC-20 contract, if you don't want to use DAI. DAI is the default because on Kovan we get it from the same faucet we get ETH, but if you want another ERC-20 you can find the addresses for it [in the token list](https://static.optimism.io/optimism.tokenlist.json).
+   1. Set `MNEMONIC` to point to an account that has ETH and DAI on the Kovan test network.
+   1. Set `KOVAN_URL` to point to a URL that accesses the Kovan test network.
+   1. Set `OPTI_KOVAN_URL` to point to the URL for [an Optimism endpoint](https://community.optimism.io/docs/useful-tools/networks/)
 
    On the Kovan test network you can get ETH and DAI from [this faucet](https://faucet.paradigm.xyz/).
 
@@ -113,30 +109,34 @@ As you can see, the total running time is about six minutes.
 // Transfers between L1 and L2 using the Optimism SDK
 
 const ethers = require("ethers")
-
 const optimismSDK = require("@eth-optimism/sdk")
+require('dotenv').config()
+
 ```
 
-The libraries we need: [ethers](https://docs.ethers.io/v5/) and the Optimism SDK itself.
+The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https://www.npmjs.com/package/dotenv) and the Optimism SDK itself.
 
 ```js
-const network = "kovan"    // "kovan" or "mainnet"
+const network = "kovan"  
 
-const mnemonic = "test test test test test test test test test test test junk"
-const l2Url = `https://${network}.optimism.io`
-// const l1Url = 
+const mnemonic = process.env.MNEMONIC
+const l1Url = process.env.KOVAN_URL
+const l2Url = process.env.OPTI_KOVAN_URL
+```
 
+Configuration, read from `.env`.
+
+```js
 // Contract addresses for DAI tokens, taken 
 // from https://static.optimism.io/optimism.tokenlist.json
 const daiAddrs = {
-  l1Addr: network === "kovan" ? "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa" 
-                              : "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+  l1Addr: "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa",
   l2Addr: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
 }    // daiAddrs
 ```
 
-Network configuration. The mnemonic corresponds to address 
-[`0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`](https://kovan.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), which is often used for testing.
+The addresses for the DAI contracts on Kovan and Optimistic Kovan.
+We use DAI here because we can get it for free [from the faucet](https://faucet.paradigm.xyz/).
 
 ```js
 // Global variable because we need them almost everywhere
@@ -153,38 +153,30 @@ This function returns the two signers (one for each layer).
 
 ```js
 const getSigners = async () => {
-    let l1RpcProvider
-
-    if (l1Url) {
-      l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)    
-    } else  {
-      const l1RpcProvider = new ethers.providers.getDefaultProvider(network)
-    }
-
+    const l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)    
     const l2RpcProvider = new ethers.providers.JsonRpcProvider(l2Url)
 ```
 
 The first step is to create the two providers, each connected to an endpoint in the appropriate layer.
 
 ```js
-    const privateKey = ethers.utils.HDNode.fromMnemonic(mnemonic).privateKey
-```
+    const hdNode = ethers.utils.HDNode.fromMnemonic(mnemonic)
+    const privateKey = hdNode.derivePath(ethers.utils.defaultPath).privateKey
+```    
 
-Next we get the private key from the mnemonic.
+To derive the private key and address from a mnemonic it is not enough to create the `HDNode` ([Hierarchical Deterministic Node](https://en.bitcoin.it/wiki/Deterministic_wallet#Type_2:_Hierarchical_deterministic_wallet)).
+The same mnemonic can be used for different blockchains (it's originally a Bitcoin standard), and the node with Ethereum information is under [`ethers.utils.defaultPath`](https://docs.ethers.io/v5/single-page/#/v5/api/utils/hdnode/-%23-hdnodes--defaultpath).
 
-```js
+```js    
     const l1Wallet = new ethers.Wallet(privateKey, l1RpcProvider)
     const l2Wallet = new ethers.Wallet(privateKey, l2RpcProvider)
 
     return [l1Wallet, l2Wallet]
+}   // getSigners
 ```
 
 Finally, create and return the wallets.
 We need to use wallets, rather than providers, because we need to sign transactions.
-
-```js
-}   // getSigners
-```
 
 
 
@@ -202,7 +194,7 @@ We need to know our address to get our ERC-20 balances.
 
 ```js
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "kovan" ? 42 : 1,    
+      l1ChainId: 42,   // For Kovan, it's 1 for Mainnet    
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer
   })
@@ -213,7 +205,7 @@ Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmes
 ```js
   l1ERC20 = new ethers.Contract(daiAddrs.l1Addr, erc20ABI, l1Signer)
   l2ERC20 = new ethers.Contract(daiAddrs.l2Addr, erc20ABI, l2Signer)  
-}
+}   // setup
 ```
 
 Create the two contract objects we'll use to check ERC-20 balances. 
@@ -229,7 +221,7 @@ const erc20ABI = [
       outputs: [{ name: "balance", type: "uint256" }],
       type: "function",
     },
-  ]
+  ]    // erc20ABI
 ```
 
 Most of our calls to the ERC-20 accounts are going to be handled by `crossDomainMessenger`, so we won't have worry about the ABI. But we need this specific fragment to be able to check balances.
