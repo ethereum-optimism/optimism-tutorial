@@ -71,7 +71,7 @@ L2 Gas:
 There are several important facts to note here:
 
 - The L1 gas cost is over 7,500 times the L2 gas cost.
-  This is typical in Optimistic transactions, because of the cost ration between L1 gas and L2 gas.
+  This is typical in Optimistic transactions, because of the cost ratio between L1 gas and L2 gas.
 - The L1 gas estimate is accurate, but the L1 gas cost is off by one wei.
   This happens because as part of the calculation the gas cost is multiplied by a scalar (1.24 as I'm writing this).
   The result is sometimes rounded up and sometimes down, depending on where it is calculated.
