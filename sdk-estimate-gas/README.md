@@ -17,7 +17,7 @@ This calculation is complicated by the fact that the major cost is the cost of w
 1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
 1. There is network connectivity to a provider on the Optimistic Kovan L2 network, and to the npm package registry.
 1. The account it uses, [0xf5a6ead936fb47f342bb63e676479bddf26ebe1d](https://kovan-optimistic.etherscan.io/address/0xf5a6ead936fb47f342bb63e676479bddf26ebe1d), has enough Kovan ETH to pay for gas.
-   If it does not have enough Kovan ETH, please replenish it [from this faucet](https://faucet.paradigm.xyz/).
+   If it does not have enough Kovan ETH, please replenish it [from a faucet](https://community.optimism.io/docs/useful-tools/faucets).
 
 
 ## Running the script
