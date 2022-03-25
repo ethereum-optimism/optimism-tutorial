@@ -35,12 +35,12 @@ const getSigner = async () => {
 
 // Get estimates from the SDK
 const getEstimates = async (provider, tx) => {
-  let retVal = {}
-  retVal.totalCost = await provider.estimateTotalGasCost(tx)
-  retVal.l1Cost    = await provider.estimateL1GasCost(tx)
-  retVal.l2Cost    = await provider.estimateL2GasCost(tx)
-  retVal.l1Gas     = await provider.estimateL1Gas(tx)
-  return retVal
+  return {
+    totalCost: await provider.estimateTotalGasCost(tx),
+    l1Cost: await provider.estimateL1GasCost(tx),
+    l2Cost: await provider.estimateL2GasCost(tx),
+    l1Gas: await provider.estimateL1Gas(tx)
+  }
 }    // getEstimates
 
 
@@ -82,8 +82,7 @@ const main = async () => {
 
     const fakeTxReq = await greeter.populateTransaction.setGreeting(greeting)
     const fakeTx = await signer.populateTransaction(fakeTxReq)
-    delete fakeTx.from
-    delete fakeTx.chainId
+
 
     let estimated = await getEstimates(signer.provider, fakeTx)
     estimated.l2Gas = await greeter.estimateGas.setGreeting(greeting)

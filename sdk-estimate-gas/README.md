@@ -252,13 +252,6 @@ The contract cannot provide us with the `nonce`, `chainId`, `gasPrice`, or `gasL
 To get those fields we use [`signer.populateTransaction`](https://docs.ethers.io/v5/api/signer/#Signer-populateTransaction).
 
 ```js
-    delete fakeTx.from
-    delete fakeTx.chainId
-```
-
-The `from` address and the `chainId` are encoded in the signature, so we do not need to pass them to get the estimate.
-
-```js
     let estimated = await getEstimates(signer.provider, fakeTx)
 ```
 
