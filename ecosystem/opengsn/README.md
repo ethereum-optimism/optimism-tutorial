@@ -116,8 +116,74 @@ Return the address that last modified the greeting.
 Save both the new greeting, and the identity that called us.
 Note the use of `_msgSender()` instead of `msg.sender`.
 
-## Modify the user interface
+### Modify the client code
 
+Client requests need to go through a [`RelayProvider`](https://github.com/opengsn/gsn/blob/master/packages/provider/src/RelayProvider.ts) to be redirected to a GSN relay.
+
+
+#### Details explanation
+
+```js
+#! /usr/local/bin/node
+
+
+const ethers = require("ethers")
+const { RelayProvider } = require('@opengsn/provider')
+const Web3HttpProvider = require( 'web3-providers-http')
+// const Web3Contract = require( 'web3-eth-contract')
+
+const greeterAddr = "0x4f8D981EA47c6712fD0016Ad79F8cd7A4E8DE79e"
+
+const relayConfig = {
+    paymasterAddress: "0x00B7B352C117Cd283Ce4A6Fc0Ba1F3D95Ea2036E",
+    auditorsCount: 0
+}     // relayConfig
+
+
+const greeterArtifact = 
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Greeter",
+  "sourceName": "contracts/Greeter.sol",
+  "abi": [
+      .
+      .
+      .
+  ],
+  "bytecode": "0x6080.......", 
+  "deployedBytecode":  "0x6080........", 
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
+
+
+
+const main = async () => {
+
+  let wallet = (ethers.Wallet.createRandom())
+  
+  const web3provider = new Web3HttpProvider('https://kovan.optimism.io')
+  const gsnProvider = RelayProvider.newProvider({ provider: web3provider, config: relayConfig })
+  await gsnProvider.init()
+  gsnProvider.addAccount(wallet.privateKey)
+  const ethersProvider = new ethers.providers.Web3Provider(gsnProvider)
+  const signer = ethersProvider.getSigner(wallet.address)
+  const greeter = new ethers.Contract(greeterAddr, greeterArtifact.abi, signer)
+
+  console.log(`New greeter: ${wallet.address}`)
+
+  tx = await greeter.setGreeting(`Hello from ${wallet.address}`)
+  rcpt = await tx.wait()
+}   // main
+
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });        
+```
 
 
 
