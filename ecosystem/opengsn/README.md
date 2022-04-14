@@ -284,11 +284,22 @@ If none of them fit your needs you can also write your own.
 After you deploy a paymaster just send it ETH, and it'll forward it to the relay hub.
 [You can see an example in this transaction](https://kovan-optimistic.etherscan.io/tx/0xdea9ba02b386449af2a05eef42e5e02b421762d4750751c3744a6d34f39b062e). 
 
-When the pay master is done, you can withdraw any remaining ETH using [`withdrawRelayHubDepositTo`](https://github.com/opengsn/gsn/blob/master/packages/contracts/src/BasePaymaster.sol#L125-L132).
+When you no longer need the pay master, you can withdraw any remaining ETH using [`withdrawRelayHubDepositTo`](https://github.com/opengsn/gsn/blob/master/packages/contracts/src/BasePaymaster.sol#L125-L132).
 
 
 ## Running your own relay
 
+The OpenGSN design assumes that every application runs its own relay, which provides two services:
+
+- Relay the messages of that application at cost (you can specify preferred relays in the GSN configuration)
+- Relay the messages of other applications for a profit (exactly how much is determined by the relay administrator).
+  On most networks OpenGSN runs a relay that charges a 70% premium.
+
+This way relaying is usually cost free, and the more applications for OpenGSN the more robust the network becomes overall, and therefore the more robust the network access of each application.
+
+[See here for directions to create a relayer here](https://docs.opengsn.org/relay-server/tutorial.html).
 
 
 ## Conclusion
+
+You should now be able to use OpenGSN transactions to enable ETH-less transactions for your users, when your business plan is to monetize them by other means.
