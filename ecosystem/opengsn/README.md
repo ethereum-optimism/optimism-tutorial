@@ -18,17 +18,31 @@ In general, doing this requires these tasks:
 
 To see this system in action:
 
+1. Download the repository if you haven't yet:
+
+   ```bash
+   git clone https://github.com/ethereum-optimism/optimism-tutorial.git
+   cd optimism-tutorial/ecosystem/opengsn
+   ```
+
 1. Download the necessary packages:
 
    ```bash
    yarn
    ```
 
+1. Open [the Greeter contract](https://kovan-optimistic.etherscan.io/address/0xd34335b1d818cee54e3323d3246bd31d94e6a78a#readContract) and see which account set the greeting last (**lastGreeterAddr**).
+
 1. Run the script:
 
    ```bash
    scripts/use-gsn.js
    ```
+
+   This script creates a random wallet (which of course doesn't have any ETH) and has that wallet send an OpenGSN transaction to change the greeting.
+
+1. Reload the Etherscan page, open **lastGreeterAddr** again, and see that it is a different value.
+
 
 ## Modify your dapp
 
@@ -169,10 +183,10 @@ const ethers = require("ethers")
 const { RelayProvider } = require('@opengsn/provider')
 const Web3HttpProvider = require( 'web3-providers-http')
 
-const greeterAddr = "0xA76F74361971b28bc57d0519a010a56e6D334c33"
+const greeterAddr = "0xD34335b1d818ceE54e3323D3246bD31d94E6a78a"
 ```
 
-The address of [the greeter contract](https://kovan-optimistic.etherscan.io/address/0xA76F74361971b28bc57d0519a010a56e6D334c33).
+The address of [the greeter contract](https://kovan-optimistic.etherscan.io/address/0xd34335b1d818cee54e3323d3246bd31d94e6a78a).
 In production code this would probably be a configuration variable.
 
 ```js
