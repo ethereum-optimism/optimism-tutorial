@@ -297,7 +297,7 @@ The OpenGSN design assumes that every application runs its own relay, which prov
 
 This way relaying is usually cost free, and the more applications for OpenGSN the more robust the network becomes overall, and therefore the more robust the network access of each application.
 
-[For directions how to create a relayer, see here](https://docs.opengsn.org/relay-server/tutorial.html).
+[For directions how to create a relayer see here](https://docs.opengsn.org/relay-server/tutorial.html).
 
 
 ## Conclusion
