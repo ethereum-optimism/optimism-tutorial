@@ -44,7 +44,7 @@ To see this system in action:
 1. Reload the Etherscan page, open **lastGreeterAddr** again, and see that it is a different value.
 
 
-## Modify your dapp
+## Integrating OpenGSN with your dapp
 
 ### OpenGSN compatible contracts
 
@@ -55,7 +55,7 @@ There are several requirements for a contract to be compatible with OpenGSN:
   If the contact is called normally, `_msgSender()` is equal to `msg.sender`.
   If the contact is called directly by an OpenGSN transaction, `_msgSender()` is the original sender rather than the forwarder that forwarded the message.
   Note that if you inherit from [OpenZeppelin contracts](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts), they already use `_msgSender()` to be OpenGSN compatible.
-- In the construct call `_setTrustedForwarder` with the address of the trusted forwarder on your network.
+- In the constructor call `_setTrustedForwarder` with the address of the trusted forwarder on your network.
   [You can get this address here](https://docs.opengsn.org/networks/optimism/optimism.html).
 - Create a `versionRecipient()` function to return the current version of the contract.
 
@@ -103,11 +103,6 @@ This may be wasteful in production, but this isn't production code.
  The address of the [`Forwarder`](https://github.com/opengsn/gsn/blob/master/packages/contracts/src/forwarder/Forwarder.sol) from which we are willing accept to messages (including the claim they are from a different source).
  The purpose of that contract is to have a tiny (and therefore easily audited) contract that proxies the relayed messages so a security audit of the OpengSGN compatible contract doesn’t require a security audit of [the much more complicated `RelayHub` contract](https://github.com/opengsn/gsn/blob/master/packages/contracts/src/RelayHub.sol).
 
-```solidity
-    lastGreeter = _msgSender();
-  }
-```
-
 Note that there is no way to change the forwarder after construction in this contract.
 If you need to do so (because the OpenGSN team upgraded their code), you need to either:
 
@@ -116,9 +111,11 @@ If you need to do so (because the OpenGSN team upgraded their code), you need to
 - Write a contract that inherits from [`Ownable`](https://docs.openzeppelin.com/contracts/2.x/access-control#ownership-and-ownable) and create an `onlyOwner` function that changes the forwarder.
 I chose not to follow this route to keep the code simple to understand.
 
-To find the address of the forwarder [look in the OpenGSN docs](https://docs.opengsn.org/networks/addresses.html#optimism-network).
-
 ```solidity
+    lastGreeter = _msgSender();
+  }
+
+
   function versionRecipient() external virtual view override returns (string memory) {
     return "v. 1.0.0";
   }
