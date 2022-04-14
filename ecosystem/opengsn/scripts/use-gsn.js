@@ -4,15 +4,15 @@
 const ethers = require("ethers")
 const { RelayProvider } = require('@opengsn/provider')
 const Web3HttpProvider = require( 'web3-providers-http')
-// const Web3Contract = require( 'web3-eth-contract')
 
-const greeterAddr = "0xA76F74361971b28bc57d0519a010a56e6D334c33"
-// "0x4f8D981EA47c6712fD0016Ad79F8cd7A4E8DE79e"
+const greeterAddr = "0xD34335b1d818ceE54e3323D3246bD31d94E6a78a"
 
 const relayConfig = {
     paymasterAddress: "0xCc6dA63d001017AC34BFfd35cD24F795014f6a6c",
-    // "0x00B7B352C117Cd283Ce4A6Fc0Ba1F3D95Ea2036E",
-    auditorsCount: 0
+    auditorsCount: 0,
+    relayLookupWindowBlocks: 5e9,
+    relayRegistrationLookupBlocks: 5e9,
+    pastEventsQueryMaxPageSize: 5e7
 }     // relayConfig
 
 
@@ -169,7 +169,7 @@ const greeterArtifact =
 
 const main = async () => {
 
-  let wallet = (ethers.Wallet.createRandom())
+  const wallet = (ethers.Wallet.createRandom())
   
   const web3provider = new Web3HttpProvider('https://kovan.optimism.io')
   const gsnProvider = RelayProvider.newProvider({ provider: web3provider, config: relayConfig })
