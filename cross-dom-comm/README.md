@@ -71,7 +71,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
 
 
-### Optimism message to Etherscan
+### Optimism message to Ethereum
 
 #### Send the message
 
@@ -115,7 +115,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Connect the Hardhat console to Kovan (L1):
 
    ```sh
-   yarn hardhat console --network optimistic-kovan
+   yarn hardhat console --network kovan
    ```
 
 1. Get the SDK (it is already in `node_modules`).
