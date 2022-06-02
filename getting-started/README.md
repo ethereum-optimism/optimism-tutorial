@@ -283,7 +283,7 @@ To interact with the blockchain you use the command line.
 When it is time to deploy your application on mainnet, follow these steps:
 
 1. Use [a bridge](https://app.optimism.io/bridge) to transfer ETH to Optimism mainnet.
-1. In your configuration files or environment variable, use [a mainnet URL](https://community.optimism.io/docs/useful-tools/networks/#optimism-mainnet).
+1. Where you specify the RCP endpoint URL, use [a mainnet endpoint](https://community.optimism.io/docs/useful-tools/networks/#optimism-mainnet).
 
 
 ## Best practices
