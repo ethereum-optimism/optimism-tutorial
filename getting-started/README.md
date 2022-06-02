@@ -278,6 +278,14 @@ To interact with the blockchain you use the command line.
    seth call $GREETER "greet()" | seth --to-ascii
    ```
 
+## Moving to mainnet
+
+When it is time to deploy your application on mainnet, follow these steps:
+
+1. Use [a bridge](https://app.optimism.io/bridge) to transfer ETH to Optimism mainnet.
+1. In your configuration files or environment variable, use [a mainnet URL](https://community.optimism.io/docs/useful-tools/networks/#optimism-mainnet).
+
+
 ## Best practices
 
 It is best to start development with the EVM provided by the development stack. 
@@ -287,3 +295,4 @@ After you are done with that development, debug your decentralized application u
 This lets you debug parts that that are Optimism specific such as calls to bridges to transfer assets between layers.
 
 Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
+
