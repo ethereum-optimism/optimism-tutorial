@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "waffle waffle.config.json",
-    "test": "mocha -r ts-node/register/transpile-only 'test/**/*.test.ts'"
+    "test": "mocha -r ts-node/register/transpile-only 'test/**/*.test.ts' --timeout 60000"
   },
   "devDependencies": {
     "@ethereum-waffle/optimism": "^4.0.0-alpha.22",
