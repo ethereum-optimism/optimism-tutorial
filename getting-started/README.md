@@ -293,7 +293,7 @@ The tutorial makes these assumptions:
 
 ### Instructions
 
-1. Insert your mnemonic in the [line 15](./waffle/test/mock-contract.test.ts#L15) to use your address in test.
+1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
 1. In the terminal, run the following commands:
 
    ```sh
