@@ -278,6 +278,38 @@ To interact with the blockchain you use the command line.
    seth call $GREETER "greet()" | seth --to-ascii
    ```
 
+## Waffle
+
+Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.
+
+### Prerequisites
+
+The tutorial makes these assumptions:
+
+1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
+1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
+1. You have a Kovan Optimism address with enough funds on it. You can use this [faucet](https://kovan.optifaucet.com/) to get some free funds.
+1. You have general understanding of smart contracts development.
+
+### Instructions
+
+1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
+1. In the terminal, run the following commands:
+
+   ```sh
+   cd waffle
+   yarn
+   yarn build
+   yarn test
+   ```
+
+   You should see 2 tests passing.
+1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
+
+### Compatibility with other tools
+
+Note that in the tutorial we've been compiling smart contracts using [Waffle](https://github.com/TrueFiEng/Waffle). If you prefer to compile your smart contracts using other tools (like [Hardhat](https://hardhat.org/)) you can install the appropriate packages and modify `build` script in the `package.json` file.
+
 ## Best practices
 
 It is best to start development with the EVM provided by the development stack. 
