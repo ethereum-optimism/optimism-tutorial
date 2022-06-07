@@ -7,13 +7,12 @@ import { MockContract__factory, MockContract } from '../build/types';
 use(solidity);
 
 describe('Optimism', () => {
-  const provider = new OptimismProvider('http://localhost:8545');
+  const provider = new OptimismProvider('https://kovan.optimism.io');
   let wallet: Wallet;
   let contract: MockContract;
 
   before(async () => {
-    const wallets = provider.getWallets();
-    wallet = wallets[0];
+    wallet = Wallet.fromMnemonic('insert your mnemonic here').connect(provider)
   });
 
   beforeEach(async () => {

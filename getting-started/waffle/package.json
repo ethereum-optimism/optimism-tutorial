@@ -8,12 +8,12 @@
     "test": "mocha -r ts-node/register/transpile-only 'test/**/*.test.ts'"
   },
   "devDependencies": {
-    "@ethereum-waffle/optimism": "^4.0.0-alpha.21",
+    "@ethereum-waffle/optimism": "^4.0.0-alpha.22",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.1",
     "chai": "^4.3.6",
-    "ethereum-waffle": "^4.0.0-alpha.25",
+    "ethereum-waffle": "^4.0.0-alpha.27",
     "mocha": "^10.0.0",
     "solc": "^0.8.14-fixed",
     "ts-node": "^10.8.1",

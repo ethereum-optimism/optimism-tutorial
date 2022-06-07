@@ -288,12 +288,12 @@ The tutorial makes these assumptions:
 
 1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
 1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
-1. You know how to [run a local development Optimism node](https://community.optimism.io/docs/developers/build/dev-node/).
+1. You have a Kovan Optimism address with enough funds on it. You can use this [faucet](https://kovan.optifaucet.com/) to get some free funds.
 1. You have general understanding of smart contracts development.
 
 ### Instructions
 
-1. [Start a local development Optimism node](https://community.optimism.io/docs/developers/build/dev-node/). The default port that the L2 node listens on is `8845`. If you use another port, please update the URL in the [line 10](./waffle/test/mock-contract.test.ts#L10).
+1. Insert your mnemonic in the [line 15](./waffle/test/mock-contract.test.ts#L15) to use your address in test.
 1. In the terminal, run the following commands:
 
    ```sh
