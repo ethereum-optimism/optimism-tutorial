@@ -339,6 +339,34 @@ To interact with the blockchain you use the command line.
    cast call $GREETER "greet()" | cast --to-ascii
    ```
 
+
+### Using the Optimism contract library
+
+This library is provided as an [npm package](https://www.npmjs.com/package/@eth-optimism/contracts), which is different from what forge expects.
+Here is how you can import it without importing the entire Optimism monorepo:
+
+1. Install the tools: [Node.js](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/lang/en/).
+
+1. Install the `@eth-optimism/contracts` library under `.../lib`.
+
+   ```sh
+   cd lib
+   yarn add @eth-optimism/contracts
+   ```
+
+1. If you are using `git`, add `node_modules` to [`.gitignore`](https://git-scm.com/docs/gitignore).
+
+1. The remapping that `forge` deduces is not the same as what you would have with hardhat.
+   To ensure source code compatibility, create a file (in the application's root directory) called `remappings.txt` with this content:
+ 
+   ```
+   @eth-optimism/=lib/node_modules/@eth-optimism/
+   ```
+
+You can now run `forge build` with contracts that use the Optimism contract library.
+You can see this structure in the `foundry` directory of this tutorial.
+
+
 ## Waffle
 
 Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.

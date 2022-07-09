@@ -1,0 +1,590 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "msgHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FailedRelayedMessage",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "msgHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "RelayedMessage",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "message",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "messageNonce",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "gasLimit",
+          "type": "uint256"
+        }
+      ],
+      "name": "SentMessage",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_target",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_message",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_gasLimit",
+          "type": "uint32"
+        }
+      ],
+      "name": "sendMessage",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "xDomainMessageSender",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "sendMessage(address,bytes,uint32)": "3dbb202b",
+    "xDomainMessageSender()": "6e296e45"
+  },
+  "ast": {
+    "absolutePath": "lib/node_modules/@eth-optimism/contracts/libraries/bridge/ICrossDomainMessenger.sol",
+    "id": 21132,
+    "exportedSymbols": {
+      "ICrossDomainMessenger": [
+        21131
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:1003:6",
+    "nodes": [
+      {
+        "id": 21094,
+        "nodeType": "PragmaDirective",
+        "src": "32:30:6",
+        "literals": [
+          "solidity",
+          ">",
+          "0.5",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ]
+      },
+      {
+        "id": 21131,
+        "nodeType": "ContractDefinition",
+        "src": "104:930:6",
+        "nodes": [
+          {
+            "id": 21107,
+            "nodeType": "EventDefinition",
+            "src": "192:159:6",
+            "anonymous": false,
+            "eventSelector": "cb0f7ffd78f9aee47a248fae8db181db6eee833039123e026dcbff529522e52a",
+            "name": "SentMessage",
+            "nameLocation": "198:11:6",
+            "parameters": {
+              "id": 21106,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 21097,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "target",
+                  "nameLocation": "235:6:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21107,
+                  "src": "219:22:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 21096,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "219:7:6",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21099,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "sender",
+                  "nameLocation": "259:6:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21107,
+                  "src": "251:14:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 21098,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "251:7:6",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21101,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "message",
+                  "nameLocation": "281:7:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21107,
+                  "src": "275:13:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 21100,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "275:5:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21103,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "messageNonce",
+                  "nameLocation": "306:12:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21107,
+                  "src": "298:20:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 21102,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "298:7:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21105,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "gasLimit",
+                  "nameLocation": "336:8:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21107,
+                  "src": "328:16:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 21104,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "328:7:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "209:141:6"
+            }
+          },
+          {
+            "id": 21111,
+            "nodeType": "EventDefinition",
+            "src": "356:46:6",
+            "anonymous": false,
+            "eventSelector": "4641df4a962071e12719d8c8c8e5ac7fc4d97b927346a3d7a335b1f7517e133c",
+            "name": "RelayedMessage",
+            "nameLocation": "362:14:6",
+            "parameters": {
+              "id": 21110,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 21109,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "msgHash",
+                  "nameLocation": "393:7:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21111,
+                  "src": "377:23:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 21108,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "377:7:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "376:25:6"
+            }
+          },
+          {
+            "id": 21115,
+            "nodeType": "EventDefinition",
+            "src": "407:52:6",
+            "anonymous": false,
+            "eventSelector": "99d0e048484baa1b1540b1367cb128acd7ab2946d1ed91ec10e3c85e4bf51b8f",
+            "name": "FailedRelayedMessage",
+            "nameLocation": "413:20:6",
+            "parameters": {
+              "id": 21114,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 21113,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "msgHash",
+                  "nameLocation": "450:7:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21115,
+                  "src": "434:23:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 21112,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "434:7:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "433:25:6"
+            }
+          },
+          {
+            "id": 21120,
+            "nodeType": "FunctionDefinition",
+            "src": "524:64:6",
+            "functionSelector": "6e296e45",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "xDomainMessageSender",
+            "nameLocation": "533:20:6",
+            "parameters": {
+              "id": 21116,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "553:2:6"
+            },
+            "returnParameters": {
+              "id": 21119,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 21118,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21120,
+                  "src": "579:7:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 21117,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "579:7:6",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "578:9:6"
+            },
+            "scope": 21131,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 21130,
+            "nodeType": "FunctionDefinition",
+            "src": "912:120:6",
+            "documentation": {
+              "id": 21121,
+              "nodeType": "StructuredDocumentation",
+              "src": "674:233:6",
+              "text": " Sends a cross domain message to the target messenger.\n @param _target Target contract address.\n @param _message Message to send to the target.\n @param _gasLimit Gas limit for the provided message."
+            },
+            "functionSelector": "3dbb202b",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "sendMessage",
+            "nameLocation": "921:11:6",
+            "parameters": {
+              "id": 21128,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 21123,
+                  "mutability": "mutable",
+                  "name": "_target",
+                  "nameLocation": "950:7:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21130,
+                  "src": "942:15:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 21122,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "942:7:6",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21125,
+                  "mutability": "mutable",
+                  "name": "_message",
+                  "nameLocation": "982:8:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21130,
+                  "src": "967:23:6",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 21124,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "967:5:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21127,
+                  "mutability": "mutable",
+                  "name": "_gasLimit",
+                  "nameLocation": "1007:9:6",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 21130,
+                  "src": "1000:16:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  },
+                  "typeName": {
+                    "id": 21126,
+                    "name": "uint32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1000:6:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint32",
+                      "typeString": "uint32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "932:90:6"
+            },
+            "returnParameters": {
+              "id": 21129,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1031:0:6"
+            },
+            "scope": 21131,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ICrossDomainMessenger",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 21095,
+          "nodeType": "StructuredDocumentation",
+          "src": "64:39:6",
+          "text": " @title ICrossDomainMessenger"
+        },
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          21131
+        ],
+        "name": "ICrossDomainMessenger",
+        "nameLocation": "114:21:6",
+        "scope": 21132,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 6
+}
