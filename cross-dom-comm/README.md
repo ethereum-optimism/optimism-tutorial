@@ -158,7 +158,66 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 ### Foundry
 
+#### Setup
 
+1. Install the `@eth-optimims/contracts` library (assuming you already have Noe.js and yarn):
+
+   ```sh
+   cd foundry/lib
+   yarn
+   ```
+
+1. Create environment variables for the URLs for Goerli and Optimistic Goerli:
+
+   ```sh
+   cd ..
+   GOERLI_URL= ...
+   OPTI_GOERLI_URL= ...
+   ```
+
+1. Create environment variables for the Greeter contract's addresses
+
+   ```sh
+   GREETER_L1=0x7fA4D972bB15B71358da2D937E4A830A9084cf2e
+   GREETER_L2=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
+   ```
+
+1. Put your account mnemonic in the file `mnem.delme`.
+
+
+#### Control the L2 Greeter from L1
+
+1. See the current greeting.
+
+   ```sh
+   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii
+   ```
+
+1. Deploy the `FromL1_ControlL2Greeter` contract.
+
+   ```sh
+   forge create FromL1_ControlL2Greeter --rpc-url $GOERLI_URL --mnemonic-path mnem.delme
+   ```
+
+1. Create an environment variable for the `Deployed to:` address:
+
+   ```sh
+   CONTROLLER= << address >>
+   ```   
+
+1. Send a transaction to change the L2 greeting:
+
+   ```sh
+   cast send --rpc-url $GOERLI_URL --gas-limit 150000 \
+      --mnemonic-path mnem.delme \
+      $CONTROLLER "setGreeting(string)" '"Salam"'
+   ```
+
+1. See the greeting has changed. Note that the change might take a few minutes to propagate.
+
+   ```sh
+   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
+   ```
 
 ## How it's done (in Solidity)
 
