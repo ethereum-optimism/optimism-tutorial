@@ -222,13 +222,13 @@ In [dapp tools](https://github.com/dapphub/dapptools) use this command:
 - For the Optimistic Kovan test network:
 
   ```sh
-  export ETH_RPC_URL=https://kovan.optimism.io:8545
+  export ETH_RPC_URL=https://kovan.optimism.io
   ```
 
 - For the Optimism production network:
 
   ```sh
-  export ETH_RPC_URL=https://mainnet.optimism.io:8545
+  export ETH_RPC_URL=https://mainnet.optimism.io
   ```
 
 ### Greeter interaction
@@ -276,6 +276,67 @@ To interact with the blockchain you use the command line.
 
    ```sh
    seth call $GREETER "greet()" | seth --to-ascii
+   ```
+
+
+## Foundry
+
+### Connecting to Optimism
+
+In [Foundry](https://book.getfoundry.sh) use this command:
+
+- For a local development node:
+
+  ```sh
+  export ETH_RPC_URL=https://localhost:8545
+  ```
+
+- For the Optimistic Kovan test network:
+
+  ```sh
+  export ETH_RPC_URL=https://kovan.optimism.io
+  ```
+
+- For the Optimism production network:
+
+  ```sh
+  export ETH_RPC_URL=https://mainnet.optimism.io
+  ```
+
+### Greeter interaction
+
+Dapptools does not give us a JavaScript console. 
+To interact with the blockchain you use the command line.
+
+1. Set the RPC URL and the contract address.
+
+   ```sh
+   export ETH_RPC_URL=https://kovan.optimism.io
+   export GREETER=0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c   
+   ```
+
+1. Call `greet()`. Notice that the response is provided in hex.
+
+   ```sh
+   cast call $GREETER "greet()"
+   ```
+
+1. Call `greet()` again, and this time translate to ASCII
+
+   ```sh
+   cast call $GREETER "greet()" | cast --to-ascii
+   ```
+
+1. Put your mnemonic in a file `mnem.delme` and send a transaction. 
+
+   ```sh
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"'
+   ```
+
+1. Test that the greeting has changed:
+
+   ```sh
+   cast call $GREETER "greet()" | cast --to-ascii
    ```
 
 ## Waffle
