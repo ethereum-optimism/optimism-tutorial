@@ -263,17 +263,8 @@ In [dapp tools](https://github.com/dapphub/dapptools) use this command:
   export ETH_RPC_URL=https://localhost:8545
   ```
 
-- For the Optimistic Kovan test network:
+- For the Optimism Goerli test network, and the Optimism production network, use either [a third party node](https://community.optimism.io/docs/useful-tools/providers/) or the [Optimism endpoint](https://community.optimism.io/docs/useful-tools/networks/).
 
-  ```sh
-  export ETH_RPC_URL=https://kovan.optimism.io:8545
-  ```
-
-- For the Optimism production network:
-
-  ```sh
-  export ETH_RPC_URL=https://mainnet.optimism.io:8545
-  ```
 
 ### Greeter interaction
 
