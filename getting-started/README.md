@@ -193,10 +193,18 @@ In [Truffle](https://trufflesuite.com/):
 
 In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
 
-1. Log on with your wallet to Optimistic Kovan (or, eventually, Optimistic Ethereum). 
-   If you use the Optimism endpoints, you can do this using [chainid.link](https://chainid.link):
-   - [Optimistic Kovan](https://chainid.link?network=optimism-kovan)
-   - [Optimistic Ethereum](https://chainid.link?network=optimism)
+1. Add Optimism Goerli to your wallet. 
+   If you use Metamask, [follow the directions here (starting at step 4)](https://help.optimism.io/hc/en-us/articles/6665988048795), with these parameters:
+
+   | Parameter | Value |
+   | --------- | ----- |
+   | Network Name | Optimism Goerli |
+   | New RPC URL  | Either a third party provider or https://goerli.optimism.io |
+   | Chain ID     | 420 |
+   | Currency Symbol | GOR |
+   | Block Explorer URL | https://blockscout.com/optimism/goerli |
+
+1. Log on with your wallet to Optimism Goerli.
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
@@ -207,7 +215,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-1. Make sure your environment is **Injected Web3** and the network ID is **69**.
+1. Make sure your environment is **Injected Web3** and the network ID is **420**.
 
    <img src="assets/remix-env.png" width="300" />
 
@@ -221,10 +229,10 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-   If you do not have Kovan ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/)
+   If you do not have Goerli ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/) and transfer it to Optimism by sending it to address [0x636Af16bf2f682dD3109e60102b8E1A089FedAa8](https://goerli.etherscan.io/address/0x636Af16bf2f682dD3109e60102b8E1A089FedAa8).
 
 1. Scroll down. 
-   In the At Address field, type the contract address (`0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c`).
+   In the At Address field, type the contract address (`0x106941459A8768f5A92b770e280555FAF817576f`).
    Then, click **At Address**. 
    Expand the contract to see you can interact with it.
 
