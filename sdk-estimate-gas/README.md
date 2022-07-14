@@ -1,7 +1,7 @@
 # Estimate the costs of an Optimistic (L2) transaction
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
+[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 
 This tutorial teaches you how to use the Optimism SDK to estimate the gas costs of L2 transactions. 
@@ -163,6 +163,9 @@ We can't use the `{a: b(), c: d()}` syntax because the `L2Provider` functions co
 ```
 
 [Estimate the total cost (L1+L2) of running the transaction](https://sdk.optimism.io/modules.html#estimateTotalGasCost).
+
+> :warning: This function calls `eth_estimateGas`, which runs the transaction in the node (without changing the blockchain state). 
+> This means that the account in `l2Provider` has to have enough ETH to pay for the gas cost of the transaction.
 
 ```js
   retVal.l1Cost    = await provider.estimateL1GasCost(tx)

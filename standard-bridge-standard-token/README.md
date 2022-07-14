@@ -1,7 +1,7 @@
 # Bridging your Standard ERC20 token to Optimism using the Standard Bridge
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
+[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This is a practical guide to getting your ERC20 token deployed on Optimism and bridging it using the
 [Standard Bridge implementation](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
@@ -41,4 +41,9 @@ to deploy a standard token on L2. At the end you should get a successful output 
 
 # Deploying a Custom Token
 
-When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation. See this [tutorial on getting a custom token implemented and deployed](../standard-bridge-custom-token/README.md) to Optimistic Ethereum.
+When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation. 
+See this [tutorial on getting a custom token implemented and deployed](../standard-bridge-custom-token/README.md) to Optimistic Ethereum.
+
+# Testing 
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../cross-dom-bridge).
+

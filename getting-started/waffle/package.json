@@ -1,0 +1,23 @@
+{
+  "name": "waffle-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "waffle waffle.config.json",
+    "test": "mocha -r ts-node/register/transpile-only 'test/**/*.test.ts' --timeout 60000"
+  },
+  "devDependencies": {
+    "@ethereum-waffle/optimism": "^4.0.0-alpha.22",
+    "@typechain/ethers-v5": "^10.0.0",
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^4.0.0-alpha.27",
+    "mocha": "^10.0.0",
+    "solc": "^0.8.14-fixed",
+    "ts-node": "^10.8.1",
+    "typechain": "^8.0.0",
+    "typescript": "^4.7.3"
+  }
+}
