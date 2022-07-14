@@ -50,4 +50,4 @@ At the end you should get a successful output confirming your token was created 
 
 `L2CustomERC20 deployed to: 0x5CFE8703A62E3a80ab7233263C074698b722d48b`
 
-For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../l1-l2-deposit-withdrawal/README.md).
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../cross-dom-bridge).

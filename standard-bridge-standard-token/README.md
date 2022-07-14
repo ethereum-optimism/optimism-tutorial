@@ -41,4 +41,9 @@ to deploy a standard token on L2. At the end you should get a successful output 
 
 # Deploying a Custom Token
 
-When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation. See this [tutorial on getting a custom token implemented and deployed](../standard-bridge-custom-token/README.md) to Optimistic Ethereum.
+When the `L2StandardERC20` implementation does not satisfy your requirements, we can consider allowing a custom implemetation. 
+See this [tutorial on getting a custom token implemented and deployed](../standard-bridge-custom-token/README.md) to Optimistic Ethereum.
+
+# Testing 
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../cross-dom-bridge).
+
