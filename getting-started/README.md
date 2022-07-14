@@ -1,7 +1,7 @@
 # Getting started developing for Optimism
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
+[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you the basics of Optimism development.
 Optimism is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on mainnet.
@@ -277,6 +277,38 @@ To interact with the blockchain you use the command line.
    ```sh
    seth call $GREETER "greet()" | seth --to-ascii
    ```
+
+## Waffle
+
+Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.
+
+### Prerequisites
+
+The tutorial makes these assumptions:
+
+1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
+1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
+1. You have a Kovan Optimism address with enough funds on it. You can use this [faucet](https://kovan.optifaucet.com/) to get some free funds.
+1. You have general understanding of smart contracts development.
+
+### Instructions
+
+1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
+1. In the terminal, run the following commands:
+
+   ```sh
+   cd waffle
+   yarn
+   yarn build
+   yarn test
+   ```
+
+   You should see 2 tests passing.
+1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
+
+### Compatibility with other tools
+
+Note that in the tutorial we've been compiling smart contracts using [Waffle](https://github.com/TrueFiEng/Waffle). If you prefer to compile your smart contracts using other tools (like [Hardhat](https://hardhat.org/)) you can install the appropriate packages and modify `build` script in the `package.json` file.
 
 ## Best practices
 
