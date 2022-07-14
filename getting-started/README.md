@@ -14,14 +14,12 @@ To access any Ethereum type network you need an endpoint. There are several ways
 
 1. [Run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
 
+1. For production use there is [a number of service providers that provide Optimism endpoints](https://community.optimism.io/docs/useful-tools/providers/), usually with a free tier for low usage.
+
 1. For *limited* development use, [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
    Note that these endpoints are rate limited, so they are not for use in QA or production environments.
 
-1. For production use there is a number of service providers that provide Optimism endpoints, usually with a free tier for low usage.
 
-   * [Alchemy](https://www.alchemy.com/layer2/optimism)
-   * [Infura](https://infura.io/docs/ethereum#section/Choose-a-Network)
-   * [QuickNode](https://www.quicknode.com/chains/optimism)
 
 
 
