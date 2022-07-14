@@ -25,16 +25,16 @@ To access any Ethereum type network you need an endpoint. There are several ways
 
 ### Network choice
 
-For development purposes we recommend you use either a local development node or [Optimistic Kovan](https://kovan-optimistic.etherscan.io/).
+For development purposes we recommend you use either a local development node or [Optimism Goerli](https://blockscout.com/optimism/goerli).
 That way you don't need to spend real money.
-If you need Kovan ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
+If you need Goerli ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
 
-The tests examples below all use Optimistic Kovan.
+The tests examples below all use Optimism Goerli.
 
 
 ## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimistic Kovan, at address [0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c](https://kovan-optimistic.etherscan.io/address/0xe0a5fe4fd70b6ea4217122e85d213d70766d6c2c). 
+We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
 You can verify your development stack configuration by interacting with it.
 
 
@@ -42,13 +42,30 @@ You can verify your development stack configuration by interacting with it.
 
 ### Connecting to Optimism
 
-In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file's `modules.export.networks` to add a definition similar to this one:
+In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
+
+1. Use `.env` for your network configuration:
+
+   ```js
+   require('dotenv').config()
+   ```
+
+1. Define your network configuration in `.env`:
+
+   ```sh
+   # Put the mnemonic for an account on Optimism here
+   MNEMONIC="test test test test test test test test test test test junk"
+
+   # URL to access Optimism Goerli
+   OPTI_GOERLI_URL=https://goerli.optimism.io
+   ```
+
+1. Add a network definition in `module.exports.networks`:
 
 ```js
-    "optimistic-kovan": {
-       url: '<Optimism URL>',
-       accounts: { mnemonic: <your account mnemonic goes here> }
-
+    "optimism-goerli": {
+       url: process.env.OPTI_GOERLI_URL,
+       accounts: { mnemonic: process.env.MNEMONIC }
     }
 ```
 
@@ -58,29 +75,27 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file's `modu
    ```sh
    cd hardhat
    yarn
-   yarn hardhat console --network optimistic-kovan
+   yarn hardhat console --network optimism-goerli
    ```
 
 1. Connect to the Greeter contract:   
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
+   greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
    ```   
 
-1. Read information from the contact:
+1. Read information from the contract:
 
    ```js
    await greeter.greet()
    ```
 
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
-   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
-   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
    ```js
    tx = await greeter.setGreeting(`Hello ${new Date()}`)
-   receipt = await tx.wait()   // Doesn't work in Truffle
+   rcpt = await tx.wait()  
    await greeter.greet()
    ```
 
@@ -109,7 +124,7 @@ In [Truffle](https://trufflesuite.com/):
    1. Edit `modules.export.networks` to add a definition similar to this one:
 
       ```js 
-      "optimistic-kovan": {
+      "optimism-goerli": {
          provider: () => new HDWalletProvider(<your mnemonic>, <Optimism URL>)
       }
       ```
