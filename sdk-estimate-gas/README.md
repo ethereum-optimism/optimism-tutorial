@@ -164,6 +164,9 @@ We can't use the `{a: b(), c: d()}` syntax because the `L2Provider` functions co
 
 [Estimate the total cost (L1+L2) of running the transaction](https://sdk.optimism.io/modules.html#estimateTotalGasCost).
 
+> :warning: This function calls `eth_estimateGas`, which runs the transaction in the node (without changing the blockchain state). 
+> This means that the account in `l2Provider` has to have enough ETH to pay for the gas cost of the transaction.
+
 ```js
   retVal.l1Cost    = await provider.estimateL1GasCost(tx)
   retVal.l2Cost    = await provider.estimateL2GasCost(tx)
