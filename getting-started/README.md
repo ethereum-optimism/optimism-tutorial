@@ -44,12 +44,6 @@ You can verify your development stack configuration by interacting with it.
 
 In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
 
-1. Use `.env` for your network configuration:
-
-   ```js
-   require('dotenv').config()
-   ```
-
 1. Define your network configuration in `.env`:
 
    ```sh
@@ -60,14 +54,29 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
    OPTI_GOERLI_URL=https://goerli.optimism.io
    ```
 
-1. Add a network definition in `module.exports.networks`:
+1. Add `dotenv` to your project:
 
-```js
-    "optimism-goerli": {
-       url: process.env.OPTI_GOERLI_URL,
-       accounts: { mnemonic: process.env.MNEMONIC }
-    }
-```
+   ```sh
+   yarn add dotenv
+   ```
+
+1. Edit `hardhat.config.js`:
+
+   1. Use `.env` for your blockchain configuration:
+
+      ```js
+      require('dotenv').config()
+      ```
+
+
+   1. Add a network definition in `module.exports.networks`:
+
+   ```js
+       "optimism-goerli": {
+          url: process.env.OPTI_GOERLI_URL,
+         accounts: { mnemonic: process.env.MNEMONIC }
+      }
+   ```
 
 ### Greeter interaction
 
@@ -104,16 +113,26 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
 
 ### Connecting to Optimism
 
-
 In [Truffle](https://trufflesuite.com/):
 
-1. Add the `@truffle/hdwallet-provider` package:
+1. Define your network configuration in `.env`:
 
    ```sh
-   yarn add @truffle/hdwallet-provider
+   # Put the mnemonic for an account on Optimism here
+   MNEMONIC="test test test test test test test test test test test junk"
+
+   # URL to access Optimism Goerli
+   OPTI_GOERLI_URL=https://goerli.optimism.io
    ```
 
-1. Edit the `truffle-config.js` file
+1. Add `dotenv` and `@truffle/hdwallet-provider` to your project:
+
+   ```sh
+   yarn add dotenv @truffle/hdwallet-provider
+   ```
+
+
+1. Edit `truffle-config.js`:
 
    1. Uncomment this line:
 
@@ -121,30 +140,37 @@ In [Truffle](https://trufflesuite.com/):
       const HDWalletProvider = require('@truffle/hdwallet-provider')
       ```
 
-   1. Edit `modules.export.networks` to add a definition similar to this one:
+   1. Use `.env` for your network configuration:
 
-      ```js 
+      ```js
+      require('dotenv').config()
+      ```
+
+   1. Add a network definition in `module.exports.networks`:
+
+      ```js
       "optimism-goerli": {
-         provider: () => new HDWalletProvider(<your mnemonic>, <Optimism URL>)
+         provider: () => new HDWalletProvider(
+            process.env.MNEMONIC,
+            process.env.OPTI_GOERLI_URL)
       }
       ```
 
 
+
 ### Greeter interaction
 
-1. Install the software, compile the contract, and run the console:
+1. Compile the contract and run the console:
 
    ```sh
-   cd truffle
-   yarn
    truffle compile
-   truffle console --network optimistic-kovan
+   truffle console --network optimism-goerli
    ```
 
 1. Connect to the Greeter contact:
 
    ```js
-   greeter = await Greeter.at("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
+   greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
    ```
 
 1. Read information from the contact:
@@ -154,14 +180,11 @@ In [Truffle](https://trufflesuite.com/):
    ```
 
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
-   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
-   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
    ```js
    tx = await greeter.setGreeting(`Hello ${new Date()}`)
    await greeter.greet()
    ```
-
 
 
 ## Remix

@@ -21,9 +21,6 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 require('dotenv').config()
 
-// The mnemonic for local-devnode and optimistic-kovan
-const mnemonic = "test test test test test test test test test test test junk"
-
 
 module.exports = {
   /**
@@ -73,18 +70,12 @@ module.exports = {
        networkCheckTimeout: 1000000000,
        timeoutBlocks: 300
     },
-    "optimistic-kovan": {
-       provider: () => new HDWalletProvider(mnemonic, `https://kovan.optimism.io`),
-       network_id: 69, 
-       networkCheckTimeout: 1000000000,
-       timeoutBlocks: 300
-    },
-    "optimism": {
-       provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://mainnet.optimism.io`),
-       network_id: 10,
-       networkCheckTimeout: 1000000000,
-       timeoutBlocks: 300
-    },
+    "optimism-goerli": {
+      provider: () => new HDWalletProvider(
+         process.env.MNEMONIC,
+         process.env.OPTI_GOERLI_URL),
+      network_id: 420
+   }
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
