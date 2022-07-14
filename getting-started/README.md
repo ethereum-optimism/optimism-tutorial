@@ -249,69 +249,88 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. See the results on the console and then click **greet** again to see the greeting changed.   
 
-
-
-## Dapp tools
-
-### Connecting to Optimism
-
-In [dapp tools](https://github.com/dapphub/dapptools) use this command:
-
-- For a local development node:
-
-  ```sh
-  export ETH_RPC_URL=https://localhost:8545
-  ```
-
-- For the Optimism Goerli test network, and the Optimism production network, use either [a third party node](https://community.optimism.io/docs/useful-tools/providers/) or the [Optimism endpoint](https://community.optimism.io/docs/useful-tools/networks/).
+## Foundry
 
 
 ### Greeter interaction
 
-Dapptools does not give us a JavaScript console. 
+Foundry does not give us a JavaScript console. 
 To interact with the blockchain you use the command line.
 
-1. Set the RPC URL and the contract address
+1. Set the RPC URL and the contract address.
 
    ```sh
-   cd dapptools
-   export ETH_RPC_URL=https://kovan.optimism.io
-   export GREETER=0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c   
+   export ETH_RPC_URL= << Your Goerli URL goes here >>
+   export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
    ```
 
 1. Call `greet()`. Notice that the response is provided in hex.
 
    ```sh
-   seth call $GREETER "greet()"
+   cast call $GREETER "greet()"
    ```
 
 1. Call `greet()` again, and this time translate to ASCII
 
    ```sh
-   seth call $GREETER "greet()" | seth --to-ascii
+   cast call $GREETER "greet()" | cast --to-ascii
    ```
 
-1. Run this command to get our wallet's address.
-   This is the same address we used earlier for Hardhat and Truffle.
-   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
+1. Put your mnemonic in a file `mnem.delme` and send a transaction. 
 
    ```sh
-   export ETH_FROM=`seth --keystore=$PWD/keystore ls | awk '{print $1}'`
-   ```
-
-
-1. Send a transaction. 
-   When asked for the pass phrase just click Enter.
-
-   ```sh
-   seth --keystore=$PWD/keystore send $GREETER "setGreeting(string)" '"hello"'
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
    ```
 
 1. Test that the greeting has changed:
 
    ```sh
-   seth call $GREETER "greet()" | seth --to-ascii
+   cast call $GREETER "greet()" | cast --to-ascii
    ```
+
+
+### Using the Optimism contract library
+
+This library is provided as an [npm package](https://www.npmjs.com/package/@eth-optimism/contracts), which is different from what forge expects.
+Here is how you can import it without importing the entire Optimism monorepo:
+
+1. Install the JavaScript tools if you don't already have them: [Node.js](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/lang/en/).
+
+1. Install the `@eth-optimism/contracts` library under `lib`.
+
+   ```sh
+   cd lib
+   yarn add @eth-optimism/contracts
+   ```
+
+1. If you are using `git`, add `node_modules` to [`.gitignore`](https://git-scm.com/docs/gitignore).
+
+1. The remapping that `forge` deduces is not the same as what you would have with hardhat.
+   To ensure source code compatibility, create a file (in the application's root directory) called `remappings.txt` with this content:
+ 
+   ```
+   @eth-optimism/=lib/node_modules/@eth-optimism/
+   ```
+
+You can now run `forge build` with contracts that use the Optimism contract library.
+
+To see this in action:
+
+1. Install the JavaScript libraries
+
+  ```sh
+  cd foundry/lib
+  yarn
+  ```
+
+1. Test the application
+
+   ```sh
+   cd ..
+   forge test
+   ```
+
+
 
 ## Waffle
 
@@ -329,6 +348,7 @@ The tutorial makes these assumptions:
 ### Instructions
 
 1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
+
 1. In the terminal, run the following commands:
 
    ```sh
@@ -339,6 +359,7 @@ The tutorial makes these assumptions:
    ```
 
    You should see 2 tests passing.
+
 1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
 
 ### Compatibility with other tools
