@@ -10,11 +10,7 @@ But a few differences [do exist](https://community.optimism.io/docs/developers/b
 
 ## Optimism endpoint URL
 
-To access any Ethereum type network you need an endpoint. There are several ways to get one:
-
-1. [Run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
-
-1. For production use there is [a number of service providers that provide Optimism endpoints](https://community.optimism.io/docs/useful-tools/providers/), usually with a free tier for low usage.
+To access any Ethereum type network you need an endpoint. There are several ways to get one:a free tier for low usage.
 
 1. For *limited* development use, [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
    Note that these endpoints are rate limited, so they are not for use in QA or production environments.
@@ -36,6 +32,8 @@ The tests examples below all use Optimism Goerli.
 
 We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
 You can verify your development stack configuration by interacting with it.
+
+As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is identical to the way you do it with L1 Ethereum.
 
 
 ## Hardhat
@@ -108,6 +106,16 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
    await greeter.greet()
    ```
 
+### Deploying a contract
+
+To deploy a contract from the Hardhat console:
+
+```
+Greeter = await ethers.getContractFactory("Greeter")
+greeter = await Greeter.deploy("Greeter from hardhat")
+console.log(`Contract address: ${greeter.address}`)
+await greeter.greet()
+```
 
 ## Truffle
 
@@ -187,6 +195,17 @@ In [Truffle](https://trufflesuite.com/):
    ```
 
 
+### Contract deployment
+
+You deploy a new contract from the console:
+
+```
+greeter = await Greeter.new("Greeter from Truffle")
+console.log(`Contract address: ${greeter.address}`)
+await greeter.greet()
+```
+
+
 ## Remix
 
 ### Connecting to Optimism
@@ -249,13 +268,26 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. See the results on the console and then click **greet** again to see the greeting changed.   
 
-## Foundry
 
+### Contract deployment
+
+You deploy a new contract:
+
+1. Type a string for the greeter.
+
+1. Click **Deploy**.
+
+   <img src="assets/remix-deploy.png" width="300" />
+
+1. Confirm the transaction in the wallet.
+
+
+
+## Foundry
 
 ### Greeter interaction
 
-Foundry does not give us a JavaScript console. 
-To interact with the blockchain you use the command line.
+Foundry does not give us a JavaScript console, everything can be done from the shell command line.
 
 1. Set the RPC URL and the contract address.
 
@@ -287,6 +319,15 @@ To interact with the blockchain you use the command line.
    ```sh
    cast call $GREETER "greet()" | cast --to-ascii
    ```
+
+### Contract deployment
+
+Use this command:
+
+```sh
+forge create --mnemonic-path ./mnem.delme Greeter \
+   --constructor-args "Greeter from Foundry" --legacy
+```
 
 
 ### Using the Optimism contract library
@@ -342,7 +383,7 @@ The tutorial makes these assumptions:
 
 1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
 1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
-1. You have a Kovan Optimism address with enough funds on it. You can use this [faucet](https://kovan.optifaucet.com/) to get some free funds.
+1. You have a Goerli Optimism address with enough funds on it. You can use [these faucets](https://community.optimism.io/docs/useful-tools/faucets/) to get some free test funds.
 1. You have general understanding of smart contracts development.
 
 ### Instructions
