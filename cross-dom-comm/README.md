@@ -49,38 +49,66 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
 #### Ethereum message to Optimism
 
-1. [Browse to the Greeter contract on BlockScout](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/read-contract#address-tabs) to see the result of **greet**.
+1. Connect the Hardhat console to Optimism Goerli (L2):
 
-1. Connect the Hardhat console to Kovan (L1):
+   ```sh
+   yarn hardhat console --network optimism-goerli
+   ```
+
+1. Connect to the greeter on L2:
+  
+   ```js
+   Greeter = await ethers.getContractFactory("Greeter")
+   greeter = await Greeter.attach("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")
+   await greeter.greet()
+   ```
+
+# 1. [Browse to the Greeter contract on BlockScout](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/read-contract#address-tabs) to see the result of **greet**.
+
+1. In a separatate terminal window connect the Hardhat console to Goerli (L1):
 
    ```sh
    yarn hardhat console --network goerli
    ```
 
-1. Deploy and call the `FromL2_ControlL2Greeter` contract.
+1. Deploy and call the `FromL1_ControlL2Greeter` contract.
 
    ```js
-   Controller = await ethers.getContractFactory("FromL2_ControlL2Greeter")
+   Controller = await ethers.getContractFactory("FromL1_ControlL2Greeter")
    controller = await Controller.deploy()
    tx = await controller.setGreeting("Shalom")
    rcpt = await tx.wait()
    ```
 
-1. Make a note of the address of `FromL2_ControlL2Greeter`.
+1. Make a note of the address of `FromL1_ControlL2Greeter`.
 
    ```js
    controller.address
    ```
 
-1. [Browse to the Greeter contract on Etherscan](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/read-contract#address-tabs) to see the new greeting.
+1. Back in the Optimism Goerli console, see the new greeting.
+   Note that it may take a few minutes to update.
 
+   ```js
+   await greeter.greet()
+   ```
 
 
 #### Optimism message to Ethereum
 
 ##### Send the message
 
-1. [Browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) and click **greet** to see the greeting.
+1. Get the current L1 greeting. There are two ways to do that:
+
+   - [Browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) and click **greet** to see the greeting.
+
+   - Run these commands in the Hardhat console connected to L1 Goerli:
+
+     ```js
+     Greeter = await ethers.getContractFactory("Greeter")
+     greeter = await Greeter.attach("0x7fA4D972bB15B71358da2D937E4A830A9084cf2e")
+     await greeter.greet()     
+     ```
 
 1. Connect the Hardhat console to Optimistic Goerli (L2):
 
@@ -133,7 +161,9 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```js
    l1Signer = await ethers.getSigner()
-   crossChainMessenger = new sdk.CrossChainMessenger({ l1ChainId: 5, 
+   crossChainMessenger = new sdk.CrossChainMessenger({ 
+      l1ChainId: 5,
+      l2ChainId: 420,
       l1SignerOrProvider: l1Signer, 
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider("https://goerli.optimism.io")
    })
