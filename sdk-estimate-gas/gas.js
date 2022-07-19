@@ -5,17 +5,17 @@
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 const fs = require("fs")
+require('dotenv').config()
 
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 
-const network = "kovan"    // "kovan" or "mainnet"
+const greeterAddrs = {
+  // Optimism
+  "10":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
 
-const mnemonic = "test test test test test test test test test test test junk"
-
-const l2Url = `https://${network}.optimism.io`
-const greeterAddr = network === "kovan" ? 
-                        "0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c" :
-                        "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1"
+  // Optimism Goerli
+  "420": "0x106941459A8768f5A92b770e280555FAF817576f"
+}
 
 
 // Utilities
@@ -25,9 +25,11 @@ const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 
 // Get an L2 signer
 const getSigner = async () => {
-    const l2RpcProvider = optimismSDK.asL2Provider(new ethers.providers.JsonRpcProvider(l2Url))
-    const privateKey = ethers.utils.HDNode.fromMnemonic(mnemonic).privateKey
-    const wallet = new ethers.Wallet(privateKey, l2RpcProvider)
+    const l2RpcProvider = optimismSDK.asL2Provider(
+      new ethers.providers.JsonRpcProvider(process.env.L2_URL)
+    )
+    const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
+      connect(l2RpcProvider)
 
     return wallet
 }   // getSigner
@@ -72,9 +74,15 @@ const displayResults = (estimated, real) => {
 const main = async () => {    
     
     const signer = await getSigner()
+    const chainId = (await signer.provider._networkPromise).chainId
+
+    if(!greeterAddrs[chainId]) {
+      console.log(`I don't know the Greeter address on chainId: ${chainId}`)
+      process.exit(-1)  
+    }
 
     const Greeter = new ethers.ContractFactory(greeterJSON.abi, greeterJSON.bytecode, signer)
-    const greeter = Greeter.attach(greeterAddr)
+    const greeter = Greeter.attach(greeterAddrs[chainId])
 
     const greeting = "Hello!"
 
@@ -82,14 +90,14 @@ const main = async () => {
 
     const fakeTxReq = await greeter.populateTransaction.setGreeting(greeting)
     const fakeTx = await signer.populateTransaction(fakeTxReq)
-
-
+    console.log("About to get estimates")
     let estimated = await getEstimates(signer.provider, fakeTx)
     estimated.l2Gas = await greeter.estimateGas.setGreeting(greeting)
 
-    // If the transaction fails, error out with additional information
     let realTx, realTxResp
     const weiB4 = await signer.getBalance()
+
+    // If the transaction fails, error out with additional information
     try {
       console.log("About to create the transaction")
       realTx = await greeter.setGreeting(greeting)
@@ -108,7 +116,7 @@ const main = async () => {
     while (real.totalCost === 0) {
         const weiAfter = await signer.getBalance()
         real.totalCost= weiB4-weiAfter
-        sleep(100)
+        await sleep(100)
     }
 
     // Get the real information (cost, etc.) from the transaction response
