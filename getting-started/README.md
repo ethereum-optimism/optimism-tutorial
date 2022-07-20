@@ -1,7 +1,7 @@
 # Getting started developing for Optimism
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
+[![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
 This tutorial teaches you the basics of Optimism development.
 Optimism is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on mainnet.
@@ -10,49 +10,71 @@ But a few differences [do exist](https://community.optimism.io/docs/developers/b
 
 ## Optimism endpoint URL
 
-To access any Ethereum type network you need an endpoint. There are several ways to get one:
-
-1. [Run a local development node](https://community.optimism.io/docs/developers/build/dev-node/).
+To access any Ethereum type network you need an endpoint. There are several ways to get one:a free tier for low usage.
 
 1. For *limited* development use, [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
    Note that these endpoints are rate limited, so they are not for use in QA or production environments.
 
-1. For production use there is a number of service providers that provide Optimism endpoints, usually with a free tier for low usage.
 
-   * [Alchemy](https://www.alchemy.com/layer2/optimism)
-   * [Infura](https://infura.io/docs/ethereum#section/Choose-a-Network)
-   * [QuickNode](https://www.quicknode.com/chains/optimism)
 
 
 
 ### Network choice
 
-For development purposes we recommend you use either a local development node or [Optimistic Kovan](https://kovan-optimistic.etherscan.io/).
+For development purposes we recommend you use either a local development node or [Optimism Goerli](https://blockscout.com/optimism/goerli).
 That way you don't need to spend real money.
-If you need Kovan ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
+If you need Goerli ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
 
-The tests examples below all use Optimistic Kovan.
+The tests examples below all use Optimism Goerli.
 
 
 ## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimistic Kovan, at address [0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c](https://kovan-optimistic.etherscan.io/address/0xe0a5fe4fd70b6ea4217122e85d213d70766d6c2c). 
+We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
 You can verify your development stack configuration by interacting with it.
+
+As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is identical to the way you do it with L1 Ethereum.
 
 
 ## Hardhat
 
 ### Connecting to Optimism
 
-In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file's `modules.export.networks` to add a definition similar to this one:
+In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
 
-```js
-    "optimistic-kovan": {
-       url: '<Optimism URL>',
-       accounts: { mnemonic: <your account mnemonic goes here> }
+1. Define your network configuration in `.env`:
 
-    }
-```
+   ```sh
+   # Put the mnemonic for an account on Optimism here
+   MNEMONIC="test test test test test test test test test test test junk"
+
+   # URL to access Optimism Goerli
+   OPTI_GOERLI_URL=https://goerli.optimism.io
+   ```
+
+1. Add `dotenv` to your project:
+
+   ```sh
+   yarn add dotenv
+   ```
+
+1. Edit `hardhat.config.js`:
+
+   1. Use `.env` for your blockchain configuration:
+
+      ```js
+      require('dotenv').config()
+      ```
+
+
+   1. Add a network definition in `module.exports.networks`:
+
+   ```js
+       "optimism-goerli": {
+          url: process.env.OPTI_GOERLI_URL,
+         accounts: { mnemonic: process.env.MNEMONIC }
+      }
+   ```
 
 ### Greeter interaction
 
@@ -60,47 +82,65 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file's `modu
    ```sh
    cd hardhat
    yarn
-   yarn hardhat console --network optimistic-kovan
+   yarn hardhat console --network optimism-goerli
    ```
 
 1. Connect to the Greeter contract:   
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
+   greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
    ```   
 
-1. Read information from the contact:
+1. Read information from the contract:
 
    ```js
    await greeter.greet()
    ```
 
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
-   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
-   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
    ```js
    tx = await greeter.setGreeting(`Hello ${new Date()}`)
-   receipt = await tx.wait()   // Doesn't work in Truffle
+   rcpt = await tx.wait()  
    await greeter.greet()
    ```
 
+### Deploying a contract
+
+To deploy a contract from the Hardhat console:
+
+```
+Greeter = await ethers.getContractFactory("Greeter")
+greeter = await Greeter.deploy("Greeter from hardhat")
+console.log(`Contract address: ${greeter.address}`)
+await greeter.greet()
+```
 
 ## Truffle
 
 ### Connecting to Optimism
 
-
 In [Truffle](https://trufflesuite.com/):
 
-1. Add the `@truffle/hdwallet-provider` package:
+1. Define your network configuration in `.env`:
 
    ```sh
-   yarn add @truffle/hdwallet-provider
+   # Put the mnemonic for an account on Optimism here
+   MNEMONIC="test test test test test test test test test test test junk"
+
+   # URL to access Optimism Goerli
+   OPTI_GOERLI_URL=https://goerli.optimism.io
    ```
 
-1. Edit the `truffle-config.js` file
+1. Add `dotenv` and `@truffle/hdwallet-provider` to your project:
+
+   ```sh
+   yarn add dotenv @truffle/hdwallet-provider
+   ```
+
+
+1. Edit `truffle-config.js`:
 
    1. Uncomment this line:
 
@@ -108,30 +148,37 @@ In [Truffle](https://trufflesuite.com/):
       const HDWalletProvider = require('@truffle/hdwallet-provider')
       ```
 
-   1. Edit `modules.export.networks` to add a definition similar to this one:
+   1. Use `.env` for your network configuration:
 
-      ```js 
-      "optimistic-kovan": {
-         provider: () => new HDWalletProvider(<your mnemonic>, <Optimism URL>)
+      ```js
+      require('dotenv').config()
+      ```
+
+   1. Add a network definition in `module.exports.networks`:
+
+      ```js
+      "optimism-goerli": {
+         provider: () => new HDWalletProvider(
+            process.env.MNEMONIC,
+            process.env.OPTI_GOERLI_URL)
       }
       ```
 
 
+
 ### Greeter interaction
 
-1. Install the software, compile the contract, and run the console:
+1. Compile the contract and run the console:
 
    ```sh
-   cd truffle
-   yarn
    truffle compile
-   truffle console --network optimistic-kovan
+   truffle console --network optimism-goerli
    ```
 
 1. Connect to the Greeter contact:
 
    ```js
-   greeter = await Greeter.at("0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c")
+   greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
    ```
 
 1. Read information from the contact:
@@ -141,14 +188,22 @@ In [Truffle](https://trufflesuite.com/):
    ```
 
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
-   Note that the account used by default, [0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266](https://kovan-optimistic.etherscan.io/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), may not have enough ETH. 
-   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
 
    ```js
    tx = await greeter.setGreeting(`Hello ${new Date()}`)
    await greeter.greet()
    ```
 
+
+### Contract deployment
+
+You deploy a new contract from the console:
+
+```
+greeter = await Greeter.new("Greeter from Truffle")
+console.log(`Contract address: ${greeter.address}`)
+await greeter.greet()
+```
 
 
 ## Remix
@@ -157,10 +212,18 @@ In [Truffle](https://trufflesuite.com/):
 
 In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
 
-1. Log on with your wallet to Optimistic Kovan (or, eventually, Optimistic Ethereum). 
-   If you use the Optimism endpoints, you can do this using [chainid.link](https://chainid.link):
-   - [Optimistic Kovan](https://chainid.link?network=optimism-kovan)
-   - [Optimistic Ethereum](https://chainid.link?network=optimism)
+1. Add Optimism Goerli to your wallet. 
+   If you use Metamask, [follow the directions here (starting at step 4)](https://help.optimism.io/hc/en-us/articles/6665988048795), with these parameters:
+
+   | Parameter | Value |
+   | --------- | ----- |
+   | Network Name | Optimism Goerli |
+   | New RPC URL  | Either a third party provider or https://goerli.optimism.io |
+   | Chain ID     | 420 |
+   | Currency Symbol | GOR |
+   | Block Explorer URL | https://blockscout.com/optimism/goerli |
+
+1. Log on with your wallet to Optimism Goerli.
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
@@ -171,7 +234,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-1. Make sure your environment is **Injected Web3** and the network ID is **69**.
+1. Make sure your environment is **Injected Web3** and the network ID is **420**.
 
    <img src="assets/remix-env.png" width="300" />
 
@@ -185,10 +248,10 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-   If you do not have Kovan ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/)
+   If you do not have Goerli ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/) and transfer it to Optimism by sending it to address [0x636Af16bf2f682dD3109e60102b8E1A089FedAa8](https://goerli.etherscan.io/address/0x636Af16bf2f682dD3109e60102b8E1A089FedAa8).
 
 1. Scroll down. 
-   In the At Address field, type the contract address (`0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c`).
+   In the At Address field, type the contract address (`0x106941459A8768f5A92b770e280555FAF817576f`).
    Then, click **At Address**. 
    Expand the contract to see you can interact with it.
 
@@ -206,77 +269,109 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. See the results on the console and then click **greet** again to see the greeting changed.   
 
 
+### Contract deployment
 
-## Dapp tools
+You deploy a new contract:
 
-### Connecting to Optimism
+1. Type a string for the greeter.
 
-In [dapp tools](https://github.com/dapphub/dapptools) use this command:
+1. Click **Deploy**.
 
-- For a local development node:
+   <img src="assets/remix-deploy.png" width="300" />
 
-  ```sh
-  export ETH_RPC_URL=https://localhost:8545
-  ```
+1. Confirm the transaction in the wallet.
 
-- For the Optimistic Kovan test network:
 
-  ```sh
-  export ETH_RPC_URL=https://kovan.optimism.io:8545
-  ```
 
-- For the Optimism production network:
-
-  ```sh
-  export ETH_RPC_URL=https://mainnet.optimism.io:8545
-  ```
+## Foundry
 
 ### Greeter interaction
 
-Dapptools does not give us a JavaScript console. 
-To interact with the blockchain you use the command line.
+Foundry does not give us a JavaScript console, everything can be done from the shell command line.
 
-1. Set the RPC URL and the contract address
+1. Set the RPC URL and the contract address.
 
    ```sh
-   cd dapptools
-   export ETH_RPC_URL=https://kovan.optimism.io
-   export GREETER=0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c   
+   export ETH_RPC_URL= << Your Goerli URL goes here >>
+   export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
    ```
 
 1. Call `greet()`. Notice that the response is provided in hex.
 
    ```sh
-   seth call $GREETER "greet()"
+   cast call $GREETER "greet()"
    ```
 
 1. Call `greet()` again, and this time translate to ASCII
 
    ```sh
-   seth call $GREETER "greet()" | seth --to-ascii
+   cast call $GREETER "greet()" | cast --to-ascii
    ```
 
-1. Run this command to get our wallet's address.
-   This is the same address we used earlier for Hardhat and Truffle.
-   In that case, either edit the configuration file to use your own mnemonic or "feed it" using [Paradigm's faucet](https://faucet.paradigm.xyz/)
+1. Put your mnemonic in a file `mnem.delme` and send a transaction. 
 
    ```sh
-   export ETH_FROM=`seth --keystore=$PWD/keystore ls | awk '{print $1}'`
-   ```
-
-
-1. Send a transaction. 
-   When asked for the pass phrase just click Enter.
-
-   ```sh
-   seth --keystore=$PWD/keystore send $GREETER "setGreeting(string)" '"hello"'
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
    ```
 
 1. Test that the greeting has changed:
 
    ```sh
-   seth call $GREETER "greet()" | seth --to-ascii
+   cast call $GREETER "greet()" | cast --to-ascii
    ```
+
+### Contract deployment
+
+Use this command:
+
+```sh
+forge create --mnemonic-path ./mnem.delme Greeter \
+   --constructor-args "Greeter from Foundry" --legacy
+```
+
+
+### Using the Optimism contract library
+
+This library is provided as an [npm package](https://www.npmjs.com/package/@eth-optimism/contracts), which is different from what forge expects.
+Here is how you can import it without importing the entire Optimism monorepo:
+
+1. Install the JavaScript tools if you don't already have them: [Node.js](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/lang/en/).
+
+1. Install the `@eth-optimism/contracts` library under `lib`.
+
+   ```sh
+   cd lib
+   yarn add @eth-optimism/contracts
+   ```
+
+1. If you are using `git`, add `node_modules` to [`.gitignore`](https://git-scm.com/docs/gitignore).
+
+1. The remapping that `forge` deduces is not the same as what you would have with hardhat.
+   To ensure source code compatibility, create a file (in the application's root directory) called `remappings.txt` with this content:
+ 
+   ```
+   @eth-optimism/=lib/node_modules/@eth-optimism/
+   ```
+
+You can now run `forge build` with contracts that use the Optimism contract library.
+
+To see this in action:
+
+1. Install the JavaScript libraries
+
+  ```sh
+  cd foundry/lib
+  yarn
+  ```
+
+1. Test the application
+
+   ```sh
+   cd ..
+   forge test
+   ```
+
+
 
 ## Waffle
 
@@ -288,12 +383,13 @@ The tutorial makes these assumptions:
 
 1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
 1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
-1. You have a Kovan Optimism address with enough funds on it. You can use this [faucet](https://kovan.optifaucet.com/) to get some free funds.
+1. You have a Goerli Optimism address with enough funds on it. You can use [these faucets](https://community.optimism.io/docs/useful-tools/faucets/) to get some free test funds.
 1. You have general understanding of smart contracts development.
 
 ### Instructions
 
 1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
+
 1. In the terminal, run the following commands:
 
    ```sh
@@ -304,19 +400,12 @@ The tutorial makes these assumptions:
    ```
 
    You should see 2 tests passing.
+
 1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
 
 ### Compatibility with other tools
 
 Note that in the tutorial we've been compiling smart contracts using [Waffle](https://github.com/TrueFiEng/Waffle). If you prefer to compile your smart contracts using other tools (like [Hardhat](https://hardhat.org/)) you can install the appropriate packages and modify `build` script in the `package.json` file.
-
-## Moving to mainnet
-
-When it is time to deploy your application on mainnet, follow these steps:
-
-1. Use [a bridge](https://app.optimism.io/bridge) to transfer ETH to Optimism mainnet.
-1. Where you specify the RCP endpoint URL, use [a mainnet endpoint](https://community.optimism.io/docs/useful-tools/networks/#optimism-mainnet).
-
 
 ## Best practices
 
@@ -327,4 +416,3 @@ After you are done with that development, debug your decentralized application u
 This lets you debug parts that that are Optimism specific such as calls to bridges to transfer assets between layers.
 
 Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
-
