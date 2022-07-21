@@ -21,10 +21,11 @@ To show how this works we installed [a slightly modified version of HardHat's `G
 ::: Tip What if somebody else uses the same contracts at the same time?
 If somebody else uses these contracts while you are going through the tutorial, they might update the greeting after you.
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
-However, you can still verify your controller works in one of two ways:
-1. Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#internaltx) or [Optimistic Goerli BlockScount](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/internal-transactions#address-tabs).
-   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
-1. Just try again.
+However, you can still verify your controller works in one of these ways:
+
+- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#internaltx) or [Optimistic Goerli BlockScount](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/internal-transactions#address-tabs).
+  In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
+- Just try again.
 :::
 
 ### Hardhat
@@ -63,7 +64,9 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
-# 1. [Browse to the Greeter contract on BlockScout](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/read-contract#address-tabs) to see the result of **greet**.
+<!--
+ 1. [Browse to the Greeter contract on BlockScout](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/read-contract#address-tabs) to see the result of **greet**.
+-->
 
 1. In a separatate terminal window connect the Hardhat console to Goerli (L1):
 
@@ -93,6 +96,8 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
+1. In the block explorer, [view the event log](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/logs#address-tabs).
+   Notice that the `xorigin` value is the controller address.
 
 #### Optimism message to Ethereum
 
@@ -140,7 +145,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 ##### Receive the message
 
 Transactions from Optimism to Ethereum are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
-Once the fault challenge period is over (one minute on Kovan, seven days on the production network) it is necessary to claim the transaction on L1. 
+Once the fault challenge period is over (ten seconds on Goerli, seven days on the production network) it is necessary to claim the transaction on L1. 
 This is a complex process that requires a [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5).
 You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
 
@@ -177,6 +182,18 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    (await crossChainMessenger.getMessageStatus(hash)) == sdk.MessageStatus.READY_FOR_RELAY
    ```
 
+   `await crossChainMessenger.getMessageStatus(hash)` can return several values at this stage:
+
+   - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
+     The challenge period only starts when the state root is published, which is means you might need to wait a few minutes.
+
+   - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (3): Still in the challenge period, wait a few seconds.
+
+   - `sdk.MessageStatus.READY_FOR_RELAY` (4): Ready to finalize the message.
+     Go on to the next step.
+
+     <!-- 0xf45d2efe1e631bd84ab3de3226ab70d00b332577d6edbc5b1bb7d89bb04277d0 -->
+
 1. Finalize the message.
 
    ```js
@@ -190,7 +207,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 #### Setup
 
-1. Install the `@eth-optimims/contracts` library (assuming you already have Noe.js and yarn):
+1. Install the `@eth-optimims/contracts` library (assuming you already have Node.js and yarn):
 
    ```sh
    cd foundry/lib
@@ -201,21 +218,21 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```sh
    cd ..
-   GOERLI_URL= ...
-   OPTI_GOERLI_URL= ...
+   export GOERLI_URL= ...
+   export OPTI_GOERLI_URL= ...
    ```
 
-1. Create environment variables for the Greeter contract's addresses
+1. Create environment variables for the Greeter contracts' addresses
 
    ```sh
-   GREETER_L1=0x7fA4D972bB15B71358da2D937E4A830A9084cf2e
-   GREETER_L2=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
+   export GREETER_L1=0x7fA4D972bB15B71358da2D937E4A830A9084cf2e
+   export GREETER_L2=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
    ```
 
 1. Put your account mnemonic in the file `mnem.delme`.
 
 
-#### Control the L2 Greeter from L1
+#### Ethereum message to Optimism
 
 1. See the current greeting.
 
@@ -232,22 +249,70 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Create an environment variable for the `Deployed to:` address:
 
    ```sh
-   CONTROLLER= << address >>
+   export FROM_L1_CONTROLLER= << address >>
    ```   
 
 1. Send a transaction to change the L2 greeting:
 
    ```sh
-   cast send --rpc-url $GOERLI_URL --gas-limit 150000 \
-      --mnemonic-path mnem.delme \
-      $CONTROLLER "setGreeting(string)" '"Salam"'
+   cast send --rpc-url $GOERLI_URL \
+      --mnemonic-path mnem.delme --gas-limit 130000 \
+      $FROM_L1_CONTROLLER "setGreeting(string)" '"Salam"'
    ```
+
+   Note that `cast` doesn't estimate the gas limit correctly in this case, so you need to specify it manually.
 
 1. See the greeting has changed. Note that the change might take a few minutes to propagate.
 
    ```sh
    cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
    ```
+
+#### Optimism message to Ethereum
+
+##### Send the message
+
+1. See the current greeting.
+
+   ```sh
+   cast call --rpc-url $GOERLI_URL $GREETER_L1 "greet()"  | cast --to-ascii
+   ```
+
+1. Deploy the `FromL2_ControlL1Greeter` contract.
+
+   ```sh
+   forge create FromL2_ControlL1Greeter --rpc-url $OPTI_GOERLI_URL --mnemonic-path mnem.delme --legacy
+   ```
+
+1. Create an environment variable for the `Deployed to:` address:
+
+   ```sh
+   export FROM_L2_CONTROLLER= << address >>
+   ```   
+
+1. Send a transaction to change the L1 greeting:
+
+   ```sh
+   cast send --rpc-url $OPTI_GOERLI_URL --legacy \
+      --mnemonic-path mnem.delme $FROM_L2_CONTROLLER "setGreeting(string)" '"Salam"'
+   ```
+
+1. Create an environment variable for the transaction hash:
+
+   ```sh
+   export HASH= << transaction hash >>
+   ```
+
+##### Receive the message
+
+
+1. See the greeting has changed.
+
+   ```sh
+   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
+   ```
+
+
 
 ## How it's done (in Solidity)
 
@@ -268,10 +333,10 @@ This line imports the interface to send messages, [`ICrossDomainMessenger.sol`](
 
 ```solidity
 contract FromL1_ControlL2Greeter {
-    address crossDomainMessengerAddr = 0x4361d0F75A0186C05f971c566dC6bEa5957483fD;
+    address crossDomainMessengerAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
 ```
 
-This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Kovan. 
+This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Goerli. 
 To call L2 from L1 on mainnet, you need to [use this address](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/mainnet/Proxy__OVM_L1CrossDomainMessenger.json#L2).
 To call L1 from L2, on either mainnet or Kovan, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 
