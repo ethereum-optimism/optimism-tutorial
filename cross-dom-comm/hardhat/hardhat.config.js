@@ -23,12 +23,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.4",
   networks: {
-     "optimistic-kovan": {
-        url: 'https://kovan.optimism.io',
+     "optimism-goerli": {
+        url: process.env.OPTI_GOERLI_URL,
         accounts: { mnemonic: process.env.MNEMONIC }
       },
-      "kovan": {
-        url: process.env.KOVAN_URL,
+      "goerli": {
+        url: process.env.GOERLI_URL,
         accounts: { mnemonic: process.env.MNEMONIC }
       }
   } 
