@@ -192,12 +192,11 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    - `sdk.MessageStatus.READY_FOR_RELAY` (4): Ready to finalize the message.
      Go on to the next step.
 
-     <!-- 0xf45d2efe1e631bd84ab3de3226ab70d00b332577d6edbc5b1bb7d89bb04277d0 -->
 
 1. Finalize the message.
 
    ```js
-   (await crossChainMessenger.finalizeMessage(hash))
+   await crossChainMessenger.finalizeMessage(hash)
    ```
 
 1. To verify the change, [browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) again and click **greet** to see the new greeting.
@@ -207,7 +206,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 #### Setup
 
-1. Install the `@eth-optimims/contracts` library (assuming you already have Node.js and yarn):
+1. Install the `@eth-optimims/sdk` library (assuming you already have Node.js and yarn):
 
    ```sh
    cd foundry/lib
@@ -294,7 +293,8 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```sh
    cast send --rpc-url $OPTI_GOERLI_URL --legacy \
-      --mnemonic-path mnem.delme $FROM_L2_CONTROLLER "setGreeting(string)" '"Salam"'
+      --mnemonic-path mnem.delme $FROM_L2_CONTROLLER \
+      "setGreeting(string)" '"Salam"'
    ```
 
 1. Create an environment variable for the transaction hash:
@@ -305,6 +305,67 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 ##### Receive the message
 
+
+1. Run `node`, the JavaScript command line.
+ 
+   ```sh
+   cd lib
+   node
+   ```
+
+1. Get the SDK and the Ethers libraries (they are already in `node_modules`).
+
+   ```js
+   sdk = require("@eth-optimism/sdk")
+   ethers = require("ethers")
+   ```
+
+1. Configure a `CrossChainMessenger` object:
+
+   ```js
+   l1Provider = new ethers.providers.JsonRpcProvider(process.env.GOERLI_URL)
+   mnemonic = fs.readFileSync("../mnem.delme").toString()
+   wallet = ethers.Wallet.fromMnemonic(mnemonic.slice(0,-1))
+   l1Signer = wallet.connect(l1Provider)
+   l2Provider = new ethers.providers.JsonRpcProvider(process.env.OPTI_GOERLI_URL)
+   crossChainMessenger = new sdk.CrossChainMessenger({ 
+      l1ChainId: 5,
+      l2ChainId: 420,
+      l1SignerOrProvider: l1Signer,
+      l2SignerOrProvider: l2Provider
+   })
+   ```
+
+1. To check the status of the transaction, run these commands:
+
+   ```js
+   statusPromise = crossChainMessenger.getMessageStatus(process.env.HASH)
+   statusPromise.then(status => console.log(status === sdk.MessageStatus.READY_FOR_RELAY))
+   ```
+
+   `crossChainMessenger.getMessageStatus(hash)` can return several values at this stage:
+
+   - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
+     The challenge period only starts when the state root is published, which is means you might need to wait a few minutes.
+
+   - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (3): Still in the challenge period, wait a few seconds.
+
+   - `sdk.MessageStatus.READY_FOR_RELAY` (4): Ready to finalize the message.
+     Go on to the next step.
+
+
+1. Finalize the message.
+
+   ```js
+   crossChainMessenger.finalizeMessage(process.env.HASH)
+   ```
+
+
+1. Exit `node`:
+
+   ```js
+   .exit
+   ```
 
 1. See the greeting has changed.
 
