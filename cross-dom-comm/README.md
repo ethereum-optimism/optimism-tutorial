@@ -170,7 +170,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
       l1ChainId: 5,
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer, 
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider("https://goerli.optimism.io")
+      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.OPTI_GOERLI_URL)
    })
    ```
 
