@@ -14,10 +14,8 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
 [The node script](./gas.js) makes these assumptions:
 
-1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-1. There is network connectivity to a provider on the Optimistic Kovan L2 network, and to the npm package registry.
-1. The account it uses, [0xf5a6ead936fb47f342bb63e676479bddf26ebe1d](https://kovan-optimistic.etherscan.io/address/0xf5a6ead936fb47f342bb63e676479bddf26ebe1d), has enough Kovan ETH to pay for gas.
-   If it does not have enough Kovan ETH, please replenish it [from a faucet](https://community.optimism.io/docs/useful-tools/faucets).
+- You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
+- There is network connectivity to a provider on the Optimistic Kovan L2 network, and to the npm package registry.
 
 
 ## Running the script
@@ -27,6 +25,13 @@ This calculation is complicated by the fact that the major cost is the cost of w
    ```sh
    yarn
    ```
+
+1. Copy `.env.example` to `.env` and modify the parameters:
+
+   - `MNEMONIC` is the mnemonic to an account that has enough ETH to pay for the transaction.
+
+   - `L2_URL` is a URL to an L2 network, either Optimism or Optimism Goerli. 
+     You can get such an endpoint from [any of these providers](https://community.optimism.io/docs/useful-tools/providers/).
 
 1. Use Node to run the script
 
@@ -38,46 +43,43 @@ That's it.
 
 ### Results
 
-The results you get from the script on Kovan look a bit strange, because the L1 gas price is tiny (7 wei) compared to the L2 gas price (1,000,000 wei).
-Here is an example of results from the production Optimism blockchain, where the L2 gas price is still 1,000,000 wei, but the L1 gas price is, at writing, about 60 Gwei. 
+The results you get from the script on Optimism Goerli are different than the ones you'd get from running on the main Optimism blockchain. 
+The reason is that on Goerli L1 gas costs is just seven times the L1 gas cost.
+On the main network the ratio is usually in the tens of thousands ([click here to see the current values](https://public-grafana.optimism.io/d/9hkhMxn7z/public-dashboard?orgId=1&refresh=5m)).
+
+Here is an example of results from the main Optimism blockchain.
 
 
 ```
-ori@Oris-MacBook-Pro sdk-gas-estimate % node gas.js
+ori@Oris-MBP sdk-estimate-gas % ./gas.js 
+About to get estimates
 About to create the transaction
 Transaction created, submitting it
 Transaction processed
 Estimates:
-   Total gas cost:      309728722234122 wei
-      L1 gas cost:      309689454234122 wei
-      L2 gas cost:          39268000000 wei
+   Total gas cost:       99958954362216 wei
+      L1 gas cost:       99926386362216 wei
+      L2 gas cost:          32568000000 wei
 
 Real values:
-   Total gas cost:      309727308234124 wei
-      L1 gas cost:      309689454234123 wei
-      L2 gas cost:          37854000001 wei
+   Total gas cost:       99493733721792 wei
+      L1 gas cost:       99461179721796 wei
+      L2 gas cost:          32553999996 wei
 
 L1 Gas:
-      Estimate:       4276
+      Estimate:       4296
           Real:       4276
-    Difference:          0
+    Difference:        -20
 
 L2 Gas:
-      Estimate:      39268
-          Real:      37854
-    Difference:      -1414    
+      Estimate:      32568
+          Real:      32554
+    Difference:        -14
+
 ```
 
-There are several important facts to note here:
-
-- The L1 gas cost is over 7,500 times the L2 gas cost.
-  This is typical in Optimistic transactions, because of the cost ratio between L1 gas and L2 gas.
-- The L1 gas estimate is accurate, but the L1 gas cost is off by one wei.
-  This happens because as part of the calculation the gas cost is multiplied by a scalar (1.24 as I'm writing this).
-  The result is sometimes rounded up and sometimes down, depending on where it is calculated.
-- The L2 gas estimate is off by about 3%. 
-  The mechanism `geth` uses to estimate the gas cost of a transaction has an approximation, not an exact figure.
-- Because the cost discrepency is in L2 gas, the difference in cost is just 1.4 Gwei, which at current prices is less than a thousands of a cent.
+The L1 gas cost is thousands of times the L2 gas cost.
+This is typical in Optimistic transactions, because of the cost ratio between L1 gas and L2 gas.
 
 
 
@@ -87,6 +89,8 @@ In this section we go over the script line by line to learn how to use the SDK f
 
 
 ```js
+#! /usr/local/bin/node
+
 // Estimate the costs of an Optimistic (L2) transaction
 
 const ethers = require("ethers")
@@ -97,6 +101,12 @@ const fs = require("fs")
 The packages we need directly.
 
 ```js
+require('dotenv').config()
+```
+
+The [`dotenv`](https://www.npmjs.com/package/dotenv) package reads the `.env` file and adds the parameters to `process.env`.
+
+```js
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 ```
 
@@ -105,21 +115,17 @@ This contract has one function that changes the state and there requires a trans
 
 
 ```js
-const network = "kovan"    // "kovan" or "mainnet"
-const mnemonic = "test test test test test test test test test test test junk"
+const greeterAddrs = {
+  // Optimism
+  "10":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
+
+  // Optimism Goerli
+  "420": "0x106941459A8768f5A92b770e280555FAF817576f"
+}
 ```
 
-Configuration, the network to use and the mnemonic for the account.
-This mnemonic is a common testing account.
+The address of the Greeter contract, which is different on different networks.
 
-```js
-const l2Url = `https://${network}.optimism.io`
-const greeterAddr = network === "kovan" ? 
-                        "0xE0A5fe4Fd70B6ea4217122e85d213D70766d6c2c" :
-                        "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1"
-```
-
-We deployed `Greeter` on both our test network and our production network, at these addresses.
 
 ```js
 // Utilities
@@ -133,33 +139,30 @@ The `sleep` function pauses execution for that number of milliseconds.
 ```js
 // Get an L2 signer
 const getSigner = async () => {
-    const l2RpcProvider = optimismSDK.asL2Provider(new ethers.providers.JsonRpcProvider(l2Url))
+    const l2RpcProvider = optimismSDK.asL2Provider(
+      new ethers.providers.JsonRpcProvider(process.env.L2_URL)
+    )
 ```
 
 The function [`optimismSDK.asL2Provider`](https://sdk.optimism.io/modules.html#asL2Provider) takes a regular [Ethers.js Provider](https://docs.ethers.io/v5/api/providers/) and adds a few L2 specific functions, which are explained below.
 Because it only adds functions, an [`L2Provider`](https://sdk.optimism.io/modules.html#L2Provider) can be used anywhere you use an Ethers `Provider`.
 
 ```js
-    const privateKey = ethers.utils.HDNode.fromMnemonic(mnemonic).privateKey
-    const wallet = new ethers.Wallet(privateKey, l2RpcProvider)
+    const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
+      connect(l2RpcProvider)
 
+    return wallet
 }   // getSigner
 ```
 
-The rest on the function in standard usage of [`HDNode`](https://docs.ethers.io/v5/api/utils/hdnode/#HDNode) and [`Wallet`](https://docs.ethers.io/v5/api/signer/#Wallet) from the Ethers package.
+The rest on the function in standard usage of [`Wallet`](https://docs.ethers.io/v5/api/signer/#Wallet) from the Ethers package.
 
 
 ```js
 // Get estimates from the SDK
 const getEstimates = async (provider, tx) => {
-  let retVal = {}
-```
-
-We can't use the `{a: b(), c: d()}` syntax because the `L2Provider` functions connect to the Optimism endpoint, and therefore are asynchronous.
-
-
-```js
-  retVal.totalCost = await provider.estimateTotalGasCost(tx)
+  return {
+    totalCost: await provider.estimateTotalGasCost(tx),
 ```
 
 [Estimate the total cost (L1+L2) of running the transaction](https://sdk.optimism.io/modules.html#estimateTotalGasCost).
@@ -168,24 +171,22 @@ We can't use the `{a: b(), c: d()}` syntax because the `L2Provider` functions co
 > This means that the account in `l2Provider` has to have enough ETH to pay for the gas cost of the transaction.
 
 ```js
-  retVal.l1Cost    = await provider.estimateL1GasCost(tx)
-  retVal.l2Cost    = await provider.estimateL2GasCost(tx)
+    l1Cost: await provider.estimateL1GasCost(tx),
+    l2Cost: await provider.estimateL2GasCost(tx),
 ```
 
 Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.html#estimateL1GasCost) and [L2]()https://sdk.optimism.io/modules.html#estimateL1GasCost.
 
-```js
-  retVal.l1Gas     = await provider.estimateL1Gas(tx)
+```js    
+    l1Gas: await provider.estimateL1Gas(tx)
+  }
+}    // getEstimates
 ```
 
 [Get the amount of gas we expect to use to store the transaction on L1](https://sdk.optimism.io/modules.html#estimateL1Gas).
 
+
 ```js
-  return retVal
-}    // getEstimates
-
-
-
 const displayResults = (estimated, real) => {
   console.log(`Estimates:`)
   console.log(`   Total gas cost: ${displayWei(estimated.totalCost)} wei`)
@@ -216,13 +217,20 @@ This lets you see how accurate the estimates were.
 const main = async () => {    
     
     const signer = await getSigner()
+    const chainId = (await signer.provider._networkPromise).chainId
+
+    if(!greeterAddrs[chainId]) {
+      console.log(`I don't know the Greeter address on chainId: ${chainId}`)
+      process.exit(-1)  
+    }
 
     const Greeter = new ethers.ContractFactory(greeterJSON.abi, greeterJSON.bytecode, signer)
-    const greeter = Greeter.attach(greeterAddr)
+    const greeter = Greeter.attach(greeterAddrs[chainId])
 
     const greeting = "Hello!"
 
     let real = {}
+
 ```
 
 To create a valid estimate, we need these transaction fields:
@@ -255,6 +263,7 @@ The contract cannot provide us with the `nonce`, `chainId`, `gasPrice`, or `gasL
 To get those fields we use [`signer.populateTransaction`](https://docs.ethers.io/v5/api/signer/#Signer-populateTransaction).
 
 ```js
+    console.log("About to get estimates")
     let estimated = await getEstimates(signer.provider, fakeTx)
 ```
 
@@ -304,7 +313,7 @@ The error message shows that information so the user knows about it.
     while (real.totalCost === 0) {
         const weiAfter = await signer.getBalance()
         real.totalCost= weiB4-weiAfter
-        sleep(100)
+        await sleep(100)
     }
 ```
 
