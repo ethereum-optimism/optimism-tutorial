@@ -18,19 +18,14 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.13",
   networks: {
     "local-devnode": {
        url: "http://localhost:8545",
        accounts: { mnemonic: "test test test test test test test test test test test junk" }
     },
-    "optimistic-kovan": {
-       url: "https://kovan.optimism.io",
-       accounts: { mnemonic: process.env.MNEMONIC }
-//       accounts: { mnemonic: "test test test test test test test test test test test junk" }
-    },
-    "optimism": {
-       url: "https://mainnet.optimism.io",
+    "optimism-goerli": {
+       url: process.env.OPTI_GOERLI_URL,
        accounts: { mnemonic: process.env.MNEMONIC }
     }
   }
