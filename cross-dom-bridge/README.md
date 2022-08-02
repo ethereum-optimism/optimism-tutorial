@@ -5,10 +5,6 @@
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer assets between Layer 1 (Ethereum) and Layer 2 (Optimism).
 
-<!--
-It covers both deposits (Ethereum to Optimism) and withdrawals (Optimism to Ethereum) of the two most common asset types: ETH and ERC-20.
--->
-
 
 ## Setup
 
@@ -102,21 +98,6 @@ const l2Url = process.env.OPTI_GOERLI_URL
 
 Configuration, read from `.env`.
 
-<!--
-```js
-// Contract addresses for DAI tokens, taken 
-// from https://static.optimism.io/optimism.tokenlist.json
-const daiAddrs = {
-  l1Addr: "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa",
-  l2Addr: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
-}    // daiAddrs
-```
-
-
-The addresses for the DAI contracts on Kovan and Optimistic Kovan.
-We use DAI here because we can get it for free [from the faucet](https://faucet.paradigm.xyz/).
--->
-
 
 ```js
 // Global variable because we need them almost everywhere
@@ -124,9 +105,6 @@ let crossChainMessenger
 let addr    // Our address
 ```
 
-<!--
-let l1ERC20, l2ERC20    // DAI contracts to show ERC-20 transfers
--->
 
 The configuration parameters required for transfers.
 
@@ -173,9 +151,6 @@ const setup = async() => {
   addr = l1Signer.address
 ```
 
-<!--
-We need to know our address to get our ERC-20 balances.
--->
 
 ```js
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
@@ -188,31 +163,6 @@ We need to know our address to get our ERC-20 balances.
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to transfer assets.
 
-<!--
-```js
-  l1ERC20 = new ethers.Contract(daiAddrs.l1Addr, erc20ABI, l1Signer)
-  l2ERC20 = new ethers.Contract(daiAddrs.l2Addr, erc20ABI, l2Signer)  
-}   // setup
-```
-
-Create the two contract objects we'll use to check ERC-20 balances. 
-
-```js
-// The ABI fragment for an ERC20 we need to get a user's balance.
-const erc20ABI = [  
-    // balanceOf
-    {    
-      constant: true,  
-      inputs: [{ name: "_owner", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ name: "balance", type: "uint256" }],
-      type: "function",
-    },
-  ]    // erc20ABI
-```
-
-Most of our calls to the ERC-20 accounts are going to be handled by `crossDomainMessenger`, so we won't have worry about the ABI. But we need this specific fragment to be able to check balances.
--->
 
 ### Variables that make it easier to convert between WEI and ETH
 
@@ -224,11 +174,6 @@ const gwei = 1000000000n
 const eth = gwei * gwei   // 10^18
 const centieth = eth/100n
 ```
-
-<!--
-const dai = eth 
--->
-
 
 ### `reportBalances`
 
@@ -244,20 +189,6 @@ const reportBalances = async () => {
 ```
 
 
-<!--
-### `reportERC20Balances`
-
-This function reports the ERC-20 balances on both layers.
-We can afford to transfer whole DAIs because we get 500 each time we use the faucet, in contrast to ETH where we only get one.
-
-```js
-const reportERC20Balances = async () => {
-  const l1Balance = (await l1ERC20.balanceOf(addr)).toString().slice(0,-18)
-  const l2Balance = (await l2ERC20.balanceOf(addr)).toString().slice(0,-18)
-  console.log(`DAI on L1:${l1Balance}     DAI on L2:${l2Balance}`)  
-}    // reportERC20Balances
-```
--->
 
 ### `depositETH`
 
@@ -311,69 +242,6 @@ The third parameter (which is optional) is a hashed array of options:
 
 Once the message is relayed the balance change on Optimism is practically instantaneous.
 We can just report the balances and see that the L2 balance rose by 1 gwei.
-
-<!--
-### `depositERC20`
-
-This function is similar to `depositETH` above, with a few changes for ERC-20.
-Therefore, this tutorial only explains the new parts.
-
-ERC-20 deposit is a two step process:
-
-1. Provide an allowance to the bridge
-1. Call the bridge to use the allowance to perform a transfer
-
-```js
-const depositERC20 = async () => {
-
-  console.log("Deposit ERC20")
-  await reportERC20Balances()
-  const start = new Date()
-
-  // Need the l2 address to know which bridge is responsible
-  const allowanceResponse = await crossChainMessenger.approveERC20(
-    daiAddrs.l1Addr, daiAddrs.l2Addr, dai)
-```
-
-[Create the transaction that approves the allowance](https://sdk.optimism.io/classes/crosschainmessenger#approveERC20-2).
-We have to provide both the L1 token address and the L2 token address for two reasons:
-
-1. There could be multiple L2 ERC-20 contracts that represent the same L1 token.
-1. Some token pairs use a different bridge from the standard one.
-
-So the SDK needs to know which bridge needs to get the allowance.
-
-```js
-  await allowanceResponse.wait()
-  console.log(`Allowance given by tx ${allowanceResponse.hash}`)
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-```
-
-Providing an allowance is a pure L1 action, so there is no need to wait until a message is relayed.
-
-```js
-
-  const response = await crossChainMessenger.depositERC20(
-    daiAddrs.l1Addr, daiAddrs.l2Addr, dai)
-```
-
-The `depositERC20()` function](https://sdk.optimism.io/classes/crosschainmessenger#depositERC20-2) also needs both token addresses.
-
-
-```js
-  console.log(`Deposit transaction hash (on L1): ${response.hash}`)
-  await response.wait()
-  console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-                                                  optimismSDK.MessageStatus.RELAYED) 
-
-  await reportERC20Balances()    
-  console.log(`depositERC20 took ${(new Date()-start)/1000} seconds\n\n`)
-}     // depositERC20()
-```
--->
-
 
 ### `withdrawETH`
 
@@ -438,71 +306,6 @@ Finalizing the message also takes a bit of time.
   console.log(`withdrawETH took ${(new Date()-start)/1000} seconds\n\n\n`)  
 }     // withdrawETH()
 ```
-
-
-<!--
-
-### `withdrawERC20`
-
-In contract to deposits, ERC-20 withdrawals (from Optimism to Ethereum) do not require an allowance.
-
-```js
-const withdrawERC20 = async () => { 
-  
-  console.log("Withdraw ERC20")
-  const start = new Date()  
-  await reportERC20Balances()
-
-  const response = await crossChainMessenger.withdrawERC20(
-    daiAddrs.l1Addr, daiAddrs.l2Addr, dai)
-```
-
-[See here for the `withdrawERC20()` documentation](https://sdk.optimism.io/classes/crosschainmessenger#withdrawERC20-2).
-
-```js
-  console.log(`Transaction hash (on L2): ${response.hash}`)
-  await response.wait()
-
-  console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-    optimismSDK.MessageStatus.IN_CHALLENGE_PERIOD) 
-```
-
-The challenge period starts when the L2 transaction is written to the cannonical transaction chain on L1, which is not immediate, so it makes sense to wait until [the challenge period](https://community.optimism.io/docs/how-optimism-works/#fault-proofs) starts.
-
-
-```js
-  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-                                                optimismSDK.MessageStatus.READY_FOR_RELAY) 
-```
-
-Wait until the state that includes the transaction gets past the challenge period, at which time we can finalize (also known as claim) the transaction.
-
-```js
-  console.log("Ready for relay, finalizing message now")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.finalizeMessage(response)
-```
-
-Finalizing the message takes a bit of time.
-
-
-```js
-  console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response, 
-    optimismSDK.MessageStatus.RELAYED)
-  await reportERC20Balances()   
-  console.log(`withdrawERC20 took ${(new Date()-start)/1000} seconds\n\n\n`)  
-}     // withdrawERC20()
-```
-
-Once the transaction is related the L1 balance is increased and the withdrawal is done.
-
--->
 
 
 ### `main`
