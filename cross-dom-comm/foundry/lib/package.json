@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@eth-optimism/sdk": "^1.3.1"
+  }
+}

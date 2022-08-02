@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+    ],
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "sourceMap": true,
+    "target": "es6",
+    "outDir": "dist",
+    "downlevelIteration": true
+  },
+  "include": [
+    "test",
+    "contracts"
+  ],
+  "exclude": [
+    "**/dist",
+    "**/build"
+  ]
+}

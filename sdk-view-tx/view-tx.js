@@ -6,7 +6,7 @@ const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
 
-const network = "mainnet"    // "kovan" or "mainnet"
+const network = "mainnet"    // "mainnet" or "goerli"
 
 
 
@@ -16,7 +16,8 @@ let crossChainMessenger
 
 const setup = async() => {
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "kovan" ? 42 : 1,    
+      l1ChainId: network === "goerli" ? 5 : 1,    
+      l2ChainId: network === "goerli" ? 420 : 10,          
       l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
   })

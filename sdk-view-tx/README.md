@@ -1,7 +1,7 @@
 # View transactions between layers
 
-[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord.com/channels/667044843901681675)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
+[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
+[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 
 This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/) to view the transactions passed between L1 (Ethereum) and L2 (Optimism) by an address.
@@ -41,18 +41,18 @@ Note that by the time you read this there might be additional transactions repor
 ```
 Deposits by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
 tx:0xa35a3085e025e2addd59c5ef2a2e5529be5141522c3cce78a1b137f2eb992d19
-        Amount: 0.01 ETH
-        Relayed: true
+	Amount: 0.01 ETH
+	Relayed: true
 
 
 
 Withdrawals by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
 tx:0x7826399958c6bb3831ef0b02b658e7e3e69f334e20e27a3c14d7caae545c3d0d
-        Amount: 1 DAI
-        Relayed: false
+	Amount: 1 DAI
+	Relayed: false
 tx:0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a
-        Amount: 0.001 ETH
-        Relayed: false
+	Amount: 0.001 ETH
+	Relayed: true
 ```
 
 ## How does it work?
@@ -68,10 +68,10 @@ const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
 
-const network = "mainnet"    // "kovan" or "mainnet"
+const network = "mainnet"    // "mainnet" or "goerli"
 ```
 
-If you decide to use Kovan you'll need to specify appropriate (Kovan and Optimistic Kovan) provider URLs in `.env.example`.
+If you decide to use Goerli you'll need to specify appropriate (Goerli and Optimism Goerli) provider URLs in `.env`.
 
 ```js
 // Global variable because we need them almost everywhere
@@ -80,7 +80,8 @@ let crossChainMessenger
 
 const setup = async() => {
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "kovan" ? 42 : 1,    
+      l1ChainId: network === "goerli" ? 5 : 1,    
+      l2ChainId: network === "goerli" ? 420 : 10,      
       l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
   })
@@ -89,6 +90,7 @@ const setup = async() => {
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to view information.
 Note that we do not need signers here, since what we are only calling `view` functions.
+However, we do need the chainId values.
 
 
 ```js

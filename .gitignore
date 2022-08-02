@@ -5,6 +5,7 @@ optimism
 # environment variables
 .env
 .env.local
+*.delme
 
 # Packages
 node_modules/

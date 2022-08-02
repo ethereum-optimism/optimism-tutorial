@@ -1,0 +1,9 @@
+{
+  "compilerType": "solcjs",
+  "compilerVersion": "0.8.11",
+  "sourceDirectory": "./contracts",
+  "outputDirectory": "./build",
+  "nodeModulesDirectory": "./node_modules",
+  "flattenOutputDirectory": "./flatten",
+  "typechainEnabled": true
+}

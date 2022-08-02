@@ -1,0 +1,199 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "name": "revert",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b5060b78061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80637da3c3ab14602d575b600080fd5b60336035565b005b60405162461bcd60e51b815260206004820152601760248201527f66616c73652069732066616c73652120416d617a696e21000000000000000000604482015260640160405180910390fdfea2646970667358221220f753c17be5260204526ed6c0ccd8b0a5363a088f0a136a0b5420461547df25b564736f6c634300080d0033",
+    "sourceMap": "96:98:1:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80637da3c3ab14602d575b600080fd5b60336035565b005b60405162461bcd60e51b815260206004820152601760248201527f66616c73652069732066616c73652120416d617a696e21000000000000000000604482015260640160405180910390fdfea2646970667358221220f753c17be5260204526ed6c0ccd8b0a5363a088f0a136a0b5420461547df25b564736f6c634300080d0033",
+    "sourceMap": "96:98:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;115:77;;;:::i;:::-;;;146:41;;-1:-1:-1;;;146:41:1;;216:2:2;146:41:1;;;198:21:2;255:2;235:18;;;228:30;294:25;274:18;;;267:53;337:18;;146:41:1;;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "revert()": "7da3c3ab"
+  },
+  "ast": {
+    "absolutePath": "src/Fail.sol",
+    "id": 8077,
+    "exportedSymbols": {
+      "Fail": [
+        8076
+      ],
+      "console": [
+        8063
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "37:180:1",
+    "nodes": [
+      {
+        "id": 8065,
+        "nodeType": "PragmaDirective",
+        "src": "37:23:1",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 8066,
+        "nodeType": "ImportDirective",
+        "src": "63:31:1",
+        "absolutePath": "lib/forge-std/src/console.sol",
+        "file": "forge-std/console.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 8077,
+        "sourceUnit": 8064,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 8076,
+        "nodeType": "ContractDefinition",
+        "src": "96:98:1",
+        "nodes": [
+          {
+            "id": 8075,
+            "nodeType": "FunctionDefinition",
+            "src": "115:77:1",
+            "body": {
+              "id": 8074,
+              "nodeType": "Block",
+              "src": "140:52:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "hexValue": "66616c7365",
+                        "id": 8070,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "bool",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "154:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "value": "false"
+                      },
+                      {
+                        "hexValue": "66616c73652069732066616c73652120416d617a696e21",
+                        "id": 8071,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "161:25:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_e93eaad0d3077374e597e6bae04fa4b4c5c50e04b86b12fbc0259bcf145726ab",
+                          "typeString": "literal_string \"false is false! Amazin!\""
+                        },
+                        "value": "false is false! Amazin!"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_e93eaad0d3077374e597e6bae04fa4b4c5c50e04b86b12fbc0259bcf145726ab",
+                          "typeString": "literal_string \"false is false! Amazin!\""
+                        }
+                      ],
+                      "id": 8069,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "146:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 8072,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "146:41:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 8073,
+                  "nodeType": "ExpressionStatement",
+                  "src": "146:41:1"
+                }
+              ]
+            },
+            "functionSelector": "7da3c3ab",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "revert",
+            "nameLocation": "124:6:1",
+            "parameters": {
+              "id": 8067,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "130:2:1"
+            },
+            "returnParameters": {
+              "id": 8068,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "140:0:1"
+            },
+            "scope": 8076,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Fail",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          8076
+        ],
+        "name": "Fail",
+        "nameLocation": "105:4:1",
+        "scope": 8077,
+        "usedErrors": []
+      }
+    ],
+    "license": "Unlicense"
+  },
+  "id": 1
+}

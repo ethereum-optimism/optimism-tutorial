@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@eth-optimism/sdk": "^1.0.0"
+    "@eth-optimism/sdk": "^1.0.0",
+    "dotenv": "^16.0.1"
   },
   "scripts": {
-    "estimate": "node gas.js" 
-  }  
+    "estimate": "node gas.js"
+  }
 }
