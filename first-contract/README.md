@@ -37,19 +37,37 @@ In this tutorial we'll use [Optimism](https://www.optimism.io/), an Ethereum Lay
 
 [Deploying contracts and interacting with them costs gas, which has to be purchased with Ether (also known as ETH)](https://ethereum.org/en/developers/docs/gas/). 
 On the production network that Ether costs money, it is part of the security mechanism of Ethereum.
-To avoid spending real money, we'll use Optimistic Kovan, a test network built on top of Kovan.
+To avoid spending real money, we'll use Optimism Goerli, a test network built on top of Goerli.
 The test network also requires ETH, but it is test ETH you can get for free.
 
-1. [Go here](https://chainid.link/?network=optimism-kovan) to add Optimistic Kovan to your wallet. 
-Click **Connect** on the web page and then **Approve** in MetaMask.
+1. Sign up for a [free Alchemy account](https://auth.alchemyapi.io/signup)
+
+1. Use that account to get Goerli ETH from [this faucet](goerlifaucet).
+   It will appear in the L1 Goerli test network
+
+1. Paste your address and click **Send Me ETH**.
+
+1. In Metamask click the round icon at the top right and then **Settings > Advanced**.
+   Enable **Show test networks**.
+
+1. Click the network selection field and select **Goerli Test Network**.
+
+1. You will now see your ETH on the L1 Goerli test network.
+   The next step is to transfer it to the Optimism Goerli network.
+   Click the MetaMask **Send** icon.
+
+1. Send the address **0x636Af16bf2f682dD3109e60102b8E1A089FedAa8** a small amount, for example 0.2 GoerliETH.
+
+1. Click **Next** and then **Confirm**.
+
+1. [Go here](https://chainid.link/?network=optimism-goerli) to add Optimism Goerli to your wallet. 
+   Click **Connect** on the web page and then **Approve** in MetaMask.
 
 1. Permit the network switch.
 
-1. Go to [this faucet](https://faucet.paradigm.xyz/) to get ETH on the Optimistic Kovan network.
+1. See if you have anything on Optimism Goerli.
+   Note that this process may take a few minutes.
 
-1. Paste your address, select **Drip on additional networks**, and click **Claim**.
-
-1. [Go to Etherscan](https://kovan-optimistic.etherscan.io/), search for your address, and see that you now have 1 ETH.
 
 
 ## Interacting with a Solidity contract
@@ -63,22 +81,26 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
 1. Click the Files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />) and open **contracts > 1_Storage.sol**.
 
-1. Click the Compiler icon (<img src="assets/remix-compiler-icon.png" height="24" valign="top" />) and then **Compile 1_Storage.sol**.
+1. Click the Compiler icon (<img src="assets/remix-compiler-icon.png" height="24" valign="top" />) 
+
+1. Expand **Advanced Configurations** and select the EVM version **berlin**.
+
+1. Click **Compile 1_Storage.sol**.
 
 1. Click the Run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-1. Select the Environment **Injected Web3 Provider**.
+1. Select the Environment **Injected Provider**.
 
 1. In MetaMask, click **Next** and then **Connect** to accept the connection in the wallet.
 
-1. To add the smart contract into the blockchain, click **Deploy** and **Confirm** the transaction in MetaMask.
+1. To add the smart contract into the blockchain, click **Deploy** (in Remix) and **Confirm** the transaction in MetaMask.
 
 1. Expand the contract **STORAGE AT ...** and scroll down to see what you can do.
 
 1. To retrieve the current stored number, click **retrieve**. 
    Note that as this is a read-only operation, it does not cost anything and does not require MetaMask confirmation.
 
-1. See the retrieved number right below the **retrieve** button.   
+1. See the retrieved number right below the **retrieve** button.
 
    <img src="assets/remix-query.png" width="300" />
 
@@ -94,9 +116,10 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
    1. Copy the transaction hash from the remix console.
 
-   1. Open [Etherscan for Optimistic Kovan](https://kovan-optimistic.etherscan.io/).
+   1. Open [Blockscout for Optimism Goerli](https://blockscout.com/optimism/goerli).
 
    1. Search for the transaction hash. 
+      Note that it may take a few minutes for Blockscout to get updated.
 
 1. Back in Remix, click **retrieve** again to see that the value has changed.
 
