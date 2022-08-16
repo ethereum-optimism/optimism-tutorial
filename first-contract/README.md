@@ -40,25 +40,8 @@ On the production network that Ether costs money, it is part of the security mec
 To avoid spending real money, we'll use Optimism Goerli, a test network built on top of Goerli.
 The test network also requires ETH, but it is test ETH you can get for free.
 
-1. Sign up for a [free Alchemy account](https://auth.alchemyapi.io/signup)
-
-1. Use that account to get Goerli ETH from [this faucet](goerlifaucet).
-   It will appear in the L1 Goerli test network
-
-1. Paste your address and click **Send Me ETH**.
-
-1. In Metamask click the round icon at the top right and then **Settings > Advanced**.
-   Enable **Show test networks**.
-
-1. Click the network selection field and select **Goerli Test Network**.
-
-1. You will now see your ETH on the L1 Goerli test network.
-   The next step is to transfer it to the Optimism Goerli network.
-   Click the MetaMask **Send** icon.
-
-1. Send the address **0x636Af16bf2f682dD3109e60102b8E1A089FedAa8** a small amount, for example 0.2 GoerliETH.
-
-1. Click **Next** and then **Confirm**.
+1. Use [this faucet](https://optimismfaucet.xyz/) to obtain Optimism Goerli test ETH.
+   Follow five [github](https://github.com/) users or organizations to get past the anti-Sybil defense.
 
 1. [Go here](https://chainid.link/?network=optimism-goerli) to add Optimism Goerli to your wallet. 
    Click **Connect** on the web page and then **Approve** in MetaMask.
@@ -66,13 +49,12 @@ The test network also requires ETH, but it is test ETH you can get for free.
 1. Permit the network switch.
 
 1. See if you have anything on Optimism Goerli.
-   Note that this process may take a few minutes.
 
 
 
 ## Interacting with a Solidity contract
 
-The most common smart contract development language is called [Solidity](https://docs.soliditylang.org/en/v0.8.11/).
+The most common smart contract development language is called [Solidity](https://docs.soliditylang.org/en/latest/).
 Here we will use using an integrated development environment (IDE) called [Remix](https://remix.ethereum.org/).
 It has the significant advantage of requiring minimal set up because it runs in your browser.
 
