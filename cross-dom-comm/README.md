@@ -36,12 +36,19 @@ This is how you can see communication between domains work in hardhat.
 
 This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/) installed on your system. 
 
+1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
+
+   - An application on Goerli
+   - An application on Optimistic Goerli
+
+   Keep a copy of the two keys.
+
 1. Copy `.env.example` to `.env` and edit it:
 
-   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network as well as the Optimistic Goerli test network.
-   1. Set `GOERLI_URL` to point to a URL that accesses the Goerli test network.
-   1. Set `OPTI_GOERLI_URL` to point to a URL that accesses the Goerli test network.   
-
+   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
+   1. Set `GOERLI_KEY` to the key for the Goerli app.
+   1. Set `OPTIMISM_GOERLI_KEY` to the key for the Optimistic Goerli app
+   
 1. Install the necessary packages.
 
    ```sh
@@ -79,7 +86,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```js
    Controller = await ethers.getContractFactory("FromL1_ControlL2Greeter")
    controller = await Controller.deploy()
-   tx = await controller.setGreeting("Shalom")
+   tx = await controller.setGreeting(`Hello from L1 ${Date()}`)
    rcpt = await tx.wait()
    ```
 
@@ -126,7 +133,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```js
    Controller = await ethers.getContractFactory("FromL2_ControlL1Greeter")
    controller = await Controller.deploy()
-   tx = await controller.setGreeting("Shalom")
+tx = await controller.setGreeting(`Hello from L2 ${Date()}`)
    rcpt = await tx.wait()
    ```
 
@@ -166,11 +173,12 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```js
    l1Signer = await ethers.getSigner()
+   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
    crossChainMessenger = new sdk.CrossChainMessenger({ 
       l1ChainId: 5,
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer, 
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.OPTI_GOERLI_URL)
+      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url)
    })
    ```
 
@@ -196,10 +204,22 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Finalize the message.
 
    ```js
-   await crossChainMessenger.finalizeMessage(hash)
+   tx = await crossChainMessenger.finalizeMessage(hash)
+   rcpt = await tx.wait()
    ```
 
-1. To verify the change, [browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) again and click **greet** to see the new greeting.
+1. Get the new L1 greeting. There are two ways to do that:
+
+   - [Browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) and click **greet** to see the greeting.
+
+   - Run these commands in the Hardhat console connected to L1 Goerli:
+
+     ```js
+     Greeter = await ethers.getContractFactory("Greeter")
+     greeter = await Greeter.attach("0x7fA4D972bB15B71358da2D937E4A830A9084cf2e")
+     await greeter.greet()     
+     ```
+
 
 
 ### Foundry
@@ -213,7 +233,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    yarn
    ```
 
-1. Create environment variables for the URLs for Goerli and Optimistic Goerli:
+1. Create environment variables for the URLs for the Goerli and Optimism Goerli applications:
 
    ```sh
    cd ..

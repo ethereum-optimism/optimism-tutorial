@@ -12,8 +12,6 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 });
 
 
-
-
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -24,11 +22,11 @@ module.exports = {
   solidity: "0.8.4",
   networks: {
      "optimism-goerli": {
-        url: process.env.OPTI_GOERLI_URL,
+        url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`,
         accounts: { mnemonic: process.env.MNEMONIC }
       },
       "goerli": {
-        url: process.env.GOERLI_URL,
+        url: `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_KEY}`,
         accounts: { mnemonic: process.env.MNEMONIC }
       }
   } 
