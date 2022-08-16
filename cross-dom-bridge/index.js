@@ -1,4 +1,4 @@
-#! /usr/bin/node
+#! /usr/local/bin/node
 
 // Transfers between L1 and L2 using the Optimism SDK
 
@@ -8,8 +8,8 @@ require('dotenv').config()
 
 
 const mnemonic = process.env.MNEMONIC
-const l1Url = process.env.GOERLI_URL
-const l2Url = process.env.OPTI_GOERLI_URL
+const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_KEY}`
+const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
 
 
 // Contract addresses for DAI tokens, taken
@@ -47,8 +47,8 @@ const setup = async() => {
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer
   })
-  l1ERC20 = new ethers.Contract(daiAddrs.l1Addr, erc20ABI, l1Signer)
-  l2ERC20 = new ethers.Contract(daiAddrs.l2Addr, erc20ABI, l2Signer)
+//  l1ERC20 = new ethers.Contract(daiAddrs.l1Addr, erc20ABI, l1Signer)
+//  l2ERC20 = new ethers.Contract(daiAddrs.l2Addr, erc20ABI, l2Signer)
 }    // setup
 
 
