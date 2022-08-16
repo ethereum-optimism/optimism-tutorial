@@ -17,6 +17,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+
+const optimismGoerliUrl = 
+  process.env.ALCHEMY_API_KEY ? 
+    `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+    process.env.OPTIMISM_GOERLI_URL
+
 module.exports = {
   solidity: "0.8.13",
   networks: {
@@ -25,7 +31,7 @@ module.exports = {
        accounts: { mnemonic: "test test test test test test test test test test test junk" }
     },
     "optimism-goerli": {
-       url: process.env.OPTI_GOERLI_URL,
+       url: optimismGoerliUrl,
        accounts: { mnemonic: process.env.MNEMONIC }
     }
   }
