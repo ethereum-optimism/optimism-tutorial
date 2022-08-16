@@ -37,10 +37,12 @@ As you can see in the different development stacks below, the way you deploy con
 
 ## Hardhat
 
+In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/hardhat).
+
 ### Connecting to Optimism
 
-In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/hardhat).
-Here are the steps to create it:
+Follow these steps to add Optimism Goerli support to an existing Hardhat project. 
+
 
 1. Define your network configuration in `.env`:
 
@@ -115,7 +117,7 @@ Here are the steps to create it:
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
 
    ```js
-   tx = await greeter.setGreeting(`Hello ${new Date()}`)
+   tx = await greeter.setGreeting(`Hardhat: Hello ${new Date()}`)
    rcpt = await tx.wait()  
    await greeter.greet()
    ```
@@ -133,18 +135,24 @@ await greeter.greet()
 
 ## Truffle
 
+In [Truffle](https://trufflesuite.com/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/truffle).
+
 ### Connecting to Optimism
 
-In [Truffle](https://trufflesuite.com/):
+Follow these steps to add Optimism Goerli support to an existing Truffle project. 
+
 
 1. Define your network configuration in `.env`:
 
    ```sh
    # Put the mnemonic for an account on Optimism here
-   MNEMONIC="test test test test test test test test test test test junk"
+   MNEMONIC=test test test test test test test test test test test junk
 
-   # URL to access Optimism Goerli
-   OPTI_GOERLI_URL=https://goerli.optimism.io
+   # API KEY for Alchemy
+   ALCHEMY_API_KEY=
+
+   # URL to access Optimism Goerli (if not using Alchemy)
+   OPTIMISM_GOERLI_URL=
    ```
 
 1. Add `dotenv` and `@truffle/hdwallet-provider` to your project:
@@ -168,13 +176,23 @@ In [Truffle](https://trufflesuite.com/):
       require('dotenv').config()
       ```
 
+   1. Get the correct URL:
+
+      ```js
+      const optimismGoerliUrl =
+         process.env.ALCHEMY_API_KEY ?
+            `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+            process.env.OPTIMISM_GOERLI_URL
+      ```
+
    1. Add a network definition in `module.exports.networks`:
 
       ```js
       "optimism-goerli": {
          provider: () => new HDWalletProvider(
             process.env.MNEMONIC,
-            process.env.OPTI_GOERLI_URL)
+            optimismGoerliUrl),
+         network_id: 420
       }
       ```
 
@@ -204,7 +222,7 @@ In [Truffle](https://trufflesuite.com/):
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
 
    ```js
-   tx = await greeter.setGreeting(`Hello ${new Date()}`)
+   tx = await greeter.setGreeting(`Truffle: Hello ${new Date()}`)
    await greeter.greet()
    ```
 
@@ -219,7 +237,7 @@ console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
 ```
 
-
+<!--
 ## Brownie
 
 [Brownie](https://eth-brownie.readthedocs.io/en/stable/install.html) is an Ethereum development environment, similar to Hardhat and Truffle, but using Python rather than JavaScript.
@@ -357,6 +375,8 @@ greeter = await Greeter.deploy("Greeter from hardhat")
 console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
 ```
+
+-->
 
 
 
