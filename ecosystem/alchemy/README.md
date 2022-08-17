@@ -18,7 +18,7 @@ The first step is to register for a free Alchemy account.
 
 1. Fill up the requested information (team, type of project, etc.).
 
-   <img src="assets/team-form.png" width="300"/>
+   <img src="assets/team-form.png" />
 
 1. When asked for chain select **Optimism** and click **Next**.   
 
