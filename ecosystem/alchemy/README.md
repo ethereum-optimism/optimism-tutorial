@@ -18,21 +18,21 @@ The first step is to register for a free Alchemy account.
 
 1. Fill up the requested information (team, type of project, etc.).
 
-   ![Team form](assets/team-form.png)
+   <img src="assets/team-form.png" width="300"/>
 
 1. When asked for chain select **Optimism** and click **Next**.   
 
-   ![Select Optimism](assets/select-op.png)
+   <img src="assets/select-op.png" width="300"/>
 
 1. Select the free plan and click **Next**.   
 
 1. Either enter payment details or click **Skip for now**.
 
-   ![Payment details](assets/payment-details.png)
+   <img src="assets/payment-details.png" width="300"/>
 
 1. Enter where you heard about Alchemy and click **Let's Build!**. 
 
-   ![Let's Build](assets/lets-build.png)
+   <img src="assets/lets-build.png" width="300"/>
 
 ## Setup 
 
