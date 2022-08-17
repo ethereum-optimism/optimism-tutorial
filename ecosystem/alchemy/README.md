@@ -12,7 +12,7 @@ The first step is to register for a free Alchemy account.
 
 1. Browse [to Alchemy](https://auth.alchemyapi.io/signup?redirectUrl=https%3A%2F%2Fdashboard.alchemyapi.io%2Fsignup%2F%3Freferrer_origin%3DDIRECT), enter user information, and click **Sign up**.
 
-   ![Signup form](assets/signup.png)
+   ![Signup form](assets/signup.png | width=300px)
 
 1. Go to your e-mail and click **VERIFY EMAIL**.
 
@@ -30,6 +30,9 @@ The first step is to register for a free Alchemy account.
 
    ![Payment details](assets/payment-details.png)
 
+1. Enter where you heard about Alchemy and click **Let's Build!**. 
+
+   ![Let's Build](assets/lets-build.png)
 
 ## Setup 
 
