@@ -59,5 +59,8 @@ The next step is to create applications and get their API keys.
 
    <img src="assets/copykey.png" width="200"/>
 
+   Alternatively, if you need a URL, copy the HTTPS definition.
 
 ### Create a new Goerli application
+
+Follow the same instructions as for Optimism Goerli, but select the chain **Ethereum** and the network **Goerli**.
