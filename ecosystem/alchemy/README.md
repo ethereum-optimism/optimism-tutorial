@@ -12,7 +12,7 @@ The first step is to register for a free Alchemy account.
 
 1. Browse [to Alchemy](https://auth.alchemyapi.io/signup?redirectUrl=https%3A%2F%2Fdashboard.alchemyapi.io%2Fsignup%2F%3Freferrer_origin%3DDIRECT), enter user information, and click **Sign up**.
 
-   <img src="assets/signup.png" width="300"/>
+   <img src="assets/signup.png" />
 
 1. Go to your e-mail and click **VERIFY EMAIL**.
 
@@ -57,7 +57,7 @@ The next step is to create applications and get their API keys.
 
 1. Copy the API Key.
 
-   <img src="assets/copykey.png" width="200"/>
+   <img src="assets/copykey.png" width="300"/>
 
    Alternatively, if you need a URL, copy the HTTPS definition.
 
