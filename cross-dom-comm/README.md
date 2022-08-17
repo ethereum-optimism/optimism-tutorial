@@ -47,7 +47,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
    1. Set `GOERLI_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_KEY` to the key for the Optimistic Goerli app
+   1. Set `OPTIMISM_GOERLI_KEY` to the key for the Optimistic Goerli app.
    
 1. Install the necessary packages.
 
