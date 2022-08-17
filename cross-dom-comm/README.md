@@ -46,8 +46,8 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Copy `.env.example` to `.env` and edit it:
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
-   1. Set `GOERLI_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_KEY` to the key for the Optimistic Goerli app
+   1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
+   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
    
 1. Install the necessary packages.
 
@@ -97,7 +97,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```
 
 1. Back in the Optimism Goerli console, see the new greeting.
-   Note that it may take a few minutes to update.
+   Note that it may take a few minutes to update after the transaction is processed on L2.
 
    ```js
    await greeter.greet()
@@ -133,7 +133,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```js
    Controller = await ethers.getContractFactory("FromL2_ControlL1Greeter")
    controller = await Controller.deploy()
-tx = await controller.setGreeting(`Hello from L2 ${Date()}`)
+   tx = await controller.setGreeting(`Hello from L2 ${Date()}`)
    rcpt = await tx.wait()
    ```
 
@@ -173,7 +173,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```js
    l1Signer = await ethers.getSigner()
-   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
+   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
    crossChainMessenger = new sdk.CrossChainMessenger({ 
       l1ChainId: 5,
       l2ChainId: 420,

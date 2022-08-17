@@ -36,8 +36,8 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 1. Copy `.env.example` to `.env` and edit it:
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
-   1. Set `GOERLI_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_KEY` to the key for the Optimistic Goerli app
+   1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
+   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
 
    On the Goerli test network you can get ETH from [this faucet](https://faucet.paradigm.xyz/).
 
