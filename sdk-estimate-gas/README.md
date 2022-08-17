@@ -30,8 +30,10 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
    - `MNEMONIC` is the mnemonic to an account that has enough ETH to pay for the transaction.
 
-   - `L2_URL` is a URL to an L2 network, either Optimism or Optimism Goerli. 
-     You can get such an endpoint from [any of these providers](https://community.optimism.io/docs/useful-tools/providers/).
+   - `ALCHEMY_API_KEY` is the API key for an Optimism Goerli app on [Alchemy](https://www.alchemy.com/), our preferred provider.
+
+   - `OPTIMISM_GOERLI_URL` is the URL for Optimism Goerli, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
+
 
 1. Use Node to run the script
 
@@ -137,11 +139,20 @@ const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 The `sleep` function pauses execution for that number of milliseconds. 
 
 ```js
-// Get an L2 signer
 const getSigner = async () => {
+  const optimismGoerliUrl = 
+  process.env.ALCHEMY_API_KEY ? 
+    `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+    process.env.OPTIMISM_GOERLI_URL
+
     const l2RpcProvider = optimismSDK.asL2Provider(
-      new ethers.providers.JsonRpcProvider(process.env.L2_URL)
+      new ethers.providers.JsonRpcProvider(optimismGoerliUrl)
     )
+    const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
+      connect(l2RpcProvider)
+
+    return wallet
+}   // getSigner
 ```
 
 The function [`optimismSDK.asL2Provider`](https://sdk.optimism.io/modules.html#asL2Provider) takes a regular [Ethers.js Provider](https://docs.ethers.io/v5/api/providers/) and adds a few L2 specific functions, which are explained below.

@@ -26,11 +26,18 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
    yarn
    ```
 
+1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
+
+   - An application on Goerli
+   - An application on Optimistic Goerli
+
+   Keep a copy of the two keys.
+
 1. Copy `.env.example` to `.env` and edit it:
 
-   1. Set `MNEMONIC` to point to an account that has ETH and DAI on the Kovan test network.
-   1. Set `GOERLI_URL` to point to a URL that accesses the Goerli test network.
-   1. Set `OPTI_GOERLI_URL` to point to the URL for [an Optimism endpoint](https://community.optimism.io/docs/useful-tools/networks/)
+   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
+   1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
+   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
 
    On the Goerli test network you can get ETH from [this faucet](https://faucet.paradigm.xyz/).
 
@@ -92,8 +99,8 @@ The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https:
 
 ```js
 const mnemonic = process.env.MNEMONIC
-const l1Url = process.env.GOERLI_URL
-const l2Url = process.env.OPTI_GOERLI_URL
+const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_KEY}`
+const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
 ```
 
 Configuration, read from `.env`.

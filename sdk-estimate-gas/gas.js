@@ -25,8 +25,13 @@ const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 
 // Get an L2 signer
 const getSigner = async () => {
+  const optimismGoerliUrl = 
+  process.env.ALCHEMY_API_KEY ? 
+    `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+    process.env.OPTIMISM_GOERLI_URL
+
     const l2RpcProvider = optimismSDK.asL2Provider(
-      new ethers.providers.JsonRpcProvider(process.env.L2_URL)
+      new ethers.providers.JsonRpcProvider(optimismGoerliUrl)
     )
     const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
       connect(l2RpcProvider)

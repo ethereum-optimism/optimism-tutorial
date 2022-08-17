@@ -21,6 +21,12 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 require('dotenv').config()
 
+      
+const optimismGoerliUrl =
+    process.env.ALCHEMY_API_KEY ?
+        `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+        process.env.OPTIMISM_GOERLI_URL
+
 
 module.exports = {
   /**
@@ -73,7 +79,7 @@ module.exports = {
     "optimism-goerli": {
       provider: () => new HDWalletProvider(
          process.env.MNEMONIC,
-         process.env.OPTI_GOERLI_URL),
+         optimismGoerliUrl),
       network_id: 420
    }
     // Useful for private networks

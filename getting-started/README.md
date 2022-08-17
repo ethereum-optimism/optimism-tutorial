@@ -10,12 +10,10 @@ But a few differences [do exist](https://community.optimism.io/docs/developers/b
 
 ## Optimism endpoint URL
 
-To access any Ethereum type network you need an endpoint. There are several ways to get one:a free tier for low usage.
+To access any Ethereum type network you need an endpoint. 
+We recommend you get one from [Alchemy, our preferred provider](https://www.alchemy.com/).
 
-1. For *limited* development use, [Optimism-provided endpoints](https://community.optimism.io/docs/useful-tools/networks/). 
-   Note that these endpoints are rate limited, so they are not for use in QA or production environments.
-
-
+Alternatively, we have [other great providers](https://community.optimism.io/docs/useful-tools/providers/) that support our networks.
 
 
 
@@ -23,7 +21,7 @@ To access any Ethereum type network you need an endpoint. There are several ways
 
 For development purposes we recommend you use either a local development node or [Optimism Goerli](https://blockscout.com/optimism/goerli).
 That way you don't need to spend real money.
-If you need Goerli ETH for testing purposes, [you can use this faucet](https://faucet.paradigm.xyz/).
+If you need ETH on Optimism Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
 
 The tests examples below all use Optimism Goerli.
 
@@ -33,23 +31,31 @@ The tests examples below all use Optimism Goerli.
 We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
 You can verify your development stack configuration by interacting with it.
 
-As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is identical to the way you do it with L1 Ethereum.
+As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
+The most visible difference is that you have to specify a different endpoint (of course). 
+The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
 
 ## Hardhat
 
+In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/hardhat).
+
 ### Connecting to Optimism
 
-In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
+Follow these steps to add Optimism Goerli support to an existing Hardhat project. 
+
 
 1. Define your network configuration in `.env`:
 
    ```sh
    # Put the mnemonic for an account on Optimism here
-   MNEMONIC="test test test test test test test test test test test junk"
+   MNEMONIC=test test test test test test test test test test test junk
 
-   # URL to access Optimism Goerli
-   OPTI_GOERLI_URL=https://goerli.optimism.io
+   # API KEY for Alchemy
+   ALCHEMY_API_KEY=
+
+   # URL to access Optimism Goerli (if not using Alchemy)
+   OPTIMISM_GOERLI_URL=
    ```
 
 1. Add `dotenv` to your project:
@@ -66,15 +72,26 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
       require('dotenv').config()
       ```
 
+   1. Get the correct URL from the configuration:
+
+      ```js
+      const optimismGoerliUrl =
+         process.env.ALCHEMY_API_KEY ?
+            `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+            process.env.OPTIMISM_GOERLI_URL
+      ```
+
 
    1. Add a network definition in `module.exports.networks`:
 
    ```js
-       "optimism-goerli": {
-          url: process.env.OPTI_GOERLI_URL,
-         accounts: { mnemonic: process.env.MNEMONIC }
-      }
+   "optimism-goerli": {
+      url: optimismGoerliUrl,
+      accounts: { mnemonic: process.env.MNEMONIC }
+   }   
    ```
+
+
 
 ### Greeter interaction
 
@@ -101,7 +118,7 @@ In [Hardhat](https://hardhat.org/) you edit the `hardhat.config.js` file:
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
 
    ```js
-   tx = await greeter.setGreeting(`Hello ${new Date()}`)
+   tx = await greeter.setGreeting(`Hardhat: Hello ${new Date()}`)
    rcpt = await tx.wait()  
    await greeter.greet()
    ```
@@ -119,18 +136,24 @@ await greeter.greet()
 
 ## Truffle
 
+In [Truffle](https://trufflesuite.com/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/truffle).
+
 ### Connecting to Optimism
 
-In [Truffle](https://trufflesuite.com/):
+Follow these steps to add Optimism Goerli support to an existing Truffle project. 
+
 
 1. Define your network configuration in `.env`:
 
    ```sh
    # Put the mnemonic for an account on Optimism here
-   MNEMONIC="test test test test test test test test test test test junk"
+   MNEMONIC=test test test test test test test test test test test junk
 
-   # URL to access Optimism Goerli
-   OPTI_GOERLI_URL=https://goerli.optimism.io
+   # API KEY for Alchemy
+   ALCHEMY_API_KEY=
+
+   # URL to access Optimism Goerli (if not using Alchemy)
+   OPTIMISM_GOERLI_URL=
    ```
 
 1. Add `dotenv` and `@truffle/hdwallet-provider` to your project:
@@ -154,13 +177,23 @@ In [Truffle](https://trufflesuite.com/):
       require('dotenv').config()
       ```
 
+   1. Get the correct URL:
+
+      ```js
+      const optimismGoerliUrl =
+         process.env.ALCHEMY_API_KEY ?
+            `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+            process.env.OPTIMISM_GOERLI_URL
+      ```
+
    1. Add a network definition in `module.exports.networks`:
 
       ```js
       "optimism-goerli": {
          provider: () => new HDWalletProvider(
             process.env.MNEMONIC,
-            process.env.OPTI_GOERLI_URL)
+            optimismGoerliUrl),
+         network_id: 420
       }
       ```
 
@@ -190,7 +223,7 @@ In [Truffle](https://trufflesuite.com/):
 1. Submit a transaction, wait for it to be processed, and see that it affected the state.
 
    ```js
-   tx = await greeter.setGreeting(`Hello ${new Date()}`)
+   tx = await greeter.setGreeting(`Truffle: Hello ${new Date()}`)
    await greeter.greet()
    ```
 
@@ -204,6 +237,9 @@ greeter = await Greeter.new("Greeter from Truffle")
 console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
 ```
+
+
+
 
 
 ## Remix
@@ -402,6 +438,8 @@ The tutorial makes these assumptions:
    You should see 2 tests passing.
 
 1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
+
+
 
 ### Compatibility with other tools
 
