@@ -6,18 +6,16 @@ require('dotenv').config();
 
 module.exports = {
   networks: {
-    'optimistic-kovan': {
-      chainId: 69,
-      url: 'https://kovan.optimism.io',
-      accounts: [process.env.PRIVATE_KEY],
-      gasPrice: 15000000,
+    'optimism-goerli': {
+      chainId: 420,
+      url: `https://opt-goerli.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
+      accounts: { mnemonic: process.env.MNEMONIC }
     },
-    'optimistic-mainnet': {
+    'optimism-mainnet': {
       chainId: 10,
-      url: 'https://mainnet.optimism.io',
-      accounts: [process.env.PRIVATE_KEY],
-      gasPrice: 15000000,
+      url: `https://opt-mainnet.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
+      accounts: { mnemonic: process.env.MNEMONIC }
     }
   },
-  solidity: '0.8.9',
+  solidity: '0.8.13',
 }
