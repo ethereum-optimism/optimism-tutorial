@@ -12,6 +12,7 @@ But a few differences [do exist](https://community.optimism.io/docs/developers/b
 
 To access any Ethereum type network you need an endpoint. 
 We recommend you get one from [Alchemy, our preferred provider](https://www.alchemy.com/).
+[See here](../ecosystem/alchemy/) for step by step directions on using Alchemy.
 
 Alternatively, we have [other great providers](https://community.optimism.io/docs/useful-tools/providers/) that support our networks.
 
