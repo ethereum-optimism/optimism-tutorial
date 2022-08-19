@@ -7,14 +7,17 @@ This is a practical guide to getting your ERC20 token deployed on Optimism and b
 [Standard Bridge implementation](https://community.optimism.io/docs/developers/bridge/standard-bridge.html).
 
 For an L1/L2 token pair to work on the Standard Bridge the L2 token contract has to implement
-[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol). The standard implementation of that is available in
-[`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package.
+[`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol). 
 
-## Deploying a Standard Token
 
-Deployment script is made available under `scripts/deploy-standard-token.js` that you can use to instantiate `L2StandardERC20` on `optimistic-kovan` or `optimistic-mainnet`.
+## Deploying a standard token
 
-The hardhat config `hardhat.config.js` is already setup to run against `optimistic-kovan` and `optimistic-mainnet` networks.
+If there is no need for custom logic on Optimism, it's easiest to use the standard token, available as the
+[`L2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/L2StandardERC20.sol) contract as part of the `@eth-optimism/contracts` package. 
+The [standard token factory](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/L2/messaging/L2StandardTokenFactory.sol) can deploy the standard contract for you.
+
+You can use the deployment script under [`scripts/deploy-standard-token.js`](scripts/deploy-standard-token.js) to call this token factory. 
+The hardhat config [`hardhat.config.js`](hardhat.config.js) is already setup for both Optimism (the production network) and Optimism Goerli (the testnet).
 
 ### Configuration
 
