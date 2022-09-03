@@ -17,7 +17,7 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 
    ```sh
    git clone https://github.com/ethereum-optimism/optimism-tutorial.git
-   cd optimism-tutorial/cross-dom-bridge
+   cd optimism-tutorial/cross-dom-bridge-eth
    ```
 
 1. Install the necessary packages.
@@ -39,7 +39,7 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
    1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
 
-   On the Goerli test network you can get ETH from [this faucet](https://faucet.paradigm.xyz/).
+   [This faucet gives ETH on the Goerli network](https://faucet.paradigm.xyz/). [This faucet gives ETH on the Optimism Goerli network](https://optimismfaucet.xyz/).
 
 
 ## Run the sample code
@@ -158,6 +158,7 @@ const setup = async() => {
   addr = l1Signer.address
 ```
 
+Get the signers we need, and our address.
 
 ```js
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
@@ -252,7 +253,7 @@ We can just report the balances and see that the L2 balance rose by 1 gwei.
 
 ### `withdrawETH`
 
-This function shows how to deposit ETH from Ethereum to Optimism.
+This function shows how to withdraw ETH from Optimism to Ethereum.
 
 ```js
 const withdrawETH = async () => { 
@@ -317,16 +318,13 @@ Finalizing the message also takes a bit of time.
 
 ### `main`
 
-A `main` to run the setup followed by all four operations.
+A `main` to run the setup followed by both operations.
 
 ```js
 const main = async () => {    
     await setup()
     await depositETH()
     await withdrawETH() 
-    await depositERC20()   
-    await withdrawERC20()
-
 }  // main
 
 
@@ -342,7 +340,7 @@ main().then(() => process.exit(0))
 
 You should now be able to write applications that use our SDK and bridge to transfer ETH between layer 1 and layer 2. 
 
-Note that for withdrawals of ETH you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
+Note that for withdrawals of ETH (or commonly used ERC-20 tokens) you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
 Here is the API documentation for some of those bridges:
 
 * [Hop](https://docs.hop.exchange/js-sdk/getting-started)

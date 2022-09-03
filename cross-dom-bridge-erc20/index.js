@@ -1,6 +1,6 @@
 #! /usr/local/bin/node
 
-// Transfers between L1 and L2 using the Optimism SDK
+// ERC-20 transfers between L1 and L2 using the Optimism SDK
 
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
@@ -127,7 +127,7 @@ const depositERC20 = async () => {
 
   await reportERC20Balances()
   console.log(`depositERC20 took ${(new Date()-start)/1000} seconds\n\n`)
-}     // depositETH()
+}     // depositERC20()
 
 
 
