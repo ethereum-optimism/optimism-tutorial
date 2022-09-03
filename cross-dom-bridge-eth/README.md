@@ -1,9 +1,9 @@
-# Bridging Assets with the Optimism SDK
+# Bridging ETH with the Optimism SDK
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer assets between Layer 1 (Ethereum) and Layer 2 (Optimism).
+This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ETH between Layer 1 (Ethereum) and Layer 2 (Optimism).
 
 
 ## Setup
@@ -340,9 +340,9 @@ main().then(() => process.exit(0))
 
 ## Conclusion
 
-You should now be able to write applications that use our SDK and bridge to transfer assets between layer 1 and layer 2. 
+You should now be able to write applications that use our SDK and bridge to transfer ETH between layer 1 and layer 2. 
 
-Note that for withdrawals of a commonly used ERC-20 token (or ETH) you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
+Note that for withdrawals of ETH you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
 Here is the API documentation for some of those bridges:
 
 * [Hop](https://docs.hop.exchange/js-sdk/getting-started)
