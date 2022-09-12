@@ -30,11 +30,14 @@ The tests examples below all use Optimism Goerli.
 ## Interacting with Optimism contracts
 
 We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
-You can verify your development stack configuration by interacting with it.
+You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
 The most visible difference is that you have to specify a different endpoint (of course). 
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
+
+**Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in alpha. 
+As it is a different testnet for now, that testnet has Greeter at address `0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba`.
 
 
 ## Hardhat
@@ -92,6 +95,14 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    }   
    ```
 
+**Bedrock:** To use the Bedrock alpha network, add this network definition in `module.exports.networks`: 
+
+```js
+    "optimism-bedrock": {
+       url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
+       accounts: { mnemonic: process.env.MNEMONIC }
+    }
+```    
 
 
 ### Greeter interaction
@@ -110,6 +121,12 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
    ```   
 
+   **Bedrock:** If using Bedrock, remember to use the correct address:
+
+   ```js
+   Greeter = await ethers.getContractFactory("Greeter")
+   greeter = await Greeter.attach("0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba")   
+   ```
 1. Read information from the contract:
 
    ```js
@@ -123,6 +140,14 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    rcpt = await tx.wait()  
    await greeter.greet()
    ```
+
+   **Bedrock:** To get ETH on an address in the Bedrock alpha network:
+
+   1. [Look at the Bedrock alpha contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
+
+   1. Find the `OptimismPortalProxy` address.
+
+   1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock alpha network.
 
 ### Deploying a contract
 
