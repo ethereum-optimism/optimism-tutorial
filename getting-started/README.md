@@ -95,14 +95,14 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    }   
    ```
 
-**Bedrock:** To use the Bedrock alpha network, add this network definition in `module.exports.networks`: 
+   **Bedrock:** To use the Bedrock alpha network, add this network definition in `module.exports.networks`: 
 
-```js
-    "optimism-bedrock": {
-       url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
-       accounts: { mnemonic: process.env.MNEMONIC }
-    }
-```    
+   ```js
+      "optimism-bedrock": {
+         url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
+         accounts: { mnemonic: process.env.MNEMONIC }
+      }
+   ```    
 
 
 ### Greeter interaction
@@ -112,6 +112,14 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    cd hardhat
    yarn
    yarn hardhat console --network optimism-goerli
+   ```
+
+   **Bedrock:**
+
+   Replace the final command with
+
+   ```sh
+   yarn hardhat console --network optimism-bedrock
    ```
 
 1. Connect to the Greeter contract:   
@@ -223,6 +231,17 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
       }
       ```
 
+      **Bedrock:** Also add this network definition:
+
+      ```js
+         "optimism-bedrock": {
+            provider: () => new HDWalletProvider(
+               process.env.MNEMONIC,
+               'https://alpha-1-replica-0.bedrock-goerli.optimism.io'),
+            network_id: 28528,
+            gas: 100000            
+         },
+      ```
 
 
 ### Greeter interaction
@@ -234,10 +253,22 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
    truffle console --network optimism-goerli
    ```
 
+   **Bedrock:** Replace the last command with:
+
+   ```sh
+   truffle console --network optimism-bedrock
+   ```
+
 1. Connect to the Greeter contact:
 
    ```js
    greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
+   ```
+
+   **Bedrock:** Use this command:
+
+   ```js
+   greeter = await Greeter.at("0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba")
    ```
 
 1. Read information from the contact:
@@ -253,12 +284,20 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
    await greeter.greet()
    ```
 
+   **Bedrock:** To get ETH on an address in the Bedrock alpha network:
+
+   1. [Look at the Bedrock alpha contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
+
+   1. Find the `OptimismPortalProxy` address.
+
+   1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock alpha network.
+
 
 ### Contract deployment
 
 You deploy a new contract from the console:
 
-```
+``` 
 greeter = await Greeter.new("Greeter from Truffle")
 console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
