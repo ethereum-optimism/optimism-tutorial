@@ -324,6 +324,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
    | Currency Symbol | GOR |
    | Block Explorer URL | https://blockscout.com/optimism/goerli |
 
+
 1. Log on with your wallet to Optimism Goerli.
 
 1. Browse to [Remix](https://remix.ethereum.org/).
@@ -397,6 +398,13 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
    ```
 
+   **Bedrock:**
+
+   ```sh
+   export ETH_RPC_URL=https://alpha-1-replica-0.bedrock-goerli.optimism.io
+   export GREETER=0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba
+   ```
+
 1. Call `greet()`. Notice that the response is provided in hex.
 
    ```sh
@@ -413,6 +421,13 @@ Foundry does not give us a JavaScript console, everything can be done from the s
 
    ```sh
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
+   ```
+
+   **Bedrock:**
+   No need for `--legacy`:
+
+   ```sh
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"'   
    ```
 
 1. Test that the greeting has changed:
