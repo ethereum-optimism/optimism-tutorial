@@ -6,6 +6,18 @@ const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 const fs = require("fs")
 require('dotenv').config()
+const yargs = require("yargs")
+const { boolean } = require("yargs")
+
+
+const argv = yargs
+  .option('bedrock', {
+    type: boolean,
+    description: 'Use the Bedrock Optimism alpha network'
+  })
+  .help()
+  .alias('help', 'h').argv;
+
 
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 
@@ -14,7 +26,10 @@ const greeterAddrs = {
   "10":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
 
   // Optimism Goerli
-  "420": "0x106941459A8768f5A92b770e280555FAF817576f"
+  "420": "0x106941459A8768f5A92b770e280555FAF817576f",
+
+  // Optimism Bedrock Alpha:
+  "28528": "0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba"
 }
 
 
@@ -25,13 +40,18 @@ const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 
 // Get an L2 signer
 const getSigner = async () => {
-  const optimismGoerliUrl = 
-  process.env.ALCHEMY_API_KEY ? 
-    `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-    process.env.OPTIMISM_GOERLI_URL
+  let endpointUrl;
+
+  if (argv.bedrock) 
+    endpointUrl = 'https://alpha-1-replica-0.bedrock-goerli.optimism.io'
+  else
+    endpointUrl = 
+      process.env.ALCHEMY_API_KEY ? 
+        `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+        process.env.OPTIMISM_GOERLI_URL
 
     const l2RpcProvider = optimismSDK.asL2Provider(
-      new ethers.providers.JsonRpcProvider(optimismGoerliUrl)
+      new ethers.providers.JsonRpcProvider(endpointUrl)
     )
     const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
       connect(l2RpcProvider)
@@ -98,6 +118,7 @@ const main = async () => {
     console.log("About to get estimates")
     let estimated = await getEstimates(signer.provider, fakeTx)
     estimated.l2Gas = await greeter.estimateGas.setGreeting(greeting)
+    console.log(estimated)
 
     let realTx, realTxResp
     const weiB4 = await signer.getBalance()
@@ -106,6 +127,8 @@ const main = async () => {
     try {
       console.log("About to create the transaction")
       realTx = await greeter.setGreeting(greeting)
+      realTx.gasPrice = realTx.maxFeePerGas;
+      console.log(realTx);
       console.log("Transaction created, submitting it")
       realTxResp = await realTx.wait()
       console.log("Transaction processed")
