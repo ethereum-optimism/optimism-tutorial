@@ -276,7 +276,8 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-   If you do not have Goerli ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/) and transfer it to Optimism by sending it to address [0x636Af16bf2f682dD3109e60102b8E1A089FedAa8](https://goerli.etherscan.io/address/0x636Af16bf2f682dD3109e60102b8E1A089FedAa8).
+   If you do not have Goerli ETH, get some using [our faucet](https://optimismfaucet.xyz/).
+   You just need to follow five people or projects on github.
 
 1. Scroll down. 
    In the At Address field, type the contract address (`0x106941459A8768f5A92b770e280555FAF817576f`).
