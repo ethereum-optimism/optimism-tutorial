@@ -249,16 +249,7 @@ await greeter.greet()
 
 In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
 
-1. Add Optimism Goerli to your wallet. 
-   If you use Metamask, [follow the directions here (starting at step 4)](https://help.optimism.io/hc/en-us/articles/6665988048795), with these parameters:
-
-   | Parameter | Value |
-   | --------- | ----- |
-   | Network Name | Optimism Goerli |
-   | New RPC URL  | Either a third party provider or https://goerli.optimism.io |
-   | Chain ID     | 420 |
-   | Currency Symbol | GOR |
-   | Block Explorer URL | https://blockscout.com/optimism/goerli |
+1. Add Optimism Goerli to your wallet, using [this link](https://chainid.link/?network=optimism-goerli).
 
 1. Log on with your wallet to Optimism Goerli.
 
@@ -285,7 +276,8 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-   If you do not have Goerli ETH, get some using [Paradigm's faucet](https://faucet.paradigm.xyz/) and transfer it to Optimism by sending it to address [0x636Af16bf2f682dD3109e60102b8E1A089FedAa8](https://goerli.etherscan.io/address/0x636Af16bf2f682dD3109e60102b8E1A089FedAa8).
+   If you do not have Goerli ETH, get some using [our faucet](https://optimismfaucet.xyz/).
+   You just need to follow five people or projects on github.
 
 1. Scroll down. 
    In the At Address field, type the contract address (`0x106941459A8768f5A92b770e280555FAF817576f`).
