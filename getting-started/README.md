@@ -30,11 +30,24 @@ The tests examples below all use Optimism Goerli.
 ## Interacting with Optimism contracts
 
 We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
-You can verify your development stack configuration by interacting with it.
+You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
 The most visible difference is that you have to specify a different endpoint (of course). 
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
+
+**Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in alpha. 
+As it is a different testnet for now, that testnet has Greeter at address [`0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba`](https://blockscout.com/optimism/bedrock-alpha/address/0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba).
+
+To get ETH on an address in the Bedrock alpha network:
+
+1. [Look at the Bedrock alpha contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
+
+1. Find the `OptimismPortalProxy` address.
+
+1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock alpha network.
+
+1. To see your balance, [go to the explorer](https://blockscout.com/optimism/bedrock-alpha/) and search for your address.
 
 
 ## Hardhat
@@ -92,6 +105,14 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    }   
    ```
 
+   **Bedrock:** To use the Bedrock alpha network, add this network definition in `module.exports.networks`: 
+
+   ```js
+      "optimism-bedrock": {
+         url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
+         accounts: { mnemonic: process.env.MNEMONIC }
+      }
+   ```    
 
 
 ### Greeter interaction
@@ -103,12 +124,27 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    yarn hardhat console --network optimism-goerli
    ```
 
+   **Bedrock:**
+
+   Replace the final command with
+
+   ```sh
+   yarn hardhat console --network optimism-bedrock
+   ```
+
 1. Connect to the Greeter contract:   
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
    greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
    ```   
+
+   **Bedrock:** If using Bedrock, remember to use the correct address:
+
+   ```js
+   Greeter = await ethers.getContractFactory("Greeter")
+   greeter = await Greeter.attach("0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba")   
+   ```
 
 1. Read information from the contract:
 
@@ -198,6 +234,20 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
       }
       ```
 
+      **Bedrock:** Also add this network definition:
+
+      ```js
+         "optimism-bedrock": {
+            provider: () => new HDWalletProvider(
+               process.env.MNEMONIC,
+               'https://alpha-1-replica-0.bedrock-goerli.optimism.io'),
+            network_id: 28528,
+            gas: 2000000           
+         },
+      ```
+
+      The `gas` setting is the block gas limit.
+      We need this because by default Truffle sends transactions with a huge gas limit, which exceeds the amount a bedrock block can accept.
 
 
 ### Greeter interaction
@@ -209,10 +259,22 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
    truffle console --network optimism-goerli
    ```
 
+   **Bedrock:** Replace the last command with:
+
+   ```sh
+   truffle console --network optimism-bedrock
+   ```
+
 1. Connect to the Greeter contact:
 
    ```js
    greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
+   ```
+
+   **Bedrock:** Use this command:
+
+   ```js
+   greeter = await Greeter.at("0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba")
    ```
 
 1. Read information from the contact:
@@ -228,12 +290,20 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
    await greeter.greet()
    ```
 
+   **Bedrock:** To get ETH on an address in the Bedrock alpha network:
+
+   1. [Look at the Bedrock alpha contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
+
+   1. Find the `OptimismPortalProxy` address.
+
+   1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock alpha network.
+
 
 ### Contract deployment
 
 You deploy a new contract from the console:
 
-```
+``` 
 greeter = await Greeter.new("Greeter from Truffle")
 console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
@@ -249,7 +319,20 @@ await greeter.greet()
 
 In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
 
-1. Add Optimism Goerli to your wallet, using [this link](https://chainid.link/?network=optimism-goerli).
+1. Add Optimism Goerli to your wallet. 
+   The easiest way to do this is to use [chainid.link](https://chainid.link/?network=optimism-goerli).
+
+   **Bedrock:**
+   If you use Metamask, [follow the directions here (starting at step 4)](https://help.optimism.io/hc/en-us/articles/6665988048795), with these parameters:
+
+   | Parameter | Value |
+   | --------- | ----- |
+   | Network Name | Optimism Goerli |
+   | New RPC URL  | https://alpha-1-replica-0.bedrock-goerli.optimism.io |
+   | Chain ID     | 28528 |
+   | Currency Symbol | ETH |
+   | Block Explorer URL | https://blockscout.com/optimism/bedrock-alpha |
+
 
 1. Log on with your wallet to Optimism Goerli.
 
@@ -266,6 +349,8 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-env.png" width="300" />
 
+   **Bedrock:** If using bedrock, the network ID is **28528**.
+
 1. Click the files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />).
 
 1. Download [Greeter.sol](hardhat/contracts/Greeter.sol) and upload (<img src="assets/remix-upload-icon.png" height="24" valign="top" />) it to Remix under **contracts**.
@@ -276,15 +361,14 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-   If you do not have Goerli ETH, get some using [our faucet](https://optimismfaucet.xyz/).
-   You just need to follow five people or projects on github.
-
 1. Scroll down. 
-   In the At Address field, type the contract address (`0x106941459A8768f5A92b770e280555FAF817576f`).
+   In the At Address field, type the contract address `0x106941459A8768f5A92b770e280555FAF817576f`.
    Then, click **At Address**. 
    Expand the contract to see you can interact with it.
 
    <img src="assets/remix-connect.png" width="300" />
+
+   **Bedrock:** Use the address `0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba`.
 
 1. Click **greet** and expand the transaction result in the console (bottom right).
 
@@ -325,6 +409,13 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
    ```
 
+   **Bedrock:**
+
+   ```sh
+   export ETH_RPC_URL=https://alpha-1-replica-0.bedrock-goerli.optimism.io
+   export GREETER=0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba
+   ```
+
 1. Call `greet()`. Notice that the response is provided in hex.
 
    ```sh
@@ -341,6 +432,13 @@ Foundry does not give us a JavaScript console, everything can be done from the s
 
    ```sh
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
+   ```
+
+   **Bedrock:**
+   No need for `--legacy`:
+
+   ```sh
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"'   
    ```
 
 1. Test that the greeting has changed:
