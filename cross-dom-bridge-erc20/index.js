@@ -1,6 +1,6 @@
 #! /usr/local/bin/node
 
-// Transfers between L1 and L2 using the Optimism SDK
+// ERC-20 transfers between L1 and L2 using the Optimism SDK
 
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
@@ -12,18 +12,18 @@ const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_
 const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
 
 
-// Contract addresses for DAI tokens, taken
-// from https://static.optimism.io/optimism.tokenlist.json
-const daiAddrs = {
-  l1Addr: "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa",
-  l2Addr: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
-}    // daiAddrs
+// Contract addresses for OPTb tokens, taken
+// from https://github.com/ethereum-optimism/ethereum-optimism.github.io/blob/master/data/OUTb/data.json
+const erc20Addrs = {
+  l1Addr: "0x32B3b2281717dA83463414af4E8CfB1970E56287",
+  l2Addr: "0x3e7eF8f50246f725885102E8238CBba33F276747"
+}    // erc20Addrs
 
 
 
 // Global variable because we need them almost everywhere
 let crossChainMessenger
-let l1ERC20, l2ERC20    // DAI contracts to show ERC-20 transfers
+let l1ERC20, l2ERC20    // OUTb contracts to show ERC-20 transfers
 let addr    // Our address
 
 const getSigners = async () => {
@@ -38,6 +38,31 @@ const getSigners = async () => {
 }   // getSigners
 
 
+
+// The ABI fragment for the contract. We only need to know how to do two things:
+// 1. Get an account's balance
+// 2. Call the faucet to get more (only works on L1)
+const erc20ABI = [
+  // balanceOf
+  {
+    constant: true,
+    inputs: [{ name: "_owner", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ name: "balance", type: "uint256" }],
+    type: "function",
+  },
+  // faucet
+  {
+    inputs: [],
+    name: "faucet",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function"
+  }  
+]    // erc20ABI
+
+
+
 const setup = async() => {
   const [l1Signer, l2Signer] = await getSigners()
   addr = l1Signer.address
@@ -47,68 +72,33 @@ const setup = async() => {
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer
   })
-//  l1ERC20 = new ethers.Contract(daiAddrs.l1Addr, erc20ABI, l1Signer)
-//  l2ERC20 = new ethers.Contract(daiAddrs.l2Addr, erc20ABI, l2Signer)
+  l1ERC20 = new ethers.Contract(erc20Addrs.l1Addr, erc20ABI, l1Signer)
+  l2ERC20 = new ethers.Contract(erc20Addrs.l2Addr, erc20ABI, l2Signer)
 }    // setup
-
-
-
-// The ABI fragment for an ERC20 we need to get a user's balance.
-const erc20ABI = [
-    // balanceOf
-    {
-      constant: true,
-      inputs: [{ name: "_owner", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ name: "balance", type: "uint256" }],
-      type: "function",
-    },
-  ]    // erc20ABI
-
-
-const gwei = 1000000000n
-const eth = gwei * gwei   // 10^18
-const centieth = eth/100n
-const dai = eth
-
-
-const reportBalances = async () => {
-  const l1Balance = (await crossChainMessenger.l1Signer.getBalance()).toString().slice(0,-9)
-  const l2Balance = (await crossChainMessenger.l2Signer.getBalance()).toString().slice(0,-9)
-
-  console.log(`On L1:${l1Balance} Gwei    On L2:${l2Balance} Gwei`)
-}    // reportBalances
 
 
 
 const reportERC20Balances = async () => {
   const l1Balance = (await l1ERC20.balanceOf(addr)).toString().slice(0,-18)
   const l2Balance = (await l2ERC20.balanceOf(addr)).toString().slice(0,-18)
-  console.log(`DAI on L1:${l1Balance}     DAI on L2:${l2Balance}`)
+  console.log(`OUTb on L1:${l1Balance}     OUTb on L2:${l2Balance}`)
+
+  if (l1Balance != 0)
+    return
+
+  console.log(`You don't have enough OUTb on L1. Let's call the faucet to fix that`)
+  const tx = (await l1ERC20.faucet())
+  console.log(`Faucet tx: ${tx.hash}`)
+  console.log(`\tMore info: https://goerli.etherscan.io/tx/${tx.hash}`)
+  await tx.wait()
+  const newBalance = (await l1ERC20.balanceOf(addr)).toString().slice(0,-18)
+  console.log(`New L1 OUTb balance: ${newBalance}`)
 }    // reportERC20Balances
 
 
 
 
-
-const depositETH = async () => {
-
-  console.log("Deposit ETH")
-  await reportBalances()
-  const start = new Date()
-
-  const response = await crossChainMessenger.depositETH(gwei)
-  console.log(`Transaction hash (on L1): ${response.hash}`)
-  await response.wait()
-  console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash,
-                                                  optimismSDK.MessageStatus.RELAYED)
-
-  await reportBalances()
-  console.log(`depositETH took ${(new Date()-start)/1000} seconds\n\n`)
-}     // depositETH()
-
+const oneToken = 1000000000000000000n
 
 
 const depositERC20 = async () => {
@@ -119,14 +109,16 @@ const depositERC20 = async () => {
 
   // Need the l2 address to know which bridge is responsible
   const allowanceResponse = await crossChainMessenger.approveERC20(
-    daiAddrs.l1Addr, daiAddrs.l2Addr, dai)
+    erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   await allowanceResponse.wait()
   console.log(`Allowance given by tx ${allowanceResponse.hash}`)
+  console.log(`\tMore info: https://goerli.etherscan.io/tx/${allowanceResponse.hash}`)
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
 
   const response = await crossChainMessenger.depositERC20(
-    daiAddrs.l1Addr, daiAddrs.l2Addr, dai)
+    erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   console.log(`Deposit transaction hash (on L1): ${response.hash}`)
+  console.log(`\tMore info: https://goerli.etherscan.io/tx/${response.hash}`)
   await response.wait()
   console.log("Waiting for status to change to RELAYED")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
@@ -135,7 +127,7 @@ const depositERC20 = async () => {
 
   await reportERC20Balances()
   console.log(`depositERC20 took ${(new Date()-start)/1000} seconds\n\n`)
-}     // depositETH()
+}     // depositERC20()
 
 
 
@@ -146,8 +138,9 @@ const withdrawERC20 = async () => {
   await reportERC20Balances()
 
   const response = await crossChainMessenger.withdrawERC20(
-    daiAddrs.l1Addr, daiAddrs.l2Addr, dai)
+    erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   console.log(`Transaction hash (on L2): ${response.hash}`)
+  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
   await response.wait()
 
   console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
@@ -171,42 +164,11 @@ const withdrawERC20 = async () => {
 
 
 
-const withdrawETH = async () => { 
-  
-  console.log("Withdraw ETH")
-  const start = new Date()  
-  await reportBalances()
-
-  const response = await crossChainMessenger.withdrawETH(centieth)
-  console.log(`Transaction hash (on L2): ${response.hash}`)
-  await response.wait()
-
-  console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-    optimismSDK.MessageStatus.IN_CHALLENGE_PERIOD)
-  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-                                                optimismSDK.MessageStatus.READY_FOR_RELAY) 
-  console.log("Ready for relay, finalizing message now")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.finalizeMessage(response)
-  console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response, 
-    optimismSDK.MessageStatus.RELAYED)
-  await reportBalances()   
-  console.log(`withdrawETH took ${(new Date()-start)/1000} seconds\n\n\n`)  
-}     // withdrawETH()
-
 
 const main = async () => {
     await setup()
-    await depositETH()
-    await withdrawETH()
-    // await depositERC20()
-    // await withdrawERC20()
+    await depositERC20()
+    await withdrawERC20()
 }  // main
 
 
