@@ -4,6 +4,8 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ERC-20 tokens between Layer 1 (Ethereum) and Layer 2 (Optimism).
+While you *could* use [the bridge contracts](https://community.optimism.io/docs/developers/bridge/standard-bridge/) directly, a [simple usage error](https://community.optimism.io/docs/developers/bridge/standard-bridge/#depositing-erc20s) can cause you to lock tokens in the bridge forever and lose their value. 
+The SDK provides transparent safety rails to prevent that mistake.
 
 
 ## Setup
