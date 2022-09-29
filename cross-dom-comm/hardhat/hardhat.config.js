@@ -28,6 +28,10 @@ module.exports = {
       "goerli": {
         url: `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`,
         accounts: { mnemonic: process.env.MNEMONIC }
-      }
+      },
+      "bedrock-alpha": {
+        url: `https://alpha-1-replica-0.bedrock-goerli.optimism.io`,
+        accounts: { mnemonic: process.env.MNEMONIC }
+      }      
   } 
 };
