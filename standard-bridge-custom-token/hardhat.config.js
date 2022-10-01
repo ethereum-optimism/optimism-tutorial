@@ -17,14 +17,14 @@ module.exports = {
         mnemonic: 'test test test test test test test test test test test junk'
       }
     },
-    'optimistic-kovan': {
-      chainId: 69,
-      url: 'https://kovan.optimism.io',
+    'optimism-goerli': {
+      chainId: 420,
+      url: `https://opt-goerli.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
       accounts: [process.env.PRIVATE_KEY]
     },
-    'optimistic-mainnet': {
+    'optimism-mainnet': {
       chainId: 10,
-      url: 'https://mainnet.optimism.io',
+      url: `https://opt-mainnet.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
       accounts: [process.env.PRIVATE_KEY]
     },
   },

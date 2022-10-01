@@ -23,27 +23,41 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 
 ## Deploying the Custom Token
 
-Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimistic-kovan`.
+Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimism-goerli`.
 
-Once you're ready with a tested kovan deployment, you can request a review via
-[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimistic-mainnet`.
+Once you're ready with a tested goerli deployment, you can request a review via
+[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimism-mainnet`.
 
-The hardhat config `hardhat.config.js` is already setup to run against `optimistic-kovan` and `optimistic-mainnet` networks.
+The hardhat config `hardhat.config.js` is already setup to run against `optimism-goerli` and `optimism-mainnet` networks.
 
 ### Configuration
 
-See an example config at [.env.example](.env.example); copy into a `.env` file before running.
+1. Install the necessary packages.
+    
+    ```sh
+   yarn
+   ```
+   
+1. Copy the example configuration to the production one:
 
-`PRIVATE_KEY` - this account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
-`INFURA_ID` - is your Infura ID for using `optimistic-kovan` and `optimistic-mainnet`.
-`L1_TOKEN_ADDRESS` - address of the L1 ERC20 which you want to bridge.
+   ```sh
+   cp .env.example .env
+   ```
+
+1. Get an [Alchemy](https://dashboard.alchemyapi.io/) application for Optimism, either Optimism Goerli for testing or Optimism Mainnet for deployment.
+
+1. Edit `.env` to set the deployment parameters:
+
+- `PRIVATE_KEY` - this account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
+- `L2_ALCHEMY_KEY` - is the API_KEY provided by [Alchemy](https://dashboard.alchemyapi.io/) for using `optimism-goerli` and `optimism-mainnet`.
+- `L1_TOKEN_ADDRESS` - address of the L1 ERC20 which you want to bridge.
 
 ### Running the deploy script
 
 Run the following script
 
 ```sh
-yarn hardhat run scripts/deploy-custom-token.js --network optimistic-kovan
+yarn hardhat run scripts/deploy-custom-token.js --network optimism-goerli
 ```
 
 At the end you should get a successful output confirming your token was created and the L2 address:
