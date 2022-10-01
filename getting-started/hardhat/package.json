@@ -10,11 +10,7 @@
   },
   "scripts": {
     "compile": "yarn hardhat compile",
-    "test": "yarn hardhat test",
-    "test-kovan": "yarn hardhat test --network optimistic-kovan",
-    "deploy-devnode": "yarn hardhat run scripts/deploy-script.js --network local-devnode",
-    "deploy-kovan": "yarn hardhat run scripts/deploy-script.js --network optimistic-kovan",
-    "deploy-production": "yarn hardhat run scripts/deploy-script.js --network optimism"
+    "test": "yarn hardhat test"
   },
   "dependencies": {
     "dotenv": "^16.0.0"

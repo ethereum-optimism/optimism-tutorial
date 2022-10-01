@@ -16,6 +16,9 @@ In general, doing this requires these tasks:
 
 [Click here for the OpenGSN documentation](https://docs.opengsn.org/).
 
+The tutorial below is not usable until OpenGSN installs their system on the Optimism Goerli test network.
+
+<!-- 
 To see this system in action:
 
 1. Download the repository if you haven't yet:
@@ -314,3 +317,5 @@ This way relaying is usually cost free, and the more applications for OpenGSN th
 ## Conclusion
 
 You should now be able to use OpenGSN transactions to enable ETH-less transactions for your users, when your business plan is to monetize them by other means.
+
+-->

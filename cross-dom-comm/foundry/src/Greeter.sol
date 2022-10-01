@@ -37,16 +37,12 @@ contract Greeter {
     if (block.chainid == 1)
       cdmAddr = 0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
 
-    // Kovan
-    if (block.chainid == 42)
-      cdmAddr = 0x4361d0F75A0186C05f971c566dC6bEa5957483fD;
-
     // Goerli
     if (block.chainid == 5)
       cdmAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
 
     // L2 (same address on every network)
-    if (block.chainid == 10 || block.chainid == 69 || block.chainid == 420)
+    if (block.chainid == 10 || block.chainid == 420)
       cdmAddr = 0x4200000000000000000000000000000000000007;
 
     // If this isn't a cross domain message

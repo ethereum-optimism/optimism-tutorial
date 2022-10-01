@@ -11,10 +11,6 @@
   },
   "scripts": {
     "compile": "truffle compile",
-    "test": "truffle test --network local-devnode",
-    "test-kovan": "truffle test --network optimistic-kovan",
-    "deploy-devnode": "truffle deploy --network local-devnode",
-    "deploy-kovan": "truffle deploy --network optimistic-kovan",
-    "deploy-production": "truffle deploy --network optimism"
+    "test": "truffle test --network local-devnode"
   }
 }

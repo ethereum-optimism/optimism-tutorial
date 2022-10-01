@@ -17,9 +17,9 @@ module.exports = {
         mnemonic: 'test test test test test test test test test test test junk'
       }
     },
-    'optimistic-kovan': {
-      chainId: 69,
-      url: 'https://kovan.optimism.io',
+    'optimistic-goerli': {
+      chainId: 420,
+      url: 'https://goerli.optimism.io',
       accounts: [process.env.PRIVATE_KEY]
     },
     'optimistic-mainnet': {

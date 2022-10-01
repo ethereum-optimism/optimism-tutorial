@@ -23,19 +23,18 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 
 ## Deploying the Custom Token
 
-Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimistic-kovan`.
+Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimistic-goerli`.
 
-Once you're ready with a tested kovan deployment, you can request a review via
-[this](https://docs.google.com/forms/d/e/1FAIpQLSdKyXpXY1C4caWD3baQBK1dPjEboOJ9dpj9flc-ursqq8KU0w/viewform) form and we'll consider whitelisting your deployer address on `optimistic-mainnet`.
+Once you're ready with a tested goerli deployment, you can request a review [as explained in the standard token tutorial](../standard-bridge-standard-token/README.md#adding-a-token-to-the-bridge) form and we'll consider whitelisting your deployer address on `optimism`.
 
-The hardhat config `hardhat.config.js` is already setup to run against `optimistic-kovan` and `optimistic-mainnet` networks.
+The hardhat config `hardhat.config.js` is already setup to run against `optimistic-goerli` and `optimistic-mainnet` networks.
 
 ### Configuration
 
 See an example config at [.env.example](.env.example); copy into a `.env` file before running.
 
 `PRIVATE_KEY` - this account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
-`INFURA_ID` - is your Infura ID for using `optimistic-kovan` and `optimistic-mainnet`.
+`INFURA_ID` - is your Infura ID for using `optimistic-goerli` and `optimistic-mainnet`.
 `L1_TOKEN_ADDRESS` - address of the L1 ERC20 which you want to bridge.
 
 ### Running the deploy script
@@ -43,7 +42,7 @@ See an example config at [.env.example](.env.example); copy into a `.env` file b
 Run the following script
 
 ```sh
-yarn hardhat run scripts/deploy-custom-token.js --network optimistic-kovan
+yarn hardhat run scripts/deploy-custom-token.js --network optimistic-goerli
 ```
 
 At the end you should get a successful output confirming your token was created and the L2 address:
