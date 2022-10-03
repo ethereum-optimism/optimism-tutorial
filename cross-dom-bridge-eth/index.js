@@ -41,7 +41,7 @@ const setup = async() => {
 
 
 
-const gwei = 1000000000n
+const gwei = BigInt(1e9)
 const eth = gwei * gwei   // 10^18
 const centieth = eth/100n
 

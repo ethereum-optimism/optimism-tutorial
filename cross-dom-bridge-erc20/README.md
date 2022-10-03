@@ -132,7 +132,7 @@ The addresses of the ERC-20 token on L1 and L2.
 // Global variable because we need them almost everywhere
 let crossChainMessenger
 let l1ERC20, l2ERC20    // OUTb contracts to show ERC-20 transfers
-let addr    // Our address
+let ourAddr   // Our address
 ```
 
 The configuration parameters required for transfers.
@@ -210,7 +210,7 @@ This function sets up the parameters we need for transfers.
 ```js
 const setup = async() => {
   const [l1Signer, l2Signer] = await getSigners()
-  addr = l1Signer.address
+  ourAddr= l1Signer.address
 ```
 
 Get the signers we need, and our address.

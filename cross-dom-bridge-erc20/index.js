@@ -19,13 +19,20 @@ const erc20Addrs = {
   l2Addr: "0x3e7eF8f50246f725885102E8238CBba33F276747"
 }    // erc20Addrs
 
+// To learn how to deploy an L2 equivalent to an L1 ERC-20 contract,
+// see here: 
+// https://github.com/ethereum-optimism/optimism-tutorial/tree/main/standard-bridge-standard-token
 
 
 // Global variable because we need them almost everywhere
 let crossChainMessenger
 let l1ERC20, l2ERC20    // OUTb contracts to show ERC-20 transfers
-let addr    // Our address
+let ourAddr             // The address of the signer we use.  
 
+
+// Get signers on L1 and L2 (for the same address). Note that 
+// this address needs to have ETH on it, both on Optimism and
+// Optimism Georli
 const getSigners = async () => {
     const l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)
     const l2RpcProvider = new ethers.providers.JsonRpcProvider(l2Url)
@@ -41,7 +48,8 @@ const getSigners = async () => {
 
 // The ABI fragment for the contract. We only need to know how to do two things:
 // 1. Get an account's balance
-// 2. Call the faucet to get more (only works on L1)
+// 2. Call the faucet to get more (only works on L1). Of course, production 
+//    ERC-20 tokens tend to be a bit harder to acquire.
 const erc20ABI = [
   // balanceOf
   {
@@ -65,7 +73,7 @@ const erc20ABI = [
 
 const setup = async() => {
   const [l1Signer, l2Signer] = await getSigners()
-  addr = l1Signer.address
+  ourAddr = l1Signer.address
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: 5,    // Goerli value, 1 for mainnet
       l2ChainId: 420,  // Goerli value, 10 for mainnet
@@ -79,26 +87,27 @@ const setup = async() => {
 
 
 const reportERC20Balances = async () => {
-  const l1Balance = (await l1ERC20.balanceOf(addr)).toString().slice(0,-18)
-  const l2Balance = (await l2ERC20.balanceOf(addr)).toString().slice(0,-18)
+  const l1Balance = (await l1ERC20.balanceOf(ourAddr)).toString().slice(0,-18)
+  const l2Balance = (await l2ERC20.balanceOf(ourAddr)).toString().slice(0,-18)
   console.log(`OUTb on L1:${l1Balance}     OUTb on L2:${l2Balance}`)
 
-  if (l1Balance != 0)
+  if (l1Balance != 0) {
     return
+  }
 
   console.log(`You don't have enough OUTb on L1. Let's call the faucet to fix that`)
   const tx = (await l1ERC20.faucet())
   console.log(`Faucet tx: ${tx.hash}`)
   console.log(`\tMore info: https://goerli.etherscan.io/tx/${tx.hash}`)
   await tx.wait()
-  const newBalance = (await l1ERC20.balanceOf(addr)).toString().slice(0,-18)
+  const newBalance = (await l1ERC20.balanceOf(ourAddr)).toString().slice(0,-18)
   console.log(`New L1 OUTb balance: ${newBalance}`)
 }    // reportERC20Balances
 
 
 
 
-const oneToken = 1000000000000000000n
+const oneToken = BigInt(1e18)
 
 
 const depositERC20 = async () => {
