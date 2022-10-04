@@ -8,6 +8,8 @@ Optimism is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-ev
 Therefore, we the differences between Optimism development and Ethereum development are minor.
 But a few differences [do exist](https://community.optimism.io/docs/developers/build/differences/#).
 
+[![See a video with this information](https://img.youtube.com/vi/_Y6CwsYgqwI/default.jpg)](https://youtu.be/_Y6CwsYgqwI)
+
 ## Optimism endpoint URL
 
 To access any Ethereum type network you need an endpoint. 
