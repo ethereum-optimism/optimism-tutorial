@@ -7,7 +7,7 @@ import { MockContract__factory, MockContract } from '../build/types';
 use(solidity);
 
 describe('Optimism', () => {
-  const provider = new OptimismProvider('https://kovan.optimism.io');
+  const provider = new OptimismProvider('https://goerli.optimism.io');
   let wallet: Wallet;
   let contract: MockContract;
 

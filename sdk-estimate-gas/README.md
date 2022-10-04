@@ -15,7 +15,7 @@ This calculation is complicated by the fact that the major cost is the cost of w
 [The node script](./gas.js) makes these assumptions:
 
 - You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-- There is network connectivity to a provider on the Optimistic Kovan L2 network, and to the npm package registry.
+- There is network connectivity to a provider on the Optimistic Goerli L2 network, and to the npm package registry.
 
 
 ## Running the script

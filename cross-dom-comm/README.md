@@ -458,7 +458,7 @@ contract FromL1_ControlL2Greeter {
 
 This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Goerli. 
 To call L2 from L1 on mainnet, you need to [use this address](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/mainnet/Proxy__OVM_L1CrossDomainMessenger.json#L2).
-To call L1 from L2, on either mainnet or Kovan, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
+To call L1 from L2, on either mainnet or Goerli, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 
 ```solidity
     address greeterL2Addr = 0xC0836cCc8FBa87637e782Dde6e6572aD624fb984;
@@ -531,16 +531,12 @@ Unless we are going to run this code thousands of times, it is more efficient to
     if (block.chainid == 1)
       cdmAddr = 0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
 
-    // Kovan
-    if (block.chainid == 42)
-      cdmAddr = 0x4361d0F75A0186C05f971c566dC6bEa5957483fD;
-
     // Goerli
     if (block.chainid == 5)
       cdmAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
 
     // L2 (same address on every network)
-    if (block.chainid == 10 || block.chainid == 69 || block.chainid == 420)
+    if (block.chainid == 10 || block.chainid == 420)
       cdmAddr = 0x4200000000000000000000000000000000000007;
       
 ```
