@@ -10,13 +10,23 @@ You will learn how run a contract on Ethereum that runs another contract on Opti
 
 ## Seeing it in action
 
-To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and Optimistic Goerli
+To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and Optimism Goerli.
 
 
 | Network | Greeter address  |
 | ------- | ---------------- |
 | Goerli (L1) | [0x7fA4D972bB15B71358da2D937E4A830A9084cf2e](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e) |
-| Optimistic Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
+| Optimism Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
+
+**Bedrock:**
+
+If you are using the Bedrock alpha network, you have to use other addresses:
+
+| Network | Greeter address  |
+| ------- | ---------------- |
+| Goerli (L1) | [0x4e971602c65d15c1f2d4eabcea13913d8f8fd645](https://goerli.etherscan.io/address/0x4e971602c65d15c1f2d4eabcea13913d8f8fd645#code) |
+| Bedrock Alpha-1 (L2) | [0xf1918d0752270e0c0c7c845d2691fefd764c72d2](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2) |
+
 
 ::: Tip What if somebody else uses the same contracts at the same time?
 If somebody else uses these contracts while you are going through the tutorial, they might update the greeting after you.
@@ -63,6 +73,12 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn hardhat console --network optimism-goerli
    ```
 
+   **Bedrock:** If you're using the bedrock alpha network, run this command:
+
+   ```sh
+   yarn hardhat console --network bedrock-alpha
+   ```   
+
 1. Connect to the greeter on L2:
   
    ```js
@@ -71,9 +87,13 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
-<!--
- 1. [Browse to the Greeter contract on BlockScout](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/read-contract#address-tabs) to see the result of **greet**.
--->
+   **Bedrock:** Use this code instead:
+
+   ```js
+   Greeter = await ethers.getContractFactory("Greeter")
+   greeter = await Greeter.attach("0xf1918D0752270E0c0c7c845d2691FeFd764C72d2")
+   await greeter.greet()
+   ```
 
 1. In a separatate terminal window connect the Hardhat console to Goerli (L1):
 
@@ -90,21 +110,32 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    rcpt = await tx.wait()
    ```
 
-1. Make a note of the address of `FromL1_ControlL2Greeter`.
+   **Bedrock:** Use the `Bedrock_FromL1_ControlL2Greeter` contract, which has the correct addresses for the alpha bedrock network.
+
+   ```js
+   Controller = await ethers.getContractFactory("Bedrock_FromL1_ControlL2Greeter")
+   controller = await Controller.deploy()
+   tx = await controller.setGreeting(`Hello from L1 ${Date()}`)
+   rcpt = await tx.wait()
+   ```   
+
+1. Make a note of the address of the L1 controller.
 
    ```js
    controller.address
    ```
 
-1. Back in the Optimism Goerli console, see the new greeting.
-   Note that it may take a few minutes to update after the transaction is processed on L2.
+1. Back in the L2 console, see the new greeting.
+   Note that it may take a few minutes to update after the transaction is processed on L1.
 
    ```js
    await greeter.greet()
    ```
 
-1. In the block explorer, [view the event log](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/logs#address-tabs).
+1. In the block explorer, [view the event log](https://goerli-optimism.etherscan.io/address/0xc0836ccc8fba87637e782dde6e6572ad624fb984#readContract).
    Notice that the `xorigin` value is the controller address.
+
+   **Bedrock:** Use [this link](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2/logs#address-tabs) for the event log.
 
 #### Optimism message to Ethereum
 
@@ -121,6 +152,14 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
      greeter = await Greeter.attach("0x7fA4D972bB15B71358da2D937E4A830A9084cf2e")
      await greeter.greet()     
      ```
+
+     **Bedrock:**
+
+     ```js
+     Greeter = await ethers.getContractFactory("Greeter")
+     greeter = await Greeter.attach("0x4e971602c65d15c1f2D4eabCea13913D8f8FD645")
+     await greeter.greet()     
+     ```     
 
 1. Connect the Hardhat console to Optimistic Goerli (L2):
 

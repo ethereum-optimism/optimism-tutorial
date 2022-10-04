@@ -72,5 +72,5 @@ See this [tutorial on getting a custom token implemented and deployed](../standa
 
 ## Testing 
 
-For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../cross-dom-bridge).
+For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../cross-dom-bridge-erc20).
 
