@@ -5,8 +5,16 @@
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
+const yargs = require("yargs")
 
-const network = "mainnet"    // "mainnet" or "goerli"
+const argv = yargs
+  .option('address', {
+    description: "Address to trace",
+    default: "0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F",
+    type: 'string'
+  })
+  .help()
+  .alias('help', 'h').argv;
 
 
 
@@ -15,11 +23,17 @@ let crossChainMessenger
 
 
 const setup = async() => {
+  l1provider = new ethers.providers.JsonRpcProvider(process.env.L1URL)
+  l2provider = new ethers.providers.JsonRpcProvider(process.env.L2URL)
+
+  l1chainId = (await l1provider._networkPromise).chainId
+  l2chainId = (await l2provider._networkPromise).chainId  
+
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "goerli" ? 5 : 1,    
-      l2ChainId: network === "goerli" ? 420 : 10,          
-      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
+      l1ChainId: l1chainId,
+      l2ChainId: l2chainId,
+      l1SignerOrProvider: l1provider,
+      l2SignerOrProvider: l2provider
   })
 }    // setup
 
