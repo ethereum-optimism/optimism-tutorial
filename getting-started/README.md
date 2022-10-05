@@ -10,7 +10,7 @@ But a few differences [do exist](https://community.optimism.io/docs/developers/b
 
 #### See video
 
-If you prefer watching tutorials rather than reading them, we have [![this great video covering the getting started content](https://img.youtube.com/vi/_Y6CwsYgqwI/default.jpg)](https://youtu.be/_Y6CwsYgqwI)
+If you prefer watching tutorials rather than reading them, we have this great video covering the getting started content [![getting started video](https://img.youtube.com/vi/_Y6CwsYgqwI/default.jpg)](https://youtu.be/_Y6CwsYgqwI)
 
 ## Optimism endpoint URL
 
