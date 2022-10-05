@@ -167,6 +167,12 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn hardhat console --network optimistic-goerli
    ```
 
+   **Bedrock:**
+
+   ```sh
+   yarn hardhat console --network bedrock-alpha
+   ```
+
 1. Deploy and call the `FromL2_ControlL1Greeter` contract.
 
    ```js
@@ -176,7 +182,16 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    rcpt = await tx.wait()
    ```
 
-1. Make a note of the address of `FromL2_ControlL1Greeter`.
+   **Bedrock:** Use the `Bedrock_FromL2_ControlL1Greeter`
+
+   ```js
+   Controller = await ethers.getContractFactory("Bedrock_FromL2_ControlL1Greeter")
+   controller = await Controller.deploy()
+   tx = await controller.setGreeting(`Hello from L2 ${Date()}`)
+   rcpt = await tx.wait()
+   ```   
+
+1. Make a note of the address of the controller.
 
    ```js
    controller.address
@@ -220,6 +235,19 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url)
    })
    ```
+
+   **Bedrock:**
+   ```js
+   l1Signer = await ethers.getSigner()
+   l2Url = "https://alpha-1-replica-0.bedrock-goerli.optimism.io"
+   crossChainMessenger = new sdk.CrossChainMessenger({ 
+      l1ChainId: 5,
+      l2ChainId: 28528,
+      l1SignerOrProvider: l1Signer, 
+      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
+      bedrock: true
+   })
+   ```   
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
