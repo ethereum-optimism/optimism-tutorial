@@ -51,8 +51,8 @@ This calculation is complicated by the fact that the major cost is the cost of w
      - `bedrock-alpha`: The Bedrock alpha test network
 
    - `--verify`: Run the transaction to verify the estimate
-
-
+  
+     Note that right now there is a bug that prevents the combination `--network bedrock-alpha --verify` from working.
 
 ### Results
 
