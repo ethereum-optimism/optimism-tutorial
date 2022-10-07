@@ -12,6 +12,10 @@ const { boolean } = require("yargs")
 
 const argv = yargs
   .option('network', {
+    // All of those choices are Optimism:
+    // mainnet - Optimism Mainnet, the production network
+    // goerli - Optimism Goerli, the main test network
+    // bedrock-alpha - Alpha version of Optimism Bedrock, our next release
     choices: ["mainnet", "goerli", "bedrock-alpha"],
     description: 'Optimistm network to use'
   }).
@@ -25,6 +29,10 @@ const argv = yargs
 
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
 
+// These are the addresses of the Greeter.sol contract on the various Optimism networks:
+// mainnet - Optimism Mainnet, the production network
+// goerli - Optimism Goerli, the main test network
+// bedrock-alpha - Alpha version of Optimism Bedrock, our next release
 const greeterAddrs = {
   "mainnet":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
   "goerli": "0x106941459A8768f5A92b770e280555FAF817576f",
