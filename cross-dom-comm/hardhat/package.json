@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@eth-optimism/contracts": "^0.5.14",
-    "@eth-optimism/sdk": "^1.6.0",
+    "@eth-optimism/sdk": "0.0.0-20229519352",
     "dotenv": "^16.0.0"
   }
 }

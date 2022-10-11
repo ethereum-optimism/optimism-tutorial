@@ -164,7 +164,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Connect the Hardhat console to Optimistic Goerli (L2):
 
    ```sh
-   yarn hardhat console --network optimistic-goerli
+   yarn hardhat console --network optimism-goerli
    ```
 
    **Bedrock:**
@@ -250,7 +250,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ```   
 
 1. Check the status of the transaction.
-   If it is `false`, wait a few seconds and try again.
+   If it is `false`, wait (see below for how long) and try again.
 
    ```js
    hash = <<< tx.hash from L2 >>>
@@ -260,7 +260,9 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    `await crossChainMessenger.getMessageStatus(hash)` can return several values at this stage:
 
    - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
-     The challenge period only starts when the state root is published, which is means you might need to wait a few minutes.
+     The challenge period only starts when the state root is published, which  means you might need to wait a few minutes.
+
+     **Bedrock alpha:** State roots are published once an hour.
 
    - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (3): Still in the challenge period, wait a few seconds.
 
