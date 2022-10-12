@@ -133,27 +133,49 @@ const argv = yargs
   })
   .help()
   .alias('help', 'h').argv;
+```
 
+Use the [`yargs` package](http://yargs.js.org/) to read the command line parameters.
 
+```js
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
+```
 
+Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
+
+```js
 // These are the addresses of the Greeter.sol contract on the various Optimism networks:
 // mainnet - Optimism Mainnet, the production network
 // goerli - Optimism Goerli, the main test network
 // bedrock-alpha - Alpha version of Optimism Bedrock, our next release
 const greeterAddrs = {
-  "mainnet":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
-  "goerli": "0x106941459A8768f5A92b770e280555FAF817576f",
+  "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
+  "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
   "bedrock-alpha": "0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba"
 }
+```
+
+Addresses for the Greeter contracts:
+
+- [Mainnet](https://optimistic.etherscan.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
+- [Goerli](https://goerli-optimism.etherscan.io/address/0x106941459a8768f5a92b770e280555faf817576f#code)
+- [Bedrock Alpha](https://blockscout.com/optimism/bedrock-alpha/address/0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba/contracts#address-tabs)
 
 
+```js
 // Utilities
 const displayWei = x => x.toString().padStart(20, " ")                        
 const displayGas = x => x.toString().padStart(10, " ")
-const sleep = ms => new Promise(resp => setTimeout(resp, ms));
-
 ```
+
+Display a value (either wei or gas).
+To properly align these values for display, we first turn [them into strings](https://www.w3schools.com/jsref/jsref_tostring_number.asp) and then [add spaces to the start](https://www.javascripttutorial.net/es-next/pad-string/) until the total value is the right length (20 or 10 characters).
+
+```js
+const sleep = ms => new Promise(resp => setTimeout(resp, ms));
+```
+
+Return a [Promise](https://www.w3schools.com/js/js_promise.asp) that gets resolved after `ms` milliseconds. 
 
 </details>
 
@@ -192,6 +214,7 @@ Because it only adds functions, an [`L2Provider`](https://sdk.optimism.io/module
 }   // getSigner
 ```
 
+### getEstimates
 
 ```js
 // Get estimates from the SDK
@@ -221,6 +244,63 @@ Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.ht
 [Get the amount of gas we expect to use to store the transaction on L1](https://sdk.optimism.io/modules.html#estimateL1Gas).
 
 
+### displayResults
+
+<details>
+```js
+
+const displayResults = (estimated, real) => {
+  console.log(`Estimates:`)
+  console.log(`   Total gas cost: ${displayWei(estimated.totalCost)} wei`)
+  console.log(`      L1 gas cost: ${displayWei(estimated.l1Cost)} wei`)
+  console.log(`      L2 gas cost: ${displayWei(estimated.l2Cost)} wei`)
+```
+
+Show the gas cost estimates.
+
+```js
+  if (argv.verify) {
+    console.log(`\nReal values:`)    
+    console.log(`   Total gas cost: ${displayWei(real.totalCost)} wei`)
+    console.log(`      L1 gas cost: ${displayWei(real.l1Cost)} wei`)
+    console.log(`      L2 gas cost: ${displayWei(real.l2Cost)} wei`)
+```
+
+If we are verifying the estimates, show the real values.
+
+```js
+    console.log(`\nL1 Gas:`)
+    console.log(`      Estimate: ${displayGas(estimated.l1Gas)}`)
+    console.log(`          Real: ${displayGas(real.l1Gas)}`)  
+    console.log(`    Difference: ${displayGas(real.l1Gas-estimated.l1Gas)}`)
+```
+
+Compare the L1 gas estimated with the L1 gas actually required.
+
+```js
+    console.log(`\nL2 Gas:`)
+    console.log(`      Estimate: ${displayGas(estimated.l2Gas)}`)
+    console.log(`          Real: ${displayGas(real.l2Gas)}`)  
+    console.log(`    Difference: ${displayGas(real.l2Gas-estimated.l2Gas)}`)
+```
+
+Compare the L2 gas estimates with the L2 gas actually required.
+
+```js
+  } else {   // if argv.verify
+    console.log(`      L1 gas: ${displayGas(estimated.l1Gas)}`)
+    console.log(`      L2 gas: ${displayGas(estimated.l2Gas)}`)
+  }   // if argv.verify
+
+}   // displayResults
+```
+
+If we aren't verifying the esitmate, just display the estimated values.
+
+</details>
+
+
+### main
 
 ```js
 const main = async () => {    

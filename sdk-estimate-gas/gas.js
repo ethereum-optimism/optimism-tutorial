@@ -34,8 +34,8 @@ const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 // goerli - Optimism Goerli, the main test network
 // bedrock-alpha - Alpha version of Optimism Bedrock, our next release
 const greeterAddrs = {
-  "mainnet":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
-  "goerli": "0x106941459A8768f5A92b770e280555FAF817576f",
+  "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
+  "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
   "bedrock-alpha": "0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba"
 }
 
