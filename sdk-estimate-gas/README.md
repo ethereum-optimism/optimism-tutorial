@@ -96,6 +96,69 @@ This is typical in Optimistic transactions, because of the cost ratio between L1
 
 In this section we go over the relevant parts of the script.
 
+
+### Setup
+
+<details>
+
+```js
+#! /usr/local/bin/node
+
+// Estimate the costs of an Optimistic (L2) transaction
+
+const ethers = require("ethers")
+const optimismSDK = require("@eth-optimism/sdk")
+const fs = require("fs")
+require('dotenv').config()
+const yargs = require("yargs")
+const { boolean } = require("yargs")
+```
+
+The packages needed for the script.
+
+```js
+
+const argv = yargs
+  .option('network', {
+    // All of those choices are Optimism:
+    // mainnet - Optimism Mainnet, the production network
+    // goerli - Optimism Goerli, the main test network
+    // bedrock-alpha - Alpha version of Optimism Bedrock, our next release
+    choices: ["mainnet", "goerli", "bedrock-alpha"],
+    description: 'Optimistm network to use'
+  }).
+  option('verify', {
+    type: boolean,
+    description: 'Run the transaction, compare to the estimate'
+  })
+  .help()
+  .alias('help', 'h').argv;
+
+
+const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
+
+// These are the addresses of the Greeter.sol contract on the various Optimism networks:
+// mainnet - Optimism Mainnet, the production network
+// goerli - Optimism Goerli, the main test network
+// bedrock-alpha - Alpha version of Optimism Bedrock, our next release
+const greeterAddrs = {
+  "mainnet":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
+  "goerli": "0x106941459A8768f5A92b770e280555FAF817576f",
+  "bedrock-alpha": "0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba"
+}
+
+
+// Utilities
+const displayWei = x => x.toString().padStart(20, " ")                        
+const displayGas = x => x.toString().padStart(10, " ")
+const sleep = ms => new Promise(resp => setTimeout(resp, ms));
+
+```
+
+</details>
+
+### getSigner
+
 ```js
 const getSigner = async () => {
   let endpointUrl;
