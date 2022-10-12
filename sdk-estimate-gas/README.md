@@ -295,7 +295,7 @@ Compare the L2 gas estimates with the L2 gas actually required.
 }   // displayResults
 ```
 
-If we aren't verifying the esitmate, just display the estimated values.
+If we aren't verifying the estimate, just display the estimated values.
 
 </details>
 
