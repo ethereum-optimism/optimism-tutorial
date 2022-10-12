@@ -34,61 +34,72 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
    - `OPTIMISM_GOERLI_URL` is the URL for Optimism Goerli, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
 
+   - `OPTIMISM_MAINNET_URL` is the URL for Optimism Mainnet, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
+
 
 1. Use Node to run the script
 
    ```sh
-   node gas.js
+   node gas.js --network mainnet
    ```
 
-That's it.
+   The command line options are:
+
+   - `--network`: The network to estimate gas on:
+     - `mainnet`: The Optimism mainnet network
+     - `goerli`: The Optimism testnet on Goerli
+     - `bedrock-alpha`: The Bedrock alpha test network
+
+   - `--verify`: Run the transaction to verify the estimate
+  
+     Note that right now there is a bug that prevents the combination `--network bedrock-alpha --verify` from working.
 
 ### Results
 
-The results you get from the script on Optimism Goerli are different than the ones you'd get from running on the main Optimism blockchain. 
-The reason is that on Goerli L1 gas costs is just seven times the L1 gas cost.
-On the main network the ratio is usually in the tens of thousands ([click here to see the current values](https://public-grafana.optimism.io/d/9hkhMxn7z/public-dashboard?orgId=1&refresh=5m)).
-
-Here is an example of results from the main Optimism blockchain.
+Here is an example of results from the main Optimism blockchain:
 
 
 ```
-ori@Oris-MBP sdk-estimate-gas % ./gas.js 
+ori@Oris-MBP sdk-estimate-gas % ./gas.js --network mainnet --verify
+ori@Oris-MacBook-Pro sdk-estimate-gas % ./gas.js --network mainnet --verify
 About to get estimates
 About to create the transaction
-Transaction created, submitting it
+Transaction created and submitted
 Transaction processed
 Estimates:
-   Total gas cost:       99958954362216 wei
-      L1 gas cost:       99926386362216 wei
+   Total gas cost:       58819800030256 wei
+      L1 gas cost:       58787232030256 wei
       L2 gas cost:          32568000000 wei
 
 Real values:
-   Total gas cost:       99493733721792 wei
-      L1 gas cost:       99461179721796 wei
-      L2 gas cost:          32553999996 wei
+   Total gas cost:       58819786030272 wei
+      L1 gas cost:       58787232030256 wei
+      L2 gas cost:          32554000016 wei
 
 L1 Gas:
-      Estimate:       4296
+      Estimate:       4276
           Real:       4276
-    Difference:        -20
+    Difference:          0
 
 L2 Gas:
       Estimate:      32568
           Real:      32554
     Difference:        -14
-
 ```
 
-The L1 gas cost is thousands of times the L2 gas cost.
+The L1 gas cost is over a thousand times the L2 gas cost.
 This is typical in Optimistic transactions, because of the cost ratio between L1 gas and L2 gas.
 
 
 
 ## How does it work?
 
-In this section we go over the script line by line to learn how to use the SDK for gas estimates.
+In this section we go over the relevant parts of the script.
 
+
+### Setup
+
+<details>
 
 ```js
 #! /usr/local/bin/node
@@ -98,61 +109,98 @@ In this section we go over the script line by line to learn how to use the SDK f
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 const fs = require("fs")
-```
-
-The packages we need directly.
-
-```js
 require('dotenv').config()
+const yargs = require("yargs")
+const { boolean } = require("yargs")
 ```
 
-The [`dotenv`](https://www.npmjs.com/package/dotenv) package reads the `.env` file and adds the parameters to `process.env`.
+The packages needed for the script.
 
 ```js
-const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
+
+const argv = yargs
+  .option('network', {
+    // All of those choices are Optimism:
+    // mainnet - Optimism Mainnet, the production network
+    // goerli - Optimism Goerli, the main test network
+    // bedrock-alpha - Alpha version of Optimism Bedrock, our next release
+    choices: ["mainnet", "goerli", "bedrock-alpha"],
+    description: 'Optimistm network to use'
+  }).
+  option('verify', {
+    type: boolean,
+    description: 'Run the transaction, compare to the estimate'
+  })
+  .help()
+  .alias('help', 'h').argv;
 ```
 
-The transaction whose gas costs we'll estimate uses [the Hardhat Greeting.sol contract](https://github.com/NomicFoundation/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol).
-This contract has one function that changes the state and there requires a transaction to call, [`setGreeting(string)`](https://github.com/NomicFoundation/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol#L18-L21).
-
+Use the [`yargs` package](http://yargs.js.org/) to read the command line parameters.
 
 ```js
+const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
+```
+
+Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
+
+```js
+// These are the addresses of the Greeter.sol contract on the various Optimism networks:
+// mainnet - Optimism Mainnet, the production network
+// goerli - Optimism Goerli, the main test network
+// bedrock-alpha - Alpha version of Optimism Bedrock, our next release
 const greeterAddrs = {
-  // Optimism
-  "10":  "0x5825fA9cD0986F52A8Dda506564E99d24a8684D1",
-
-  // Optimism Goerli
-  "420": "0x106941459A8768f5A92b770e280555FAF817576f"
+  "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
+  "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
+  "bedrock-alpha": "0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba"
 }
 ```
 
-The address of the Greeter contract, which is different on different networks.
+Addresses for the Greeter contracts:
+
+- [Mainnet](https://optimistic.etherscan.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
+- [Goerli](https://goerli-optimism.etherscan.io/address/0x106941459a8768f5a92b770e280555faf817576f#code)
+- [Bedrock Alpha](https://blockscout.com/optimism/bedrock-alpha/address/0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba/contracts#address-tabs)
 
 
 ```js
 // Utilities
 const displayWei = x => x.toString().padStart(20, " ")                        
 const displayGas = x => x.toString().padStart(10, " ")
+```
+
+Display a value (either wei or gas).
+To properly align these values for display, we first turn [them into strings](https://www.w3schools.com/jsref/jsref_tostring_number.asp) and then [add spaces to the start](https://www.javascripttutorial.net/es-next/pad-string/) until the total value is the right length (20 or 10 characters).
+
+```js
 const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 ```
 
-The `sleep` function pauses execution for that number of milliseconds. 
+Return a [Promise](https://www.w3schools.com/js/js_promise.asp) that gets resolved after `ms` milliseconds. 
+
+</details>
+
+### getSigner
 
 ```js
 const getSigner = async () => {
-  const optimismGoerliUrl = 
-  process.env.ALCHEMY_API_KEY ? 
-    `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-    process.env.OPTIMISM_GOERLI_URL
+  let endpointUrl;
+
+  if (argv.network == 'bedrock-alpha')
+    endpointUrl = 'https://alpha-1-replica-0.bedrock-goerli.optimism.io'
+  if (argv.network == 'goerli')
+    endpointUrl = 
+      process.env.ALCHEMY_API_KEY ? 
+        `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+        process.env.OPTIMISM_GOERLI_URL
+  if (argv.network == 'mainnet')
+    endpointUrl = 
+      process.env.ALCHEMY_API_KEY ? 
+        `https://opt-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+        process.env.OPTIMISM_MAINNET_URL
 
     const l2RpcProvider = optimismSDK.asL2Provider(
-      new ethers.providers.JsonRpcProvider(optimismGoerliUrl)
+      new ethers.providers.JsonRpcProvider(endpointUrl)
     )
-    const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
-      connect(l2RpcProvider)
-
-    return wallet
-}   // getSigner
 ```
 
 The function [`optimismSDK.asL2Provider`](https://sdk.optimism.io/modules.html#asL2Provider) takes a regular [Ethers.js Provider](https://docs.ethers.io/v5/api/providers/) and adds a few L2 specific functions, which are explained below.
@@ -166,8 +214,7 @@ Because it only adds functions, an [`L2Provider`](https://sdk.optimism.io/module
 }   // getSigner
 ```
 
-The rest on the function in standard usage of [`Wallet`](https://docs.ethers.io/v5/api/signer/#Wallet) from the Ethers package.
-
+### getEstimates
 
 ```js
 // Get estimates from the SDK
@@ -197,51 +244,81 @@ Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.ht
 [Get the amount of gas we expect to use to store the transaction on L1](https://sdk.optimism.io/modules.html#estimateL1Gas).
 
 
+### displayResults
+
+<details>
+
 ```js
+
 const displayResults = (estimated, real) => {
   console.log(`Estimates:`)
   console.log(`   Total gas cost: ${displayWei(estimated.totalCost)} wei`)
   console.log(`      L1 gas cost: ${displayWei(estimated.l1Cost)} wei`)
   console.log(`      L2 gas cost: ${displayWei(estimated.l2Cost)} wei`)
+```
 
-  console.log(`\nReal values:`)    
-  console.log(`   Total gas cost: ${displayWei(real.totalCost)} wei`)
-  console.log(`      L1 gas cost: ${displayWei(real.l1Cost)} wei`)
-  console.log(`      L2 gas cost: ${displayWei(real.l2Cost)} wei`)
+Show the gas cost estimates.
 
-  console.log(`\nL1 Gas:`)
-  console.log(`      Estimate: ${displayGas(estimated.l1Gas)}`)
-  console.log(`          Real: ${displayGas(real.l1Gas)}`)  
-  console.log(`    Difference: ${displayGas(real.l1Gas-estimated.l1Gas)}`)
-  
-  console.log(`\nL2 Gas:`)
-  console.log(`      Estimate: ${displayGas(estimated.l2Gas)}`)
-  console.log(`          Real: ${displayGas(real.l2Gas)}`)  
-  console.log(`    Difference: ${displayGas(real.l2Gas-estimated.l2Gas)}`)
+```js
+  if (argv.verify) {
+    console.log(`\nReal values:`)    
+    console.log(`   Total gas cost: ${displayWei(real.totalCost)} wei`)
+    console.log(`      L1 gas cost: ${displayWei(real.l1Cost)} wei`)
+    console.log(`      L2 gas cost: ${displayWei(real.l2Cost)} wei`)
+```
+
+If we are verifying the estimates, show the real values.
+
+```js
+    console.log(`\nL1 Gas:`)
+    console.log(`      Estimate: ${displayGas(estimated.l1Gas)}`)
+    console.log(`          Real: ${displayGas(real.l1Gas)}`)  
+    console.log(`    Difference: ${displayGas(real.l1Gas-estimated.l1Gas)}`)
+```
+
+Compare the L1 gas estimated with the L1 gas actually required.
+
+```js
+    console.log(`\nL2 Gas:`)
+    console.log(`      Estimate: ${displayGas(estimated.l2Gas)}`)
+    console.log(`          Real: ${displayGas(real.l2Gas)}`)  
+    console.log(`    Difference: ${displayGas(real.l2Gas-estimated.l2Gas)}`)
+```
+
+Compare the L2 gas estimates with the L2 gas actually required.
+
+```js
+  } else {   // if argv.verify
+    console.log(`      L1 gas: ${displayGas(estimated.l1Gas)}`)
+    console.log(`      L2 gas: ${displayGas(estimated.l2Gas)}`)
+  }   // if argv.verify
+
 }   // displayResults
 ```
 
-This function displays the results to show you the estimates and the real information.
-This lets you see how accurate the estimates were.
+If we aren't verifying the estimate, just display the estimated values.
+
+</details>
+
+
+### main
 
 ```js
 const main = async () => {    
     
     const signer = await getSigner()
-    const chainId = (await signer.provider._networkPromise).chainId
 
-    if(!greeterAddrs[chainId]) {
-      console.log(`I don't know the Greeter address on chainId: ${chainId}`)
+    if(!greeterAddrs[argv.network]) {
+      console.log(`I don't know the Greeter address on chain: ${argv.network}`)
       process.exit(-1)  
     }
 
     const Greeter = new ethers.ContractFactory(greeterJSON.abi, greeterJSON.bytecode, signer)
-    const greeter = Greeter.attach(greeterAddrs[chainId])
+    const greeter = Greeter.attach(greeterAddrs[argv.network])
 
     const greeting = "Hello!"
 
     let real = {}
-
 ```
 
 To create a valid estimate, we need these transaction fields:
@@ -287,45 +364,51 @@ Call `getEstimates` to get the `L2Provider` estimates.
 There is no need for a special function to estimate the amount of L2 gas, the normal `estimateGas.<function>` can do the same job it usually does.
 
 ```js
-    // If the transaction fails, error out with additional information
-    let realTx, realTxResp
-    const weiB4 = await signer.getBalance()
+    if (argv.verify) {
+```
+
+// If we want to run the real transaction to verify the estimate
+
+```js
+      // If the transaction fails, error out with additional information
+      let realTx, realTxResp
+      const weiB4 = await signer.getBalance()
 ```
 
 Get the balance prior to the transaction, so we'll be able to see how much it really cost.
 
 ```js
-    try {
-      console.log("About to create the transaction")
-      realTx = await greeter.setGreeting(greeting)
-      console.log("Transaction created, submitting it")
-      realTxResp = await realTx.wait()
-      console.log("Transaction processed")
+      try {
+        console.log("About to create the transaction")
+        realTx = await greeter.setGreeting(greeting)
+        console.log("Transaction created, submitting it")
+        realTxResp = await realTx.wait()
+        console.log("Transaction processed")
 ```
 
 Create the transaction and then wait for it to be processed.
 This is [the standard way to submit a transaction in Ethers](https://docs.ethers.io/v5/api/contract/contract/#contract-functionsSend).
 
 ```js
-    } catch (err) {        
-      console.log(`Error: ${err}`)
-      console.log(`Coming from address: ${await signer.getAddress()} on Optimistic ${network}`)
-      console.log(`            balance: ${displayWei(await signer.getBalance())} wei`)
-      process.exit(-1)
-    }
+      } catch (err) {        
+        console.log(`Error: ${err}`)
+        console.log(`Coming from address: ${await signer.getAddress()} on Optimistic ${network}`)
+        console.log(`            balance: ${displayWei(await signer.getBalance())} wei`)
+        process.exit(-1)
+      }
 ```
 
 If the transaction failed, it could be because the account lacks the ETH to pay for gas.
 The error message shows that information so the user knows about it.
 
 ```js
-    // If the balance hasn't been updated yet, wait 0.1 sec
-    real.totalCost = 0
-    while (real.totalCost === 0) {
-        const weiAfter = await signer.getBalance()
-        real.totalCost= weiB4-weiAfter
-        await sleep(100)
-    }
+      // If the balance hasn't been updated yet, wait 0.1 sec
+      real.totalCost = 0
+      while (real.totalCost === 0) {
+          const weiAfter = await signer.getBalance()
+          real.totalCost= weiB4-weiAfter
+          await sleep(100)
+      }
 ```
 
 It takes a bit of time before the change in the account's balance is processed.
@@ -335,15 +418,15 @@ Note that this is not the only way to wait until a transaction happens.
 You can also use [`crossDomainMessenger.waitForMessageStatus`](https://sdk.optimism.io/interfaces/icrosschainmessenger#waitForMessageStatus). 
 
 ```js
-    // Get the real information (cost, etc.) from the transaction response
-    real.l1Gas = realTxResp.l1GasUsed
-    real.l1Cost = realTxResp.l1Fee 
+      // Get the real information (cost, etc.) from the transaction response
+      real.l1Gas = realTxResp.l1GasUsed
+      real.l1Cost = realTxResp.l1Fee 
 ```
 
 These fields are specific to Optimism transaction responses.
 
 ```js
-    real.l2Gas = realTxResp.gasUsed
+      real.l2Gas = realTxResp.gasUsed
 ```
 
 The gas used on L2 is the gas used for processing.
@@ -351,7 +434,8 @@ The gas used on L2 is the gas used for processing.
 
 
 ```js
-    real.l2Cost = real.totalCost - real.l1Cost
+      real.l2Cost = real.totalCost - real.l1Cost
+    }  // if argv.verified
 ```
 
 This is one way to get the L2 cost of the transaction.
