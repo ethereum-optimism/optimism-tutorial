@@ -247,6 +247,7 @@ Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.ht
 ### displayResults
 
 <details>
+
 ```js
 
 const displayResults = (estimated, real) => {
