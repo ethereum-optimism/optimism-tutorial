@@ -7,7 +7,7 @@ const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
 const yargs = require("yargs")
 
-const argv = yargs
+argv = yargs
   .option('address', {
     description: "Address to trace",
     default: "0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F",
@@ -18,7 +18,7 @@ const argv = yargs
 
 
 
-// Global variable because we need them almost everywhere
+// Global variable because we need it almost everywhere
 let crossChainMessenger
 
 
@@ -28,8 +28,6 @@ const setup = async() => {
 
   l1chainId = (await l1provider._networkPromise).chainId
   l2chainId = (await l2provider._networkPromise).chainId  
-
-  console.log(l2chainId)
 
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: l1chainId,
@@ -81,16 +79,13 @@ const describeTx = async tx => {
 const main = async () => {    
     await setup()
 
-    // The address we trace
-    const addr = "0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F"
-
-    const deposits = await crossChainMessenger.getDepositsByAddress(addr)
-    console.log(`Deposits by address ${addr}`)
+    const deposits = await crossChainMessenger.getDepositsByAddress(argv.address)
+    console.log(`Deposits by address ${argv.address}`)
     for (var i=0; i<deposits.length; i++)
       await describeTx(deposits[i])
 
-    const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(addr)
-    console.log(`\n\n\nWithdrawals by address ${addr}`)
+    const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(argv.address)
+    console.log(`\n\n\nWithdrawals by address ${argv.address}`)
     for (var i=0; i<withdrawals.length; i++)
       await describeTx(withdrawals[i])
       

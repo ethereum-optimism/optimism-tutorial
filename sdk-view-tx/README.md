@@ -25,7 +25,8 @@ This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/
    yarn
    ```
 
-1. Copy `.env.example` to `.env` and specify the URLs for L1 
+1. Copy `.env.example` to `.env` and specify the URLs for L1 and L2.
+   These need to be matching chains, such as Ethereum mainnet (chainID 1) and Optimism mainnet (chainID 10) or Goerli (chainId 5) and Optimism Goerli (chainId 420).
 
 1. Use Node to run the script
 
@@ -59,6 +60,10 @@ tx:0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a
 
 In this section we go over the script line by line to learn how to use the SDK to view deposits and withdrawals.
 
+### Initial code
+
+<details>
+
 ```js
 #! /usr/local/bin/node
 
@@ -67,31 +72,75 @@ In this section we go over the script line by line to learn how to use the SDK t
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
-
-const network = "mainnet"    // "mainnet" or "goerli"
+const yargs = require("yargs")
 ```
 
-If you decide to use Goerli you'll need to specify appropriate (Goerli and Optimism Goerli) provider URLs in `.env`.
+The packages we need.
+
 
 ```js
-// Global variable because we need them almost everywhere
-let crossChainMessenger
-
-
-const setup = async() => {
-  crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "goerli" ? 5 : 1,    
-      l2ChainId: network === "goerli" ? 420 : 10,      
-      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
+const argv = yargs
+  .option('address', {
+    description: "Address to trace",
+    default: "0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F",
+    type: 'string'
   })
-}    // setup
+  .help()
+  .alias('help', 'h').argv;
 ```
+
+The one parameter we need is the address we want to trace.
+
+```js
+// Global variable because we need it almost everywhere
+let crossChainMessenger
+```
+
+</details>
+
+### setup
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to view information.
 Note that we do not need signers here, since what we are only calling `view` functions.
 However, we do need the chainId values.
 
+```js
+const setup = async() => {
+  l1provider = new ethers.providers.JsonRpcProvider(process.env.L1URL)
+  l2provider = new ethers.providers.JsonRpcProvider(process.env.L2URL)
+```
+
+Create new [`Provider` objects](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/) from the URLs.
+
+```js
+  l1chainId = (await l1provider._networkPromise).chainId
+  l2chainId = (await l2provider._networkPromise).chainId  
+```
+
+Read the chainId values.
+
+```js
+  crossChainMessenger = new optimismSDK.CrossChainMessenger({
+      l1ChainId: l1chainId,
+      l2ChainId: l2chainId,
+      l1SignerOrProvider: l1provider,
+      l2SignerOrProvider: l2provider,
+      bedrock: l2chainId > 420
+```
+
+The bedrock alpha network has a higher chainId, so we can use this to distinguish between bedrock and the current version.
+This parameter won't be required after bedrock is released.
+
+```js      
+  })
+}    // setup
+```
+
+### ERC20ABI
+
+<details>
+
+We don't need the entire ABI, just the `symbol` function.
 
 ```js
 // Only the part of the ABI we need to get the symbol
@@ -111,28 +160,33 @@ const ERC20ABI = [
     "type": "function"
   }
 ]     // ERC20ABI
+```
+
+</details>
 
 
+### getSymbol
 
+<details>
+
+This function gets the symbol of the asset that was transferred (either ETH or an ERC-20 token)
+
+```js
 const getSymbol = async l1Addr => {
   if (l1Addr == '0x0000000000000000000000000000000000000000')
     return "ETH"
-```
-
-If `l1Addr` is all zeroes, it means the transfer was ETH.
-
-```js
   const l1Contract = new ethers.Contract(l1Addr, ERC20ABI, crossChainMessenger.l1SignerOrProvider)
   return await l1Contract.symbol()  
+}   // getSymbol
 ```
 
-Otherwise, ask the contract (we could have used the L1 or the L2) what is the correct symbol.
+</details>
+
+### describeTx
+
+<details>
 
 ```js
-}   // getSymbol
-
-
-
 // Describe a cross domain transaction, either deposit or withdrawal
 const describeTx = async tx => {
   console.log(`tx:${tx.transactionHash}`)
@@ -140,51 +194,41 @@ const describeTx = async tx => {
   console.log(`\tAmount: ${tx.amount/1e18} ${await getSymbol(tx.l1Token)}`)
   console.log(`\tRelayed: ${await crossChainMessenger.getMessageStatus(tx.transactionHash)  
                               == optimismSDK.MessageStatus.RELAYED}`)
+}  // describeTx
 ```
 
-The result of [`crossDomainMessenger.getMessageStatus`](https://sdk.optimism.io/classes/crosschainmessenger#getMessageStatus) is [a `MessageStatus` enumerated value](https://sdk.optimism.io/enums/messagestatus).
-In this case we only care whether the deposit/withdrawal is still in process or if it is done.
+</details>
+
+### main
+
 
 ```js
-}  // describeTx
-
-
 const main = async () => {    
     await setup()
 
-    // The address we trace
-    const addr = "0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F"
-
-    const deposits = await crossChainMessenger.getDepositsByAddress(addr)
-```
-
-[The `crossChainMessenger.getDepositsByAddress` function](https://sdk.optimism.io/classes/crosschainmessenger#getDepositsByAddress) gives us all the deposits by an address.
-
-```js
-    console.log(`Deposits by address ${addr}`)
+    const deposits = await crossChainMessenger.getDepositsByAddress(argv.address)
+    console.log(`Deposits by address ${argv.address}`)
     for (var i=0; i<deposits.length; i++)
       await describeTx(deposits[i])
 
-    const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(addr)
-```
-
-[The `crossChainMessenger.getWithdrawalsByAddress` function](https://sdk.optimism.io/classes/crosschainmessenger#getWithdrawalsByAddress) gives us all the deposits by an address.
-
-```js
-    console.log(`\n\n\nWithdrawals by address ${addr}`)
+    const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(argv.address)
+    console.log(`\n\n\nWithdrawals by address ${argv.address}`)
     for (var i=0; i<withdrawals.length; i++)
       await describeTx(withdrawals[i])
-
+      
 }  // main
+```
 
+We use [`getDepositsByAddress`](https://sdk.optimism.io/classes/crosschainmessenger#getDepositsByAddress) to get the deposit list and [`getWithdrawalsByAddress`](https://sdk.optimism.io/classes/crosschainmessenger#getWithdrawalsByAddress) to get the withdrawals.
 
-
+```js
 main().then(() => process.exit(0))
   .catch((error) => {
     console.error(error)
     process.exit(1)
   })
 ```
+
 
 
 ## Conclusion
