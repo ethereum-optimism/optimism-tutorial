@@ -4,7 +4,7 @@
   "main": "view-tx.js",
   "license": "MIT",
   "dependencies": {
-    "@eth-optimism/sdk": "0.0.0-2022829172921",
+    "@eth-optimism/sdk": "1.6.8",
     "dotenv": "^16.0.0",
     "ethers": "^5.6.1",
     "yargs": "^17.6.0"
