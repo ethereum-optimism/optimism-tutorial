@@ -8,6 +8,14 @@ require('dotenv').config()
 
 
 const mnemonic = process.env.MNEMONIC
+
+const words = process.env.MNEMONIC.match(/[a-zA-Z]+/g).length
+validLength = [12, 15, 18, 24]
+if (!validLength.includes(words)) {
+   console.log(`The mnemonic (${process.env.MNEMONIC}) is the wrong number of words`)
+   process.exit(-1)
+}
+
 const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`
 const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
 
