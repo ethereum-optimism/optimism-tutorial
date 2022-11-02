@@ -23,6 +23,13 @@ const optimismGoerliUrl =
     `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
     process.env.OPTIMISM_GOERLI_URL
 
+const words = process.env.MNEMONIC.match(/[a-zA-Z]+/g).length
+validLength = [12, 15, 18, 24]
+if (!validLength.includes(words)) {
+   console.log(`The mnemonic (${process.env.MNEMONIC}) is the wrong number of words`)
+   process.exit(-1)
+}
+
 module.exports = {
   solidity: "0.8.13",
   networks: {
@@ -34,8 +41,20 @@ module.exports = {
        url: optimismGoerliUrl,
        accounts: { mnemonic: process.env.MNEMONIC }
     },
-    "optimism-bedrock": {
+    "optimism-bedrock-0": {
        url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
+       accounts: { mnemonic: process.env.MNEMONIC }
+    },
+    "optimism-bedrock-1": {
+       url: 'https://alpha-1-replica-1.bedrock-goerli.optimism.io',
+       accounts: { mnemonic: process.env.MNEMONIC }
+    },
+    "optimism-bedrock-2": {
+       url: 'https://alpha-1-replica-2.bedrock-goerli.optimism.io',
+       accounts: { mnemonic: process.env.MNEMONIC }
+    },
+    "optimism-bedrock-3": {
+       url: 'https://alpha-1-replica-3.bedrock-goerli.optimism.io',
        accounts: { mnemonic: process.env.MNEMONIC }
     }
   }
