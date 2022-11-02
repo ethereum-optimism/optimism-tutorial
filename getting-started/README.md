@@ -551,3 +551,11 @@ After you are done with that development, debug your decentralized application u
 This lets you debug parts that that are Optimism specific such as calls to bridges to transfer assets between layers.
 
 Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
+
+### Contract source verification
+
+You don't have to upload your source code to [block explorers](https://community.optimism.io/docs/useful-tools/explorers/), but it is a good idea. 
+On the test network it lets you issue queries and transactions from the explorer's user interface.
+On the production network it lets users know exactly what your contract does, which is conducive to trust.
+
+Just remember, if you use [the Etherscan API](https://optimistic.etherscan.io/apis), you need one API key for Optimism and a separate one for Optimism Goerli.
