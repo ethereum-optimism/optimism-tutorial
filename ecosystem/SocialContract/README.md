@@ -6,12 +6,14 @@
 The Social Contract smart contract contains a public `attestations` mapping that anyone can write to and read from.
 In this tutorial you learn how to read, interpret, and write those attestations.
 
+The contract we'll be using is on the Optimism Goerli network, at address [`0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d`](https://goerli-optimism.etherscan.io/address/0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d).
+
 ## Prerequisites
 
 [The node script](./index.js) makes these assumptions:
 
 - You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-- There is network connectivity to a provider on the Optimistic Goerli L2 network, and to the npm package registry.
+- There is network connectivity to a provider on the Optimism Goerli network, and to the npm package registry.
 
 
 ## Setup
@@ -43,7 +45,7 @@ In this tutorial you learn how to read, interpret, and write those attestations.
 
    ```js
    SocialContract = await ethers.getContractFactory("SocialContract")
-   socialContract = SocialContract.attach("0x7787194CCA11131C0159c0AcFf7E127CF0B676ed")
+   socialContract = SocialContract.attach("0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d")
    ```
 
 
