@@ -10,8 +10,6 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
 
 ## Prerequisites
 
-[The node script](./index.js) makes these assumptions:
-
 - You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
 - There is network connectivity to a provider on the Optimism Goerli network, and to the npm package registry.
 

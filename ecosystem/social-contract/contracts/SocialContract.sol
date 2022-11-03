@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.15;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.17;
 
 contract SocialContract {
     mapping(address => mapping(address => mapping(bytes32 => bytes))) public attestations;

@@ -9,8 +9,6 @@
     "hardhat": "^2.8.4"
   },
   "dependencies": {
-    "@eth-optimism/contracts": "^0.5.14",
-    "@eth-optimism/sdk": "^1.6.0",
     "dotenv": "^16.0.0"
   }
 }
