@@ -43,7 +43,7 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
 
    ```js
    AttestationStation = await ethers.getContractFactory("AttestationStation")
-   AttestationStation = AttestationStation.attach("0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d")
+   attestationStation = AttestationStation.attach("0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d")
    ```
 
 
@@ -63,10 +63,10 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
 
 
 1. Send the attestation.
-   Note that `socialContract.attest` accepts an array as parameter, so you'll be able to attest to many facts in a single transaction.
+   Note that `attestationStation.attest` accepts an array as parameter, so you'll be able to attest to many facts in a single transaction.
 
    ```js
-   tx = await socialContract.attest([attestation])
+   tx = await attestationStation.attest([attestation])
    rcpt = await tx.wait()
    ```
 
@@ -83,7 +83,7 @@ To read an attestation you need to know three things:
 
    ```js
    creatorAddr = (await ethers.getSigner()).address
-   hex = await socialContract.attestations(creatorAddr, goatAddr, educationKey)
+   hex = await attestationStation.attestations(creatorAddr, goatAddr, educationKey)
    ```
 
 1. Convert to a readable string:
@@ -95,6 +95,6 @@ To read an attestation you need to know three things:
 1. Read an attestation created by a different user.
 
    ```js
-   hex = await socialContract.attestations('0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F', goatAddr, educationKey)
+   hex = await attestationStation.attestations('0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F', goatAddr, educationKey)
    ethers.utils.toUtf8String(hex)
    ```
