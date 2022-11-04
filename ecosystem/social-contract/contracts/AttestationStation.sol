@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-contract SocialContract {
+contract AttestationStation {
     mapping(address => mapping(address => mapping(bytes32 => bytes))) public attestations;
 
     struct AttestationData {
