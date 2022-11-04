@@ -1,9 +1,9 @@
-# Social Contract
+# AttestationStation Contract
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-The Social Contract smart contract contains a public `attestations` mapping that anyone can write to and read from.
+The AttestationStation Contract smart contract contains a public `attestations` mapping that anyone can write to and read from.
 In this tutorial you learn how to read, interpret, and write those attestations.
 
 The contract we'll be using is on the Optimism Goerli network, at address [`0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d`](https://goerli-optimism.etherscan.io/address/0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d).
@@ -42,8 +42,8 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
 1. Attach to the contract on the Optimism Goerli network:
 
    ```js
-   SocialContract = await ethers.getContractFactory("SocialContract")
-   socialContract = SocialContract.attach("0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d")
+   AttestationStation = await ethers.getContractFactory("AttestationStation")
+   AttestationStation = AttestationStation.attach("0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d")
    ```
 
 
