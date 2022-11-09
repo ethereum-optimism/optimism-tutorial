@@ -53,11 +53,11 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
    
    ```js
    goatAddr = '0x00000000000000000000000000000000000060A7'
-   educationKey = ethers.utils.formatBytes32String("education")
+   attendedKey = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("animal-farm.school.attended"))
    attestation = {
        about: goatAddr,
-       key: educationKey,
-       val: ethers.utils.toUtf8Bytes("Ate a geometry textbook")
+       key: attendedKey,
+       val: 1   // for true
    }
    ```
 
@@ -79,22 +79,34 @@ To read an attestation you need to know three things:
 - Subject address (who is being attested about)
 - Key
 
-1. Read the hex value for the attestation you just created:
+1. Read the value for the attestation you just created.
 
    ```js
    creatorAddr = (await ethers.getSigner()).address
-   hex = await attestationStation.attestations(creatorAddr, goatAddr, educationKey)
+   (await attestationStation.attestations(creatorAddr, goatAddr, attendedKey) != '0x')
    ```
 
-1. Convert to a readable string:
+1. Check the attestation for a different address to see that the default is false
 
    ```js
+   notGoatAddr = '0x000000000000000000000000000000000000BEEF'
+   (await attestationStation.attestations(creatorAddr, notGoatAddr, attendedKey) != '0x')
+   ```
+
+1. Read an attestation created by a different user (this one is a grade, so it's text)
+
+   ```js
+   historyKey = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("animal-farm.school.grades.history"))
+   hex = await attestationStation.attestations('0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F', goatAddr, historyKey)
    ethers.utils.toUtf8String(hex)
    ```
 
-1. Read an attestation created by a different user.
+   Note: To create the attestation with an ascii value I used this data structure:
 
    ```js
-   hex = await attestationStation.attestations('0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F', goatAddr, educationKey)
-   ethers.utils.toUtf8String(hex)
+   attestation = {
+      about: goatAddr, 
+      key: historyKey, 
+      val: ethers.utils.toUtf8Bytes("A+")
+   }
    ```
