@@ -40,14 +40,14 @@ Here are the expected results.
 Note that by the time you read this there might be additional transactions reported.
 
 ```
-Deposits by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
+1 deposits by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
 tx:0xa35a3085e025e2addd59c5ef2a2e5529be5141522c3cce78a1b137f2eb992d19
 	Amount: 0.01 ETH
 	Relayed: true
 
 
 
-Withdrawals by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
+2 withdrawals by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
 tx:0x7826399958c6bb3831ef0b02b658e7e3e69f334e20e27a3c14d7caae545c3d0d
 	Amount: 1 DAI
 	Relayed: false
@@ -207,12 +207,12 @@ const main = async () => {
     await setup()
 
     const deposits = await crossChainMessenger.getDepositsByAddress(argv.address)
-    console.log(`Deposits by address ${argv.address}`)
+    console.log(`${deposits.length} deposits by address ${argv.address}`)
     for (var i=0; i<deposits.length; i++)
       await describeTx(deposits[i])
 
     const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(argv.address)
-    console.log(`\n\n\nWithdrawals by address ${argv.address}`)
+    console.log(`\n\n\n${withdrawals.length} withdrawals by address ${argv.address}`)
     for (var i=0; i<withdrawals.length; i++)
       await describeTx(withdrawals[i])
       

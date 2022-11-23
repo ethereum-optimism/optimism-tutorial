@@ -80,12 +80,12 @@ const main = async () => {
     await setup()
 
     const deposits = await crossChainMessenger.getDepositsByAddress(argv.address)
-    console.log(`Deposits by address ${argv.address}`)
+    console.log(`${deposits.length} deposits by address ${argv.address}`)
     for (var i=0; i<deposits.length; i++)
       await describeTx(deposits[i])
 
     const withdrawals = await crossChainMessenger.getWithdrawalsByAddress(argv.address)
-    console.log(`\n\n\nWithdrawals by address ${argv.address}`)
+    console.log(`\n\n\n${withdrawals.length} withdrawals by address ${argv.address}`)
     for (var i=0; i<withdrawals.length; i++)
       await describeTx(withdrawals[i])
       

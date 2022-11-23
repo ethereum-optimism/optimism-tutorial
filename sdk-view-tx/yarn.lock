@@ -2,30 +2,30 @@
 # yarn lockfile v1
 
 
-"@eth-optimism/contracts-bedrock@0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts-bedrock/-/contracts-bedrock-0.8.2.tgz#feec870920ff4523001eab72baf70166edeaef53"
-  integrity sha512-GvJY2o9s3AUPvTxpXjpC3hy8nt9jjyfnV9ZKUMecYvL3Z8FuDKumeS9yUrtTbEZCzANXjiwfkhC0+TeTPfuZ0w==
+"@eth-optimism/contracts-bedrock@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts-bedrock/-/contracts-bedrock-0.9.1.tgz#1e85039421aadd018fd184b5305cf4b77186b8af"
+  integrity sha512-r+AUgPRBnZ0fGNskrjKdeenWQswx7NowAyLZ719+tmy3bQXBcV9vN/ArdNn8qotXBq9fHXOeJVzDzzM17YHkZw==
   dependencies:
-    "@eth-optimism/core-utils" "^0.10.1"
+    "@eth-optimism/core-utils" "^0.11.0"
     "@openzeppelin/contracts" "4.7.3"
     "@openzeppelin/contracts-upgradeable" "4.7.3"
     ethers "^5.7.0"
     hardhat "^2.9.6"
 
-"@eth-optimism/contracts@0.5.37":
-  version "0.5.37"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts/-/contracts-0.5.37.tgz#3aaca1ca1f49ef895d4165cc7bf29c8d1f5b0f56"
-  integrity sha512-HbNUUDIM1dUAM0hWPfGp3l9/Zte40zi8QhVbUSIwdYRA7jG7cZgbteqavrjW8wwFqxkWX9IrtA0KAR7pNlSAIQ==
+"@eth-optimism/contracts@0.5.38":
+  version "0.5.38"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts/-/contracts-0.5.38.tgz#9c55725a253a0c6be351b4823ec1f0af62df8315"
+  integrity sha512-VvPvTD6AKFIPZVwGRK1eDuhRS+WyUGemIiu7h9txpKitkXKpTqb4DscR6cul5Dl+JhonX36ZvnJmDIfF+KBY5A==
   dependencies:
-    "@eth-optimism/core-utils" "0.10.1"
+    "@eth-optimism/core-utils" "0.11.0"
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/abstract-signer" "^5.7.0"
 
-"@eth-optimism/core-utils@0.10.1", "@eth-optimism/core-utils@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/core-utils/-/core-utils-0.10.1.tgz#44515fbca627532a24c6fd433395f00be8525832"
-  integrity sha512-IJvG5UtYvyz6An9QdohlCLoeB3NBFxx2lRJKlPzvYYlfugUNNCHsajRIWIwJTcPRRma0WPd46JUsKACLJDdNrA==
+"@eth-optimism/core-utils@0.11.0", "@eth-optimism/core-utils@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/core-utils/-/core-utils-0.11.0.tgz#cc0ac24fc49a6f5f411e3947d2d3bb5f49333d5a"
+  integrity sha512-/oTyC1sqZ/R97pRk+7cQJpZ6qwmJvqcym9coy9fZaqmIuFaZkjXQKz04lWUPL0zzh9zTN+2nMSB+kZReccmong==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
@@ -44,14 +44,14 @@
     bufio "^1.0.7"
     chai "^4.3.4"
 
-"@eth-optimism/sdk@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/sdk/-/sdk-1.6.8.tgz#f3c0f501ea79cb6a06de87e1755bcc4f27ef1aa2"
-  integrity sha512-A/mj3oANziPNWX9RuPsvHF+oH9Qd655pIKPcJmHyeEdepwnhiMDA+cCCNpnAiQ9z7aakPxtjfnJzCUuILRklnA==
+"@eth-optimism/sdk@1.6.11":
+  version "1.6.11"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/sdk/-/sdk-1.6.11.tgz#683bb14b03b4317c71ddf30b86c837a1cf602e34"
+  integrity sha512-vbhqixN9lPaMFnw4YvpskifWq7ooKKMQ/Gbn4uDnAEpkwrqlTsVOHsVDQY7HOFzHcQ/pWRzyy16seE2A+5x4Kg==
   dependencies:
-    "@eth-optimism/contracts" "0.5.37"
-    "@eth-optimism/contracts-bedrock" "0.8.2"
-    "@eth-optimism/core-utils" "0.10.1"
+    "@eth-optimism/contracts" "0.5.38"
+    "@eth-optimism/contracts-bedrock" "0.9.1"
+    "@eth-optimism/core-utils" "0.11.0"
     lodash "^4.17.21"
     merkletreejs "^0.2.27"
     rlp "^2.2.7"
