@@ -46,6 +46,51 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
    attestationStation = AttestationStation.attach("0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d")
    ```
 
+## Key values
+
+Every attestation has three fields:
+
+- Creator address (who attested this)
+- Subject address (who is being attested about)
+- Key
+
+The first two are self-explanatory, but for the key we propose this convention:
+
+1. The raw key is a dot separated value, going from general to specific, followed by a colon and a data type. For example,
+  
+   ```
+   op.retropgf.szn-2.can-vote:bool
+   ```
+
+   Means that the value attested is permission to vote in season 2 of the RetroPGF distribution of The Optimism Foundation.
+   This value is a boolean (whether the address can or cannot vote).
+
+   Note that there is no need for a central registry of top level names, such as `op.`, because if different addresses attest the same key they do not affect each other.
+
+1. If the raw key is 31 characters long or less, just use it as is.
+
+1. If the raw key is longer than 31 characters, use a different key (one that has the least significant bit turned on so it won't appear to be a regular key).
+   For example, the key can be a hash of the raw key, with the least significant byte replaced by `0xFF`.
+   To record the raw key, create another attestation with these value:
+   
+   | Parameter | Value |
+   | --------- | ----- |
+   | key       | Encoded key |
+   | about     | 0 |
+   | val       | Raw key |
+
+
+You can use this function to encode raw keys.
+
+```js
+encodeRawKey = rawKey => {
+   if (rawKey.length<32) 
+      return ethers.utils.formatBytes32String(rawKey)
+
+   const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(rawKey))
+   return hash.slice(0,64)+'ff'
+}
+```
 
 ## Write an attestation
 
@@ -53,7 +98,7 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
    
    ```js
    goatAddr = '0x00000000000000000000000000000000000060A7'
-   attendedKey = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("animal-farm.school.attended"))
+   attendedKey = encodeRawKey("animalfarm.school.attended:bool")
    attestation = {
        about: goatAddr,
        key: attendedKey,
@@ -70,6 +115,7 @@ The contract we'll be using is on the Optimism Goerli network, at address [`0x3C
    rcpt = await tx.wait()
    ```
 
+1. If you want to see the key, you can use the hash to find your transaction on Etherscan (or just [use my transaction](https://goerli-optimism.etherscan.io/tx/0xe8e5196821656b40e098b6bb9ff2b357353cd4d990cd55f1293a1152901e4100)), click **Click to see More**, and then **View Input As > UTF-8**.
 
 ## Read attestations
 
@@ -93,20 +139,29 @@ To read an attestation you need to know three things:
    (await attestationStation.attestations(creatorAddr, notGoatAddr, attendedKey) != '0x')
    ```
 
-1. Read an attestation created by a different user (this one is a grade, so it's text)
+1. Read an attestation created by a different user (this one is a grade, so it's a string)
 
    ```js
-   historyKey = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("animal-farm.school.grades.history"))
+   historyKey = encodeRawKey("animal-farm.school.grades.history:str")
    hex = await attestationStation.attestations('0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F', goatAddr, historyKey)
    ethers.utils.toUtf8String(hex)
    ```
 
-   Note: To create the attestation with an ascii value I used this data structure:
+   Note: To create the attestation with an ascii value, and record the raw key to interpret it, I used this data structure:
 
    ```js
-   attestation = {
-      about: goatAddr, 
-      key: historyKey, 
-      val: ethers.utils.toUtf8Bytes("A+")
-   }
+   attestations = [
+      {
+         about: goatAddr, 
+         key: historyKey, 
+         val: ethers.utils.toUtf8Bytes("A+")
+      },
+      {
+         about: '0x'.padEnd(42,'0'),
+         key: historyKey,
+         val: ethers.utils.toUtf8Bytes("animal-farm.school.grades.history:str")
+      }
+   ]
    ```
+
+
