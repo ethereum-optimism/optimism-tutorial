@@ -142,7 +142,7 @@ To read an attestation you need to know three things:
 1. Read an attestation created by a different user (this one is a grade, so it's a string)
 
    ```js
-   historyKey = encodeRawKey("animal-farm.school.grades.history:str")
+   historyKey = encodeRawKey("animal-farm.school.grades.history:string")
    hex = await attestationStation.attestations('0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F', goatAddr, historyKey)
    ethers.utils.toUtf8String(hex)
    ```
@@ -159,7 +159,7 @@ To read an attestation you need to know three things:
       {
          about: '0x'.padEnd(42,'0'),
          key: historyKey,
-         val: ethers.utils.toUtf8Bytes("animal-farm.school.grades.history:str")
+         val: ethers.utils.toUtf8Bytes("animal-farm.school.grades.history:string")
       }
    ]
    ```
