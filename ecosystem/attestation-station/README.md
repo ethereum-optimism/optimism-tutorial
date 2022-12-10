@@ -8,6 +8,8 @@ In this tutorial you learn how to read, interpret, and write those attestations.
 
 The contract we'll be using is on the Optimism Goerli network, at address [`0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d`](https://goerli-optimism.etherscan.io/address/0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d).
 
+Note: This is the tutorial for programmatic access to the contract. There is also a [web-based user interface](https://attestationstation.xyz/).
+
 ## Prerequisites
 
 - You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
