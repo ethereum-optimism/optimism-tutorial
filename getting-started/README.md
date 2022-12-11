@@ -43,7 +43,7 @@ The most visible difference is that you have to specify a different endpoint (of
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
 **Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in beta. 
-As it is a different testnet for now, that testnet has Greeter at address .
+As it is a different testnet for now, that testnet has Greeter at address `0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`.
 
 To get ETH on an address in the Bedrock beta network:
 
