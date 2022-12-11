@@ -29,13 +29,17 @@ const setup = async() => {
   l1chainId = (await l1provider._networkPromise).chainId
   l2chainId = (await l2provider._networkPromise).chainId  
 
-  crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: l1chainId,
-      l2ChainId: l2chainId,
-      l1SignerOrProvider: l1provider,
-      l2SignerOrProvider: l2provider,
-      bedrock: l2chainId > 420
-  })
+  crossChainMessengerOpts = {
+    l1ChainId: l1chainId,
+    l2ChainId: l2chainId,
+    l1SignerOrProvider: l1provider,
+    l2SignerOrProvider: l2provider,
+    bedrock: l2chainId > 420
+  }
+
+  console.log(crossChainMessengerOpts)
+
+  crossChainMessenger = new optimismSDK.CrossChainMessenger(crossChainMessengerOpts)
 }    // setup
 
 
