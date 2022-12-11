@@ -41,20 +41,8 @@ module.exports = {
        url: optimismGoerliUrl,
        accounts: { mnemonic: process.env.MNEMONIC }
     },
-    "optimism-bedrock-0": {
-       url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
-       accounts: { mnemonic: process.env.MNEMONIC }
-    },
-    "optimism-bedrock-1": {
-       url: 'https://alpha-1-replica-1.bedrock-goerli.optimism.io',
-       accounts: { mnemonic: process.env.MNEMONIC }
-    },
-    "optimism-bedrock-2": {
-       url: 'https://alpha-1-replica-2.bedrock-goerli.optimism.io',
-       accounts: { mnemonic: process.env.MNEMONIC }
-    },
-    "optimism-bedrock-3": {
-       url: 'https://alpha-1-replica-3.bedrock-goerli.optimism.io',
+    "optimism-bedrock": {
+       url: 'https://bedrock-beta-1-replica-0.optimism.io/',
        accounts: { mnemonic: process.env.MNEMONIC }
     }
   }
