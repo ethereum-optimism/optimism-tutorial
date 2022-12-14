@@ -6,7 +6,7 @@
 The AttestationStation smart contract contains a public `attestations` mapping that anyone can write to and read from. For more context on the AttestationStation visit the [overview in our developer documentation](https://community.optimism.io/docs/governance/attestation-station/).
 In this tutorial you learn how to read, interpret, and write those attestations.
 
-The contract we'll be using is on the Optimism Goerli network, at address [`0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d`](https://goerli-optimism.etherscan.io/address/0x3Ca8c0B5608AE3E4D3b4d29b2699C5fCc0e67f3d).
+The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-optimism.etherscan.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
 
 Note: This is the tutorial for programmatic access to the contract. There is also a [web-based user interface](https://attestationstation.xyz/).
 
