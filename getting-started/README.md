@@ -30,7 +30,7 @@ For development purposes we recommend you use either a local development node or
 That way you don't need to spend real money.
 If you need ETH on Optimism Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
 
-The tests examples below all use Optimism Goerli.
+The tests examples below all use either Optimism Goerli or the Optimism Bedrock beta testnet.
 
 
 ## Interacting with Optimism contracts
@@ -42,18 +42,20 @@ As you can see in the different development stacks below, the way you deploy con
 The most visible difference is that you have to specify a different endpoint (of course). 
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
-**Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in alpha. 
-As it is a different testnet for now, that testnet has Greeter at address [`0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba`](https://blockscout.com/optimism/bedrock-alpha/address/0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba).
+**Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in beta. 
+As it is a different testnet for now, that testnet has Greeter at address `0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`.
 
-To get ETH on an address in the Bedrock alpha network:
+To get ETH on an address in the Bedrock beta network:
 
-1. [Look at the Bedrock alpha contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
+1. [Look at the Bedrock beta contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
 
 1. Find the `OptimismPortalProxy` address.
+   Currently that is [`0xf91795564662dcc9a17de67463ec5ba9c6dc207b`](https://goerli.etherscan.io/address/0xf91795564662dcc9a17de67463ec5ba9c6dc207b), but as we're still in development it might change.
 
-1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock alpha network.
+1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock beta network.
 
-1. To see your balance, [go to the explorer](https://blockscout.com/optimism/bedrock-alpha/) and search for your address.
+1. We don't have an explorer for the bedrock beta network yet, but you can [add it to a wallet](https://oplabs.notion.site/Usage-Guide-3667cfd2b180475894201f4a69089419) and see your balance that way.
+   Alternatively, you can use your preferred development framework to check the balance (see below).
 
 
 ## Hardhat
@@ -115,7 +117,7 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
 
    ```js
       "optimism-bedrock": {
-         url: 'https://alpha-1-replica-0.bedrock-goerli.optimism.io',
+         url: 'https://bedrock-beta-1-replica-0.optimism.io/',
          accounts: { mnemonic: process.env.MNEMONIC }
       }
    ```    
@@ -149,7 +151,7 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba")   
+   greeter = await Greeter.attach("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")   
    ```
 
 1. Read information from the contract:
@@ -246,8 +248,8 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
          "optimism-bedrock": {
             provider: () => new HDWalletProvider(
                process.env.MNEMONIC,
-               'https://alpha-1-replica-0.bedrock-goerli.optimism.io'),
-            network_id: 28528,
+               'https://bedrock-beta-1-replica-0.optimism.io/'),
+            network_id: 902,
             gas: 2000000           
          },
       ```
@@ -280,7 +282,7 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
    **Bedrock:** Use this command:
 
    ```js
-   greeter = await Greeter.at("0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba")
+   greeter = await Greeter.at("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")
    ```
 
 1. Read information from the contact:
@@ -296,13 +298,7 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
    await greeter.greet()
    ```
 
-   **Bedrock:** To get ETH on an address in the Bedrock alpha network:
 
-   1. [Look at the Bedrock alpha contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
-
-   1. Find the `OptimismPortalProxy` address.
-
-   1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock alpha network.
 
 
 ### Contract deployment
@@ -334,8 +330,8 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
    | Parameter | Value |
    | --------- | ----- |
    | Network Name | Optimism Goerli |
-   | New RPC URL  | https://alpha-1-replica-0.bedrock-goerli.optimism.io |
-   | Chain ID     | 28528 |
+   | New RPC URL  | https://bedrock-beta-1-replica-0.optimism.io/ |
+   | Chain ID     | 902 |
    | Currency Symbol | ETH |
    | Block Explorer URL | https://blockscout.com/optimism/bedrock-alpha |
 
@@ -355,7 +351,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-env.png" width="300" />
 
-   **Bedrock:** If using bedrock, the network ID is **28528**.
+   **Bedrock:** If using bedrock, the network ID is **902**.
 
 1. Click the files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />).
 
@@ -374,7 +370,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-connect.png" width="300" />
 
-   **Bedrock:** Use the address `0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba`.
+   **Bedrock:** Use the address `0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`.
 
 1. Click **greet** and expand the transaction result in the console (bottom right).
 
@@ -418,8 +414,8 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    **Bedrock:**
 
    ```sh
-   export ETH_RPC_URL=https://alpha-1-replica-0.bedrock-goerli.optimism.io
-   export GREETER=0x6D86Ae3e08960f04932Ec8e38C5Ac692351114Ba
+   export ETH_RPC_URL=https://bedrock-beta-1-replica-0.optimism.io/
+   export GREETER=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
    ```
 
 1. Call `greet()`. Notice that the response is provided in hex.
@@ -440,12 +436,14 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
    ```
 
+<!--
    **Bedrock:**
    No need for `--legacy`:
 
    ```sh
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"'   
    ```
+-->
 
 1. Test that the greeting has changed:
 
