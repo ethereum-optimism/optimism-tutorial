@@ -8,6 +8,9 @@ You will learn how run a contract on Ethereum that runs another contract on Opti
 
 [You can read more details about this process here](https://community.optimism.io/docs/developers/bridge/messaging/).
 
+This tutorial focuses on sending and receiving messages.
+If you want to trace transactions, [see the tracing tutorial](../sdk-trace-tx/).
+
 ## Seeing it in action
 
 To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and Optimism Goerli.

@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and Optimism using [the Optimism SDK](https://sdk.optimism.io/).
-
+To see how to send these messages, see [the cross domain tutorial](../cross-dom-comm/) or the tutorials on how transfer [ETH](../cross-dom-bridge-eth/) and [ERC-20](../cross-dom-bridge-erc20/).
 
 ## Getting started
 
@@ -62,16 +62,16 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
 1. Get the message receipt.
 
    ```js
-   rcpt = await crossChainMessenger.getMessageReceipt (l1TxHash)
+   l2Rcpt = await crossChainMessenger.getMessageReceipt(l1TxHash)
    ```
 
-   In addition to `rcpt.transactionReceipt`, which contains the stardard transaction receipt, you get `rcpt.receiptStatus` with the transaction status. 
+   In addition to `l2Rcpt.transactionReceipt`, which contains the stardard transaction receipt, you get `l2Rcpt.receiptStatus` with the transaction status. 
    [`1` means successful relay](https://sdk.optimism.io/enums/messagereceiptstatus).
 
-1. Get the hash of the L2 transaction (`rcpt.transactionReceipt.transactionHash`) 
+1. Get the hash of the L2 transaction (`l2Rcpt.transactionReceipt.transactionHash`) 
 
    ```js
-   l2TxHash = rcpt.transactionReceipt.transactionHash
+   l2TxHash = l2Rcpt.transactionReceipt.transactionHash
    ```
 
    You can view this transaction [on Etherscan](https://optimistic.etherscan.io/tx/0xacebdaad885f1b8228fab4f5ef781cdbec05546fab68b005a17a56687efa2428).
@@ -93,7 +93,7 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
      "event RelayedMessage (bytes32 indexed msgHash)"
    ]
    iface = new ethers.utils.Interface(abi)
-   events = rcpt.transactionReceipt.logs.map(x => {
+   events = l2Rcpt.transactionReceipt.logs.map(x => {
      res = iface.parseLog(x)
      res.address = x.address
      return res
@@ -127,16 +127,16 @@ We are going to trace [this withdrawal](https://optimistic.etherscan.io/tx/0xd9f
 1. Get the message receipt.
 
    ```js
-   rcpt = await crossChainMessenger.getMessageReceipt(l2TxHash)
+   l1Rcpt = await crossChainMessenger.getMessageReceipt(l2TxHash)
    ```
 
-   In addition to `rcpt.transactionReceipt`, which contains the stardard transaction receipt, you get `rcpt.receiptStatus` with the transaction status. 
+   In addition to `l1Rcpt.transactionReceipt`, which contains the stardard transaction receipt, you get `l1Rcpt.receiptStatus` with the transaction status. 
    [`1` means successful relay](https://sdk.optimism.io/enums/messagereceiptstatus).
 
-1. Get the hash of the L1 transaction (`rcpt.transactionReceipt.transactionHash`) 
+1. Get the hash of the L1 transaction (`l1Rcpt.transactionReceipt.transactionHash`) 
 
    ```js
-   l1TxHash = rcpt.transactionReceipt.transactionHash
+   l1TxHash = l1Rcpt.transactionReceipt.transactionHash
    ```
 
    You can view this transaction [on Etherscan](https://etherscan.io/tx/0x12fb3b98dfaee334e32d6feeb358e9382806a8a5f418e8837e71a0d92967bef9).
@@ -144,7 +144,7 @@ We are going to trace [this withdrawal](https://optimistic.etherscan.io/tx/0xd9f
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
    To see if actual assets were transfered, you can parse the event log.
-   This is how you parse the event log of the L2 transaction
+   This is how you parse the event log of the L2 transaction.
 
    The event names and their parameters are usually available on Etherscan, but you can't just copy and paste, you need to make a few changes:
 
@@ -159,7 +159,7 @@ We are going to trace [this withdrawal](https://optimistic.etherscan.io/tx/0xd9f
      "event WithdrawalInitiated (address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)"
    ]
    iface = new ethers.utils.Interface(abi)
-   l2Rcpt = await l2provider.getTransactionReceipt(l2TxHash)
+   l2Rcpt = await l2Provider.getTransactionReceipt(l2TxHash)
    events = l2Rcpt.logs.map(x => {
      res = iface.parseLog(x)
      res.address = x.address
