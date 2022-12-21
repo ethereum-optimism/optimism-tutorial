@@ -34,10 +34,25 @@ const setup = async() => {
     l2ChainId: l2chainId,
     l1SignerOrProvider: l1provider,
     l2SignerOrProvider: l2provider,
-    bedrock: l2chainId > 420
+    bedrock: l2chainId > 420,
   }
 
-  console.log(crossChainMessengerOpts)
+  // Add contracts for bedrock beta
+  if (crossChainMessengerOpts.bedrock)
+   crossChainMessengerOpts.contracts = {
+      l1: {
+        "StateCommitmentChain": "0xAc92cEc51dFA387F37590Bc1DC049F50AB99D8eC",
+        "L1CrossDomainMessenger": "0x3e654CBd61711dC9D114b61813846b6401695f07",
+        "L1StandardBridge": "0x3F0135534453CEC0eA94187C62bF80EF21dc9C91",
+        "CanonicalTransactionChain": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "OptimismPortal": "0xf91795564662DcC9a17de67463ec5BA9C6DC207b",
+        "L2OutputOracle": "0xAc92cEc51dFA387F37590Bc1DC049F50AB99D8eC",
+
+        // No longer needed, but a value is required
+        "AddressManager": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "BondManager": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      }
+    }
 
   crossChainMessenger = new optimismSDK.CrossChainMessenger(crossChainMessengerOpts)
 }    // setup
