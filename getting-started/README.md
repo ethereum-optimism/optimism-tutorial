@@ -26,7 +26,7 @@ Alternatively, we have [other great providers](https://community.optimism.io/doc
 
 ### Network choice
 
-For development purposes we recommend you use either a local development node or [Optimism Goerli](https://blockscout.com/optimism/goerli).
+For development purposes we recommend you use either a local development node or [Optimism Goerli](https://goerli-optimism.etherscan.io/).
 That way you don't need to spend real money.
 If you need ETH on Optimism Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
 
@@ -35,7 +35,7 @@ The tests examples below all use either Optimism Goerli or the Optimism Bedrock 
 
 ## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://blockscout.com/optimism/goerli/address/0x106941459A8768f5A92b770e280555FAF817576f). 
+We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://goerli-optimism.etherscan.io/address/0x106941459A8768f5A92b770e280555FAF817576f). 
 You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
@@ -43,7 +43,7 @@ The most visible difference is that you have to specify a different endpoint (of
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
 **Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in beta. 
-As it is a different testnet for now, that testnet has Greeter at address `0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`.
+As it is a different testnet, that testnet has Greeter at address [`0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`](https://blockscout.com/optimism/bedrock-beta/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984).
 
 To get ETH on an address in the Bedrock beta network:
 
@@ -54,8 +54,7 @@ To get ETH on an address in the Bedrock beta network:
 
 1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock beta network.
 
-1. We don't have an explorer for the bedrock beta network yet, but you can [add it to a wallet](https://oplabs.notion.site/Usage-Guide-3667cfd2b180475894201f4a69089419) and see your balance that way.
-   Alternatively, you can use your preferred development framework to check the balance (see below).
+1. Use [the explorer](https://blockscout.com/optimism/bedrock-beta) to verify you have the ETH on Optimism Bedrock beta.
 
 
 ## Hardhat
@@ -113,7 +112,7 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    }   
    ```
 
-   **Bedrock:** To use the Bedrock alpha network, add this network definition in `module.exports.networks`: 
+   **Bedrock:** To use the Bedrock beta network, add this network definition in `module.exports.networks`: 
 
    ```js
       "optimism-bedrock": {
