@@ -11,7 +11,7 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 1. Ensure your computer has:
    - [`git`](https://git-scm.com/downloads)
    - [`node`](https://nodejs.org/en/)
-   - [`yarn`](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+   - [`yarn`](https://classic.yarnpkg.com/lang/en/docs/install)
 
 1. Clone this repository and enter it.
 
@@ -32,6 +32,8 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
    - An application on Optimistic Goerli
 
    Keep a copy of the two keys.
+
+   
 
 1. Copy `.env.example` to `.env` and edit it:
 

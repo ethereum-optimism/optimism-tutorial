@@ -5,7 +5,19 @@
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
+const yargs = require("yargs")
 
+
+const argv = yargs
+  .option('network', {
+    // All of those choices are Optimism:
+    // goerli - Optimism Goerli, the main test network
+    // bedrock - Bedrock version of Optimism Bedrock, our next release
+    choices: ["goerli", "bedrock"],
+    description: 'Optimistm network to use'
+  })
+  .help()
+  .alias('help', 'h').argv;
 
 const mnemonic = process.env.MNEMONIC
 
@@ -17,7 +29,17 @@ if (!validLength.includes(words)) {
 }
 
 const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+
+let l2Url
+
+switch(argv.network) {
+  case "goerli":
+    l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+    break
+  case "bedrock":
+    l2Url = 'https://bedrock-beta-1-replica-0.optimism.io'
+    break
+}
 
 
 // Global variable because we need them almost everywhere
@@ -39,12 +61,39 @@ const getSigners = async () => {
 const setup = async() => {
   const [l1Signer, l2Signer] = await getSigners()
   addr = l1Signer.address
-  crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: 5,    // Goerli value, 1 for mainnet
-      l2ChainId: 420,  // Goerli value, 10 for mainnet
-      l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Signer
-  })
+  crossChainMessengerOpts = {
+    l1ChainId: 5,    // Goerli value, 1 for mainnet
+    l2ChainId: argv.network == "goerli" ? 420 : 902,  // 10 for mainnet
+    l1SignerOrProvider: l1Signer,
+    l2SignerOrProvider: l2Signer,
+    bedrock: argv.network == "bedrock"
+  }
+  if (crossChainMessengerOpts.bedrock) {
+    crossChainMessengerOpts.contracts = {
+      l1: {
+        "StateCommitmentChain": "0xAc92cEc51dFA387F37590Bc1DC049F50AB99D8eC",
+        "L1CrossDomainMessenger": "0x3e654CBd61711dC9D114b61813846b6401695f07",
+        "L1StandardBridge": "0x3F0135534453CEC0eA94187C62bF80EF21dc9C91",
+        "CanonicalTransactionChain": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "OptimismPortal": "0xf91795564662DcC9a17de67463ec5BA9C6DC207b",
+        "L2OutputOracle": "0xAc92cEc51dFA387F37590Bc1DC049F50AB99D8eC",
+
+        // No longer needed, but a value is required
+        "AddressManager": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "BondManager": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      }
+    }
+    crossChainMessengerOpts.bridges = 
+    {
+      ETH: {
+        l1Bridge: "0x3F0135534453CEC0eA94187C62bF80EF21dc9C91",
+        l2Bridge: "0x4200000000000000000000000000000000000010"
+      }
+    } 
+  }
+
+  console.log(crossChainMessengerOpts)
+  crossChainMessenger = new optimismSDK.CrossChainMessenger(crossChainMessengerOpts)
 }    // setup
 
 
@@ -67,6 +116,8 @@ const depositETH = async () => {
   console.log("Deposit ETH")
   await reportBalances()
   const start = new Date()
+
+  console.log(crossChainMessenger)
 
   const response = await crossChainMessenger.depositETH(gwei)
   console.log(`Transaction hash (on L1): ${response.hash}`)
@@ -118,8 +169,6 @@ const main = async () => {
     await setup()
     await depositETH()
     await withdrawETH()
-    // await depositERC20()
-    // await withdrawERC20()
 }  // main
 
 
