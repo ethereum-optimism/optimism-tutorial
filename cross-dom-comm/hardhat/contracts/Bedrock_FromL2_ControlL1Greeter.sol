@@ -11,7 +11,7 @@ contract Bedrock_FromL2_ControlL1Greeter {
     // Should be the same on all Optimism networks
     address crossDomainMessengerAddr = 0x4200000000000000000000000000000000000007;
 
-    address greeterL1Addr = 0x4e971602c65d15c1f2D4eabCea13913D8f8FD645;
+    address greeterL1Addr = 0x3D97905442D4265E648AB7Bf3E05Fa85393CF615;
 
     function setGreeting(string calldata _greeting) public {
         bytes memory message;

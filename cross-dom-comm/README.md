@@ -24,7 +24,7 @@ If you are using the Bedrock beta network, you have to use other addresses:
 
 | Network | Greeter address  |
 | ------- | ---------------- |
-| Goerli (L1) | [`0x36d844727eb739b8076B6Aa8E9034D3701a2cB3f`](https://goerli.etherscan.io/address/0x36d844727eb739b8076B6Aa8E9034D3701a2cB3f#code) |
+| Goerli (L1) | [`0x3D97905442D4265E648AB7Bf3E05Fa85393CF615`](https://goerli.etherscan.io/address/0x3D97905442D4265E648AB7Bf3E05Fa85393CF615#code) |
 | Bedrock Beta (L2) | [`0xa81CD040903A7431d1c7AF269f039574eab5B7D8`](https://blockscout.com/optimism/bedrock-beta/address/0xa81CD040903A7431d1c7AF269f039574eab5B7D8) |
 
 
@@ -65,7 +65,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn
    ```
 
-#### Ethereum message to Optimism
+#### Ethereum message to Optimism (a.k.a. Deposit)
 
 1. Connect the Hardhat console to Optimism Goerli (L2):
 
@@ -135,9 +135,9 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. In the block explorer, [view the event log](https://goerli-optimism.etherscan.io/address/0xc0836ccc8fba87637e782dde6e6572ad624fb984#readContract).
    Notice that the `xorigin` value is the controller address.
 
-   **Bedrock:** Use [this link](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2/logs#address-tabs) for the event log.
+   **Bedrock:** Use [this link](https://blockscout.com/optimism/bedrock-beta/address/0xa81CD040903A7431d1c7AF269f039574eab5B7D8/logs#address-tabs) for the event log.
 
-#### Optimism message to Ethereum
+#### Optimism message to Ethereum (a.k.a. Withdrawal)
 
 ##### Send the message
 
@@ -157,7 +157,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
      ```js
      Greeter = await ethers.getContractFactory("Greeter")
-     greeter = await Greeter.attach("0x4e971602c65d15c1f2D4eabCea13913D8f8FD645")
+     greeter = await Greeter.attach("0x3D97905442D4265E648AB7Bf3E05Fa85393CF615")
      await greeter.greet()     
      ```     
 
@@ -170,7 +170,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    **Bedrock:**
 
    ```sh
-   yarn hardhat console --network bedrock-alpha
+   yarn hardhat console --network bedrock
    ```
 
 1. Deploy and call the `FromL2_ControlL1Greeter` contract.
@@ -211,6 +211,16 @@ This is a complex process that requires a [Merkle proof](https://medium.com/cryp
 You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
 
 
+**Bedrock:**
+
+In the case of Bedrock claiming is a two step process:
+1. Submit the Merkle proof early, you can do it as soon as the root hash is submitted to L1.
+   Use [`proveMessage`](https://sdk.optimism.io/classes/crosschainmessenger#proveMessage-2).
+
+1. When the challenge period is done, use [`finalizeMessage`](https://sdk.optimism.io/classes/crosschainmessenger#finalizeMessage-2) to actually claim the withdrawal.
+
+Here are the actual steps:
+
 1. Connect the Hardhat console to Goerli (L1):
 
    ```sh
@@ -239,13 +249,27 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    **Bedrock:**
    ```js
    l1Signer = await ethers.getSigner()
-   l2Url = "https://alpha-1-replica-0.bedrock-goerli.optimism.io"
+   l2Url = "https://bedrock-beta-1-replica-0.optimism.io"
    crossChainMessenger = new sdk.CrossChainMessenger({ 
       l1ChainId: 5,
-      l2ChainId: 28528,
+      l2ChainId: 902,
       l1SignerOrProvider: l1Signer, 
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
-      bedrock: true
+      bedrock: true,
+      contracts:{
+         l1: {
+         "StateCommitmentChain": "0xAc92cEc51dFA387F37590Bc1DC049F50AB99D8eC",
+         "L1CrossDomainMessenger": "0x3e654CBd61711dC9D114b61813846b6401695f07",
+         "L1StandardBridge": "0x3F0135534453CEC0eA94187C62bF80EF21dc9C91",
+         "CanonicalTransactionChain": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+         "OptimismPortal": "0xf91795564662DcC9a17de67463ec5BA9C6DC207b",
+         "L2OutputOracle": "0xAc92cEc51dFA387F37590Bc1DC049F50AB99D8eC",
+
+         // No longer needed, but a value is required
+         "AddressManager": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+         "BondManager": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+         }
+      }
    })
    ```   
 
@@ -262,12 +286,16 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
      The challenge period only starts when the state root is published, which  means you might need to wait a few minutes.
 
-     **Bedrock alpha:** State roots are published once an hour.
-
    - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (3): Still in the challenge period, wait a few seconds.
 
    - `sdk.MessageStatus.READY_FOR_RELAY` (4): Ready to finalize the message.
      Go on to the next step.
+
+   **Bedrock:**
+   ```js
+   hash = <<< tx.hash from L2 >>>
+   (await crossChainMessenger.getMessageStatus(hash)) == sdk.MessageStatus.IN_CHALLENGE_PERIOD
+   ```
 
 
 1. Finalize the message.
