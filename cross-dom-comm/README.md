@@ -15,17 +15,17 @@ To show how this works we installed [a slightly modified version of HardHat's `G
 
 | Network | Greeter address  |
 | ------- | ---------------- |
-| Goerli (L1) | [0x7fA4D972bB15B71358da2D937E4A830A9084cf2e](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e) |
-| Optimism Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
+| Goerli (L1) | [`0x7fA4D972bB15B71358da2D937E4A830A9084cf2e`](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e) |
+| Optimism Goerli (L2) | [`0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
 
 **Bedrock:**
 
-If you are using the Bedrock alpha network, you have to use other addresses:
+If you are using the Bedrock beta network, you have to use other addresses:
 
 | Network | Greeter address  |
 | ------- | ---------------- |
-| Goerli (L1) | [0x4e971602c65d15c1f2d4eabcea13913d8f8fd645](https://goerli.etherscan.io/address/0x4e971602c65d15c1f2d4eabcea13913d8f8fd645#code) |
-| Bedrock Alpha-1 (L2) | [0xf1918d0752270e0c0c7c845d2691fefd764c72d2](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2) |
+| Goerli (L1) | [`0x36d844727eb739b8076B6Aa8E9034D3701a2cB3f`](https://goerli.etherscan.io/address/0x36d844727eb739b8076B6Aa8E9034D3701a2cB3f#code) |
+| Bedrock Beta (L2) | [`0xa81CD040903A7431d1c7AF269f039574eab5B7D8`](https://blockscout.com/optimism/bedrock-beta/address/0xa81CD040903A7431d1c7AF269f039574eab5B7D8) |
 
 
 ::: Tip What if somebody else uses the same contracts at the same time?
@@ -76,7 +76,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    **Bedrock:** If you're using the bedrock alpha network, run this command:
 
    ```sh
-   yarn hardhat console --network bedrock-alpha
+   yarn hardhat console --network bedrock
    ```   
 
 1. Connect to the greeter on L2:
@@ -91,7 +91,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xf1918D0752270E0c0c7c845d2691FeFd764C72d2")
+   greeter = await Greeter.attach("0xa81CD040903A7431d1c7AF269f039574eab5B7D8")
    await greeter.greet()
    ```
 

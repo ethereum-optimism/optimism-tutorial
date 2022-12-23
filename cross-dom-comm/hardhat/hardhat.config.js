@@ -19,7 +19,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.15",
   networks: {
      "optimism-goerli": {
         url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`,
@@ -29,8 +29,8 @@ module.exports = {
         url: `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`,
         accounts: { mnemonic: process.env.MNEMONIC }
       },
-      "bedrock-alpha": {
-        url: `https://alpha-1-replica-0.bedrock-goerli.optimism.io`,
+      "bedrock": {
+        url: `https://bedrock-beta-1-replica-0.optimism.io`,
         accounts: { mnemonic: process.env.MNEMONIC }
       }      
   } 

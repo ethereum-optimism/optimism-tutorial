@@ -7,10 +7,9 @@ import { ICrossDomainMessenger } from
     "@eth-optimism/contracts/libraries/bridge/ICrossDomainMessenger.sol";
     
 contract Bedrock_FromL1_ControlL2Greeter {
-    // Taken from https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d
-    address crossDomainMessengerAddr = 0x838a6DC4E37CA45D4Ef05bb776bf05eEf50798De ;
+    address crossDomainMessengerAddr = 0x3e654CBd61711dC9D114b61813846b6401695f07;
 
-    address greeterL2Addr = 0xf1918D0752270E0c0c7c845d2691FeFd764C72d2;
+    address greeterL2Addr = 0xa81CD040903A7431d1c7AF269f039574eab5B7D8;
 
     function setGreeting(string calldata _greeting) public {
         bytes memory message;
