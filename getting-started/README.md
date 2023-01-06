@@ -502,6 +502,82 @@ To see this in action:
    ```
 
 
+## Brownie
+
+If you want to develop in Python, you can use the [Brownie](https://eth-brownie.readthedocs.io/en/stable/install.html) toolstack.
+
+### Greeter interaction
+
+1. Specify your mnemonic in `.env`:
+
+   ```sh
+   # Put the mnemonic for an account on Optimism here
+   MNEMONIC=test test test test test test test test test test test junk
+   ```
+
+1. Install packages and enter the console
+
+   ```sh
+   pip install eth-brownie dotenv
+   brownie console --network optimism-goerli
+   ```
+
+   Note that the default color scheme assumes a dark background. 
+   If your default background is light, you might want to create a file `brownie-config.yaml` with this content:
+
+   ```yaml
+   console:
+      show_colors: true
+      color_style: manni
+   ```
+
+1. Read `.env`
+
+   ```python
+   import os
+   from dotenv import load_dotenv
+   load_dotenv()
+   ```
+
+1. Add your accounts to the `accounts` list:
+
+   ```python
+   from eth_account import Account
+   acct = Account.from_mnemonic(os.getenv("MNEMONIC"))
+   accounts.add(acct.privateKey)
+   ```
+
+1. Create an object for the contract:
+
+   ```python
+   greeter = Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
+   ```
+
+1. View the current greeting:
+
+   ```python
+   greeter.greet()
+   ```
+
+1. Modify the greeting and see the new one:
+
+   ```python
+   greeter.setGreeting("Python hello", {'from': accounts[0] })
+   greeter.greet()
+   ```
+
+### Contract deployment
+
+Use this command:
+
+```python
+Greeter.deploy("Hello", {'from': accounts[0]})
+```
+
+Note that this produces an error, but the contract does get deployed.
+
+
+
 
 ## Waffle
 
