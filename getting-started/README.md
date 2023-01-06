@@ -508,6 +508,8 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 
 ### Greeter interaction
 
+1. Change to the `brownie` directory under `getting-started`.
+
 1. Specify your mnemonic in `.env`:
 
    ```sh
@@ -515,11 +517,25 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
    MNEMONIC=test test test test test test test test test test test junk
    ```
 
-1. Install packages and enter the console
+1. Install packages.
 
    ```sh
-   pip install eth-brownie dotenv
-   brownie console --network optimism-goerli
+   pip3 install eth-brownie 
+   pip3 install dotenv
+   ```
+
+1. Update the `optimism-test` network.
+
+   ```sh
+   brownie networks modify optimism-test chainid=420 \
+      explorer=goerli-optimism.etherscan.io \
+      host= << Optimism Goerli URL >>
+   ```
+
+1. Start the console.
+
+   ```sh
+   brownie console --network optimism-test
    ```
 
    Note that the default color scheme assumes a dark background. 
@@ -573,10 +589,6 @@ Use this command:
 ```python
 Greeter.deploy("Hello", {'from': accounts[0]})
 ```
-
-Note that this produces an error, but the contract does get deployed.
-
-
 
 
 ## Waffle
