@@ -135,7 +135,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
-1. In the block explorer, [view the event log](https://goerli-optimism.etherscan.io/address/0xc0836ccc8fba87637e782dde6e6572ad624fb984#readContract).
+1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xc0836ccc8fba87637e782dde6e6572ad624fb984#readContract).
    Notice that the `xorigin` value is the controller address.
 
    **Bedrock:** Use [this link](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2/logs#address-tabs) for the event log.

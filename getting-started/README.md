@@ -26,7 +26,7 @@ Alternatively, we have [other great providers](https://community.optimism.io/doc
 
 ### Network choice
 
-For development purposes we recommend you use either a local development node or [Optimism Goerli](https://goerli-optimism.etherscan.io/).
+For development purposes we recommend you use either a local development node or [Optimism Goerli](https://goerli-explorer.optimism.io/).
 That way you don't need to spend real money.
 If you need ETH on Optimism Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
 
@@ -35,7 +35,7 @@ The tests examples below all use either Optimism Goerli or the Optimism Bedrock 
 
 ## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://goerli-optimism.etherscan.io/address/0x106941459A8768f5A92b770e280555FAF817576f). 
+We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://goerli-explorer.optimism.io/address/0x106941459A8768f5A92b770e280555FAF817576f). 
 You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.

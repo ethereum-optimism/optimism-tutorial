@@ -75,7 +75,7 @@ depositERC20 took 230.453 seconds
 Withdraw ERC20
 OUTb on L1:999     OUTb on L2:402
 Transaction hash (on L2): 0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
-	For more information: https://goerli-optimism.etherscan.io/tx/0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
+	For more information: https://goerli-explorer.optimism.io/tx/0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
 Waiting for status to change to IN_CHALLENGE_PERIOD
 Time so far 6.062 seconds
 In the challenge period, waiting for status READY_FOR_RELAY
@@ -366,7 +366,7 @@ const withdrawERC20 = async () => {
   const response = await crossChainMessenger.withdrawERC20(
     erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   console.log(`Transaction hash (on L2): ${response.hash}`)
-  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
+  console.log(`\tFor more information: https://goerli-explorer.optimism.io/tx/${response.hash}`)
   await response.wait()
 
   console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
