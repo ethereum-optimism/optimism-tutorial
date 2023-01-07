@@ -74,7 +74,7 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
    l2TxHash = l2Rcpt.transactionReceipt.transactionHash
    ```
 
-   You can view this transaction [on Etherscan](https://optimistic.etherscan.io/tx/0xacebdaad885f1b8228fab4f5ef781cdbec05546fab68b005a17a56687efa2428).
+   You can view this transaction [on Etherscan](https://explorer.optimism.io/tx/0xacebdaad885f1b8228fab4f5ef781cdbec05546fab68b005a17a56687efa2428).
    
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
@@ -111,7 +111,7 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
 
 ## Tracing a withdrawal
 
-We are going to trace [this withdrawal](https://optimistic.etherscan.io/tx/0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a).
+We are going to trace [this withdrawal](https://explorer.optimism.io/tx/0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a).
 
 
 1. Get the message status.
