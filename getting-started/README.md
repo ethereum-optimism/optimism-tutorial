@@ -503,6 +503,97 @@ To see this in action:
 
 
 
+
+## Apeworx
+
+
+### Connect to Optimism
+
+1. Install [Apeworx](https://www.apeworx.io/) and create a new project.
+
+   ```sh
+   pip3 install eth-ape
+   ape init
+   <type project name>
+   ```
+
+1. Install plugins.
+   In this tutorial we use Solidity, but Vyper is also supported by Apeworx.
+
+   ```sh
+   ape plugins install optimism solidity
+   ```
+
+1. Import your account.
+   Type this command, followed by your mnemonic (the 12 word phrase) and a pass phrase to protect it.
+
+   ```sh
+   ape accounts import test --use-mnemonic
+   ```
+
+1. Create an [Alchemy](https://dashboard.alchemy.com/) account and create an **Optimistic Goerli** app.
+   [See here for detailed directions](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/alchemy).
+
+1. Edit the configuration file, `ape-config.yaml`:
+
+   ```yaml
+   name: greeter
+
+   default_ecosystem: optimism
+
+   geth:
+     optimism:
+       goerli:
+         uri: https://goerli.optimism.io
+         # Normally the uri would be:
+         # https://opt-goerli.g.alchemy.com/v2/<key>
+   ```
+
+### Greeter interaction
+
+
+1. Start the console:
+
+   ```sh
+   ape console --network optimism:goerli
+   ```
+
+1. Connect to the Greeter contract:   
+
+   ```python
+   greeter = project.get_contract("Greeter").at("0x106941459A8768f5A92b770e280555FAF817576f")
+   ```   
+
+1. Read information from the contract:
+
+   ```python
+   greeter.greet()
+   ```
+
+1. Submit a transaction.
+
+   ```python
+   acct = accounts.load("test")
+   greeter.setGreeting("The chimp says hi", sender=acct)  
+   ```
+
+   Sign the transaction and provide the passphrase if necessary.
+   Ignore error messages if you get them.
+
+1. Verify the greeting changed.
+
+   ```python
+   greeter.greet()
+   ```
+
+### Deploying a contract
+
+To deploy a contract from the Apeworx console:
+
+```
+project.get_contract("Greeter").deploy("Hello", sender=acct)
+```
+
 ## Waffle
 
 Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.
