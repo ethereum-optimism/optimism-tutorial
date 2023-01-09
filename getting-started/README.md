@@ -58,7 +58,7 @@ To get ETH on an address in the Bedrock beta network:
 
 ## Development stacks
 
-= [Apeworx](#apeworx)
+- [Apeworx](#apeworx)
 - [Brownie](#brownie)
 - [Foundry](#foundry)
 - [Hardhat](#hardhat)
