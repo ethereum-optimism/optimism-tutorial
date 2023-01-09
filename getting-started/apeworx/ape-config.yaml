@@ -1,0 +1,12 @@
+name: greeter
+
+default_ecosystem: optimism
+
+geth:
+  optimism:
+      goerli:
+         uri: https://goerli.optimism.io
+         # Normally the uri would be:
+         # https://opt-goerli.g.alchemy.com/v2/<key>
+
+
