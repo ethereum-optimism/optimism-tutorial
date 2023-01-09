@@ -6,7 +6,7 @@
 The AttestationStation smart contract contains a public `attestations` mapping that anyone can write to and read from. For more context on the AttestationStation visit the [overview in our developer documentation](https://community.optimism.io/docs/governance/attestation-station/).
 In this tutorial you learn how to read, interpret, and write those attestations.
 
-The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-optimism.etherscan.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
+The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
 
 Note: This is the tutorial for programmatic access to the contract. There is also a [web-based user interface](https://attestationstation.xyz/).
 
@@ -116,7 +116,7 @@ encodeRawKey = rawKey => {
    rcpt = await tx.wait()
    ```
 
-1. If you want to see the key, you can use the hash to find your transaction on Etherscan (or just [use my transaction](https://goerli-optimism.etherscan.io/tx/0x0e77a32b2558f39e60c3e81bd6efd811cf4b3bd80a4f666d042a221ea63c93ab)), click **Click to see More**, and then **View Input As > UTF-8**.
+1. If you want to see the key, you can use the hash to find your transaction on Etherscan (or just [use my transaction](https://goerli-explorer.optimism.io/tx/0x0e77a32b2558f39e60c3e81bd6efd811cf4b3bd80a4f666d042a221ea63c93ab)), click **Click to see More**, and then **View Input As > UTF-8**.
 
 ## Read attestations
 

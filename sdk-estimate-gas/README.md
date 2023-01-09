@@ -157,8 +157,8 @@ const greeterAddrs = {
 
 Addresses for the Greeter contracts:
 
-- [Mainnet](https://optimistic.etherscan.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
-- [Goerli](https://goerli-optimism.etherscan.io/address/0x106941459a8768f5a92b770e280555faf817576f#code)
+- [Mainnet](https://explorer.optimism.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
+- [Goerli](https://goerli-explorer.optimism.io/address/0x106941459a8768f5a92b770e280555faf817576f#code)
 - [Bedrock Beta](https://blockscout.com/optimism/bedrock-beta/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984)
 
 
