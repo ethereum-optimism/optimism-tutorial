@@ -56,12 +56,21 @@ To get ETH on an address in the Bedrock beta network:
 
 1. Use [the explorer](https://blockscout.com/optimism/bedrock-beta) to verify you have the ETH on Optimism Bedrock beta.
 
+## Development stacks
 
-## Hardhat
+= [Apeworx](#apeworx)
+- [Brownie](#brownie)
+- [Foundry](#foundry)
+- [Hardhat](#hardhat)
+- [Remix](#remix)
+- [Truffle](#truffle)
+- [Waffle](#waffle)
+
+### Hardhat
 
 In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/hardhat).
 
-### Connecting to Optimism
+#### Connecting to Optimism
 
 Follow these steps to add Optimism Goerli support to an existing Hardhat project. 
 
@@ -122,7 +131,7 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    ```    
 
 
-### Greeter interaction
+#### Greeter interaction
 
 1. Run the console:
    ```sh
@@ -167,7 +176,7 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    await greeter.greet()
    ```
 
-### Deploying a contract
+#### Deploying a contract
 
 To deploy a contract from the Hardhat console:
 
@@ -178,11 +187,11 @@ console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
 ```
 
-## Truffle
+### Truffle
 
 In [Truffle](https://trufflesuite.com/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/truffle).
 
-### Connecting to Optimism
+#### Connecting to Optimism
 
 Follow these steps to add Optimism Goerli support to an existing Truffle project. 
 
@@ -257,7 +266,7 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
       We need this because by default Truffle sends transactions with a huge gas limit, which exceeds the amount a bedrock block can accept.
 
 
-### Greeter interaction
+#### Greeter interaction
 
 1. Compile the contract and run the console:
 
@@ -300,7 +309,7 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
 
 
 
-### Contract deployment
+#### Contract deployment
 
 You deploy a new contract from the console:
 
@@ -314,9 +323,9 @@ await greeter.greet()
 
 
 
-## Remix
+### Remix
 
-### Connecting to Optimism
+#### Connecting to Optimism
 
 In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
 
@@ -342,7 +351,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. Select the Environment **Injected Web3 Provider**.
 1. Accept the connection in the wallet.
 
-### Greeter interaction
+#### Greeter interaction
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
@@ -383,7 +392,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. See the results on the console and then click **greet** again to see the greeting changed.   
 
 
-### Contract deployment
+#### Contract deployment
 
 You deploy a new contract:
 
@@ -397,9 +406,9 @@ You deploy a new contract:
 
 
 
-## Foundry
+### Foundry
 
-### Greeter interaction
+#### Greeter interaction
 
 Foundry does not give us a JavaScript console, everything can be done from the shell command line.
 
@@ -450,7 +459,7 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    cast call $GREETER "greet()" | cast --to-ascii
    ```
 
-### Contract deployment
+#### Contract deployment
 
 Use this command:
 
@@ -460,7 +469,7 @@ forge create --mnemonic-path ./mnem.delme Greeter \
 ```
 
 
-### Using the Optimism contract library
+#### Using the Optimism contract library
 
 This library is provided as an [npm package](https://www.npmjs.com/package/@eth-optimism/contracts), which is different from what forge expects.
 Here is how you can import it without importing the entire Optimism monorepo:
@@ -502,11 +511,11 @@ To see this in action:
    ```
 
 
-## Brownie
+### Brownie
 
 If you want to develop in Python, you can use the [Brownie](https://eth-brownie.readthedocs.io/en/stable/install.html) toolstack.
 
-### Greeter interaction
+#### Greeter interaction
 
 1. Change to the `brownie` directory under `getting-started`.
 
@@ -582,7 +591,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
    greeter.greet()
    ```
 
-### Contract deployment
+#### Contract deployment
 
 Use this command:
 
@@ -592,10 +601,10 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 
 
 
-## Apeworx
+### Apeworx
 
 
-### Connect to Optimism
+#### Connect to Optimism
 
 1. Install [Apeworx](https://www.apeworx.io/) and create a new project.
 
@@ -637,7 +646,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
          # https://opt-goerli.g.alchemy.com/v2/<key>
    ```
 
-### Greeter interaction
+#### Greeter interaction
 
 
 1. Start the console:
@@ -674,7 +683,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
    greeter.greet()
    ```
 
-### Deploying a contract
+#### Deploying a contract
 
 To deploy a contract from the Apeworx console:
 
@@ -682,11 +691,11 @@ To deploy a contract from the Apeworx console:
 project.get_contract("Greeter").deploy("Hello", sender=acct)
 ```
 
-## Waffle
+### Waffle
 
 Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.
 
-### Prerequisites
+#### Prerequisites
 
 The tutorial makes these assumptions:
 
@@ -695,7 +704,7 @@ The tutorial makes these assumptions:
 1. You have a Goerli Optimism address with enough funds on it. You can use [these faucets](https://community.optimism.io/docs/useful-tools/faucets/) to get some free test funds.
 1. You have general understanding of smart contracts development.
 
-### Instructions
+#### Instructions
 
 1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
 
@@ -714,7 +723,7 @@ The tutorial makes these assumptions:
 
 
 
-### Compatibility with other tools
+#### Compatibility with other tools
 
 Note that in the tutorial we've been compiling smart contracts using [Waffle](https://github.com/TrueFiEng/Waffle). If you prefer to compile your smart contracts using other tools (like [Hardhat](https://hardhat.org/)) you can install the appropriate packages and modify `build` script in the `package.json` file.
 
