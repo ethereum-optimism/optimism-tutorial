@@ -29,6 +29,5 @@
 ## Ecosystem
 
 - [Alchemy](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/alchemy)
-- [OpenGSN (ETH-less transactions)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/opengsn)
--[AttestationStation (Reputation primitive on Optimism)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/attestation-station)
-
+- [AttestationStation (Reputation primitive on Optimism)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/attestation-station)
+- [Tenderly](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/tenderly)
