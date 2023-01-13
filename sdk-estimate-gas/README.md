@@ -48,7 +48,6 @@ This calculation is complicated by the fact that the major cost is the cost of w
    - `--network`: The network to estimate gas on:
      - `mainnet`: The Optimism mainnet network
      - `goerli`: The Optimism testnet on Goerli
-     - `bedrock-beta`: The Bedrock beta test network
 
    - `--verify`: Run the transaction to verify the estimate
 
@@ -123,8 +122,7 @@ const argv = yargs
     // All of those choices are Optimism:
     // mainnet - Optimism Mainnet, the production network
     // goerli - Optimism Goerli, the main test network
-    // bedrock-beta - Beta version of Optimism Bedrock, our next release
-    choices: ["mainnet", "goerli", "bedrock-beta"],
+    choices: ["mainnet", "goerli"],
     description: 'Optimistm network to use'
   }).
   option('verify', {
@@ -147,11 +145,9 @@ Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
 // These are the addresses of the Greeter.sol contract on the various Optimism networks:
 // mainnet - Optimism Mainnet, the production network
 // goerli - Optimism Goerli, the main test network
-// bedrock-alpha - Alpha version of Optimism Bedrock, our next release
 const greeterAddrs = {
   "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
-  "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
-  "bedrock-beta": "0xC0836cCc8FBa87637e782Dde6e6572aD624fb984"
+  "goerli": "0x106941459a8768f5a92b770e280555faf817576f"
 }
 ```
 
@@ -159,7 +155,7 @@ Addresses for the Greeter contracts:
 
 - [Mainnet](https://explorer.optimism.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
 - [Goerli](https://goerli-explorer.optimism.io/address/0x106941459a8768f5a92b770e280555faf817576f#code)
-- [Bedrock Beta](https://blockscout.com/optimism/bedrock-beta/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984)
+
 
 
 ```js
@@ -185,8 +181,6 @@ Return a [Promise](https://www.w3schools.com/js/js_promise.asp) that gets resolv
 const getSigner = async () => {
   let endpointUrl;
 
-  if (argv.network == 'bedrock-beta')
-    endpointUrl = 'https://bedrock-beta-1-replica-0.optimism.io'
   if (argv.network == 'goerli')
     endpointUrl = 
       process.env.ALCHEMY_API_KEY ? 
