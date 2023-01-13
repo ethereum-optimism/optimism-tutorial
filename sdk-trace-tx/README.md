@@ -10,8 +10,9 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
 
 ### Prerequisites
 
-1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-1. Access to L1 (Ethereum mainnet) and L2 (Optimism) providers.
+- Have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
+- Access to L1 (Ethereum mainnet) and L2 (Optimism) providers.
+
 
 1. Use `yarn` to download the packages the script needs.
 
@@ -110,6 +111,8 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
    ```
 
 ## Tracing a withdrawal
+
+<!-- GOON - verify on Goerli  -->
 
 We are going to trace [this withdrawal](https://explorer.optimism.io/tx/0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a).
 
