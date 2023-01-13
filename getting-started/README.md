@@ -72,7 +72,7 @@ In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one]
 
 #### Connecting to Optimism
 
-Follow these steps to add Optimism Goerli support to an existing Hardhat project. 
+Follow these steps to add Optimism Goerli support to an existing Hardhat project (or a newly created one). 
 
 
 1. Define your network configuration in `.env`:
@@ -121,15 +121,6 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    }   
    ```
 
-   **Bedrock:** To use the Bedrock beta network, add this network definition in `module.exports.networks`: 
-
-   ```js
-      "optimism-bedrock": {
-         url: 'https://bedrock-beta-1-replica-0.optimism.io/',
-         accounts: { mnemonic: process.env.MNEMONIC }
-      }
-   ```    
-
 
 #### Greeter interaction
 
@@ -140,14 +131,6 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    yarn hardhat console --network optimism-goerli
    ```
 
-   **Bedrock:**
-
-   Replace the final command with
-
-   ```sh
-   yarn hardhat console --network optimism-bedrock
-   ```
-
 1. Connect to the Greeter contract:   
 
    ```js
@@ -155,12 +138,6 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
    ```   
 
-   **Bedrock:** If using Bedrock, remember to use the correct address:
-
-   ```js
-   Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")   
-   ```
 
 1. Read information from the contract:
 
@@ -268,42 +245,37 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
 
 #### Greeter interaction
 
-1. Compile the contract and run the console:
+1. Compile the contract and run the console.
 
    ```sh
    truffle compile
    truffle console --network optimism-goerli
    ```
 
-   **Bedrock:** Replace the last command with:
-
-   ```sh
-   truffle console --network optimism-bedrock
-   ```
-
-1. Connect to the Greeter contact:
+1. Connect to the Greeter contact.
 
    ```js
    greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
    ```
 
-   **Bedrock:** Use this command:
-
-   ```js
-   greeter = await Greeter.at("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")
-   ```
-
-1. Read information from the contact:
+1. Read information from the contact.
 
    ```js
    await greeter.greet()
    ```
 
-1. Submit a transaction, wait for it to be processed, and see that it affected the state.
+1. Submit a transaction.
 
    ```js
    tx = await greeter.setGreeting(`Truffle: Hello ${new Date()}`)
-   await greeter.greet()
+   ```
+
+1. Wait a few seconds for the transaction to be processed.s
+
+1. See that the greeting has changed.
+
+   ```js
+   greeter.greet()
    ```
 
 
@@ -311,10 +283,15 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
 
 #### Contract deployment
 
-You deploy a new contract from the console:
+You deploy a new contract from the console.
 
 ``` 
 greeter = await Greeter.new("Greeter from Truffle")
+```
+
+Wait a few seconds for the deployment to actually happen and then verify.
+
+```
 console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
 ```
@@ -332,23 +309,11 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. Add Optimism Goerli to your wallet. 
    The easiest way to do this is to use [chainid.link](https://chainid.link/?network=optimism-goerli).
 
-   **Bedrock:**
-   If you use Metamask, [follow the directions here (starting at step 4)](https://help.optimism.io/hc/en-us/articles/6665988048795), with these parameters:
-
-   | Parameter | Value |
-   | --------- | ----- |
-   | Network Name | Optimism Goerli |
-   | New RPC URL  | https://bedrock-beta-1-replica-0.optimism.io/ |
-   | Chain ID     | 902 |
-   | Currency Symbol | ETH |
-   | Block Explorer URL | https://blockscout.com/optimism/bedrock-alpha |
-
-
 1. Log on with your wallet to Optimism Goerli.
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
-1. Select the Environment **Injected Web3 Provider**.
+1. Select the Environment **Injected Provider - MetaMask**.
 1. Accept the connection in the wallet.
 
 #### Greeter interaction
@@ -358,8 +323,6 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. Make sure your environment is **Injected Web3** and the network ID is **420**.
 
    <img src="assets/remix-env.png" width="300" />
-
-   **Bedrock:** If using bedrock, the network ID is **902**.
 
 1. Click the files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />).
 
@@ -378,8 +341,6 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-connect.png" width="300" />
 
-   **Bedrock:** Use the address `0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`.
-
 1. Click **greet** and expand the transaction result in the console (bottom right).
 
    ![](assets/remix-query.png)
@@ -389,7 +350,9 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-tx.png" width="300" />
 
-1. See the results on the console and then click **greet** again to see the greeting changed.   
+1. See the results on the console and then click **greet** again to see the greeting changed (see it under the **greet** button).
+
+
 
 
 #### Contract deployment
@@ -419,13 +382,6 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
    ```
 
-   **Bedrock:**
-
-   ```sh
-   export ETH_RPC_URL=https://bedrock-beta-1-replica-0.optimism.io/
-   export GREETER=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
-   ```
-
 1. Call `greet()`. Notice that the response is provided in hex.
 
    ```sh
@@ -443,15 +399,6 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    ```sh
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
    ```
-
-<!--
-   **Bedrock:**
-   No need for `--legacy`:
-
-   ```sh
-   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"'   
-   ```
--->
 
 1. Test that the greeting has changed:
 
@@ -493,22 +440,6 @@ Here is how you can import it without importing the entire Optimism monorepo:
    ```
 
 You can now run `forge build` with contracts that use the Optimism contract library.
-
-To see this in action:
-
-1. Install the JavaScript libraries
-
-  ```sh
-  cd foundry/lib
-  yarn
-  ```
-
-1. Test the application
-
-   ```sh
-   cd ..
-   forge test
-   ```
 
 
 ### Brownie
@@ -671,7 +602,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 
    ```python
    acct = accounts.load("test")
-   greeter.setGreeting("The chimp says hi", sender=acct)  
+   greeter.setGreeting("Apeworx says hi", sender=acct)  
    ```
 
    Sign the transaction and provide the passphrase if necessary.
@@ -691,41 +622,6 @@ To deploy a contract from the Apeworx console:
 project.get_contract("Greeter").deploy("Hello", sender=acct)
 ```
 
-### Waffle
-
-Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.
-
-#### Prerequisites
-
-The tutorial makes these assumptions:
-
-1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
-1. You have a Goerli Optimism address with enough funds on it. You can use [these faucets](https://community.optimism.io/docs/useful-tools/faucets/) to get some free test funds.
-1. You have general understanding of smart contracts development.
-
-#### Instructions
-
-1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
-
-1. In the terminal, run the following commands:
-
-   ```sh
-   cd waffle
-   yarn
-   yarn build
-   yarn test
-   ```
-
-   You should see 2 tests passing.
-
-1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
-
-
-
-#### Compatibility with other tools
-
-Note that in the tutorial we've been compiling smart contracts using [Waffle](https://github.com/TrueFiEng/Waffle). If you prefer to compile your smart contracts using other tools (like [Hardhat](https://hardhat.org/)) you can install the appropriate packages and modify `build` script in the `package.json` file.
 
 ## Best practices
 

@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@eth-optimism/contracts": "^0.5.30"
+    "@eth-optimism/contracts": "^0.5.40"
   }
 }
