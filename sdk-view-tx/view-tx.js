@@ -6,20 +6,20 @@ const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
 
-const network = "mainnet"    // "mainnet" or "goerli"
-
-
-
 // Global variable because we need them almost everywhere
 let crossChainMessenger
 
 
 const setup = async() => {
+
+  l1SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L1URL)
+  l2SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L2URL)
+
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "goerli" ? 5 : 1,    
-      l2ChainId: network === "goerli" ? 420 : 10,          
-      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
+      l1ChainId: (await l1SignerOrProvider._networkPromise).chainId,
+      l2ChainId: (await l2SignerOrProvider._networkPromise).chainId,      
+      l1SignerOrProvider: l1SignerOrProvider,
+      l2SignerOrProvider: l2SignerOrProvider
   })
 }    // setup
 

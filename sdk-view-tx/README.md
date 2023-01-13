@@ -25,7 +25,7 @@ This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/
    yarn
    ```
 
-1. Copy `.env.example` to `.env` and specify the URLs for L1 
+1. Copy `.env.example` to `.env` and specify the URLs for L1 and L2.
 
 1. Use Node to run the script
 
@@ -68,22 +68,20 @@ const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
 require('dotenv').config()
 
-const network = "mainnet"    // "mainnet" or "goerli"
-```
-
-If you decide to use Goerli you'll need to specify appropriate (Goerli and Optimism Goerli) provider URLs in `.env`.
-
-```js
 // Global variable because we need them almost everywhere
 let crossChainMessenger
 
 
 const setup = async() => {
+
+  l1SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L1URL)
+  l2SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L2URL)
+
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: network === "goerli" ? 5 : 1,    
-      l2ChainId: network === "goerli" ? 420 : 10,      
-      l1SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L1URL),
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(process.env.L2URL)
+      l1ChainId: (await l1SignerOrProvider._networkPromise).chainId,
+      l2ChainId: (await l2SignerOrProvider._networkPromise).chainId,      
+      l1SignerOrProvider: l1SignerOrProvider,
+      l2SignerOrProvider: l2SignerOrProvider
   })
 }    // setup
 ```
