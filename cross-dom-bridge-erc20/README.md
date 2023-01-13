@@ -8,6 +8,10 @@ While you *could* use [the bridge contracts](https://community.optimism.io/docs/
 The SDK provides transparent safety rails to prevent that mistake.
 
 
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network.
+Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-bridge-erc20).
+
+
 ## Setup
 
 1. Ensure your computer has:
@@ -56,40 +60,40 @@ When running on Goerli, the output from the script should be similar to:
 
 ```
 Deposit ERC20
-OUTb on L1:     OUTb on L2:401
-You don't have enough OUTb on L1. Let's call the faucet to fix that
-Faucet tx: 0xff61c59bb14600b9cef74d6788bf8778d601326b67ec108b8bee5e02de62b939
-	More info: https://goerli.etherscan.io/tx/0xff61c59bb14600b9cef74d6788bf8778d601326b67ec108b8bee5e02de62b939
-New L1 OUTb balance: 1000
-Allowance given by tx 0x7c541937bcdb76550aecc4558dd3c53955ea2fa61e38006fa3be246277c5d2c9
-	More info: https://goerli.etherscan.io/tx/0x7c541937bcdb76550aecc4558dd3c53955ea2fa61e38006fa3be246277c5d2c9
-Time so far 24.749 seconds
-Deposit transaction hash (on L1): 0xa083b921a583e3eb0a149e79a638cc43aec42af6a80812b5a3883f8ce799a177
-	More info: https://goerli.etherscan.io/tx/0xa083b921a583e3eb0a149e79a638cc43aec42af6a80812b5a3883f8ce799a177
+OUTb on L1:999     OUTb on L2:401
+Allowance given by tx 0x5c6335a8252234deb5b65737c8473f82ba09a7c6fc7871946233f336cad6e906
+	More info: https://goerli.etherscan.io/tx/0x5c6335a8252234deb5b65737c8473f82ba09a7c6fc7871946233f336cad6e906
+Time so far 16.75 seconds
+Deposit transaction hash (on L1): 0x99eca431e66fa3d1401a4e9882436c7e71a9c410fb077cc6f988fca67845c8c5
+	More info: https://goerli.etherscan.io/tx/0x99eca431e66fa3d1401a4e9882436c7e71a9c410fb077cc6f988fca67845c8c5
 Waiting for status to change to RELAYED
-Time so far 49.39 seconds
-OUTb on L1:999     OUTb on L2:402
-depositERC20 took 230.453 seconds
+Time so far 40.388 seconds
+OUTb on L1:998     OUTb on L2:402
+depositERC20 took 69.244 seconds
 
 
 Withdraw ERC20
-OUTb on L1:999     OUTb on L2:402
-Transaction hash (on L2): 0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
-	For more information: https://goerli-explorer.optimism.io/tx/0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
-Waiting for status to change to IN_CHALLENGE_PERIOD
-Time so far 6.062 seconds
+OUTb on L1:998     OUTb on L2:402
+Transaction hash (on L2): 0x82201cc0089b98912e9329bd85cc56d26dbe916a2d4356d019be3e75d6f6d330
+	For more information: https://goerli-optimism.etherscan.io/tx/0x82201cc0089b98912e9329bd85cc56d26dbe916a2d4356d019be3e75d6f6d330
+Waiting for status to be READY_TO_PROVE
+Time so far 8.937 seconds
+Time so far 190.288 seconds
 In the challenge period, waiting for status READY_FOR_RELAY
-Time so far 210.964 seconds
+Time so far 194.306 seconds
 Ready for relay, finalizing message now
-Time so far 239.674 seconds
+Time so far 221.929 seconds
 Waiting for status to change to RELAYED
-Time so far 244.62 seconds
-OUTb on L1:1000     OUTb on L2:401
-withdrawERC20 took 254.932 seconds
+Time so far 224.121 seconds
+OUTb on L1:999     OUTb on L2:401
+withdrawERC20 took 245.182 seconds
+
+
+
 ```
 
-As you can see, the total running time is about eight minutes.
-It could be longer
+As you can see, the total running time is about five minutes.
+It could be longer.
 
 
 ## How does it work?
@@ -220,11 +224,14 @@ Get the signers we need, and our address.
       l1ChainId: 5,    // Goerli value, 1 for mainnet
       l2ChainId: 420,  // Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Signer
+      l2SignerOrProvider: l2Signer,
+      bedrock: true
   })
 ```
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to transfer assets.
+At the current version of the SDK we need to specify that it is a bedrock transaction.
+After the production network is upgraded to bedrock, that will be the default.
 
 
 ```js
