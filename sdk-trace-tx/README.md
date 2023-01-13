@@ -21,8 +21,8 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
    ```
 
 1. Copy `.env.example` to `.env` and specify the URLs for L1 and L2.
-   For the transactions in this tutorial we will use mainnet.
-   However, you can use the same code to trace Georli testnet transactions.
+   For the transactions in this tutorial we will use Goerli.
+   However, you can use the same code to trace mainnet transactions.
 
 1. Start the hardhat console
 
@@ -42,18 +42,21 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
      l1ChainId: l1ChainId,    
      l2ChainId: l2ChainId,          
      l1SignerOrProvider: l1Provider,
-     l2SignerOrProvider: l2Provider
+     l2SignerOrProvider: l2Provider,
+     bedrock: true
    })
    ```
 
+   **Note:** Until mainnet is updated to bedrock, don't put the `bedrock: true` when tracing bedrock transactions
+
 ## Tracing a deposit
 
-We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2addd59c5ef2a2e5529be5141522c3cce78a1b137f2eb992d19). 
+We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052). 
 
 1. Get the message status.
 
    ```js
-   l1TxHash = "0xa35a3085e025e2addd59c5ef2a2e5529be5141522c3cce78a1b137f2eb992d19"
+   l1TxHash = "0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052"
    await crossChainMessenger.getMessageStatus(l1TxHash)
    ```
 
@@ -75,7 +78,7 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
    l2TxHash = l2Rcpt.transactionReceipt.transactionHash
    ```
 
-   You can view this transaction [on Etherscan](https://explorer.optimism.io/tx/0xacebdaad885f1b8228fab4f5ef781cdbec05546fab68b005a17a56687efa2428).
+   You can view this transaction [on Etherscan](https://goerli-optimism.etherscan.io/tx/0xa31eda15162e681e78a52e35b63c3b3379e23705129c19d186790089519ac7d7).
    
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
@@ -94,33 +97,35 @@ We are going to trace [this deposit](https://etherscan.io/tx/0xa35a3085e025e2add
      "event RelayedMessage (bytes32 indexed msgHash)"
    ]
    iface = new ethers.utils.Interface(abi)
-   events = l2Rcpt.transactionReceipt.logs.map(x => {
-     res = iface.parseLog(x)
-     res.address = x.address
-     return res
-   })
+   logEvents = l2Rcpt.transactionReceipt.logs.map(x => {
+      try {
+      res = iface.parseLog(x)
+      res.address = x.address
+      return res
+      } catch (e) {}
+   }).filter(e => e != undefined)
    ```
+
+   The `try .. catch` syntax is necessary because not all the log entries can be parsed by `iface`.
 
 1. When an asset is deposited, it is actually locked in the bridge on L1, and an equivalent asset is minted on L2.
    To see transfered assets, look for `Mint` events.
 
    ```js
-   mints = events.filter(x => x.name == 'Mint')
+   mints = logEvents.filter(x => x.name == 'Mint')
    for(i = 0; i<mints.length; i++)
      console.log(`Asset: ${mints[i].address}, amount ${mints[0].args._amount / 1e18}`)
    ```
 
 ## Tracing a withdrawal
 
-<!-- GOON - verify on Goerli  -->
-
-We are going to trace [this withdrawal](https://explorer.optimism.io/tx/0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a).
+We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053).
 
 
 1. Get the message status.
 
    ```js
-   l2TxHash = "0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a"
+   l2TxHash = "0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053"
    await crossChainMessenger.getMessageStatus(l2TxHash)
    ```
 
@@ -142,7 +147,7 @@ We are going to trace [this withdrawal](https://explorer.optimism.io/tx/0xd9fd11
    l1TxHash = l1Rcpt.transactionReceipt.transactionHash
    ```
 
-   You can view this transaction [on Etherscan](https://etherscan.io/tx/0x12fb3b98dfaee334e32d6feeb358e9382806a8a5f418e8837e71a0d92967bef9).
+   You can view this transaction [on Etherscan](https://goerli.etherscan.io/tx/0xec821514b495c2c49dcba9b2c1a0955b85d02cd516748bc89c373d534ee878d4).
    
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
@@ -168,13 +173,22 @@ We are going to trace [this withdrawal](https://explorer.optimism.io/tx/0xd9fd11
      res.address = x.address
      return res
    })
+   logEvents = l2Rcpt.logs.map(x => {
+      try {
+      res = iface.parseLog(x)
+      res.address = x.address
+      return res
+      } catch (e) {}
+   }).filter(e => e != undefined)
    ```
+
+   The `try .. catch` syntax is necessary because not all the log entries can be parsed by `iface`.
 
 1. When an asset is withdrawn, it is burned on L2, and then the bridge on L1 releases the equivalent asset.
    To see transfered assets, look for `Burn` events.
 
    ```js
-   burns = events.filter(x => x.name == 'Burn')
+   burns = logEvents.filter(x => x.name == 'Burn')
    for(i = 0; i<burns.length; i++)
      console.log(`Asset: ${burns[i].address}, amount ${burns[0].args._amount / 1e18}`)
    ```
