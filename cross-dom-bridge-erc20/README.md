@@ -8,6 +8,10 @@ While you *could* use [the bridge contracts](https://community.optimism.io/docs/
 The SDK provides transparent safety rails to prevent that mistake.
 
 
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network.
+Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-bridge-erc20).
+
+
 ## Setup
 
 1. Ensure your computer has:
@@ -52,44 +56,45 @@ On the production network the withdrawals take around a week each, because of th
 
 ### Expected output
 
-When running on Goerli, the output from the script should be similar to:
+The output from the script should be similar to:
 
 ```
 Deposit ERC20
-OUTb on L1:     OUTb on L2:401
+OUTb on L1:     OUTb on L2:
 You don't have enough OUTb on L1. Let's call the faucet to fix that
-Faucet tx: 0xff61c59bb14600b9cef74d6788bf8778d601326b67ec108b8bee5e02de62b939
-	More info: https://goerli.etherscan.io/tx/0xff61c59bb14600b9cef74d6788bf8778d601326b67ec108b8bee5e02de62b939
+Faucet tx: 0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
+	More info: https://goerli.etherscan.io/tx/0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
 New L1 OUTb balance: 1000
-Allowance given by tx 0x7c541937bcdb76550aecc4558dd3c53955ea2fa61e38006fa3be246277c5d2c9
-	More info: https://goerli.etherscan.io/tx/0x7c541937bcdb76550aecc4558dd3c53955ea2fa61e38006fa3be246277c5d2c9
-Time so far 24.749 seconds
-Deposit transaction hash (on L1): 0xa083b921a583e3eb0a149e79a638cc43aec42af6a80812b5a3883f8ce799a177
-	More info: https://goerli.etherscan.io/tx/0xa083b921a583e3eb0a149e79a638cc43aec42af6a80812b5a3883f8ce799a177
+Allowance given by tx 0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
+	More info: https://goerli.etherscan.io/tx/0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
+Time so far 15.968 seconds
+Deposit transaction hash (on L1): 0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
+	More info: https://goerli.etherscan.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
 Waiting for status to change to RELAYED
-Time so far 49.39 seconds
-OUTb on L1:999     OUTb on L2:402
-depositERC20 took 230.453 seconds
+Time so far 35.819 seconds
+OUTb on L1:999     OUTb on L2:1
+depositERC20 took 65.544 seconds
 
 
 Withdraw ERC20
-OUTb on L1:999     OUTb on L2:402
-Transaction hash (on L2): 0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
-	For more information: https://goerli-explorer.optimism.io/tx/0x1629ab4113b3aa68447a0a08d066c5c24be1214c624b4c622578dd6e20ea05ae
-Waiting for status to change to IN_CHALLENGE_PERIOD
-Time so far 6.062 seconds
+OUTb on L1:999     OUTb on L2:1
+Transaction hash (on L2): 0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
+	For more information: https://goerli-optimism.etherscan.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
+Waiting for status to be READY_TO_PROVE
+Time so far 8.03 seconds
+Time so far 300.833 seconds
 In the challenge period, waiting for status READY_FOR_RELAY
-Time so far 210.964 seconds
+Time so far 304.811 seconds
 Ready for relay, finalizing message now
-Time so far 239.674 seconds
+Time so far 331.821 seconds
 Waiting for status to change to RELAYED
-Time so far 244.62 seconds
-OUTb on L1:1000     OUTb on L2:401
-withdrawERC20 took 254.932 seconds
+Time so far 334.525 seconds
+OUTb on L1:1000     OUTb on L2:
+withdrawERC20 took 355.772 seconds
 ```
 
-As you can see, the total running time is about eight minutes.
-It could be longer
+As you can see, the total running time is about six minutes.
+It could be longer.
 
 
 ## How does it work?
@@ -220,11 +225,14 @@ Get the signers we need, and our address.
       l1ChainId: 5,    // Goerli value, 1 for mainnet
       l2ChainId: 420,  // Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Signer
+      l2SignerOrProvider: l2Signer,
+      bedrock: true
   })
 ```
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to transfer assets.
+At the current version of the SDK we need to specify that it is a bedrock transaction.
+After the production network is upgraded to bedrock, that will be the default.
 
 
 ```js
@@ -355,6 +363,16 @@ We can just report the balances and see that the L2 balance rose by 1 gwei.
 ### `withdrawETH`
 
 This function shows how to withdraw ERC-20 from Optimism to Ethereum.
+The withdrawal process has these stages:
+
+1. Submit the withdrawal transaction on Optimism.
+1. Wait until the state root with the withdrawal is published (and the status changes to `optimismSDK.MessageStatus.READY_TO_PROVE`).
+1. Submit the proof on L1 using `crossChainMessenger.proveMessage()`.
+1. Wait the fault challenge period. 
+   When this period is over, the status becomes `optimismSDK.MessageStatus.READY_FOR_RELAY`
+1. Finalize to cause the actual withdrawal on L1 using `crossChainMessenger.proveMessage()`.
+
+[You can read more about this in the documentation](https://community.optimism.io/docs/developers/bedrock/how-is-bedrock-different/#two-phase-withdrawals).
 
 ```js
 const withdrawERC20 = async () => {
@@ -362,41 +380,58 @@ const withdrawERC20 = async () => {
   console.log("Withdraw ERC20")
   const start = new Date()
   await reportERC20Balances()
+```
 
+We want users to see their balances, and how long the withdrawal is taking.
+
+```js
   const response = await crossChainMessenger.withdrawERC20(
     erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   console.log(`Transaction hash (on L2): ${response.hash}`)
-  console.log(`\tFor more information: https://goerli-explorer.optimism.io/tx/${response.hash}`)
+  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
   await response.wait()
-
-  console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
 ```
 
-There are two wait periods for a withdrawal:
-
-1. Until the status root is written to L1. 
-1. The challenge period.
-
-You can read more about this [here](https://community.optimism.io/docs/developers/bridge/messaging/#for-optimism-l2-to-ethereum-l1-transactions).
+This is the initial withdrawal transaction on Optimism.
 
 ```js
+  console.log("Waiting for status to be READY_TO_PROVE")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.waitForMessageStatus(response.hash, 
-    optimismSDK.MessageStatus.IN_CHALLENGE_PERIOD)
+    optimismSDK.MessageStatus.READY_TO_PROVE)
+```
+
+The Merkle proof has to be submitted after the state root is written on L1.
+On Goerli we usually submit a new state root every four minutes.
+When the state root is updated, you see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+
+```js
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  await crossChainMessenger.proveMessage(response.hash)
+```
+
+Submit the Merkle proof, starting the challenge period.
+
+```
   console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
   await crossChainMessenger.waitForMessageStatus(response.hash, 
-                                                optimismSDK.MessageStatus.READY_FOR_RELAY) 
+                                                optimismSDK.MessageStatus.READY_FOR_RELAY)
 ```
 
-Wait until the state that includes the transaction gets past the challenge period, at which time we can finalize (also known as claim) the transaction.
+Wait the challenge period.
+On Goerli the challenge period is very short (a few seconds) to speed up debugging.
+On the production network it is seven days for security.
 
 ```js
-
   console.log("Ready for relay, finalizing message now")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.finalizeMessage(response)
+  await crossChainMessenger.finalizeMessage(response.hash)
+```
 
+Finalize the withdrawal and actually get back the token.
+
+```js
   console.log("Waiting for status to change to RELAYED")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
   await crossChainMessenger.waitForMessageStatus(response, 
@@ -406,7 +441,7 @@ Wait until the state that includes the transaction gets past the challenge perio
 }     // withdrawERC20()
 ```
 
-Finalizing the message also takes a bit of time.
+Wait for the message status to change to `optimismSDK.MessageStatus.RELAYED`, at which time the tokens are finally withdrawn.
 
 ### `main`
 

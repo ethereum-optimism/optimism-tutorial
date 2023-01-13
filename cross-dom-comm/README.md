@@ -11,6 +11,10 @@ You will learn how run a contract on Ethereum that runs another contract on Opti
 This tutorial focuses on sending and receiving messages.
 If you want to trace transactions, [see the tracing tutorial](../sdk-trace-tx/).
 
+
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network.
+Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-comm).
+
 ## Seeing it in action
 
 To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and Optimism Goerli.
@@ -21,7 +25,8 @@ To show how this works we installed [a slightly modified version of HardHat's `G
 | Goerli (L1) | [0x7fA4D972bB15B71358da2D937E4A830A9084cf2e](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e) |
 | Optimism Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
 
-::: Tip What if somebody else uses the same contracts at the same time?
+#### What if somebody else uses the same contracts at the same time?
+
 If somebody else uses these contracts while you are going through the tutorial, they might update the greeting after you.
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
@@ -29,7 +34,7 @@ However, you can still verify your controller works in one of these ways:
 - Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984#internaltx).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
-:::
+
 
 ### Hardhat
 
