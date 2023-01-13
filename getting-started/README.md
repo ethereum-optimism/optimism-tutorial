@@ -400,15 +400,6 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
    ```
 
-<!--
-   **Bedrock:**
-   No need for `--legacy`:
-
-   ```sh
-   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"'   
-   ```
--->
-
 1. Test that the greeting has changed:
 
    ```sh
@@ -449,22 +440,6 @@ Here is how you can import it without importing the entire Optimism monorepo:
    ```
 
 You can now run `forge build` with contracts that use the Optimism contract library.
-
-To see this in action:
-
-1. Install the JavaScript libraries
-
-  ```sh
-  cd foundry/lib
-  yarn
-  ```
-
-1. Test the application
-
-   ```sh
-   cd ..
-   forge test
-   ```
 
 
 ### Brownie
@@ -627,7 +602,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 
    ```python
    acct = accounts.load("test")
-   greeter.setGreeting("The chimp says hi", sender=acct)  
+   greeter.setGreeting("Apeworx says hi", sender=acct)  
    ```
 
    Sign the transaction and provide the passphrase if necessary.
@@ -647,41 +622,6 @@ To deploy a contract from the Apeworx console:
 project.get_contract("Greeter").deploy("Hello", sender=acct)
 ```
 
-### Waffle
-
-Starting from [Waffle](https://github.com/TrueFiEng/Waffle) v4.x.x you can use Waffle chai matchers to test your smart contracts directly on an Optimism node.
-
-#### Prerequisites
-
-The tutorial makes these assumptions:
-
-1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-1. You have `make` installed on your computer (you can verify this by running `which make` in the terminal).
-1. You have a Goerli Optimism address with enough funds on it. You can use [these faucets](https://community.optimism.io/docs/useful-tools/faucets/) to get some free test funds.
-1. You have general understanding of smart contracts development.
-
-#### Instructions
-
-1. Insert your mnemonic in the [line 15 of `...waffle/test/mock-contract.test.ts`](./waffle/test/mock-contract.test.ts#L15) to use your address in the test.
-
-1. In the terminal, run the following commands:
-
-   ```sh
-   cd waffle
-   yarn
-   yarn build
-   yarn test
-   ```
-
-   You should see 2 tests passing.
-
-1. Play around with the code! Check out other available matchers in the [Waffle documentation](https://ethereum-waffle.readthedocs.io/en/latest/).
-
-
-
-#### Compatibility with other tools
-
-Note that in the tutorial we've been compiling smart contracts using [Waffle](https://github.com/TrueFiEng/Waffle). If you prefer to compile your smart contracts using other tools (like [Hardhat](https://hardhat.org/)) you can install the appropriate packages and modify `build` script in the `package.json` file.
 
 ## Best practices
 
