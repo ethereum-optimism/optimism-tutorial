@@ -19,24 +19,14 @@ To show how this works we installed [a slightly modified version of HardHat's `G
 | Network | Greeter address  |
 | ------- | ---------------- |
 | Goerli (L1) | [0x7fA4D972bB15B71358da2D937E4A830A9084cf2e](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e) |
-| Optimism Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
-
-**Bedrock:**
-
-If you are using the Bedrock alpha network, you have to use other addresses:
-
-| Network | Greeter address  |
-| ------- | ---------------- |
-| Goerli (L1) | [0x4e971602c65d15c1f2d4eabcea13913d8f8fd645](https://goerli.etherscan.io/address/0x4e971602c65d15c1f2d4eabcea13913d8f8fd645#code) |
-| Bedrock Alpha-1 (L2) | [0xf1918d0752270e0c0c7c845d2691fefd764c72d2](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2) |
-
+| Optimism Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
 
 ::: Tip What if somebody else uses the same contracts at the same time?
 If somebody else uses these contracts while you are going through the tutorial, they might update the greeting after you.
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
 
-- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#internaltx) or [Optimistic Goerli BlockScount](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/internal-transactions#address-tabs).
+- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984#internaltx).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
 :::
@@ -68,19 +58,13 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn
    ```
 
-#### Ethereum message to Optimism
+#### Ethereum message to Optimism (deposit)
 
 1. Connect the Hardhat console to Optimism Goerli (L2):
 
    ```sh
    yarn hardhat console --network optimism-goerli
-   ```
-
-   **Bedrock:** If you're using the bedrock alpha network, run this command:
-
-   ```sh
-   yarn hardhat console --network bedrock-alpha
-   ```   
+   ```  
 
 1. Connect to the greeter on L2:
   
@@ -90,13 +74,6 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
-   **Bedrock:** Use this code instead:
-
-   ```js
-   Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xf1918D0752270E0c0c7c845d2691FeFd764C72d2")
-   await greeter.greet()
-   ```
 
 1. In a separatate terminal window connect the Hardhat console to Goerli (L1):
 
@@ -112,15 +89,6 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    tx = await controller.setGreeting(`Hello from L1 ${Date()}`)
    rcpt = await tx.wait()
    ```
-
-   **Bedrock:** Use the `Bedrock_FromL1_ControlL2Greeter` contract, which has the correct addresses for the alpha bedrock network.
-
-   ```js
-   Controller = await ethers.getContractFactory("Bedrock_FromL1_ControlL2Greeter")
-   controller = await Controller.deploy()
-   tx = await controller.setGreeting(`Hello from L1 ${Date()}`)
-   rcpt = await tx.wait()
-   ```   
 
 1. Make a note of the address of the L1 controller.
 
@@ -138,9 +106,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xc0836ccc8fba87637e782dde6e6572ad624fb984#readContract).
    Notice that the `xorigin` value is the controller address.
 
-   **Bedrock:** Use [this link](https://blockscout.com/optimism/bedrock-alpha/address/0xf1918D0752270E0c0c7c845d2691FeFd764C72d2/logs#address-tabs) for the event log.
-
-#### Optimism message to Ethereum
+#### Optimism message to Ethereum (withdrawal)
 
 ##### Send the message
 
@@ -155,14 +121,6 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
      greeter = await Greeter.attach("0x7fA4D972bB15B71358da2D937E4A830A9084cf2e")
      await greeter.greet()     
      ```
-
-     **Bedrock:**
-
-     ```js
-     Greeter = await ethers.getContractFactory("Greeter")
-     greeter = await Greeter.attach("0x4e971602c65d15c1f2D4eabCea13913D8f8FD645")
-     await greeter.greet()     
-     ```     
 
 1. Connect the Hardhat console to Optimistic Goerli (L2):
 
@@ -191,13 +149,10 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    tx.hash
    ```
 
-##### Receive the message
+##### Submit the Merkle proof
 
-Transactions from Optimism to Ethereum are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
-Once the fault challenge period is over (ten seconds on Goerli, seven days on the production network) it is necessary to claim the transaction on L1. 
-This is a complex process that requires a [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5).
-You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
-
+Once the state root is published on L1, we can present the [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5) for the withdrawal.
+The fault challenge window starts after you do this, so it's best to do it as early as possible. [You can read more about this in the documentation](https://community.optimism.io/docs/developers/bedrock/how-is-bedrock-different/#two-phase-withdrawals).
 
 1. Connect the Hardhat console to Goerli (L1):
 
@@ -220,26 +175,57 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
       l1ChainId: 5,
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer, 
-      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url)
+      l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
+      bedrock: true
    })
    ```
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+   This usually happens every four minutes.
 
    ```js
    hash = <<< tx.hash from L2 >>>
+   (await crossChainMessenger.getMessageStatus(hash)) == sdk.MessageStatus.READY_TO_PROVE
+   ```
+
+   `await crossChainMessenger.getMessageStatus(hash)` can return two values at this stage:
+
+   - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
+   You need to wait until it is published.
+
+   - `sdk.MessageStatus.READY_TO_PROVE` (3): Ready for the next step
+
+1. Send the proof on L1:
+
+   ```js
+   tx = await crossChainMessenger.proveMessage(hash)
+   rcpt = await tx.wait()
+   ```
+
+
+##### Receive the message
+
+Transactions from Optimism to Ethereum are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
+Once the fault challenge period is over (ten seconds on Goerli, seven days on the production network) it is necessary to claim the transaction on L1. 
+This is a complex process that requires a [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5).
+You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
+
+
+
+1. Check the status of the transaction.
+   If it is `false`, wait a few seconds and try again.
+
+   ```js
    (await crossChainMessenger.getMessageStatus(hash)) == sdk.MessageStatus.READY_FOR_RELAY
    ```
 
-   `await crossChainMessenger.getMessageStatus(hash)` can return several values at this stage:
+   `await crossChainMessenger.getMessageStatus(hash)` can return two values at this stage:
 
-   - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
-     The challenge period only starts when the state root is published, which is means you might need to wait a few minutes.
+   - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (4): Still in the challenge period, wait a few seconds.
 
-   - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (3): Still in the challenge period, wait a few seconds.
-
-   - `sdk.MessageStatus.READY_FOR_RELAY` (4): Ready to finalize the message.
+   - `sdk.MessageStatus.READY_FOR_RELAY` (5): Ready to finalize the message.
      Go on to the next step.
 
 
@@ -263,6 +249,10 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
      ```
 
 
+
+<!--
+
+Need to update this
 
 ### Foundry
 
@@ -435,7 +425,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
    ```
 
-
+-->
 
 ## How it's done (in Solidity)
 
