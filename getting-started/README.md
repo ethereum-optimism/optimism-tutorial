@@ -72,7 +72,7 @@ In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one]
 
 #### Connecting to Optimism
 
-Follow these steps to add Optimism Goerli support to an existing Hardhat project. 
+Follow these steps to add Optimism Goerli support to an existing Hardhat project (or a newly created one). 
 
 
 1. Define your network configuration in `.env`:
@@ -121,15 +121,6 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    }   
    ```
 
-   **Bedrock:** To use the Bedrock beta network, add this network definition in `module.exports.networks`: 
-
-   ```js
-      "optimism-bedrock": {
-         url: 'https://bedrock-beta-1-replica-0.optimism.io/',
-         accounts: { mnemonic: process.env.MNEMONIC }
-      }
-   ```    
-
 
 #### Greeter interaction
 
@@ -140,14 +131,6 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    yarn hardhat console --network optimism-goerli
    ```
 
-   **Bedrock:**
-
-   Replace the final command with
-
-   ```sh
-   yarn hardhat console --network optimism-bedrock
-   ```
-
 1. Connect to the Greeter contract:   
 
    ```js
@@ -155,12 +138,6 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
    greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
    ```   
 
-   **Bedrock:** If using Bedrock, remember to use the correct address:
-
-   ```js
-   Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")   
-   ```
 
 1. Read information from the contract:
 
@@ -268,42 +245,37 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
 
 #### Greeter interaction
 
-1. Compile the contract and run the console:
+1. Compile the contract and run the console.
 
    ```sh
    truffle compile
    truffle console --network optimism-goerli
    ```
 
-   **Bedrock:** Replace the last command with:
-
-   ```sh
-   truffle console --network optimism-bedrock
-   ```
-
-1. Connect to the Greeter contact:
+1. Connect to the Greeter contact.
 
    ```js
    greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
    ```
 
-   **Bedrock:** Use this command:
-
-   ```js
-   greeter = await Greeter.at("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")
-   ```
-
-1. Read information from the contact:
+1. Read information from the contact.
 
    ```js
    await greeter.greet()
    ```
 
-1. Submit a transaction, wait for it to be processed, and see that it affected the state.
+1. Submit a transaction.
 
    ```js
    tx = await greeter.setGreeting(`Truffle: Hello ${new Date()}`)
-   await greeter.greet()
+   ```
+
+1. Wait a few seconds for the transaction to be processed.s
+
+1. See that the greeting has changed.
+
+   ```js
+   greeter.greet()
    ```
 
 
@@ -311,10 +283,15 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
 
 #### Contract deployment
 
-You deploy a new contract from the console:
+You deploy a new contract from the console.
 
 ``` 
 greeter = await Greeter.new("Greeter from Truffle")
+```
+
+Wait a few seconds for the deployment to actually happen and then verify.
+
+```
 console.log(`Contract address: ${greeter.address}`)
 await greeter.greet()
 ```
@@ -332,23 +309,11 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. Add Optimism Goerli to your wallet. 
    The easiest way to do this is to use [chainid.link](https://chainid.link/?network=optimism-goerli).
 
-   **Bedrock:**
-   If you use Metamask, [follow the directions here (starting at step 4)](https://help.optimism.io/hc/en-us/articles/6665988048795), with these parameters:
-
-   | Parameter | Value |
-   | --------- | ----- |
-   | Network Name | Optimism Goerli |
-   | New RPC URL  | https://bedrock-beta-1-replica-0.optimism.io/ |
-   | Chain ID     | 902 |
-   | Currency Symbol | ETH |
-   | Block Explorer URL | https://blockscout.com/optimism/bedrock-alpha |
-
-
 1. Log on with your wallet to Optimism Goerli.
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
-1. Select the Environment **Injected Web3 Provider**.
+1. Select the Environment **Injected Provider - MetaMask**.
 1. Accept the connection in the wallet.
 
 #### Greeter interaction
@@ -358,8 +323,6 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. Make sure your environment is **Injected Web3** and the network ID is **420**.
 
    <img src="assets/remix-env.png" width="300" />
-
-   **Bedrock:** If using bedrock, the network ID is **902**.
 
 1. Click the files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />).
 
@@ -378,8 +341,6 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-connect.png" width="300" />
 
-   **Bedrock:** Use the address `0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`.
-
 1. Click **greet** and expand the transaction result in the console (bottom right).
 
    ![](assets/remix-query.png)
@@ -389,7 +350,9 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    <img src="assets/remix-tx.png" width="300" />
 
-1. See the results on the console and then click **greet** again to see the greeting changed.   
+1. See the results on the console and then click **greet** again to see the greeting changed (see it under the **greet** button).
+
+
 
 
 #### Contract deployment
@@ -417,13 +380,6 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    ```sh
    export ETH_RPC_URL= << Your Goerli URL goes here >>
    export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
-   ```
-
-   **Bedrock:**
-
-   ```sh
-   export ETH_RPC_URL=https://bedrock-beta-1-replica-0.optimism.io/
-   export GREETER=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
    ```
 
 1. Call `greet()`. Notice that the response is provided in hex.

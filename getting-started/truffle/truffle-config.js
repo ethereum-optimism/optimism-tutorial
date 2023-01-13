@@ -88,13 +88,6 @@ module.exports = {
          optimismGoerliUrl),
       network_id: 420
    },
-   "optimism-bedrock": {
-      provider: () => new HDWalletProvider(
-         process.env.MNEMONIC,
-         'https://bedrock-beta-1-replica-0.optimism.io/'),
-      network_id: 902,
-      gas: 2000000
-   },
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
