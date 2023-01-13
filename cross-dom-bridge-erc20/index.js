@@ -86,7 +86,8 @@ const setup = async() => {
       l1ChainId: 5,    // Goerli value, 1 for mainnet
       l2ChainId: 420,  // Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Signer
+      l2SignerOrProvider: l2Signer,
+      bedrock: true
   })
   l1ERC20 = new ethers.Contract(erc20Addrs.l1Addr, erc20ABI, l1Signer)
   l2ERC20 = new ethers.Contract(erc20Addrs.l2Addr, erc20ABI, l2Signer)
@@ -160,17 +161,22 @@ const withdrawERC20 = async () => {
   console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
   await response.wait()
 
-  console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
+  console.log("Waiting for status to be READY_TO_PROVE")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.waitForMessageStatus(response.hash, 
-    optimismSDK.MessageStatus.IN_CHALLENGE_PERIOD)
-  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
+    optimismSDK.MessageStatus.READY_TO_PROVE)
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  await crossChainMessenger.proveMessage(response.hash)
+  
+
+  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.waitForMessageStatus(response.hash, 
                                                 optimismSDK.MessageStatus.READY_FOR_RELAY) 
   console.log("Ready for relay, finalizing message now")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.finalizeMessage(response)
+  await crossChainMessenger.finalizeMessage(response.hash)
+
   console.log("Waiting for status to change to RELAYED")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
   await crossChainMessenger.waitForMessageStatus(response, 
