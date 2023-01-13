@@ -15,9 +15,8 @@ const argv = yargs
     // All of those choices are Optimism:
     // mainnet - Optimism Mainnet, the production network
     // goerli - Optimism Goerli, the main test network
-    // bedrock-beta - Bedrock version of Optimism Bedrock, our next release
-    choices: ["mainnet", "goerli", "bedrock-beta"],
-    description: 'Optimistm network to use'
+    choices: ["mainnet", "goerli"],
+    description: 'Optimism network to use'
   }).
   option('verify', {
     type: boolean,
@@ -39,11 +38,9 @@ const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 // These are the addresses of the Greeter.sol contract on the various Optimism networks:
 // mainnet - Optimism Mainnet, the production network
 // goerli - Optimism Goerli, the main test network
-// bedrock-alpha - Alpha version of Optimism Bedrock, our next release
 const greeterAddrs = {
   "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
   "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
-  "bedrock-beta": "0xC0836cCc8FBa87637e782Dde6e6572aD624fb984"
 }
 
 
@@ -56,8 +53,6 @@ const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 const getSigner = async () => {
   let endpointUrl;
 
-  if (argv.network == 'bedrock-beta')
-    endpointUrl = 'https://bedrock-beta-1-replica-0.optimism.io'
   if (argv.network == 'goerli')
     endpointUrl = 
       process.env.ALCHEMY_API_KEY ? 
