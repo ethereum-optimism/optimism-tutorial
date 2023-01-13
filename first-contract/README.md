@@ -65,8 +65,6 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
 1. Click the Compiler icon (<img src="assets/remix-compiler-icon.png" height="24" valign="top" />) 
 
-1. Expand **Advanced Configurations** and select the EVM version **berlin**.
-
 1. Click **Compile 1_Storage.sol**.
 
 1. Click the Run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
@@ -98,10 +96,10 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
    1. Copy the transaction hash from the remix console.
 
-   1. Open [Blockscout for Optimism Goerli](https://blockscout.com/optimism/goerli).
+   1. Open [Optimism Goerli on Etherscan](https://goerli-optimism.etherscan.io/).
 
    1. Search for the transaction hash. 
-      Note that it may take a few minutes for Blockscout to get updated.
+      Note that it may take a few minutes for Etherscan to get updated.
 
 1. Back in Remix, click **retrieve** again to see that the value has changed.
 
