@@ -9,10 +9,10 @@ In this tutorial you learn how to use [Tenderly](https://tenderly.co/) to see wh
 
 The contract we'll use as a sample for debugging is [Fail.sol](contracts/Fail.sol).
 
-We will trace two transactions using this contract:
+As samples, we have two transactions using this contract:
 
-- [A successful transaction](https://goerli-optimism.etherscan.io/tx/0x519c7c7b3438668c37201800b15e01721ded2f44d6963cb69c392e32ffba9a5a)
-- [A failed transaction](https://goerli-optimism.etherscan.io/tx/0xe77b6fffa9725e98aa6c58c25f2d017fb025a65fc5deae4ae84ace4c2e8822e8)
+- [A successful transaction](https://goerli-optimism.etherscan.io/tx/0x86b4fc03c1656b64206cdedd1ef840563c1aa32a7ab7c2ca4c2dcb205752848d)
+- [A failed transaction](https://goerli-optimism.etherscan.io/tx/0x9af716b7ef0ab4b4af9fbf95a7aa3f401140b07e055674c449299e18f918b938)
 
 ## Tenderly
 
@@ -23,7 +23,7 @@ The free tier is sufficient for what we do in this tutorial.
 
 1. Search for the transaction hash.
    If Tenderly has that transaction, it will find it and tell you on what network it happened.
-   For the purpose of this tutorial, search first for the successful transaction (`0xe77b6fffa9725e98aa6c58c25f2d017fb025a65fc5deae4ae84ace4c2e8822e8`).
+   For the purpose of this tutorial, search for the failed transaction (`0x9af716b7ef0ab4b4af9fbf95a7aa3f401140b07e055674c449299e18f918b938`).
 
    If the source code isn't in Tenderly, it can download it from Etherscan:
 
@@ -45,3 +45,16 @@ The free tier is sufficient for what we do in this tutorial.
 
    Because of the way we called `cheapFail` when it reverts it causes the entire transaction to revert.
    There is a way to call subcontracts without propagating revert, [see here for directions](https://stackoverflow.com/questions/72102722/can-transaction-fail-but-the-calling-contract-will-think-it-was-successful).
+
+## Using the debugger
+
+1. Trace the successful transaction (`0x86b4fc03c1656b64206cdedd1ef840563c1aa32a7ab7c2ca4c2dcb205752848d`).
+
+1. Select **State Changes** on the left bar to see the state changes caused by the transaction.
+
+   ![state changes](assets/state-changes.png)
+
+1. Select **Debugger** on the left bar to see the function trace (which functions ran, which functions called which, etc.), the stack trace (the current funtion and who called it), the source code, and the 
+
+   ![debugger](assets/debugger.png)
+   
