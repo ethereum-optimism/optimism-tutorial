@@ -21,32 +21,173 @@ import { L2StandardERC20 } from "@eth-optimism/contracts/standards/L2StandardERC
 
 Then the only thing we need to do is call the internal `_setupDecimals(8)` method to alter the token `decimals` property from the default `18` to `8`.
 
-## Deploying the Custom Token
+## Deploying the custom token
 
-Deployment script is made available under `scripts/deploy-custom-token.js` that you can use to instantiate `L2CustomERC20` either on a local dev node or on `optimistic-goerli`.
+1. Download the necessary packages.
 
-Once you're ready with a tested goerli deployment, you can request a review [as explained in the standard token tutorial](../standard-bridge-standard-token/README.md#adding-a-token-to-the-bridge) form and we'll consider whitelisting your deployer address on `optimism`.
+   ```sh
+   yarn
+   ```
 
-The hardhat config `hardhat.config.js` is already setup to run against `optimistic-goerli` and `optimistic-mainnet` networks.
+1. Copy `.env.example` to `.env`.
 
-### Configuration
+   ```sh
+   cp .env.example .env
+   ```
 
-See an example config at [.env.example](.env.example); copy into a `.env` file before running.
+1. Edit `.env` to set the deployment parameters:
 
-`PRIVATE_KEY` - this account is going to be used to call the factory and create your L2 ERC20. Remember to fund your account for deployment.
-`INFURA_ID` - is your Infura ID for using `optimistic-goerli` and `optimistic-mainnet`.
-`L1_TOKEN_ADDRESS` - address of the L1 ERC20 which you want to bridge.
+   - `MNEMONIC`, the mnemonic for an account that has enough ETH for the deployment.
+   - `L1_ALCHEMY_KEY`, the key for the alchemy application for a Goerli endpoint.   
+   - `L2_ALCHEMY_KEY`, the key for the alchemy application for an Optimism Goerli endpoint.
+   - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
+     The default value, [`0x32B3b2281717dA83463414af4E8CfB1970E56287`](https://goerli.etherscan.io/address/0x32B3b2281717dA83463414af4E8CfB1970E56287) is a test ERC-20 contract on Goerli that lets you call `faucet` to give yourself test tokens.
 
-### Running the deploy script
+1. Open the hardhat console.
 
-Run the following script
+   ```sh
+   yarn hardhat console --network optimism-goerli
+   ```
 
-```sh
-yarn hardhat run scripts/deploy-custom-token.js --network optimistic-goerli
-```
+1. Deploy the contract.
 
-At the end you should get a successful output confirming your token was created and the L2 address:
+   ```sh
+   l2CustomERC20Factory = await ethers.getContractFactory("L2CustomERC20")   
+   l2CustomERC20 = await l2CustomERC20Factory.deploy(
+      "0x4200000000000000000000000000000000000010",
+      process.env.L1_TOKEN_ADDRESS)
+   ```
 
-`L2CustomERC20 deployed to: 0x5CFE8703A62E3a80ab7233263C074698b722d48b`
+## Transfering tokens 
 
-For testing your token, see [tutorial on depositing and withdrawing between L1 and L2](../cross-dom-bridge).
+1. Get the token addresses.
+
+   ```js
+   l1Addr = process.env.L1_TOKEN_ADDRESS
+   l2Addr = l2CustomERC20.address
+   ```
+
+### Get setup for L1 (provider, wallet, tokens, etc)
+
+1. Get the L1 wallet.
+
+   ```js
+   l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.L1_ALCHEMY_KEY}`
+   l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)
+   hdNode = ethers.utils.HDNode.fromMnemonic(process.env.MNEMONIC)
+   privateKey = hdNode.derivePath(ethers.utils.defaultPath).privateKey
+   l1Wallet = new ethers.Wallet(privateKey, l1RpcProvider)
+   ```
+
+1. Get the L1 contract.
+
+   ```js
+   l1Factory = await ethers.getContractFactory("OptimismUselessToken")
+   l1Contract = new ethers.Contract(process.env.L1_TOKEN_ADDRESS, l1Factory.interface, l1Wallet)
+   ```
+
+1. Get tokens on L1 (and verify the balance)
+
+   ```js
+   tx = await l1Contract.faucet()
+   rcpt = await tx.wait()
+   await l1Contract.balanceOf(l1Wallet.address)
+   ```
+
+
+### Transfer tokens
+
+Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) (the Optimism SDK object used to bridge assets).
+
+1. Import the Optimism SDK.
+
+   ```js
+   const optimismSDK = require("@eth-optimism/sdk")
+   ```
+
+1. Create the cross domain messenger.
+
+   ```js
+   l1ChainId = (await l1RpcProvider.getNetwork()).chainId
+   l2ChainId = (await ethers.provider.getNetwork()).chainId
+   l2Wallet = await ethers.provider.getSigner()
+   crossChainMessenger = new optimismSDK.CrossChainMessenger({
+      l1ChainId: l1ChainId,
+      l2ChainId: l2ChainId,
+      l1SignerOrProvider: l1Wallet,
+      l2SignerOrProvider: l2Wallet,
+      bedrock: true
+   })
+   ```
+
+#### Deposit (from L1 to Optimism)
+
+1. Give the L2 bridge an allowance to use the user's token.
+   The L2 address is necessary to know which bridge is responsible and needs the allowance.
+
+   ```js
+   depositTx1 = await crossChainMessenger.approveERC20(l1Contract.address, l2Addr, 1e9)
+   await depositTx1.wait()
+   ```
+
+1. Check your balances on L1 and L2.
+
+   ```js
+   await l1Contract.balanceOf(l1Wallet.address) 
+   await l2CustomERC20.balanceOf(l1Wallet.address)
+   ```   
+
+1. Do the actual deposit
+
+   ```js
+   depositTx2 = await crossChainMessenger.depositERC20(l1Contract.address, l2Addr, 1e9)
+   await depositTx2.wait()
+   ```
+
+1. Wait for the deposit to be relayed.
+
+   ```js
+   await crossChainMessenger.waitForMessageStatus(depositTx2.hash, optimismSDK.MessageStatus.RELAYED)
+   ```
+
+1. Check your balances on L1 and L2.
+
+   ```js
+   await l1Contract.balanceOf(l1Wallet.address) 
+   await l2CustomERC20.balanceOf(l1Wallet.address)
+   ```
+
+#### Withdrawal (from Optimism to L1)
+
+1. Initiate the withdrawal on L2
+
+   ```js
+   withdrawalTx1 = await crossChainMessenger.withdrawERC20(l1Contract.address, l2Addr, 1e9)
+   await withdrawalTx1.wait()
+   ```
+
+1. Wait until the root state is published on L1, and then prove the withdrawal.
+   This is likely to take less than 240 seconds.
+
+   ```js
+   await crossChainMessenger.waitForMessageStatus(withdrawalTx1.hash, optimismSDK.MessageStatus.READY_TO_PROVE)
+   withdrawalTx2 = await crossChainMessenger.proveMessage(withdrawalTx1.hash)
+   await withdrawalTx2.wait()
+   ```
+
+1. Wait the fault challenge period (a short period on Goerli, seven days on the production network) and then finish the withdrawal.
+
+   ```js
+   await crossChainMessenger.waitForMessageStatus(withdrawalTx1.hash, optimismSDK.MessageStatus.READY_FOR_RELAY)
+   withdrawalTx3 = await crossChainMessenger.finalizeMessage(withdrawalTx1.hash)
+   await withdrawalTx3.wait()   
+   ```
+
+
+1. Check your balances on L1 and L2.
+   The balance on L2 should be back to zero.
+
+   ```js
+   await l1Contract.balanceOf(l1Wallet.address) 
+   await l2CustomERC20.balanceOf(l1Wallet.address)
+   ```
