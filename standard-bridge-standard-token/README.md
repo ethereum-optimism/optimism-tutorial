@@ -55,10 +55,11 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 
    ```js
    deployTx = await optimismMintableERC20Factory.createOptimismMintableERC20(
-      process.env.L1_TOKEN,
+      process.env.L1_TOKEN_ADDRESS,
       "Token Name on L2",
-      "Token Symbol on L2"
+      "L2-SYMBOL"
    )
+   deployRcpt = await deployTx.wait()
    ```
 
 ## Transfering tokens 
@@ -67,7 +68,21 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 
    ```js
    l1Addr = process.env.L1_TOKEN_ADDRESS
-   l2Addr = l2CustomERC20.address
+   event = deployRcpt.events.filter(x => x.event == "OptimismMintableERC20Created")[0]
+   l2Addr = event.args.localToken
+   ```
+
+1. Get the data for `OptimismMintableERC20`:
+
+   ```js
+   fname = "node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/universal/OptimismMintableERC20.sol/OptimismMintableERC20.json"
+   ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
+   optimismMintableERC20Data = JSON.parse(ftext)
+
+1. Get the L2 contract.
+
+   ```js
+   l2Contract = new ethers.Contract(l2Addr, optimismMintableERC20Data.abi, l2Wallet)   
    ```
 
 ### Get setup for L1 (provider, wallet, tokens, etc)
@@ -92,8 +107,8 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 1. Get tokens on L1 (and verify the balance)
 
    ```js
-   tx = await l1Contract.faucet()
-   rcpt = await tx.wait()
+   faucetTx = await l1Contract.faucet()
+   faucetRcpt = await faucetTx.wait()
    await l1Contract.balanceOf(l1Wallet.address)
    ```
 
@@ -125,7 +140,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 
 #### Deposit (from L1 to Optimism)
 
-1. Give the L2 bridge an allowance to use the user's token.
+1. Give the L1 bridge an allowance to use the user's token.
    The L2 address is necessary to know which bridge is responsible and needs the allowance.
 
    ```js
@@ -137,13 +152,13 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 
    ```js
    await l1Contract.balanceOf(l1Wallet.address) 
-   await l2CustomERC20.balanceOf(l1Wallet.address)
+   await l2Contract.balanceOf(l1Wallet.address)
    ```   
 
 1. Do the actual deposit
 
    ```js
-   depositTx2 = await crossChainMessenger.depositERC20(l1Contract.address, l2Addr, 1e9)
+   depositTx2 = await crossChainMessenger.depositERC20(l1Addr, l2Addr, 1e9)
    await depositTx2.wait()
    ```
 
@@ -157,7 +172,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 
    ```js
    await l1Contract.balanceOf(l1Wallet.address) 
-   await l2CustomERC20.balanceOf(l1Wallet.address)
+   await l2Contract.balanceOf(l1Wallet.address)
    ```
 
 #### Withdrawal (from Optimism to L1)
@@ -165,7 +180,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 1. Initiate the withdrawal on L2
 
    ```js
-   withdrawalTx1 = await crossChainMessenger.withdrawERC20(l1Contract.address, l2Addr, 1e9)
+   withdrawalTx1 = await crossChainMessenger.withdrawERC20(l1Addr, l2Addr, 1e9)
    await withdrawalTx1.wait()
    ```
 
@@ -192,5 +207,5 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 
    ```js
    await l1Contract.balanceOf(l1Wallet.address) 
-   await l2CustomERC20.balanceOf(l1Wallet.address)
+   await l2Contract.balanceOf(l1Wallet.address)
    ```
