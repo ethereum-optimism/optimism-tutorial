@@ -54,28 +54,30 @@ When running on Goerli, the output from the script should be similar to:
 
 ```
 Deposit ETH
-On L1:151154093 Gwei    On L2:139999999 Gwei
-Transaction hash (on L1): 0x70d64968fa9e4a58d19c6bdc091ab3e793f1150426168dccf111dbf5b6bee1c4
+On L1:410251220 Gwei    On L2:29020983 Gwei
+Transaction hash (on L1): 0x4c057d3aaec665c1123d2dec1d8d82c64e567681f7c48fc1aadd007961bf5f02
 Waiting for status to change to RELAYED
-Time so far 29.92 seconds
-On L1:150942902 Gwei    On L2:140000000 Gwei
-depositETH took 225.198 seconds
+Time so far 14.79 seconds
+On L1:410078008 Gwei    On L2:29021983 Gwei
+depositETH took 43.088 seconds
 
 
 Withdraw ETH
-On L1:150942902 Gwei    On L2:140000000 Gwei
-Transaction hash (on L2): 0xaddc7562ab0d7125debb9238aeb7f777c2232e724fe30c434a4524a522d4917b
-Waiting for status to change to IN_CHALLENGE_PERIOD
-Time so far 2.779 seconds
-
+On L1:410078008 Gwei    On L2:29021983 Gwei
+Transaction hash (on L2): 0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
+	For more information: https://goerli-optimism.etherscan.io/tx/0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
+Waiting for status to be READY_TO_PROVE
+Time so far 7.197 seconds
+Time so far 290.453 seconds
 In the challenge period, waiting for status READY_FOR_RELAY
-Time so far 969.294 seconds
+Time so far 294.328 seconds
 Ready for relay, finalizing message now
-Time so far 979.332 seconds
+Time so far 331.383 seconds
 Waiting for status to change to RELAYED
-Time so far 982.856 seconds
-On L1:160107872 Gwei    On L2:130000000 Gwei
-withdrawETH took 997.834 seconds
+Time so far 333.753 seconds
+On L1:419369936 Gwei    On L2:18842420 Gwei
+withdrawETH took 342.143 seconds
+
 ```
 
 As you can see, the total running time is about twenty minutes.
@@ -165,7 +167,8 @@ Get the signers we need, and our address.
       l1ChainId: 5,    // Goerli value, 1 for mainnet
       l2ChainId: 420,  // Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Signer
+      l2SignerOrProvider: l2Signer,
+      bedrock: true
   })
 ```
 
@@ -272,38 +275,48 @@ By sending 0.01 ETH it is guaranteed that the withdrawal will actually increase 
 
 ```js
   console.log(`Transaction hash (on L2): ${response.hash}`)
+  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
   await response.wait()
-
-  console.log("Waiting for status to change to IN_CHALLENGE_PERIOD")
 ```
 
-There are two wait periods for a withdrawal:
+This is the initial withdrawal transaction on Optimism.
 
-1. Until the status root is written to L1. 
-1. The challenge period.
+```js
+  console.log("Waiting for status to be READY_TO_PROVE")
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
+  await crossChainMessenger.waitForMessageStatus(response.hash, 
+    optimismSDK.MessageStatus.READY_TO_PROVE)
+```
 
-You can read more about this [here](https://community.optimism.io/docs/developers/bridge/messaging/#for-optimism-l2-to-ethereum-l1-transactions).
+The Merkle proof has to be submitted after the state root is written on L1.
+On Goerli we usually submit a new state root every four minutes.
+When the state root is updated, you see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
 
 ```js
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-    optimismSDK.MessageStatus.IN_CHALLENGE_PERIOD)
+  await crossChainMessenger.proveMessage(response.hash)
+```
+
+Submit the Merkle proof, starting the challenge period.
+
+```js
   console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
   await crossChainMessenger.waitForMessageStatus(response.hash, 
                                                 optimismSDK.MessageStatus.READY_FOR_RELAY)
 ```
 
-Wait until the state that includes the transaction gets past the challenge period, at which time we can finalize (also known as claim) the transaction.
+Wait the challenge period.
+On Goerli the challenge period is very short (a few seconds) to speed up debugging.
+On the production network it is seven days for security.
 
 ```js
-                                                
   console.log("Ready for relay, finalizing message now")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.finalizeMessage(response)
+  await crossChainMessenger.finalizeMessage(response.hash)
 ```
 
-Finalizing the message also takes a bit of time.
+Finalize the withdrawal and actually get back the 0.01 ETH.
 
 ```js
   console.log("Waiting for status to change to RELAYED")
