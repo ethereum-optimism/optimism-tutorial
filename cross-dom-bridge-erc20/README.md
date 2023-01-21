@@ -412,7 +412,7 @@ When the state root is updated, you see a new transaction [on the L2OutputOracle
 
 Submit the Merkle proof, starting the challenge period.
 
-```
+```js
   console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
   await crossChainMessenger.waitForMessageStatus(response.hash, 
