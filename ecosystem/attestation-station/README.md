@@ -7,6 +7,7 @@ The AttestationStation smart contract contains a public `attestations` mapping t
 In this tutorial you learn how to read, interpret, and write those attestations.
 
 The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
+On the production Optimism network the contract is [at the same address](https://explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77)
 
 Note: This is the tutorial for programmatic access to the contract. There is also a [web-based user interface](https://attestationstation.xyz/).
 
@@ -50,13 +51,15 @@ Note: This is the tutorial for programmatic access to the contract. There is als
 
 ## Key values
 
-Every attestation has three fields:
+Every attestation has these fields:
 
 - Creator address (who attested this)
 - Subject address (who is being attested about)
 - Key
+- Value
 
-The first two are self-explanatory, but for the key we propose this convention:
+The first two are self-explanatory, and the value can be any number of bytes in whatever format is applicable.
+For the key we propose this convention:
 
 1. The raw key is a dot separated value, going from general to specific. For example,
   
@@ -118,7 +121,7 @@ encodeRawKey = rawKey => {
 
 1. If you want to see the key, you can use the hash to find your transaction on Etherscan (or just [use my transaction](https://goerli-explorer.optimism.io/tx/0x0e77a32b2558f39e60c3e81bd6efd811cf4b3bd80a4f666d042a221ea63c93ab)), click **Click to see More**, and then **View Input As > UTF-8**.
 
-## Read attestations
+## Read an attestation
 
 To read an attestation you need to know three things:
 
@@ -166,3 +169,82 @@ To read an attestation you need to know three things:
    ```
 
 
+## Read all relevant attestations
+
+If you want to read all the attestations about a specific address, you need to look at the emitted `AttestationCreated` events.
+
+1. Create a filter.
+   You can filter based on any combination of:
+
+   - Creator address (who attested this)
+   - Subject address (who is being attested about)
+   - Key
+   - Value
+
+   If any value should match the filter, use `null` for it.
+
+   ```js
+   aboutGoat = attestationStation.filters.AttestationCreated(null,goatAddr,null,null)
+   ```
+
+1. Get all the events.
+
+   ```js
+   events = await attestationStation.queryFilter(aboutGoat)
+   ```
+
+
+### Out of date information
+
+One problem with using events is that they may contain out of date information.
+For example, look at our goat again, just at key and creator values:
+
+```js
+events.map(x => [x.args.key, x.args.creator] )
+```
+
+The results are:
+```js
+[
+   [
+      '0x616e696d616c6661726d2e7363686f6f6c2e617474656e646564000000000000',
+      '0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F'
+   ],
+   [
+      '0x881a8d71a6dabe50856e9c9753e46aaa5c552185e26a834d9111472ebd494aff',
+      '0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F'
+   ],
+   [
+      '0x616e696d616c6661726d2e7363686f6f6c2e617474656e646564000000000000',
+      '0x8Ff966Ab0DadaDC70C901dD5cDc2C708d3A229AA'
+   ],
+   [
+      '0x616e696d616c6661726d2e7363686f6f6c2e617474656e646564000000000000',
+      '0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F'
+   ]
+]   
+```
+
+We see that the same (key, creator) value is specified three times. 
+This means three different attestations, and only the latest is still applicable.
+We can solve this with a function that only updates data if it finds newer information.
+
+1. Create a key that includes the two fields we need to check for equality.
+
+   ```js
+   event2key = e => `${e.args.key}-${e.args.creator}`
+   ```
+
+1. Create a function that updates history unless it finds the history already includes
+   newer info.
+
+   ```js
+   update2Latest = (history, event) => {
+      key = event2key(event)
+      if ((history[key] == null) || (history[key].blockNumber < event.blockNumber)) {
+         history.key = event
+         return history   // including this event
+      }
+      return history      // without this event
+   } 
+   ```
