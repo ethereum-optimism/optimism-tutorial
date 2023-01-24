@@ -202,10 +202,10 @@ One problem with using events is that they may contain out of date information.
 For example, look at our goat again, just at key and creator values:
 
 ```js
-events.map(x => [x.args.key, x.args.creator] )
+events.map(x => [x.args.key, x.args.creator])
 ```
 
-The results are:
+The results were (when I wrote this):
 ```js
 [
    [
@@ -227,9 +227,9 @@ The results are:
 ]   
 ```
 
-We see that the same (key, creator) value is specified three times. 
-This means three different attestations, and only the latest is still applicable.
-We can solve this with a function that only updates data if it finds newer information.
+We see that the same (key, creator) value is specified twice. 
+This means two different attestations, and only the latest is still applicable.
+We can solve this with a function that only updates data only if it finds newer information.
 
 1. Create a key that includes the two fields we need to check for equality.
 
@@ -244,9 +244,106 @@ We can solve this with a function that only updates data if it finds newer infor
    update2Latest = (history, event) => {
       key = event2key(event)
       if ((history[key] == null) || (history[key].blockNumber < event.blockNumber)) {
-         history.key = event
+         history[key] = event
          return history   // including this event
       }
       return history      // without this event
    } 
    ```
+
+   1. Get the history and transform it back to a list of events.
+
+   ```js
+   attestedHistory = events.reduce(update2Latest, {})
+   relevantEvents = Object.keys(attestedHistory).map(key => attestedHistory[key])
+   ```
+
+
+## Separating creator, signer, and transaction payer
+
+In some circumstances it is useful for the attestation transactions to be signed by one address, attested by another, and paid for by a third one.
+For example, you might want attestations signed by a single EOA (externally owned account) right now, but with the freedom to upgrade to a multisig later while still attesting as the same creator.
+Or maybe you want users to pay for their own attestations.
+
+You can achieve this using an [AttestationProxy](contracts/AttestationProxy.sol).
+An attestation proxy receives an attestation in a transaction (that could be sent by any account or smart contract), verifies that they are signed by the correct signer, and then attest them. 
+Attestations are created by `msg.sender`, so if a smart contract calls `attest` the attestation's creator is the smart contract, not the transaction's origin.
+
+### Seeing it in action
+
+Follow these steps on the console.
+
+1. Deploy `AttestationProxy`:
+
+   ```js
+   AttestationProxy = await ethers.getContractFactory("AttestationProxy")
+   attestationProxy = await AttestationProxy.deploy(attestationStation.address)
+   ```
+
+1. Create an attestation and sign it.
+
+   ```js
+   msgHash = ethers.utils.solidityKeccak256(
+      ["address", "bytes32", "bytes"],
+      [
+            goatAddr,
+            historyKey,
+            ethers.utils.toUtf8Bytes("A+")
+      ]
+   )
+   signer = await ethers.getSigner()
+   sig = await signer.signMessage(ethers.utils.arrayify(msgHash))   
+   ```
+
+1. Send the attestation to `AttestationProxy`.
+   You are able to do it, because as the contract deployer you are the initial owner.
+
+   ```js
+   tx = await attestationProxy.attest(goatAddr, historyKey, ethers.utils.toUtf8Bytes("A+"), sig)
+   rcpt = await tx.wait()
+   ```
+
+1. Make a note of the address of your attestation proxy.   
+
+   ```js
+   attestationProxy.address
+   ```
+
+1. View the [attestation station contract on Optimism Goerli](https://goerli-optimism.etherscan.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77#internaltx) to see the new attestation.
+   Note that it is an *internal* transaction, because `AttestationStation` is called by a contract, `AttestationProxy`, rather than directly.
+   Every transaction appears twice because `0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77` is not the "real" AttestationStation contract, it is a proxy to enable upgrades.
+
+1. Click the transaction hash and then the **Logs** tab to see that the creator of the attestation is indeed the proxy address.
+
+1. The mnemonic in `.env` can generate multiple signers.
+   From this point, we will use a different signer to show how the signer and payer can be different.
+   The first step is to get that signer.
+
+   ```js
+   otherSigner = (await ethers.getSigners())[1]
+   ```
+
+1. Change signing authority to `otherSigner`.
+
+   ```js
+   tx = await attestationProxy.transferOwnership(otherSigner.address)
+   rcpt = await tx.wait()
+   ```
+
+1. Try to submit an attestation signed by yourself again, see that it now fails.   
+
+   ```js
+   tx = await attestationProxy.attest(goatAddr, historyKey, ethers.utils.toUtf8Bytes("A+"), sig)
+   ```
+
+1. Get `otherSigner`'s signature and resubmit the transaction. See that it is successful.
+
+   ```js
+   sig = await otherSigner.signMessage(ethers.utils.arrayify(msgHash))
+   tx = await attestationProxy.attest(goatAddr, historyKey, ethers.utils.toUtf8Bytes("A+"), sig)
+   rcpt = await tx.wait()
+   ```   
+
+1. Go back to [attestation station contract on Optimism Goerli](https://goerli-optimism.etherscan.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77#internaltx) to see the new attestation.
+   Note that it is still the same creator address, because that is the proxy.
+  
