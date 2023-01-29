@@ -175,6 +175,9 @@ To read an attestation you need to know three things:
 
 If you want to read all the attestations about a specific address, you need to look at the emitted `AttestationCreated` events.
 
+You can do it using [MSilb7's adapter for Flipside Crypto](https://github.com/MSilb7/op_attestationstation_data).
+You can also do it using any Optimism node using JavaScript (see below):
+
 1. Create a filter.
    You can filter based on any combination of:
 
