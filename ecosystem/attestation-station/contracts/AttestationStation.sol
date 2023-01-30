@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity 0.8.16;
 
 contract AttestationStation {
     mapping(address => mapping(address => mapping(bytes32 => bytes))) public attestations;
