@@ -254,11 +254,6 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
      ```
 
 
-
-<!--
-
-Need to update this
-
 ### Foundry
 
 #### Setup
@@ -312,7 +307,7 @@ Need to update this
 
    ```sh
    cast send --rpc-url $GOERLI_URL \
-      --mnemonic-path mnem.delme --gas-limit 130000 \
+      --mnemonic-path mnem.delme \
       $FROM_L1_CONTROLLER "setGreeting(string)" '"Salam"'
    ```
 
@@ -337,7 +332,7 @@ Need to update this
 1. Deploy the `FromL2_ControlL1Greeter` contract.
 
    ```sh
-   forge create FromL2_ControlL1Greeter --rpc-url $OPTI_GOERLI_URL --mnemonic-path mnem.delme --legacy
+   forge create FromL2_ControlL1Greeter --rpc-url $OPTI_GOERLI_URL --mnemonic-path mnem.delme
    ```
 
 1. Create an environment variable for the `Deployed to:` address:
@@ -349,7 +344,7 @@ Need to update this
 1. Send a transaction to change the L1 greeting:
 
    ```sh
-   cast send --rpc-url $OPTI_GOERLI_URL --legacy \
+   cast send --rpc-url $OPTI_GOERLI_URL \
       --mnemonic-path mnem.delme $FROM_L2_CONTROLLER \
       "setGreeting(string)" '"Salam"'
    ```
@@ -389,32 +384,57 @@ Need to update this
       l1ChainId: 5,
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Provider
+      l2SignerOrProvider: l2Provider,
+      bedrock: true
    })
    ```
 
-1. To check the status of the transaction, run these commands:
+1. Check the status of the transaction.
+   If it is `false`, wait a few seconds and try again.
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+   This usually happens every four minutes.
+
+   ```js
+   crossChainMessenger.getMessageStatus(process.env.HASH).then(status => console.log(status === sdk.MessageStatus.READY_FOR_PROVE))
+   ```
+
+   `await crossChainMessenger.getMessageStatus(process.env.HASH)` can return two values at this stage:
+
+   - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
+   You need to wait until it is published.
+
+   - `sdk.MessageStatus.READY_TO_PROVE` (3): Ready for the next step
+
+1. Send the proof on L1:
+
+   ```js
+   txPromise = crossChainMessenger.proveMessage(process.env.HASH)
+   txPromise.then(tx => console.log(tx.hash))
+   ```
+
+1. Now that the message has been proven, we need to wait the fault challenge period until it is ready to relay.
 
    ```js
    statusPromise = crossChainMessenger.getMessageStatus(process.env.HASH)
    statusPromise.then(status => console.log(status === sdk.MessageStatus.READY_FOR_RELAY))
    ```
 
-   `crossChainMessenger.getMessageStatus(hash)` can return several values at this stage:
+   `crossChainMessenger.getMessageStatus(process.env.HASH)` can return several values at this stage:
 
-   - `sdk.MessageStatus.STATE_ROOT_NOT_PUBLISHED` (2): The state root has not been published yet.
-     The challenge period only starts when the state root is published, which is means you might need to wait a few minutes.
+   - `sdk.MessageStatus.READY_TO_PROVE` (3): The proof transaction hasn't been processed yet.
+     Go to [Goerli Etherscan](https://goerli.etherscan.io/) and search for the hash.
 
-   - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (3): Still in the challenge period, wait a few seconds.
+   - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (4): Still in the challenge period, wait a few seconds.
 
-   - `sdk.MessageStatus.READY_FOR_RELAY` (4): Ready to finalize the message.
+   - `sdk.MessageStatus.READY_FOR_RELAY` (5): Ready to finalize the message.
      Go on to the next step.
 
 
 1. Finalize the message.
 
    ```js
-   crossChainMessenger.finalizeMessage(process.env.HASH)
+   txPromise = crossChainMessenger.finalizeMessage(process.env.HASH)
+   txPromise.then(tx => console.log(tx.hash))
    ```
 
 
@@ -427,10 +447,9 @@ Need to update this
 1. See the greeting has changed.
 
    ```sh
-   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
+   cast call --rpc-url $GOERLI_URL $GREETER_L1 "greet()"  | cast --to-ascii
    ```
 
--->
 
 ## How it's done (in Solidity)
 
