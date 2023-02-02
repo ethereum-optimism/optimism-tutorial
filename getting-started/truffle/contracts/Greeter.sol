@@ -4,6 +4,11 @@ pragma solidity ^0.8.0;
 contract Greeter {
   string greeting;
 
+  event SetGreeting(
+    address sender,     // msg.sender
+    string greeting
+  ); 
+
   constructor(string memory _greeting) {
     greeting = _greeting;
   }
@@ -14,5 +19,6 @@ contract Greeter {
 
   function setGreeting(string memory _greeting) public {
     greeting = _greeting;
+    emit SetGreeting(msg.sender, _greeting);
   }
 }

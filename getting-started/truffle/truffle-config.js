@@ -86,7 +86,8 @@ module.exports = {
       provider: () => new HDWalletProvider(
          process.env.MNEMONIC,
          optimismGoerliUrl),
-      network_id: 420
+      network_id: 420,
+      gas: 1e6
    },
     // Useful for private networks
     // private: {

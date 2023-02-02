@@ -40,10 +40,6 @@ module.exports = {
     "optimism-goerli": {
        url: optimismGoerliUrl,
        accounts: { mnemonic: process.env.MNEMONIC }
-    },
-    "optimism-bedrock": {
-       url: 'https://bedrock-beta-1-replica-0.optimism.io/',
-       accounts: { mnemonic: process.env.MNEMONIC }
     }
   }
 };
