@@ -5,7 +5,7 @@
 
 This tutorial teaches you the basics of Optimism development.
 Optimism is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on mainnet.
-Therefore, we the differences between Optimism development and Ethereum development are minor.
+Therefore, the differences between Optimism development and Ethereum development are minor.
 But a few differences [do exist](https://community.optimism.io/docs/developers/build/differences/#).
 
 #### See video
@@ -600,7 +600,7 @@ It is best to start development with the EVM provided by the development stack.
 Not only is it faster, but such EVMs often have extra features, such as the [ability to log messages from Solidity](https://hardhat.org/tutorial/debugging-with-hardhat-network.html) or a [graphical user interface](https://trufflesuite.com/ganache/).
 
 After you are done with that development, debug your decentralized application using either a [development node](https://community.optimism.io/docs/developers/build/dev-node/) or the [Goerli test network](https://community.optimism.io/docs/useful-tools/networks/). 
-This lets you debug parts that that are Optimism specific such as calls to bridges to transfer assets between layers.
+This lets you debug parts that are Optimism specific such as calls to bridges to transfer assets between layers.
 
 Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
 
