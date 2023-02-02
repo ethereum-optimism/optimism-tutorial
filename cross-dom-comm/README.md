@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you how to do interlayer communication.
-You will learn how run a contract on Ethereum that runs another contract on Optimism, and also how to run a contract on Optimism that calls a contract on Ethereum.
+You will learn how to run a contract on Ethereum that runs another contract on Optimism, and also how to run a contract on Optimism that calls a contract on Ethereum.
 
 [You can read more details about this process here](https://community.optimism.io/docs/developers/bridge/messaging/).
 
@@ -540,7 +540,7 @@ The way this works is that the cross domain messenger that calls the target cont
     address cdmAddr = address(0);    
 ```
 
-It might look like it would be more efficient to calculate the address of the cross domain messanger just once, but that would involve changing the state, which is an expensive operation. 
+It might look like it would be more efficient to calculate the address of the cross domain messenger just once, but that would involve changing the state, which is an expensive operation. 
 Unless we are going to run this code thousands of times, it is more efficient to just have a few `if` statements.
 
 ```solidity
