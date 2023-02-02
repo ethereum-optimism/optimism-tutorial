@@ -35,26 +35,12 @@ The tests examples below all use either Optimism Goerli or the Optimism Bedrock 
 
 ## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x106941459A8768f5A92b770e280555FAF817576f](https://goerli-explorer.optimism.io/address/0x106941459A8768f5A92b770e280555FAF817576f). 
+We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x575E9B4f2c3945d7CF07cb76628d29DF471692B8](https://goerli-explorer.optimism.io/address/0x575E9B4f2c3945d7CF07cb76628d29DF471692B8). 
 You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
 The most visible difference is that you have to specify a different endpoint (of course). 
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
-
-**Bedrock:** Our next release, [Optimism Bedrock](https://community.optimism.io/docs/developers/bedrock/), is in beta. 
-As it is a different testnet, that testnet has Greeter at address [`0xC0836cCc8FBa87637e782Dde6e6572aD624fb984`](https://blockscout.com/optimism/bedrock-beta/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984).
-
-To get ETH on an address in the Bedrock beta network:
-
-1. [Look at the Bedrock beta contract addresses](https://oplabs.notion.site/Contract-Addresses-8669ef7d6f124accb0220a5e0f24be0d).
-
-1. Find the `OptimismPortalProxy` address.
-   Currently that is [`0xf91795564662dcc9a17de67463ec5ba9c6dc207b`](https://goerli.etherscan.io/address/0xf91795564662dcc9a17de67463ec5ba9c6dc207b), but as we're still in development it might change.
-
-1. Send that address ETH on Goerli and in a few minutes' time you'll get that ETH on the Optimism Bedrock beta network.
-
-1. Use [the explorer](https://blockscout.com/optimism/bedrock-beta) to verify you have the ETH on Optimism Bedrock beta.
 
 ## Development stacks
 
@@ -135,7 +121,7 @@ Follow these steps to add Optimism Goerli support to an existing Hardhat project
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0x106941459A8768f5A92b770e280555FAF817576f")
+   greeter = await Greeter.attach("0x575E9B4f2c3945d7CF07cb76628d29DF471692B8")
    ```   
 
 
@@ -227,21 +213,6 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
       }
       ```
 
-      **Bedrock:** Also add this network definition:
-
-      ```js
-         "optimism-bedrock": {
-            provider: () => new HDWalletProvider(
-               process.env.MNEMONIC,
-               'https://bedrock-beta-1-replica-0.optimism.io/'),
-            network_id: 902,
-            gas: 2000000           
-         },
-      ```
-
-      The `gas` setting is the block gas limit.
-      We need this because by default Truffle sends transactions with a huge gas limit, which exceeds the amount a bedrock block can accept.
-
 
 #### Greeter interaction
 
@@ -255,7 +226,7 @@ Follow these steps to add Optimism Goerli support to an existing Truffle project
 1. Connect to the Greeter contact.
 
    ```js
-   greeter = await Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
+   greeter = await Greeter.at("0x575E9B4f2c3945d7CF07cb76628d29DF471692B8")
    ```
 
 1. Read information from the contact.
@@ -335,7 +306,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
 1. Scroll down. 
-   In the At Address field, type the contract address `0x106941459A8768f5A92b770e280555FAF817576f`.
+   In the At Address field, type the contract address `0x575E9B4f2c3945d7CF07cb76628d29DF471692B8`.
    Then, click **At Address**. 
    Expand the contract to see you can interact with it.
 
@@ -345,7 +316,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    ![](assets/remix-query.png)
 
-1. Type a greeting and then click **setGreeting**. Approve the transaction in your wallet. 
+1. Type a greeting (preferably, one that starts with the word `Remix`) and then click **setGreeting**. Approve the transaction in your wallet. 
    Note that if the greeting includes a comma you need to enclose it in quotes.
 
    <img src="assets/remix-tx.png" width="300" />
@@ -379,7 +350,7 @@ Foundry does not give us a JavaScript console, everything can be done from the s
 
    ```sh
    export ETH_RPC_URL= << Your Goerli URL goes here >>
-   export GREETER=0x106941459A8768f5A92b770e280555FAF817576f   
+   export GREETER=0x575E9B4f2c3945d7CF07cb76628d29DF471692B8   
    ```
 
 1. Call `greet()`. Notice that the response is provided in hex.
@@ -397,7 +368,7 @@ Foundry does not give us a JavaScript console, everything can be done from the s
 1. Put your mnemonic in a file `mnem.delme` and send a transaction. 
 
    ```sh
-   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"hello"' --legacy
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" "Foundry hello" --legacy
    ```
 
 1. Test that the greeting has changed:
@@ -506,7 +477,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 1. Create an object for the contract:
 
    ```python
-   greeter = Greeter.at("0x106941459A8768f5A92b770e280555FAF817576f")
+   greeter = Greeter.at("0x575E9B4f2c3945d7CF07cb76628d29DF471692B8")
    ```
 
 1. View the current greeting:
@@ -518,7 +489,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 1. Modify the greeting and see the new one:
 
    ```python
-   greeter.setGreeting("Python hello", {'from': accounts[0] })
+   greeter.setGreeting("Brownie hello", {'from': accounts[0] })
    greeter.greet()
    ```
 
@@ -589,7 +560,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 1. Connect to the Greeter contract:   
 
    ```python
-   greeter = project.get_contract("Greeter").at("0x106941459A8768f5A92b770e280555FAF817576f")
+   greeter = project.get_contract("Greeter").at("0x575E9B4f2c3945d7CF07cb76628d29DF471692B8")
    ```   
 
 1. Read information from the contract:
@@ -602,7 +573,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 
    ```python
    acct = accounts.load("test")
-   greeter.setGreeting("Apeworx says hi", sender=acct)  
+   greeter.setGreeting("Apeworx says hi ("+acct.address+")", sender=acct)  
    ```
 
    Sign the transaction and provide the passphrase if necessary.
