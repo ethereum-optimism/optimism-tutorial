@@ -87,7 +87,7 @@ const setup = async() => {
 ```
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to view information.
-Note that we do not need signers here, since what we are only calling `view` functions.
+Note that we do not need signers here, since we are only calling `view` functions.
 However, we do need the chainId values.
 
 
