@@ -62,7 +62,7 @@ If you do not need any special processing on L2, just the ability to deposit, tr
    deployRcpt = await deployTx.wait()
    ```
 
-## Transfering tokens 
+## Transferring tokens 
 
 1. Get the token addresses.
 
