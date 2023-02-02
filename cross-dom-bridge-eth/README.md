@@ -271,7 +271,7 @@ const withdrawETH = async () => {
 ```
 
 For deposits it was enough to transfer 1 gwei to show that the L2 balance increases.
-However, in the case of withdrawals the withdrawing account needs to be pay for finalizing the message, which costs more than that.
+However, in the case of withdrawals the withdrawing account needs to be paid for finalizing the message, which costs more than that.
 
 By sending 0.01 ETH it is guaranteed that the withdrawal will actually increase the L1 ETH balance instead of decreasing it.
 
