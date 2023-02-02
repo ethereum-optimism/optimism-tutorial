@@ -316,7 +316,7 @@ In [Remix](https://remix.ethereum.org) you access Optimism through your own wall
 
    ![](assets/remix-query.png)
 
-1. Type a greeting and then click **setGreeting**. Approve the transaction in your wallet. 
+1. Type a greeting (preferably, one that starts with the word `Remix`) and then click **setGreeting**. Approve the transaction in your wallet. 
    Note that if the greeting includes a comma you need to enclose it in quotes.
 
    <img src="assets/remix-tx.png" width="300" />
@@ -368,7 +368,7 @@ Foundry does not give us a JavaScript console, everything can be done from the s
 1. Put your mnemonic in a file `mnem.delme` and send a transaction. 
 
    ```sh
-   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" '"Foundry hello"' --legacy
+   cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" "Foundry hello" --legacy
    ```
 
 1. Test that the greeting has changed:
