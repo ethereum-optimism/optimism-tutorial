@@ -22,8 +22,8 @@ To show how this works we installed [a slightly modified version of HardHat's `G
 
 | Network | Greeter address  |
 | ------- | ---------------- |
-| Goerli (L1) | [0x7fA4D972bB15B71358da2D937E4A830A9084cf2e](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e) |
-| Optimism Goerli (L2) | [0xC0836cCc8FBa87637e782Dde6e6572aD624fb984](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984) |
+| Goerli (L1) | [0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84) |
+| Optimism Goerli (L2) | [0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9) |
 
 #### What if somebody else uses the same contracts at the same time?
 
@@ -31,7 +31,7 @@ If somebody else uses these contracts while you are going through the tutorial, 
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
 
-- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984#internaltx).
+- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#internaltx).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
 
@@ -75,7 +75,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
   
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xC0836cCc8FBa87637e782Dde6e6572aD624fb984")
+   greeter = await Greeter.attach("0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9")
    await greeter.greet()
    ```
 
@@ -91,7 +91,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```js
    Controller = await ethers.getContractFactory("FromL1_ControlL2Greeter")
    controller = await Controller.deploy()
-   tx = await controller.setGreeting(`Hello from L1 ${Date()}`)
+   tx = await controller.setGreeting(`Hardhat hello from L1 ${Date()}`)
    rcpt = await tx.wait()
    ```
 
@@ -108,8 +108,9 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
-1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xc0836ccc8fba87637e782dde6e6572ad624fb984#readContract).
+1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
    Notice that the `xorigin` value is the controller address.
+   The `user` value is your user's address, but that one is provided as part of the message.
 
 #### Optimism message to Ethereum (withdrawal)
 
@@ -123,7 +124,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
      ```js
      Greeter = await ethers.getContractFactory("Greeter")
-     greeter = await Greeter.attach("0x7fA4D972bB15B71358da2D937E4A830A9084cf2e")
+     greeter = await Greeter.attach("0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84")
      await greeter.greet()     
      ```
 
@@ -138,7 +139,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```js
    Controller = await ethers.getContractFactory("FromL2_ControlL1Greeter")
    controller = await Controller.deploy()
-   tx = await controller.setGreeting(`Hello from L2 ${Date()}`)
+   tx = await controller.setGreeting(`Hardhat hello from L2 ${Date()}`)
    rcpt = await tx.wait()
    ```
 
@@ -191,7 +192,7 @@ The fault challenge window starts after you do this, so it's best to do it as ea
    This usually happens every four minutes.
 
    ```js
-   hash = <<< tx.hash from L2 >>>
+   hash = '<<< tx.hash from L2 >>>''
    (await crossChainMessenger.getMessageStatus(hash)) == sdk.MessageStatus.READY_TO_PROVE
    ```
 
@@ -243,15 +244,11 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 1. Get the new L1 greeting. There are two ways to do that:
 
-   - [Browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) and click **greet** to see the greeting.
-
-   - Run these commands in the Hardhat console connected to L1 Goerli:
-
-     ```js
-     Greeter = await ethers.getContractFactory("Greeter")
-     greeter = await Greeter.attach("0x7fA4D972bB15B71358da2D937E4A830A9084cf2e")
-     await greeter.greet()     
-     ```
+   ```js
+   Greeter = await ethers.getContractFactory("Greeter")
+   greeter = await Greeter.attach("0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84")
+   await greeter.greet()     
+   ```
 
 
 ### Foundry
@@ -276,14 +273,14 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Create environment variables for the Greeter contracts' addresses
 
    ```sh
-   export GREETER_L1=0x7fA4D972bB15B71358da2D937E4A830A9084cf2e
-   export GREETER_L2=0xC0836cCc8FBa87637e782Dde6e6572aD624fb984
+   export GREETER_L1=0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84
+   export GREETER_L2=0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9
    ```
 
 1. Put your account mnemonic in the file `mnem.delme`.
 
 
-#### Ethereum message to Optimism
+#### Ethereum message to Optimism (deposit)
 
 1. See the current greeting.
 
@@ -308,10 +305,8 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ```sh
    cast send --rpc-url $GOERLI_URL \
       --mnemonic-path mnem.delme \
-      $FROM_L1_CONTROLLER "setGreeting(string)" '"Salam"'
+      $FROM_L1_CONTROLLER "setGreeting(string)" '"Foundry hello from L1"'
    ```
-
-   Note that `cast` doesn't estimate the gas limit correctly in this case, so you need to specify it manually.
 
 1. See the greeting has changed. Note that the change might take a few minutes to propagate.
 
@@ -319,7 +314,11 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
    ```
 
-#### Optimism message to Ethereum
+1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
+   Notice that the `xorigin` value is the controller address.
+   The `user` value is your user's address, but that one is provided as part of the message.
+
+#### Optimism message to Ethereum (withdrawal)
 
 ##### Send the message
 
@@ -346,7 +345,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ```sh
    cast send --rpc-url $OPTI_GOERLI_URL \
       --mnemonic-path mnem.delme $FROM_L2_CONTROLLER \
-      "setGreeting(string)" '"Salam"'
+      "setGreeting(string)" '"Foundry hello from L2"'
    ```
 
 1. Create an environment variable for the transaction hash:
@@ -478,7 +477,7 @@ To call L2 from L1 on mainnet, you need to [use this address](https://github.com
 To call L1 from L2, on either mainnet or Goerli, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 
 ```solidity
-    address greeterL2Addr = 0xC0836cCc8FBa87637e782Dde6e6572aD624fb984;
+    address greeterL2Addr = 0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9;
 ```    
 
 This is the address on which `Greeter` is installed on Optimistic Goerli.
@@ -499,13 +498,16 @@ The downside is that we cannot call `setGreeting` from within this contract, bec
 This is where we'll store the message to send to L2.
 
 ```solidity 
-        message = abi.encodeWithSignature("setGreeting(string)", 
-            _greeting);
+        message = abi.encodeWithSignature("setGreeting(string,address)", 
+            _greeting, msg.sender);
 ```
 
 Here we create the message, the calldata to be sent on L2.
 The Solidity [`abi.encodeWithSignature`](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.html?highlight=abi.encodeWithSignature#abi-encoding-and-decoding-functions) function creates this calldata.
-As [specified in the ABI](https://docs.soliditylang.org/en/v0.8.12/abi-spec.html), it is four bytes of signature for the function being called followed by the parameter, in this case a string.
+As [specified in the ABI](https://docs.soliditylang.org/en/v0.8.12/abi-spec.html), it is four bytes of signature for the function being called followed by the parameters, in this case a string for the new greeting, and an address for the original sender.
+
+Note: We don't need the original sender for the tutorial itself.
+We sent it here to make it easier to see how many people went through the tutorial.
 
 ```solidity
         ICrossDomainMessenger(crossDomainMessengerAddr).sendMessage(
@@ -531,7 +533,7 @@ This call actually sends the message. It gets three parameters:
 
 ## Getting the source address
 
-If you look at Etherscan, for either the [L1 Greeter](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#events) or the [L2 Greeter](https://blockscout.com/optimism/goerli/address/0xC0836cCc8FBa87637e782Dde6e6572aD624fb984/logs#address-tabs), you will see events with the source address on the other layer.
+If you look at Etherscan, for either the [L1 Greeter](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#events) or the [L2 Greeter](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events), you will see events with the source address on the other layer.
 The way this works is that the cross domain messenger that calls the target contract has a method, `xDomainMessageSender()`, that returns the source address. It is used by the `getXsource` function in `Greeter`.
 
 ```solidity
@@ -558,7 +560,7 @@ Unless we are going to run this code thousands of times, it is more efficient to
       
 ```
 
-There are three possibilities for the cross domain messenger's address on L1, because the address is not under our control.
+There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by Optimism.
 On L2 Optimism has full control of the genesis block, so we can put all of our contracts on convenient addresses.
 
 ```solidity

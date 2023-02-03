@@ -11,7 +11,11 @@ contract Greeter {
   event SetGreeting(
     address sender,     // msg.sender
     address origin,     // tx.origin
-    address xorigin);   // cross domain origin, if any
+    address xorigin,    // cross domain origin, if any
+    address user,       // user address, if given
+    string greeting     // The greeting 
+    );
+    
 
   constructor(string memory _greeting) {
     greeting = _greeting;
@@ -21,11 +25,16 @@ contract Greeter {
     return greeting;
   }
 
-  function setGreeting(string memory _greeting) public {
+  function setGreeting(string memory _greeting, address _user) public {
     greeting = _greeting;
-    emit SetGreeting(msg.sender, tx.origin, getXorig());
+    emit SetGreeting(msg.sender, tx.origin, getXorig(), _user, _greeting);
   }
 
+
+  function setGreeting(string memory _greeting) public {
+    greeting = _greeting;
+    emit SetGreeting(msg.sender, tx.origin, getXorig(), address(0), _greeting);
+  }
 
   // Get the cross domain origin, if any
   function getXorig() private view returns (address) {
