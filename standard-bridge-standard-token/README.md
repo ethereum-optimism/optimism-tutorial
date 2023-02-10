@@ -78,11 +78,12 @@ If you do not need any special processing on L2, just the ability to deposit, tr
    fname = "node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/universal/OptimismMintableERC20.sol/OptimismMintableERC20.json"
    ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
    optimismMintableERC20Data = JSON.parse(ftext)
+   ```
 
 1. Get the L2 contract.
 
    ```js
-   l2Contract = new ethers.Contract(l2Addr, optimismMintableERC20Data.abi, l2Wallet)   
+   l2Contract = new ethers.Contract(l2Addr, optimismMintableERC20Data.abi, await ethers.getSigner())   
    ```
 
 ### Get setup for L1 (provider, wallet, tokens, etc)
@@ -120,7 +121,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 1. Import the Optimism SDK.
 
    ```js
-   const optimismSDK = require("@eth-optimism/sdk")
+   optimismSDK = require("@eth-optimism/sdk")
    ```
 
 1. Create the cross domain messenger.
@@ -149,6 +150,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    ```
 
 1. Check your balances on L1 and L2.
+   Note that `l1Wallet` and `l2Wallet` have the same address, so it doesn't matter which one we use.
 
    ```js
    await l1Contract.balanceOf(l1Wallet.address) 
