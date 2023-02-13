@@ -4,6 +4,7 @@ require('@nomiclabs/hardhat-ethers')
 // Load environment variables from .env
 require('dotenv').config();
 
+
 const words = process.env.MNEMONIC.match(/[a-zA-Z]+/g).length
 validLength = [12, 15, 18, 24]
 if (!validLength.includes(words)) {
