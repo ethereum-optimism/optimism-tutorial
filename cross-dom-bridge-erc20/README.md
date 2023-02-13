@@ -360,7 +360,7 @@ The third parameter (which is optional) is a hashed array of options:
 Once the message is relayed the balance change on Optimism is practically instantaneous.
 We can just report the balances and see that the L2 balance rose by 1 gwei.
 
-### `withdrawETH`
+### `withdrawERC20`
 
 This function shows how to withdraw ERC-20 from Optimism to Ethereum.
 The withdrawal process has these stages:
