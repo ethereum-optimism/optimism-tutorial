@@ -12,7 +12,7 @@ If you are already familiar with Solidity [go here](../getting-started) for a tu
 
 Before you can use Ethereum you need [wallet software](https://cointelegraph.com/news/overview-of-software-wallets-the-easy-way-to-store-crypto).
 In this tutorial we use [MetaMask](https://metamask.io/), a browser extension, as our wallet.
-You can also use MetaMask in a mobile device (iOS or Android), but for software development it is best to use a notebook or desktop computer.
+You can also use MetaMask on a mobile device (iOS or Android), but for software development it is best to use a notebook or desktop computer.
 
 1. Make sure you have either Chrome, Firefox, Brave, or Edge. 
 
@@ -88,7 +88,7 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
    <img src="assets/remix-tx.png" width="300" />
 
-1. In the Remix console (bottom right quadrant of the window), expand the bottom entry to see the transasction information.
+1. In the Remix console (bottom right quadrant of the window), expand the bottom entry to see the transaction information.
 
    <img src="assets/remix-console.png" />
 

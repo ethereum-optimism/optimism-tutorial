@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and Optimism using [the Optimism SDK](https://sdk.optimism.io/).
-To see how to send these messages, see [the cross domain tutorial](../cross-dom-comm/) or the tutorials on how transfer [ETH](../cross-dom-bridge-eth/) and [ERC-20](../cross-dom-bridge-erc20/).
+To see how to send these messages, see [the cross domain tutorial](../cross-dom-comm/) or the tutorials on how to transfer [ETH](../cross-dom-bridge-eth/) and [ERC-20](../cross-dom-bridge-erc20/).
 
 ## Getting started
 
@@ -69,7 +69,7 @@ We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06c
    l2Rcpt = await crossChainMessenger.getMessageReceipt(l1TxHash)
    ```
 
-   In addition to `l2Rcpt.transactionReceipt`, which contains the stardard transaction receipt, you get `l2Rcpt.receiptStatus` with the transaction status. 
+   In addition to `l2Rcpt.transactionReceipt`, which contains the standard transaction receipt, you get `l2Rcpt.receiptStatus` with the transaction status. 
    [`1` means successful relay](https://sdk.optimism.io/enums/messagereceiptstatus).
 
 1. Get the hash of the L2 transaction (`l2Rcpt.transactionReceipt.transactionHash`) 
@@ -82,7 +82,7 @@ We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06c
    
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
-   To see if actual assets were transfered, you can parse the event log.
+   To see if actual assets were transferred, you can parse the event log.
 
    The event names and their parameters are usually available on Etherscan, but you can't just copy and paste, you need to make a few changes:
 
@@ -109,7 +109,7 @@ We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06c
    The `try .. catch` syntax is necessary because not all the log entries can be parsed by `iface`.
 
 1. When an asset is deposited, it is actually locked in the bridge on L1, and an equivalent asset is minted on L2.
-   To see transfered assets, look for `Mint` events.
+   To see transferred assets, look for `Mint` events.
 
    ```js
    mints = logEvents.filter(x => x.name == 'Mint')
@@ -138,7 +138,7 @@ We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/
    l1Rcpt = await crossChainMessenger.getMessageReceipt(l2TxHash)
    ```
 
-   In addition to `l1Rcpt.transactionReceipt`, which contains the stardard transaction receipt, you get `l1Rcpt.receiptStatus` with the transaction status. 
+   In addition to `l1Rcpt.transactionReceipt`, which contains the standard transaction receipt, you get `l1Rcpt.receiptStatus` with the transaction status. 
    [`1` means successful relay](https://sdk.optimism.io/enums/messagereceiptstatus).
 
 1. Get the hash of the L1 transaction (`l1Rcpt.transactionReceipt.transactionHash`) 
@@ -151,7 +151,7 @@ We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/
    
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
-   To see if actual assets were transfered, you can parse the event log.
+   To see if actual assets were transferred, you can parse the event log.
    This is how you parse the event log of the L2 transaction.
 
    The event names and their parameters are usually available on Etherscan, but you can't just copy and paste, you need to make a few changes:
@@ -185,7 +185,7 @@ We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/
    The `try .. catch` syntax is necessary because not all the log entries can be parsed by `iface`.
 
 1. When an asset is withdrawn, it is burned on L2, and then the bridge on L1 releases the equivalent asset.
-   To see transfered assets, look for `Burn` events.
+   To see transferred assets, look for `Burn` events.
 
    ```js
    burns = logEvents.filter(x => x.name == 'Burn')

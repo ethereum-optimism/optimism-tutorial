@@ -62,7 +62,7 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
       process.env.L1_TOKEN_ADDRESS)
    ```
 
-## Transfering tokens 
+## Transferring tokens 
 
 1. Get the token addresses.
 
