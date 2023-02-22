@@ -227,7 +227,7 @@ const getEstimates = async (provider, tx) => {
     l2Cost: await provider.estimateL2GasCost(tx),
 ```
 
-Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.html#estimateL1GasCost) and [L2]()https://sdk.optimism.io/modules.html#estimateL1GasCost.
+Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.html#estimateL1GasCost) and [L2](https://sdk.optimism.io/modules.html#estimateL1GasCost).
 
 ```js    
     l1Gas: await provider.estimateL1Gas(tx)
