@@ -35,7 +35,7 @@ The tests examples below all use either Optimism Goerli or the Optimism Bedrock 
 
 ## Interacting with Optimism contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Optimism Goerli, at address [0x575E9B4f2c3945d7CF07cb76628d29DF471692B8](https://goerli-explorer.optimism.io/address/0x575E9B4f2c3945d7CF07cb76628d29DF471692B8). 
+We have [Hardhat's Greeter contract](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/getting-started/hardhat/contracts/Greeter.sol) on Optimism Goerli, at address [0x575E9B4f2c3945d7CF07cb76628d29DF471692B8](https://goerli-explorer.optimism.io/address/0x575E9B4f2c3945d7CF07cb76628d29DF471692B8). 
 You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
