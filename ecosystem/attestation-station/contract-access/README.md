@@ -1,4 +1,4 @@
-# AttestationStation Contract
+# AttestationStation: Direct contract access
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
@@ -10,8 +10,8 @@ In this tutorial you learn how to read, interpret, and write those attestations.
 The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
 On the production Optimism network the contract is [at the same address](https://explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77)
 
-
-Note: This is the tutorial for programmatic access to the contract. There is also a [web-based user interface](https://attestationstation.xyz/).
+This is one of the methods to access AttestationStation (ATST).
+[There are other ways](../README.md).
 
 ## Prerequisites
 
