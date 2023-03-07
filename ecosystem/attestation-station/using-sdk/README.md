@@ -165,7 +165,7 @@ The supported data types are:
 - `bool`
 - `address`
 
-You can also specify as an additional paramter the contract address if you are not using the default.
+You can also specify as an additional parameter the contract address if you are not using the default.
 
 ```js
     
