@@ -149,11 +149,10 @@ To write an attestation we need both setups.
     const key = "animalfarm.school.GPA"
 
     // Read an attestation
-    const val = await atst.readAttestation(
+    const val = await atst.readAttestationString(
         readCreatorAddr,
         aboutAddr,
-        key,
-        "string")    // data type
+        key)   
 ```
 
 Read an attesation.
