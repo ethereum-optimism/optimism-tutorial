@@ -91,6 +91,26 @@ const main = async () => {
     const rcpt = await tx.wait()
     console.log(`Attestation written:`)
     console.log(`https://goerli-explorer.optimism.io/tx/${rcpt.transactionHash}`)
+
+
+    console.log(`---------------`)
+
+    const events = await atst.getEvents({
+      creator: null,    // any creator
+      about: aboutAddr, // Only 0x0...060A7
+      key: null,        // any key
+      key: null,        // any value
+      provider: provider(wagmiChains.optimismGoerli)
+    })
+
+    console.log("Attestations about Goat:")
+    
+    const lastEvents = events.slice(-5)
+    lastEvents.map(event => {
+      console.log(`at block ${event.blockNumber}, ${event.args.creator} attested:`)
+      console.log(`    ${Buffer.from(event.args.key.slice(2), 'hex')} -> ${
+        Buffer.from(event.args.val.slice(2), 'hex')}`)
+    })
 }
 
 

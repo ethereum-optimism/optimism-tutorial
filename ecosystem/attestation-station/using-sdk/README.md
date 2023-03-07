@@ -199,8 +199,31 @@ You can use the information in `preparedTx.request` to [estimate the total cost 
     console.log(`https://goerli-explorer.optimism.io/tx/${rcpt.transactionHash}`)
 }
 ```
-
+   
 Here we actually send the transaction, wait for it to be received, and point the user to the transaction on a block explorer.
+
+```js
+    console.log(`---------------`)
+    
+    const events = await atst.getEvents({
+      creator: null,    // any creator
+      about: aboutAddr, // Only 0x0...060A7
+      key: null,        // any key
+      key: null,        // any value
+      provider: provider(wagmiChains.optimismGoerli)
+    })
+``` 
+
+You can use `getEvents` to search for attestations based on specific criteria.
+Note that as this function uses the `eth_getLogs` RPC, it is subject to some limitations:
+
+1. It is limited (on Alchemy) to 10k attestations.
+   [See here for more information](https://docs.alchemy.com/reference/sdk-getlogs).
+
+1. It returns all events that match the filter, including those that since been superceded (attestations can be overwritten).
+   [See here for how to remove overwritten attestations](../contract-access/README.md#out-of-date-information).
+
+
 
 ## Conclusion
 
