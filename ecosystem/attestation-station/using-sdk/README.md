@@ -209,7 +209,9 @@ Here we actually send the transaction, wait for it to be received, and point the
       about: aboutAddr, // Only 0x0...060A7
       key: null,        // any key
       key: null,        // any value
-      provider: provider(wagmiChains.optimismGoerli)
+      provider: provider(wagmiChains.optimismGoerli),
+      // fromBlockOrBlockhash?: ethers.providers.BlockTag | undefined
+      // toBlock?: ethers.providers.BlockTag | undefined
     })
 ``` 
 
