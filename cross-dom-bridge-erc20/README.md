@@ -12,6 +12,11 @@ The SDK provides transparent safety rails to prevent that mistake.
 Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-bridge-erc20).
 
 
+**Warning:** The standard bridge does *not* support certain ERC-20 configurations:
+
+- [Fee on transfer tokens](https://github.com/d-xo/weird-erc20#fee-on-transfer)
+- [Tokens that modify balances without emitting a Transfer event](https://github.com/d-xo/weird-erc20#balance-modifications-outside-of-transfers-rebasingairdrops)
+
 ## Setup
 
 1. Ensure your computer has:
