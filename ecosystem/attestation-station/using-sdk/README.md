@@ -105,7 +105,7 @@ However, this example runs inside Node, which is a server.
 There is no user to prompt for signing transactions.
 Therefore, to submit transactions (which is necessary to write attestations), we use a [mock connector](https://wagmi.sh/core/connectors/mock) that has a private key.
 
-If you are going to use `atst` in client-side code to write attestations, use a different connector, probably through [RainbowKit](https://www.rainbowkit.com/docs/installation#configure) of [ConnectKit](https://docs.family.co/connectkit).
+If you are going to use `atst` in client-side code to write attestations, use a different connector, probably through [RainbowKit](https://www.rainbowkit.com/docs/installation#configure) or [ConnectKit](https://docs.family.co/connectkit).
 
 ```js
 const writeSetup = async () => {
