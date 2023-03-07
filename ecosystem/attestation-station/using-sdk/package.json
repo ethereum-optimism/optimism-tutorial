@@ -5,7 +5,7 @@
   "module": "./index.mjs",
   "license": "MIT",
   "dependencies": {
-    "@eth-optimism/atst": "0.0.0-20230306212852",
+    "@eth-optimism/atst": "latest",
     "@wagmi/core": "^0.9.7",
     "ethers": "5.7.0",
     "dotenv": "*"
