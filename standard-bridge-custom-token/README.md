@@ -13,6 +13,11 @@ It is also necessary that the ERC-20 token contract on the layer of original min
 
 **Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network. Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/standard-bridge-custom-token).
 
+**Warning:** The standard bridge does *not* support certain ERC-20 configurations:
+
+- [Fee on transfer tokens](https://github.com/d-xo/weird-erc20#fee-on-transfer)
+- [Tokens that modify balances without emitting a Transfer event](https://github.com/d-xo/weird-erc20#balance-modifications-outside-of-transfers-rebasingairdrops)
+
 ## Customizing the `L2StandardERC20` implementation
 
 Our example here implements a custom token [`L2CustomERC20`](contracts/L2CustomERC20.sol) based on the `L2StandardERC20` but with `8` decimal points, rather than `18`.
