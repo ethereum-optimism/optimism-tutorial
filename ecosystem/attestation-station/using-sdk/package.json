@@ -2,7 +2,7 @@
   "name": "atst",
   "version": "1.0.0",
   "type": "module",
-  "exports": "./index.mjs",
+  "module": "./index.mjs",
   "license": "MIT",
   "dependencies": {
     "@eth-optimism/atst": "0.0.0-20230306212852",
