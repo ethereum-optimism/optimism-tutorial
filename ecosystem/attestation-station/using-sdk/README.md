@@ -116,7 +116,7 @@ const writeSetup = async () => {
     // user wallet
     connector: new wagmiCoreMock.MockConnector({
       options: {
-        chainId: chains[0].ids,
+        chainId: wagmiChains.optimismGoerli.id,
         signer: new ethers.Wallet(process.env.PRIVATE_KEY, 
           provider(wagmiChains.optimismGoerli)
 ```
