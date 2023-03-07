@@ -185,6 +185,11 @@ You can also specify as an additional parameter the contract address if you are 
 The way wagmi works, you first [prepare a transaction](https://wagmi.sh/react/prepare-hooks) and then send it.
 One advantage of this approach is that the prepared transaction already includes, for example, the gas cost of the transaction (although note that on Optimism that is the tiny [L2 execution fee](https://community.optimism.io/docs/developers/build/transaction-fees/#the-l2-execution-fee), not the much larger [L1 data fee](https://community.optimism.io/docs/developers/build/transaction-fees/#the-l1-data-fee)).
 
+Another advantage is user responsiveness.
+Preparing a transaction requires a gas estimate, which is provided by a network node.
+That is a relatively long procedure, which takes place before the user is prompted to sign the transaction.
+By preparing the transaction in advance we can show the wallet's transaction signing window immediately.
+
 ```js
     // const txReq = preparedTx.request
 ```
