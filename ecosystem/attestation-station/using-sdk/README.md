@@ -15,16 +15,16 @@ This is one of the methods to access AttestationStation (ATST).
 
 ## Prerequisites
 
-- You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
+- You have [Node.js](https://nodejs.org/en/) running on your computer.
 - There is network connectivity to a provider on the Optimism Goerli network, and to the npm package registry.
 
 
 ## Running the app
 
-1. Use `yarn` to download the packages you need
+1. Use `npm` to download the packages you need
 
    ```sh
-   yarn
+   npm install
    ```
 
 
@@ -47,14 +47,14 @@ This is one of the methods to access AttestationStation (ATST).
 #! /usr/local/bin/node
 
 // Read .env
-const dotenv = await import("dotenv")
+import dotenv from "dotenv"
 dotenv.config()
 ```
 
 This part uses [`dotenv`](https://www.npmjs.com/package/dotenv) to read the private key and Optimism Goerli URL.
 
 ```js
-const ethers = await import("ethers")
+import ethers from "ethers"
 const wagmiCore = await import("@wagmi/core")
 const wagmiAlchemy = await import("@wagmi/core/providers/alchemy")
 const wagmiChains = await import("@wagmi/core/chains")

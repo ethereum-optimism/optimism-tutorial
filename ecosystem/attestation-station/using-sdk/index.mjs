@@ -3,10 +3,10 @@
 // wagmi prefers to use JavaScript modules, see https://wagmi.sh/react/module-types
 
 // Read .env
-const dotenv = await import("dotenv")
+import dotenv from "dotenv"
 dotenv.config()
 
-const ethers = await import("ethers")
+import ethers from "ethers"
 const wagmiCore = await import("@wagmi/core")
 const wagmiAlchemy = await import("@wagmi/core/providers/alchemy")
 const wagmiChains = await import("@wagmi/core/chains")
