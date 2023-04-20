@@ -9,6 +9,7 @@
     "hardhat": "^2.8.4"
   },
   "dependencies": {
+    "@eth-optimism/contracts-bedrock": "^0.13.2",
     "@openzeppelin/contracts": "^4.8.1",
     "dotenv": "^16.0.0"
   }
