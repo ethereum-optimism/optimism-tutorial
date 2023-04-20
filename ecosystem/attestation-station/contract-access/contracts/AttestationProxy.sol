@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.16;
+pragma solidity ^0.8.15;
 
 // Copied from FlipsideCrypto's
 // https://github.com/FlipsideCrypto/user_metrics/blob/main/apps/optimism/attestation_contracts/contracts/FlipsideAttestation.sol

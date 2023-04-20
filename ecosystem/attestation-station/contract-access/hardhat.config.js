@@ -31,7 +31,7 @@ if (!validLength.includes(words)) {
 }
 
 module.exports = {
-  solidity: "0.8.16",
+  solidity: "0.8.15",
   networks: {
     "local-devnode": {
        url: "http://localhost:8545",
