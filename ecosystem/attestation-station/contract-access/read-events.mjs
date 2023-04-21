@@ -50,7 +50,7 @@ const main = async () => {
   ))
 
   console.log(`\nTotal events: ${goatEvents.length}`)
-  console.log(`\Relevant events: ${relevantEvents.length}`)
+  console.log(`\nRelevant events: ${relevantEvents.length}`)
 }   // main
 
 
