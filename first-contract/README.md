@@ -150,7 +150,7 @@ This is the standard type for [evm](https://ethereum.org/en/developers/docs/evm/
 Note that all the fields in a contract are effectively public. 
 Ethereum code is executed by multiple computers in multiple locations, and can be verified by anybody. 
 This would be impossible if some part of the contract state had been unreadable. 
-A field variable being `private` only means it cannot be ready by on-chain code.
+A field variable being `private` only means it cannot be ready by onchain code.
 
 ```solidity
 
