@@ -473,7 +473,7 @@ contract FromL1_ControlL2Greeter {
 ```
 
 This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/ethereum-optimism/optimism/blob/186e46a47647a51a658e699e9ff047d39444c2de/packages/contracts/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Goerli. 
-To call L2 from L1 on mainnet, you need to [use this address](https://github.com/ethereum-optimism/optimism/blob/186e46a47647a51a658e699e9ff047d39444c2de/packages/contracts/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2).
+To call L2 from L1 on mainnet, you need to [use this address](https://github.com/ethereum-optimism/optimism/blob/186e46a47647a51a658e699e9ff047d39444c2de/packages/contracts/deployments/mainnet/Proxy__OVM_L1CrossDomainMessenger.json#L2).
 To call L1 from L2, on either mainnet or Goerli, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 
 ```solidity
