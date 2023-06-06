@@ -11,8 +11,6 @@ The contract on the bridged layer has to implement either the legacy [`IL2Standa
 For this to be done securely, the *only* entity that is allowed to mint and burn tokens on the bridged layer has to be the Standard Bridge, to ensure that the tokens on the bridged layer are backed up by real tokens on the layer of original mint. 
 It is also necessary that the ERC-20 token contract on the layer of original mint *not* implement either of the interfaces, to make sure the bridge contracts don't get confused and think it is the bridged layer.
 
-**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network. Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/standard-bridge-custom-token).
-
 **Warning:** The standard bridge does *not* support certain ERC-20 configurations:
 
 - [Fee on transfer tokens](https://github.com/d-xo/weird-erc20#fee-on-transfer)

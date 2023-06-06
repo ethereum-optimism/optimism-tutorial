@@ -8,9 +8,6 @@ While you *could* use [the bridge contracts](https://community.optimism.io/docs/
 The SDK provides transparent safety rails to prevent that mistake.
 
 
-**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network.
-Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-bridge-erc20).
-
 
 **Warning:** The standard bridge does *not* support certain ERC-20 configurations:
 
@@ -237,7 +234,6 @@ Get the signers we need, and our address.
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to transfer assets.
 At the current version of the SDK we need to specify that it is a bedrock transaction.
-After the production network is upgraded to bedrock, that will be the default.
 
 
 ```js

@@ -30,7 +30,6 @@ For development purposes we recommend you use either a local development node or
 That way you don't need to spend real money.
 If you need ETH on Optimism Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
 
-The tests examples below all use either Optimism Goerli or the Optimism Bedrock beta testnet.
 
 
 ## Interacting with Optimism contracts
