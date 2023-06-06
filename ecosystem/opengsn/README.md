@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 
-[Optimism transactions are cheap](https://public-grafana.optimism.io/d/9hkhMxn7z/public-dashboard?orgId=1&refresh=5m).
+[Optimism transactions are cheap](https://optimism.io/gas-tracker).
 However, depending on your business model, your users may not have ETH to pay for them at all. 
 In this tutorial you learn how to use [OpenGSN](https://opengsn.org/) to pay for your users' transactions.
 
