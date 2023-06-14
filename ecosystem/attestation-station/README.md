@@ -14,7 +14,5 @@ On the production Optimism network the contract is [at the same address](https:/
 ## Table of content
 
 - [AttestationStation: Direct contract access](contract-access/README.md)
-- [AttestationStation: The SDK](using-sdk/README.md)
-- [Web based user interface]
 
 
