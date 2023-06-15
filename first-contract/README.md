@@ -1,10 +1,10 @@
-# Writing your first contract on Optimism
+# Writing your first contract on OP Mainnet or OP Goerli
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial assumes that you know how to program, but that you've never dealt with smart contracts, much less written one.
-If you are already familiar with Solidity [go here](../getting-started) for a tutorial that teaches you only how to use Optimism with the tools you already know.
+If you are already familiar with Solidity [go here](../getting-started) for a tutorial that teaches you only how to use OP Goerli with the tools you already know.
 
 ## Setup 
 
@@ -33,22 +33,21 @@ You can also use MetaMask on a mobile device (iOS or Android), but for software 
 
 ### Blockchain
 
-In this tutorial we'll use [Optimism](https://www.optimism.io/), an Ethereum Layer 2 blockchain, to run our contracts.
+In this tutorial we'll use [OP Goerli](https://www.optimism.io/), an Ethereum Layer 2 blockchain, to run our contracts.
 
 [Deploying contracts and interacting with them costs gas, which has to be purchased with Ether (also known as ETH)](https://ethereum.org/en/developers/docs/gas/). 
 On the production network that Ether costs money, it is part of the security mechanism of Ethereum.
-To avoid spending real money, we'll use Optimism Goerli, a test network built on top of Goerli.
-The test network also requires ETH, but it is test ETH you can get for free.
+The test network we'll use, OP Goerli, also requires ETH, but it is test ETH you can get for free.
 
-1. Use [this faucet](https://optimismfaucet.xyz/) to obtain Optimism Goerli test ETH.
+1. Use [this faucet](https://optimismfaucet.xyz/) to obtain OP Goerli test ETH.
    Follow five [github](https://github.com/) users or organizations to get past the anti-Sybil defense.
 
-1. [Go here](https://chainid.link/?network=optimism-goerli) to add Optimism Goerli to your wallet. 
+1. [Go here](https://chainid.link/?network=optimism-goerli) to add OP Goerli to your wallet. 
    Click **Connect** on the web page and then **Approve** in MetaMask.
 
 1. Permit the network switch.
 
-1. See if you have anything on Optimism Goerli.
+1. See if you have anything on OP Goerli.
 
 
 
@@ -96,7 +95,7 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
    1. Copy the transaction hash from the remix console.
 
-   1. Open [Optimism Goerli on Etherscan](https://goerli-optimism.etherscan.io/).
+   1. Open [OP Goerli on Etherscan](https://goerli-optimism.etherscan.io/).
 
    1. Search for the transaction hash. 
       Note that it may take a few minutes for Etherscan to get updated.
