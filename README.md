@@ -5,7 +5,7 @@
 
 ## Getting Started
 
-* [Getting started developing for Optimism](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started)
+* [Getting started developing for OP Mainnet and OP Goerli](getting-started)
 * [Optimism + Alchemy](https://docs.alchemy.com/alchemy/introduction/getting-started)
 * [Writing your first contract on Optimism](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/first-contract) - if you are just getting started with blockchain development
 
