@@ -2,7 +2,7 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-Optimism transactions sometimes fail.
+Transaction on OP Mainnet and Optimism Goerli sometimes fail.
 In this tutorial you learn how to use [Tenderly](https://tenderly.co/) to see what happened, what is the cause of the failure.
 
 ## Configuration
