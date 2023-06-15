@@ -8,7 +8,7 @@ For more context on the AttestationStation visit the [overview in our developer 
 In this tutorial you learn how to read, interpret, and write those attestations.
 
 The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
-On the production Optimism network the contract is [at the same address](https://explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77)
+On OP Mainnet the contract is [at the same address](https://explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77)
 
 This is one of the methods to access AttestationStation (ATST).
 [There are other ways](../README.md).
@@ -45,7 +45,7 @@ This is one of the methods to access AttestationStation (ATST).
 
 
 1. Attach to the contract on the Optimism Goerli network.
-   Note that `0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77` is also the address on the Optimism production network.
+   Note that `0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77` is also the address on OP Mainnet.
 
    ```js
    AttestationStation = await ethers.getContractFactory("AttestationStation")
@@ -177,7 +177,7 @@ To read an attestation you need to know three things:
 If you want to read all the attestations about a specific address, you need to look at the emitted `AttestationCreated` events.
 
 You can do it using [MSilb7's adapter for Flipside Crypto](https://github.com/MSilb7/op_attestationstation_data).
-You can also do it using any Optimism node using JavaScript (see below):
+You can also do it using any OP Mainnet node using JavaScript (see below):
 
 1. Create a filter.
    You can filter based on any combination of:
