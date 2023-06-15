@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 
-This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/) to view the transactions passed between L1 (Ethereum) and L2 (Optimism) by an address.
+This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/) to view the transactions passed between L1 (Ethereum Mainnet or Goerli) and L2 (OP Mainnet or OP Goerli) by an address.
 
 
 
