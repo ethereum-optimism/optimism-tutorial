@@ -3,7 +3,7 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and Optimism using [the Optimism SDK](https://sdk.optimism.io/).
+This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and OP Mainnet (or OP Goerli) using [the Optimism SDK](https://sdk.optimism.io/).
 To see how to send these messages, see [the cross domain tutorial](../cross-dom-comm/) or the tutorials on how to transfer [ETH](../cross-dom-bridge-eth/) and [ERC-20](../cross-dom-bridge-erc20/).
 
 ## Getting started
@@ -11,7 +11,7 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
 ### Prerequisites
 
 - Have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-- Access to L1 (Ethereum mainnet) and L2 (Optimism) providers.
+- Access to L1 (Ethereum mainnet or Goerli) and L2 (OP Mainnet or OP Goerli) providers.
 
 
 1. Use `yarn` to download the packages the script needs.
