@@ -1,4 +1,4 @@
-# Estimate the costs of an Optimistic (L2) transaction
+# Estimate the costs of an OP Mainnet (L2) transaction
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
@@ -30,11 +30,11 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
    - `MNEMONIC` is the mnemonic to an account that has enough ETH to pay for the transaction.
 
-   - `ALCHEMY_API_KEY` is the API key for an Optimism Goerli app on [Alchemy](https://www.alchemy.com/), our preferred provider.
+   - `ALCHEMY_API_KEY` is the API key for an OP Goerli app on [Alchemy](https://www.alchemy.com/), our preferred provider.
 
-   - `OPTIMISM_GOERLI_URL` is the URL for Optimism Goerli, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
+   - `OPTIMISM_GOERLI_URL` is the URL for OP Goerli, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
 
-   - `OPTIMISM_MAINNET_URL` is the URL for Optimism Mainnet, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
+   - `OPTIMISM_MAINNET_URL` is the URL for OP Mainnet, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
 
 
 1. Use Node to run the script
@@ -46,8 +46,8 @@ This calculation is complicated by the fact that the major cost is the cost of w
    The command line options are:
 
    - `--network`: The network to estimate gas on:
-     - `mainnet`: The Optimism mainnet network
-     - `goerli`: The Optimism testnet on Goerli
+     - `mainnet`: OP Mainnet
+     - `goerli`: OP Goerli
 
    - `--verify`: Run the transaction to verify the estimate
 
@@ -55,7 +55,7 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
 ### Results
 
-Here is an example of results from the main Optimism blockchain:
+Here is an example of results from OP Mainnet:
 
 
 ```
@@ -119,11 +119,10 @@ The packages needed for the script.
 
 const argv = yargs
   .option('network', {
-    // All of those choices are Optimism:
-    // mainnet - Optimism Mainnet, the production network
-    // goerli - Optimism Goerli, the main test network
+    // mainnet - OP Mainnet, the production network
+    // goerli - OP Goerli, the main test network
     choices: ["mainnet", "goerli"],
-    description: 'Optimistm network to use'
+    description: 'OP network to use'
   }).
   option('verify', {
     type: boolean,
@@ -142,9 +141,8 @@ const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
 
 ```js
-// These are the addresses of the Greeter.sol contract on the various Optimism networks:
-// mainnet - Optimism Mainnet, the production network
-// goerli - Optimism Goerli, the main test network
+// mainnet - OP Mainnet, the production network
+// goerli - OP Goerli, the main test network
 const greeterAddrs = {
   "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
   "goerli": "0x106941459a8768f5a92b770e280555faf817576f"
@@ -417,7 +415,7 @@ You can also use [`crossDomainMessenger.waitForMessageStatus`](https://sdk.optim
       real.l1Cost = realTxResp.l1Fee 
 ```
 
-These fields are specific to Optimism transaction responses.
+These fields are specific to OP Mainnet and OP Goerli transaction responses.
 
 ```js
       real.l2Gas = realTxResp.gasUsed

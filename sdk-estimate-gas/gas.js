@@ -12,11 +12,10 @@ const { boolean } = require("yargs")
 
 const argv = yargs
   .option('network', {
-    // All of those choices are Optimism:
-    // mainnet - Optimism Mainnet, the production network
-    // goerli - Optimism Goerli, the main test network
+    // mainnet - OP Mainnet, the production network
+    // goerli - OP Goerli, the main test network
     choices: ["mainnet", "goerli"],
-    description: 'Optimism network to use'
+    description: 'OP network to use'
   }).
   option('verify', {
     type: boolean,
@@ -35,9 +34,9 @@ if (!validLength.includes(words)) {
 
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
 
-// These are the addresses of the Greeter.sol contract on the various Optimism networks:
-// mainnet - Optimism Mainnet, the production network
-// goerli - Optimism Goerli, the main test network
+// These are the addresses of the Greeter.sol contract on the various OP:
+// mainnet - OP Mainnet, the production network
+// goerli - OP Goerli, the main test network
 const greeterAddrs = {
   "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
   "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
