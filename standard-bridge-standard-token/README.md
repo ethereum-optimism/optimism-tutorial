@@ -1,4 +1,4 @@
-# Bridging your Standard ERC20 token to Optimism using the Standard Bridge
+# Bridging your Standard ERC20 token to OP Mainnet or Optimism Goerli using the Standard Bridge
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
@@ -146,7 +146,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    })
    ```
 
-#### Deposit (from L1 to Optimism)
+#### Deposit (from L1 to OP Mainnet or Optimism Goerli)
 
 1. Give the L1 bridge an allowance to use the user's token.
    The L2 address is necessary to know which bridge is responsible and needs the allowance.
@@ -184,7 +184,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    await l2Contract.balanceOf(l1Wallet.address)
    ```
 
-#### Withdrawal (from Optimism to L1)
+#### Withdrawal (from OP Mainnet or Optimism Goerli to L1)
 
 1. Initiate the withdrawal on L2
 
