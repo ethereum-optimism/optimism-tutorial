@@ -8,7 +8,7 @@ For more context on the AttestationStation visit the [overview in our developer 
 In this tutorial you learn how to read, interpret, and write those attestations.
 
 The contract we'll be using is on the Optimism Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
-On the production Optimism network the contract is [at the same address](https://explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77)
+On OP Mainnet the contract is [at the same address](https://explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77)
 
 
 ## Table of content
