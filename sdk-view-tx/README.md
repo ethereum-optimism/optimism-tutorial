@@ -14,7 +14,7 @@ This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/
 [The node script](./index.js) makes these assumptions:
 
 1. You have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-1. Access to L1 (Ethereum mainnet) and L2 (OP Mainnet) providers.
+1. Access to L1 (Ethereum mainnet or Goerli) and L2 (OP Mainnet or OP Goerli) providers.
 
 
 ## Running the script
