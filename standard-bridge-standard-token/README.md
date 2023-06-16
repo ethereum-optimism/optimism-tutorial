@@ -1,4 +1,4 @@
-# Bridging your Standard ERC20 token to Optimism using the Standard Bridge
+# Bridging your Standard ERC20 token to OP Mainnet using the Standard Bridge
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
@@ -35,7 +35,7 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 
    - `MNEMONIC`, the mnemonic for an account that has enough ETH for the deployment.
    - `L1_ALCHEMY_KEY`, the key for the alchemy application for a Goerli endpoint.   
-   - `L2_ALCHEMY_KEY`, the key for the alchemy application for an Optimism Goerli endpoint.
+   - `L2_ALCHEMY_KEY`, the key for the alchemy application for an OP Goerli endpoint.
    - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
      The default value, [`0x32B3b2281717dA83463414af4E8CfB1970E56287`](https://goerli.etherscan.io/address/0x32B3b2281717dA83463414af4E8CfB1970E56287) is a test ERC-20 contract on Goerli that lets you call `faucet` to give yourself test tokens.
 
@@ -146,7 +146,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    })
    ```
 
-#### Deposit (from L1 to Optimism)
+#### Deposit (from Ethereum to OP Mainnet, or Goerli to OP Goerli)
 
 1. Give the L1 bridge an allowance to use the user's token.
    The L2 address is necessary to know which bridge is responsible and needs the allowance.
@@ -184,7 +184,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    await l2Contract.balanceOf(l1Wallet.address)
    ```
 
-#### Withdrawal (from Optimism to L1)
+#### Withdrawal (from OP Mainnet to Ethereum or OP Goerli to Goerli)
 
 1. Initiate the withdrawal on L2
 

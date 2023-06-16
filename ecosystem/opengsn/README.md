@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 
-[Optimism transactions are cheap](https://optimism.io/gas-tracker).
+[OP Mainnet transactions are cheap](https://optimism.io/gas-tracker).
 However, depending on your business model, your users may not have ETH to pay for them at all. 
 In this tutorial you learn how to use [OpenGSN](https://opengsn.org/) to pay for your users' transactions.
 
@@ -16,7 +16,7 @@ In general, doing this requires these tasks:
 
 [Click here for the OpenGSN documentation](https://docs.opengsn.org/).
 
-The tutorial below is not usable until OpenGSN installs their system on the Optimism Goerli test network.
+
 
 <!-- 
 To see this system in action:

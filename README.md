@@ -1,18 +1,18 @@
-# Optimistic Ethereum Tutorials
+# OP Mainnet Tutorials
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 ## Getting Started
 
-* [Getting started developing for Optimism](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started)
-* [Optimism + Alchemy](https://docs.alchemy.com/alchemy/introduction/getting-started)
-* [Writing your first contract on Optimism](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/first-contract) - if you are just getting started with blockchain development
+* [Getting started developing for OP Mainnet](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started)
+* [OP Mainnet + Alchemy](https://docs.alchemy.com/alchemy/introduction/getting-started)
+* [Writing your first contract on OP Mainnet (or OP Goerli)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/first-contract) - if you are just getting started with blockchain development
 
 
 ## Cross Domain
 
-* [Communication between contracts on Optimism and Ethereum](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/cross-dom-comm)
+* [Communication between contracts on OP Mainnet and Ethereum](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/cross-dom-comm)
 * [Bridging ETH with the Optimism SDK](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/cross-dom-bridge-eth)
 * [Bridging ERC-20 tokens with the Optimism SDK](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/cross-dom-bridge-erc20)
 * [View transactions between layers](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/sdk-view-tx)
@@ -23,11 +23,11 @@
 
 ## Misc.
 
-* [Estimate the costs of an Optimistic (L2) transaction](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/sdk-estimate-gas)
+* [Estimate the costs of an OP Mainnet transaction](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/sdk-estimate-gas)
 
 
 ## Ecosystem
 
 - [Alchemy](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/alchemy)
-- [AttestationStation (Reputation primitive on Optimism)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/attestation-station)
+- [AttestationStation (Reputation primitive on OP Mainnet)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/attestation-station)
 - [Tenderly](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/tenderly)

@@ -1,10 +1,10 @@
-# Communication between contracts on Optimism and Ethereum
+# Communication between contracts on OP Mainnet and Ethereum
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you how to do interlayer communication.
-You will learn how to run a contract on Ethereum that runs another contract on Optimism, and also how to run a contract on Optimism that calls a contract on Ethereum.
+You will learn how to run a contract on Ethereum that runs another contract on OP Mainnet, and also how to run a contract on OP Mainnet that calls a contract on Ethereum.
 
 [You can read more details about this process here](https://community.optimism.io/docs/developers/bridge/messaging/).
 
@@ -14,13 +14,13 @@ If you want to trace transactions, [see the tracing tutorial](../sdk-trace-tx/).
 
 ## Seeing it in action
 
-To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and Optimism Goerli.
+To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and OP Goerli.
 
 
 | Network | Greeter address  |
 | ------- | ---------------- |
 | Goerli (L1) | [0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84) |
-| Optimism Goerli (L2) | [0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9) |
+| OP Goerli (L2) | [0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9) |
 
 #### What if somebody else uses the same contracts at the same time?
 
@@ -50,7 +50,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
 1. Copy `.env.example` to `.env` and edit it:
 
-   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
+   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the OP Goerli test network.
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
    1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
    
@@ -60,9 +60,9 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn
    ```
 
-#### Ethereum message to Optimism (deposit)
+#### Ethereum message to OP Mainnet, or Goerli to OP Goerli (deposit)
 
-1. Connect the Hardhat console to Optimism Goerli (L2):
+1. Connect the Hardhat console to OP Goerli (L2):
 
    ```sh
    yarn hardhat console --network optimism-goerli
@@ -109,7 +109,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    Notice that the `xorigin` value is the controller address.
    The `user` value is your user's address, but that one is provided as part of the message.
 
-#### Optimism message to Ethereum (withdrawal)
+#### OP Mainnet message to Ethereum, or OP Goerli message to Goerli (withdrawal)
 
 ##### Send the message
 
@@ -210,8 +210,8 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 ##### Receive the message
 
-Transactions from Optimism to Ethereum are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
-Once the fault challenge period is over (ten seconds on Goerli, seven days on the production network) it is necessary to claim the transaction on L1. 
+Transactions from OP Mainnet to Ethereum (or OP Goerli to Goerli) are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
+Once the fault challenge period is over (ten seconds on OP Goerli, seven days on OP Mainnet) it is necessary to claim the transaction on L1. 
 This is a complex process that requires a [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5).
 You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
 
@@ -259,7 +259,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    yarn
    ```
 
-1. Create environment variables for the URLs for the Goerli and Optimism Goerli applications:
+1. Create environment variables for the URLs for the Goerli and OP Goerli applications:
 
    ```sh
    cd ..
@@ -277,7 +277,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Put your account mnemonic in the file `mnem.delme`.
 
 
-#### Ethereum message to Optimism (deposit)
+#### Ethereum message to OP Mainnet, or Goerli to OP Goerli (deposit)
 
 1. See the current greeting.
 
@@ -315,7 +315,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    Notice that the `xorigin` value is the controller address.
    The `user` value is your user's address, but that one is provided as part of the message.
 
-#### Optimism message to Ethereum (withdrawal)
+#### OP Mainnet message to Ethereum, or OP Goerli to Goerli (withdrawal)
 
 ##### Send the message
 
@@ -557,8 +557,8 @@ Unless we are going to run this code thousands of times, it is more efficient to
       
 ```
 
-There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by Optimism.
-On L2 Optimism has full control of the genesis block, so we can put all of our contracts on convenient addresses.
+There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by The Optimism Foundation.
+On L2 The Optimism Foudantion has full control of the genesis block, so we can put all of our contracts on convenient addresses.
 
 ```solidity
     // If this isn't a cross domain message
@@ -580,5 +580,5 @@ If it is the cross domain messenger, call `xDomainMessageSender()` to get the or
 
 ## Conclusion
 
-You should now be able to control contracts on Optimism from Ethereum or the other way around.
-This is useful, for example, if you want to hold cheap DAO votes on Optimism to manage an Ethereum treasury (see [rollcall](https://github.com/withtally/rollcall)) or offload a complicated calculation, which must be done in a traceable manner, to Optimism where gas is cheap.
+You should now be able to control contracts on OP Mainnet from Ethereum or the other way around.
+This is useful, for example, if you want to hold cheap DAO votes on OP Mainnet to manage an Ethereum treasury (see [rollcall](https://github.com/withtally/rollcall)) or offload a complicated calculation, which must be done in a traceable manner, to OP Mainnet where gas is cheap.
