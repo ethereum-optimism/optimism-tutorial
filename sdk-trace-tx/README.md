@@ -3,7 +3,7 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and Optimism using [the Optimism SDK](https://sdk.optimism.io/).
+This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and OP Mainnet using [the Optimism SDK](https://sdk.optimism.io/).
 To see how to send these messages, see [the cross domain tutorial](../cross-dom-comm/) or the tutorials on how to transfer [ETH](../cross-dom-bridge-eth/) and [ERC-20](../cross-dom-bridge-erc20/).
 
 ## Getting started
@@ -11,7 +11,7 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
 ### Prerequisites
 
 - Have [Node.js](https://nodejs.org/en/) running on your computer, as well as [yarn](https://classic.yarnpkg.com/lang/en/).
-- Access to L1 (Ethereum mainnet) and L2 (Optimism) providers.
+- Access to L1 (Ethereum mainnet) and L2 (OP Mainnet) providers.
 
 
 1. Use `yarn` to download the packages the script needs.
@@ -81,7 +81,7 @@ We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06c
    You can view this transaction [on Etherscan](https://goerli-optimism.etherscan.io/tx/0xa31eda15162e681e78a52e35b63c3b3379e23705129c19d186790089519ac7d7).
    
 
-1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
+1. In OP Mainnet terminology *deposit* refers to any transaction going from L1 Ethereum to OP Mainnet, and *withdrawal* refers to any transaction going from OP Mainnet to L1 Ethereum, whether or not there are assets attached.
    To see if actual assets were transferred, you can parse the event log.
 
    The event names and their parameters are usually available on Etherscan, but you can't just copy and paste, you need to make a few changes:
@@ -150,7 +150,7 @@ We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/
    You can view this transaction [on Etherscan](https://goerli.etherscan.io/tx/0xec821514b495c2c49dcba9b2c1a0955b85d02cd516748bc89c373d534ee878d4).
    
 
-1. In Optimism terminology *deposit* refers to any transaction going from L1 Ethereum to Optimism, and *withdrawal* refers to any transaction going from Optimism to L1 Ethereum, whether or not there are assets attached.
+1. In OP Mainnet terminology *deposit* refers to any transaction going from L1 Ethereum to OP Mainnet, and *withdrawal* refers to any transaction going from OP Mainnet to L1 Ethereum, whether or not there are assets attached.
    To see if actual assets were transferred, you can parse the event log.
    This is how you parse the event log of the L2 transaction.
 

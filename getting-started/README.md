@@ -1,11 +1,11 @@
-# Getting started developing for Optimism
+# Getting started developing for OP Mainnet
 
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismPBC.svg?label=optimismPBC&style=social)](https://twitter.com/optimismPBC)
 
-This tutorial teaches you the basics of Optimism development.
-Optimism is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on mainnet.
-Therefore, the differences between Optimism development and Ethereum development are minor.
+This tutorial teaches you the basics of OP Mainnet development.
+OP Mainnet is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on mainnet.
+Therefore, the differences between OP Mainnet development and Ethereum development are minor.
 But a few differences [do exist](https://community.optimism.io/docs/developers/build/differences/#).
 
 #### See video
@@ -14,7 +14,7 @@ If you prefer watching tutorials rather than reading them, we have this great vi
 
 [![getting started video](https://img.youtube.com/vi/_Y6CwsYgqwI/default.jpg)](https://youtu.be/_Y6CwsYgqwI)
 
-## Optimism endpoint URL
+## OP Mainnet and OP Goerli endpoint URLs
 
 To access any Ethereum type network you need an endpoint. 
 We recommend you get one from [Alchemy, our preferred provider](https://www.alchemy.com/).
@@ -28,16 +28,16 @@ Alternatively, we have [other great providers](https://community.optimism.io/doc
 
 For development purposes we recommend you use either a local development node or [Optimism Goerli](https://goerli-explorer.optimism.io/).
 That way you don't need to spend real money.
-If you need ETH on Optimism Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
+If you need ETH on OP Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
 
 
 
-## Interacting with Optimism contracts
+## Interacting with contracts on OP Mainnet or OP Goerli
 
-We have [Hardhat's Greeter contract](https://github.com/ethereum-optimism/optimism-tutorial/blob/main/getting-started/hardhat/contracts/Greeter.sol) on Optimism Goerli, at address [0x575E9B4f2c3945d7CF07cb76628d29DF471692B8](https://goerli-explorer.optimism.io/address/0x575E9B4f2c3945d7CF07cb76628d29DF471692B8). 
+We have [Hardhat's Greeter contract](hardhat/contracts/Greeter.sol) on OP Goerli, at address [0x575E9B4f2c3945d7CF07cb76628d29DF471692B8](https://goerli-explorer.optimism.io/address/0x575E9B4f2c3945d7CF07cb76628d29DF471692B8). 
 You can verify your development stack configuration by interacting with it. 
 
-As you can see in the different development stacks below, the way you deploy contracts and interact with them on Optimism is almost identical to the way you do it with L1 Ethereum.
+As you can see in the different development stacks below, the way you deploy contracts and interact with them on OP Mainnet or OP Goerli is almost identical to the way you do it with L1 Ethereum.
 The most visible difference is that you have to specify a different endpoint (of course). 
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
@@ -55,21 +55,21 @@ The list of other differences is [here](https://community.optimism.io/docs/devel
 
 In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/hardhat).
 
-#### Connecting to Optimism
+#### Connecting to OP Goerli
 
-Follow these steps to add Optimism Goerli support to an existing Hardhat project (or a newly created one). 
+Follow these steps to add OP Goerli support to an existing Hardhat project (or a newly created one). 
 
 
 1. Define your network configuration in `.env`:
 
    ```sh
-   # Put the mnemonic for an account on Optimism here
+   # Put the mnemonic for an account on OP Goerli here
    MNEMONIC=test test test test test test test test test test test junk
 
    # API KEY for Alchemy
    ALCHEMY_API_KEY=
 
-   # URL to access Optimism Goerli (if not using Alchemy)
+   # URL to access OP Goerli (if not using Alchemy)
    OPTIMISM_GOERLI_URL=
    ```
 
@@ -153,21 +153,21 @@ await greeter.greet()
 
 In [Truffle](https://trufflesuite.com/) you use a configuration similar to [this one](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started/truffle).
 
-#### Connecting to Optimism
+#### Connecting to OP Goerli
 
-Follow these steps to add Optimism Goerli support to an existing Truffle project. 
+Follow these steps to add OP Goerli support to an existing Truffle project. 
 
 
 1. Define your network configuration in `.env`:
 
    ```sh
-   # Put the mnemonic for an account on Optimism here
+   # Put the mnemonic for an account on OP Goerli here
    MNEMONIC=test test test test test test test test test test test junk
 
    # API KEY for Alchemy
    ALCHEMY_API_KEY=
 
-   # URL to access Optimism Goerli (if not using Alchemy)
+   # URL to access OP Goerli (if not using Alchemy)
    OPTIMISM_GOERLI_URL=
    ```
 
@@ -272,14 +272,14 @@ await greeter.greet()
 
 ### Remix
 
-#### Connecting to Optimism
+#### Connecting to OP Goerli
 
-In [Remix](https://remix.ethereum.org) you access Optimism through your own wallet.
+In [Remix](https://remix.ethereum.org) you access OP Goerli (or OP Mainnet) through your own wallet.
 
-1. Add Optimism Goerli to your wallet. 
+1. Add OP Goerli to your wallet. 
    The easiest way to do this is to use [chainid.link](https://chainid.link/?network=optimism-goerli).
 
-1. Log on with your wallet to Optimism Goerli.
+1. Log on with your wallet to OP Goerli.
 
 1. Browse to [Remix](https://remix.ethereum.org/).
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
@@ -423,7 +423,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 1. Specify your mnemonic in `.env`:
 
    ```sh
-   # Put the mnemonic for an account on Optimism here
+   # Put the mnemonic for an account on OP Goerli here
    MNEMONIC=test test test test test test test test test test test junk
    ```
 
@@ -439,7 +439,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
    ```sh
    brownie networks modify optimism-test chainid=420 \
       explorer=goerli-optimism.etherscan.io \
-      host= << Optimism Goerli URL >>
+      host= << OP Goerli URL >>
    ```
 
 1. Start the console.
@@ -505,7 +505,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 ### Apeworx
 
 
-#### Connect to Optimism
+#### Connect to OP Goerli
 
 1. Install [Apeworx](https://www.apeworx.io/) and create a new project.
 
@@ -599,7 +599,7 @@ It is best to start development with the EVM provided by the development stack.
 Not only is it faster, but such EVMs often have extra features, such as the [ability to log messages from Solidity](https://hardhat.org/tutorial/debugging-with-hardhat-network.html) or a [graphical user interface](https://trufflesuite.com/ganache/).
 
 After you are done with that development, debug your decentralized application using either a [development node](https://community.optimism.io/docs/developers/build/dev-node/) or the [Goerli test network](https://community.optimism.io/docs/useful-tools/networks/). 
-This lets you debug parts that are Optimism specific such as calls to bridges to transfer assets between layers.
+This lets you debug parts that are OP Mainnet specific such as calls to bridges to transfer assets between layers.
 
 Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
 
@@ -609,4 +609,4 @@ You don't have to upload your source code to [block explorers](https://community
 On the test network it lets you issue queries and transactions from the explorer's user interface.
 On the production network it lets users know exactly what your contract does, which is conducive to trust.
 
-Just remember, if you use [the Etherscan API](https://explorer.optimism.io/apis), you need one API key for Optimism and a separate one for Optimism Goerli.
+Just remember, if you use [the Etherscan API](https://explorer.optimism.io/apis), you need one API key for OP Mainnet and a separate one for OP Goerli.

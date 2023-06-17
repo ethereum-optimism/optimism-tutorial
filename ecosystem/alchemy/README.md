@@ -3,7 +3,7 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-This tutorial assumes you are completely new to Alchemy, but that you want to get applications and API keys to use with Optimism.
+This tutorial assumes you are completely new to Alchemy, but that you want to get applications and API keys to use with OP Mainnet or OP Goerli.
 
 
 ## Register
@@ -39,7 +39,7 @@ The first step is to register for a free Alchemy account.
 
 The next step is to create applications and get their API keys.
 
-### Create a new Optimism Goerli application
+### Create a new OP Goerli application
 
 1. Browse to the [Alchemy dashboard](https://dashboard.alchemyapi.io/).
 
@@ -63,4 +63,4 @@ The next step is to create applications and get their API keys.
 
 ### Create a new Goerli application
 
-Follow the same instructions as for Optimism Goerli, but select the chain **Ethereum** and the network **Goerli**.
+Follow the same instructions as for OP Goerli, but select the chain **Ethereum** and the network **Goerli**.

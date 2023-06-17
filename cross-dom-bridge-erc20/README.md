@@ -3,7 +3,7 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ERC-20 tokens between Layer 1 (Ethereum) and Layer 2 (Optimism).
+This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ERC-20 tokens between Layer 1 (Ethereum or Goerli) and Layer 2 (OP Mainnet or OP Goerli).
 While you *could* use [the bridge contracts](https://community.optimism.io/docs/developers/bridge/standard-bridge/) directly, a [simple usage error](https://community.optimism.io/docs/developers/bridge/standard-bridge/#depositing-erc20s) can cause you to lock tokens in the bridge forever and lose their value. 
 The SDK provides transparent safety rails to prevent that mistake.
 
@@ -43,11 +43,11 @@ The SDK provides transparent safety rails to prevent that mistake.
 
 1. Copy `.env.example` to `.env` and edit it:
 
-   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
+   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the OP Goerli test network.
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
    1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
 
-   [This faucet gives ETH on the Goerli network](https://faucet.paradigm.xyz/). [This faucet gives ETH on the Optimism Goerli network](https://optimismfaucet.xyz/).
+   [This faucet gives ETH on the Goerli network](https://faucet.paradigm.xyz/). [This faucet gives ETH on the OP Goerli network](https://optimismfaucet.xyz/).
 
 
 ## Run the sample code
@@ -282,7 +282,7 @@ Otherwise, call `l1ERC20.faucet()` to get the user `OUTb` tokens to deposit and 
 
 ### `depositERC20`
 
-This function shows how to deposit an ERC-20 token from Ethereum to Optimism.
+This function shows how to deposit an ERC-20 token from Ethereum to OP Mainnet (or from Goerli to OP Goerli).
 
 ```js
 const oneToken = 1000000000000000000n
@@ -358,15 +358,15 @@ The third parameter (which is optional) is a hashed array of options:
 }     // depositERC20()
 ```
 
-Once the message is relayed the balance change on Optimism is practically instantaneous.
+Once the message is relayed the balance change on OP Mainnet (or OP Goerli) is practically instantaneous.
 We can just report the balances and see that the L2 balance rose by 1 gwei.
 
 ### `withdrawERC20`
 
-This function shows how to withdraw ERC-20 from Optimism to Ethereum.
+This function shows how to withdraw ERC-20 from OP Mainnet to Ethereum (or OP Goerli to Goerli).
 The withdrawal process has these stages:
 
-1. Submit the withdrawal transaction on Optimism.
+1. Submit the withdrawal transaction on OP Mainnet (or OP Goerli).
 1. Wait until the state root with the withdrawal is published (and the status changes to `optimismSDK.MessageStatus.READY_TO_PROVE`).
 1. Submit the proof on L1 using `crossChainMessenger.proveMessage()`.
 1. Wait the fault challenge period. 
@@ -393,7 +393,7 @@ We want users to see their balances, and how long the withdrawal is taking.
   await response.wait()
 ```
 
-This is the initial withdrawal transaction on Optimism.
+This is the initial withdrawal transaction on OP Goerli (it would look the same on OP Mainnet).
 
 ```js
   console.log("Waiting for status to be READY_TO_PROVE")
