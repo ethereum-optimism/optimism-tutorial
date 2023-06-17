@@ -558,7 +558,7 @@ Unless we are going to run this code thousands of times, it is more efficient to
 ```
 
 There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by The Optimism Foundation.
-On L2 The Optimism Foudantion has full control of the genesis block, so we can put all of our contracts on convenient addresses.
+On L2 The Optimism Foundation has full control of the genesis block, so we can put all of our contracts on convenient addresses.
 
 ```solidity
     // If this isn't a cross domain message
