@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@eth-optimism/sdk": "^1.8.0",
+    "@eth-optimism/sdk": "^3.0.0",
     "dotenv": "^16.0.1",
     "yarg": "^1.0.8"
   },
