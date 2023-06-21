@@ -17,7 +17,7 @@ if (!validLength.includes(words)) {
 }
 
 const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OP_GOERLI_ALCHEMY_KEY}`
 
 
 // Global variable because we need them almost everywhere
@@ -44,7 +44,6 @@ const setup = async() => {
       l2ChainId: 420,  // Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
-      bedrock: true
   })
 }    // setup
 

@@ -30,7 +30,7 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
 
    - An application on Goerli
-   - An application on Optimistic Goerli
+   - An application on OP Goerli
 
    Keep a copy of the two keys.
 
@@ -38,7 +38,7 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the OP Goerli test network.
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
+   1. Set `OP_GOERLI_ALCHEMY_KEY` to the key for the OP Goerli app
 
    [This faucet gives ETH on the Goerli network](https://faucet.paradigm.xyz/). [This faucet gives ETH on the OP Goerli network](https://optimismfaucet.xyz/).
 
@@ -55,33 +55,31 @@ When running on Goerli, the output from the script should be similar to:
 
 ```
 Deposit ETH
-On L1:410251220 Gwei    On L2:29020983 Gwei
-Transaction hash (on L1): 0x4c057d3aaec665c1123d2dec1d8d82c64e567681f7c48fc1aadd007961bf5f02
+On L1:2830420748 Gwei    On L2:747877782 Gwei
+Transaction hash (on L1): 0xc02a57d71d6d3b3352128ae4f55c7373d089a0267430fd596b348360622142a1
 Waiting for status to change to RELAYED
-Time so far 14.79 seconds
-On L1:410078008 Gwei    On L2:29021983 Gwei
-depositETH took 43.088 seconds
+Time so far 18.334 seconds
+On L1:2829540262 Gwei    On L2:747878782 Gwei
+depositETH took 79.996 seconds
 
 
 Withdraw ETH
-On L1:410078008 Gwei    On L2:29021983 Gwei
-Transaction hash (on L2): 0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
-	For more information: https://goerli-optimism.etherscan.io/tx/0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
+On L1:2829540262 Gwei    On L2:747878782 Gwei
+Transaction hash (on L2): 0xf5215570a7921fb12022f7cab3ca0db53462e7b10a437b23fb2796100c8f907f
+	For more information: https://goerli-optimism.etherscan.io/tx/0xf5215570a7921fb12022f7cab3ca0db53462e7b10a437b23fb2796100c8f907f
 Waiting for status to be READY_TO_PROVE
-Time so far 7.197 seconds
-Time so far 290.453 seconds
+Time so far 6.617 seconds
+Time so far 276.217 seconds
 In the challenge period, waiting for status READY_FOR_RELAY
-Time so far 294.328 seconds
+Time so far 279.51 seconds
 Ready for relay, finalizing message now
-Time so far 331.383 seconds
+Time so far 335.965 seconds
 Waiting for status to change to RELAYED
-Time so far 333.753 seconds
-On L1:419369936 Gwei    On L2:18842420 Gwei
-withdrawETH took 342.143 seconds
-
+Time so far 338.155 seconds
+On L1:2838777968 Gwei    On L2:737703229 Gwei
+withdrawETH took 359.783 seconds
 ```
 
-As you can see, the total running time is about twenty minutes.
 
 
 ## How does it work?
@@ -103,7 +101,7 @@ The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https:
 ```js
 const mnemonic = process.env.MNEMONIC
 const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
+const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OP_GOERLI_KEY}`
 ```
 
 Configuration, read from `.env`.
@@ -169,7 +167,6 @@ Get the signers we need, and our address.
       l2ChainId: 420,  // Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
-      bedrock: true
   })
 ```
 
