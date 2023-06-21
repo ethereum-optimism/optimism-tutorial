@@ -123,7 +123,6 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
       l2ChainId: l2ChainId,
       l1SignerOrProvider: l1Wallet,
       l2SignerOrProvider: l2Wallet,
-      bedrock: true
    })
    ```
 
