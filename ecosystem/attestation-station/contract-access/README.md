@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 The [AttestationStation smart contract](https://github.com/ethereum-optimism/optimism/blob/8b392e9b613ea4ca0270c2dca24d3485b7454954/packages/contracts-periphery/contracts/universal/op-nft/AttestationStation.sol) contains a public `attestations` mapping that anyone can write to and read from. 
-For more context on the AttestationStation visit the [overview in our developer documentation](https://community.optimism.io/docs/governance/attestation-station/).
+For more context on the AttestationStation visit the [overview in our developer documentation](https://community.optimism.io/docs/identity/).
 In this tutorial you learn how to read, interpret, and write those attestations.
 
 The contract we'll be using is on the OP Goerli network, at address [`0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77`](https://goerli-explorer.optimism.io/address/0xEE36eaaD94d1Cc1d0eccaDb55C38bFfB6Be06C77).
