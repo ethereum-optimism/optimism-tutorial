@@ -28,8 +28,8 @@ if (!validLength.includes(words)) {
 module.exports = {
   solidity: "0.8.4",
   networks: {
-     "optimism-goerli": {
-        url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`,
+     "op-goerli": {
+        url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OP_GOERLI_ALCHEMY_KEY}`,
         accounts: { mnemonic: process.env.MNEMONIC }
       },
       "goerli": {

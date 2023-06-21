@@ -28,7 +28,7 @@ If somebody else uses these contracts while you are going through the tutorial, 
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
 
-- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#internaltx).
+- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#internaltx) or [OP Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#internaltx).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
 
@@ -44,7 +44,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
 
    - An application on Goerli
-   - An application on Optimistic Goerli
+   - An application on OP Goerli
 
    Keep a copy of the two keys.
 
@@ -52,7 +52,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the OP Goerli test network.
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
+   1. Set `OP_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
    
 1. Install the necessary packages.
 
@@ -179,7 +179,6 @@ The fault challenge window starts after you do this, so it's best to do it as ea
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer, 
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
-      bedrock: true
    })
    ```
 
