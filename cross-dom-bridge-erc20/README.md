@@ -371,7 +371,7 @@ The withdrawal process has these stages:
 1. Submit the proof on L1 using `crossChainMessenger.proveMessage()`.
 1. Wait the fault challenge period. 
    When this period is over, the status becomes `optimismSDK.MessageStatus.READY_FOR_RELAY`
-1. Finalize to cause the actual withdrawal on L1 using `crossChainMessenger.proveMessage()`.
+1. Finalize to cause the actual withdrawal on L1 using `crossChainMessenger.finalizeMessage()`.
 
 [You can read more about this in the documentation](https://community.optimism.io/docs/developers/bedrock/how-is-bedrock-different/#two-phase-withdrawals).
 
