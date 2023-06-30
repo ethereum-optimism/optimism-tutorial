@@ -28,7 +28,7 @@ If somebody else uses these contracts while you are going through the tutorial, 
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
 
-- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#internaltx).
+- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#internaltx) or [OP Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#internaltx).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
 
@@ -44,7 +44,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
 
    - An application on Goerli
-   - An application on Optimistic Goerli
+   - An application on OP Goerli
 
    Keep a copy of the two keys.
 
@@ -52,7 +52,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the OP Goerli test network.
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
+   1. Set `OP_GOERLI_ALCHEMY_KEY` to the key for the OP Goerli app
    
 1. Install the necessary packages.
 
@@ -65,7 +65,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Connect the Hardhat console to OP Goerli (L2):
 
    ```sh
-   yarn hardhat console --network optimism-goerli
+   yarn hardhat console --network op-goerli
    ```  
 
 1. Connect to the greeter on L2:
@@ -128,7 +128,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. Connect the Hardhat console to Optimistic Goerli (L2):
 
    ```sh
-   yarn hardhat console --network optimistic-goerli
+   yarn hardhat console --network op-goerli
    ```
 
 1. Deploy and call the `FromL2_ControlL1Greeter` contract.
@@ -173,13 +173,12 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
    ```js
    l1Signer = await ethers.getSigner()
-   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OP_GOERLI_ALCHEMY_KEY}`
    crossChainMessenger = new sdk.CrossChainMessenger({ 
       l1ChainId: 5,
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer, 
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
-      bedrock: true
    })
    ```
 
@@ -244,7 +243,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
    greeter = await Greeter.attach("0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84")
-   await greeter.greet()     
+   await greeter.greet()
    ```
 
 
@@ -264,7 +263,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ```sh
    cd ..
    export GOERLI_URL= ...
-   export OPTI_GOERLI_URL= ...
+   export OP_GOERLI_URL= ...
    ```
 
 1. Create environment variables for the Greeter contracts' addresses
@@ -282,7 +281,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. See the current greeting.
 
    ```sh
-   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii
+   cast call --rpc-url $OP_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii
    ```
 
 1. Deploy the `FromL1_ControlL2Greeter` contract.
@@ -308,7 +307,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. See the greeting has changed. Note that the change might take a few minutes to propagate.
 
    ```sh
-   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
+   cast call --rpc-url $OP_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
    ```
 
 1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
@@ -328,7 +327,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Deploy the `FromL2_ControlL1Greeter` contract.
 
    ```sh
-   forge create FromL2_ControlL1Greeter --rpc-url $OPTI_GOERLI_URL --mnemonic-path mnem.delme
+   forge create FromL2_ControlL1Greeter --rpc-url $OP_GOERLI_URL --mnemonic-path mnem.delme
    ```
 
 1. Create an environment variable for the `Deployed to:` address:
@@ -340,7 +339,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Send a transaction to change the L1 greeting:
 
    ```sh
-   cast send --rpc-url $OPTI_GOERLI_URL \
+   cast send --rpc-url $OP_GOERLI_URL \
       --mnemonic-path mnem.delme $FROM_L2_CONTROLLER \
       "setGreeting(string)" '"Foundry hello from L2"'
    ```
@@ -372,16 +371,15 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```js
    l1Provider = new ethers.providers.JsonRpcProvider(process.env.GOERLI_URL)
-   mnemonic = fs.readFileSync("../mnem.delme").toString()
-   wallet = ethers.Wallet.fromMnemonic(mnemonic.slice(0,-1))
+   mnemonic = fs.readFileSync("../mnem.delme").toString().replace(/\n/g, "")
+   wallet = ethers.Wallet.fromMnemonic(mnemonic)
    l1Signer = wallet.connect(l1Provider)
-   l2Provider = new ethers.providers.JsonRpcProvider(process.env.OPTI_GOERLI_URL)
+   l2Provider = new ethers.providers.JsonRpcProvider(process.env.OP_GOERLI_URL)
    crossChainMessenger = new sdk.CrossChainMessenger({ 
       l1ChainId: 5,
       l2ChainId: 420,
       l1SignerOrProvider: l1Signer,
-      l2SignerOrProvider: l2Provider,
-      bedrock: true
+      l2SignerOrProvider: l2Provider
    })
    ```
 
@@ -389,9 +387,10 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    If it is `false`, wait a few seconds and try again.
    When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
    This usually happens every four minutes.
+   Once it is raedy to relay, the line below will require `true` rather than `false`.
 
    ```js
-   crossChainMessenger.getMessageStatus(process.env.HASH).then(status => console.log(status === sdk.MessageStatus.READY_FOR_PROVE))
+   (await crossChainMessenger.getMessageStatus(process.env.HASH)) == sdk.MessageStatus.READY_TO_PROVE
    ```
 
    `await crossChainMessenger.getMessageStatus(process.env.HASH)` can return two values at this stage:
@@ -401,24 +400,24 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    - `sdk.MessageStatus.READY_TO_PROVE` (3): Ready for the next step
 
-1. Send the proof on L1:
+1. Send the proof on L1. 
+   Run the code below and then wait for the hash to appear on the console.
 
    ```js
    txPromise = crossChainMessenger.proveMessage(process.env.HASH)
    txPromise.then(tx => console.log(tx.hash))
    ```
 
-1. Now that the message has been proven, we need to wait the fault challenge period until it is ready to relay.
+1. Now that the message has been proven, we need to wait the fault challenge period until it is ready to relay, when the line below returns `true`.
 
    ```js
-   statusPromise = crossChainMessenger.getMessageStatus(process.env.HASH)
-   statusPromise.then(status => console.log(status === sdk.MessageStatus.READY_FOR_RELAY))
+   (await crossChainMessenger.getMessageStatus(process.env.HASH)) == sdk.MessageStatus.READY_FOR_RELAY   
    ```
 
    `crossChainMessenger.getMessageStatus(process.env.HASH)` can return several values at this stage:
 
    - `sdk.MessageStatus.READY_TO_PROVE` (3): The proof transaction hasn't been processed yet.
-     Go to [Goerli Etherscan](https://goerli.etherscan.io/) and search for the hash.
+     Go to [OP Goerli](https://goerli.etherscan.io/) and search for the hash.
 
    - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (4): Still in the challenge period, wait a few seconds.
 
@@ -426,7 +425,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
      Go on to the next step.
 
 
-1. Finalize the message.
+1. Finalize the message. Again, wait until you see the hash on the console.
 
    ```js
    txPromise = crossChainMessenger.finalizeMessage(process.env.HASH)

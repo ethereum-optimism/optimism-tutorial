@@ -14,12 +14,12 @@ The SDK provides transparent safety rails to prevent that mistake.
 - [Fee on transfer tokens](https://github.com/d-xo/weird-erc20#fee-on-transfer)
 - [Tokens that modify balances without emitting a Transfer event](https://github.com/d-xo/weird-erc20#balance-modifications-outside-of-transfers-rebasingairdrops)
 
+
 ## Setup
 
 1. Ensure your computer has:
    - [`git`](https://git-scm.com/downloads)
    - [`node`](https://nodejs.org/en/)
-   - [`yarn`](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
 
 1. Clone this repository and enter it.
 
@@ -37,7 +37,7 @@ The SDK provides transparent safety rails to prevent that mistake.
 1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
 
    - An application on Goerli
-   - An application on Optimistic Goerli
+   - An application on OP Goerli
 
    Keep a copy of the two keys.
 
@@ -45,7 +45,7 @@ The SDK provides transparent safety rails to prevent that mistake.
 
    1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the OP Goerli test network.
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
+   1. Set `OP_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
 
    [This faucet gives ETH on the Goerli network](https://faucet.paradigm.xyz/). [This faucet gives ETH on the OP Goerli network](https://optimismfaucet.xyz/).
 
@@ -64,35 +64,35 @@ The output from the script should be similar to:
 Deposit ERC20
 OUTb on L1:     OUTb on L2:
 You don't have enough OUTb on L1. Let's call the faucet to fix that
-Faucet tx: 0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
-	More info: https://goerli.etherscan.io/tx/0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
+Faucet tx: 0xccf8a2b4cc9009f78975c761f5b156f4dd02574af51310bb0fb9627dbe900510
+	More info: https://goerli.etherscan.io/tx/0xccf8a2b4cc9009f78975c761f5b156f4dd02574af51310bb0fb9627dbe900510
 New L1 OUTb balance: 1000
-Allowance given by tx 0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
-	More info: https://goerli.etherscan.io/tx/0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
-Time so far 15.968 seconds
-Deposit transaction hash (on L1): 0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
-	More info: https://goerli.etherscan.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
+Allowance given by tx 0xe3c08d2dbed75f16f0eb9681d5b29971e76f831f0370175b1100a4d28b2940e1
+	More info: https://goerli.etherscan.io/tx/0xe3c08d2dbed75f16f0eb9681d5b29971e76f831f0370175b1100a4d28b2940e1
+Time so far 11.819 seconds
+Deposit transaction hash (on L1): 0xb03a4e53aa7f237ff9a1feac59f56aa683a5c6f8f0f491597b0286ff8553925e
+	More info: https://goerli.etherscan.io/tx/0xb03a4e53aa7f237ff9a1feac59f56aa683a5c6f8f0f491597b0286ff8553925e
 Waiting for status to change to RELAYED
-Time so far 35.819 seconds
+Time so far 21.561 seconds
 OUTb on L1:999     OUTb on L2:1
-depositERC20 took 65.544 seconds
+depositERC20 took 179.776 seconds
 
 
 Withdraw ERC20
 OUTb on L1:999     OUTb on L2:1
-Transaction hash (on L2): 0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
-	For more information: https://goerli-optimism.etherscan.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
+Transaction hash (on L2): 0x30758c4550035687ef13f4b1211fac9683847a9b1fab5902f6d4caf8642c4973
+	For more information: https://goerli-optimism.etherscan.io/tx/0x30758c4550035687ef13f4b1211fac9683847a9b1fab5902f6d4caf8642c4973
 Waiting for status to be READY_TO_PROVE
-Time so far 8.03 seconds
-Time so far 300.833 seconds
+Time so far 8.223 seconds
+Time so far 313.661 seconds
 In the challenge period, waiting for status READY_FOR_RELAY
-Time so far 304.811 seconds
+Time so far 317.002 seconds
 Ready for relay, finalizing message now
-Time so far 331.821 seconds
+Time so far 339.851 seconds
 Waiting for status to change to RELAYED
-Time so far 334.525 seconds
+Time so far 342.437 seconds
 OUTb on L1:1000     OUTb on L2:
-withdrawERC20 took 355.772 seconds
+withdrawERC20 took 351.272 seconds
 ```
 
 As you can see, the total running time is about six minutes.
@@ -118,7 +118,7 @@ The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https:
 ```js
 const mnemonic = process.env.MNEMONIC
 const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
+const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OP_GOERLI_KEY}`
 ```
 
 Configuration, read from `.env`.
@@ -225,15 +225,13 @@ Get the signers we need, and our address.
 ```js
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: 5,    // Goerli value, 1 for mainnet
-      l2ChainId: 420,  // Goerli value, 10 for mainnet
+      l2ChainId: 420,  // OP Goerli value, 10 for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
-      bedrock: true
   })
 ```
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to transfer assets.
-At the current version of the SDK we need to specify that it is a bedrock transaction.
 
 
 ```js

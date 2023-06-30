@@ -43,11 +43,8 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
      l2ChainId: l2ChainId,          
      l1SignerOrProvider: l1Provider,
      l2SignerOrProvider: l2Provider,
-     bedrock: true
    })
    ```
-
-   **Note:** Until mainnet is updated to bedrock, don't put the `bedrock: true` when tracing bedrock transactions
 
 ## Tracing a deposit
 
