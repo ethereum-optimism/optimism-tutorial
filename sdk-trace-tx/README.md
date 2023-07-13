@@ -6,6 +6,12 @@
 This tutorial teaches you how to trace individual cross-domain transactions between L1 Ethereum and OP Mainnet using [the Optimism SDK](https://sdk.optimism.io/).
 To see how to send these messages, see [the cross domain tutorial](../cross-dom-comm/) or the tutorials on how to transfer [ETH](../cross-dom-bridge-eth/) and [ERC-20](../cross-dom-bridge-erc20/).
 
+The SDK supports multiple OP Chains: OP, Base, Zora, etc.
+To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
+Chains that aren't officially supported just take a few extra steps.
+Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
+Once you do that, you can use the SDK normally.
+
 ## Getting started
 
 ### Prerequisites

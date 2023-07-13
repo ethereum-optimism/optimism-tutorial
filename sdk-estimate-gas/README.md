@@ -8,7 +8,11 @@ This tutorial teaches you how to use the Optimism SDK to estimate the gas costs 
 This calculation is complicated by the fact that the major cost is the cost of writing the transaction on L1, it doesn't work to just multiply the gas used by the transaction by the gas price, the same way you would on L1. 
 [You can read the details of the calculation here](https://help.optimism.io/hc/en-us/articles/4411895794715-Transaction-fees).
 
-
+The SDK supports multiple OP Chains: OP, Base, Zora, etc.
+To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
+Chains that aren't officially supported just take a few extra steps.
+Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
+Once you do that, you can use the SDK normally.
 
 ## Prerequisites
 

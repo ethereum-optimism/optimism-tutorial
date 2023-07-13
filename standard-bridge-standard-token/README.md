@@ -124,6 +124,11 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 ### Transfer tokens
 
 Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) (the Optimism SDK object used to bridge assets).
+The SDK supports multiple OP Chains: OP, Base, Zora, etc.
+To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
+Chains that aren't officially supported just take a few extra steps.
+Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
+Once you do that, you can use the SDK normally.
 
 1. Import the Optimism SDK.
 
