@@ -7,7 +7,11 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 While you *could* use [the bridge contracts](https://community.optimism.io/docs/developers/bridge/standard-bridge/) directly, a [simple usage error](https://community.optimism.io/docs/developers/bridge/standard-bridge/#depositing-erc20s) can cause you to lock tokens in the bridge forever and lose their value. 
 The SDK provides transparent safety rails to prevent that mistake.
 
-
+> The SDK supports multiple OP Chains: OP, Base, Zora, etc.
+To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
+Chains that aren't officially supported just take a few extra steps.
+Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
+Once you do that, you can use the SDK normally.
 
 **Warning:** The standard bridge does *not* support certain ERC-20 configurations:
 
