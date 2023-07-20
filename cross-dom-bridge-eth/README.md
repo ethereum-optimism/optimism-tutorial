@@ -5,7 +5,11 @@
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ETH between Layer 1 (Ethereum or Goerli) and Layer 2 (OP Mainnet or OP Goerli).
 
-
+The SDK supports multiple OP Chains: OP, Base, etc.
+To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
+Chains that aren't officially supported just take a few extra steps.
+Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
+Once you do that, you can use the SDK normally.
 
 ## Setup
 

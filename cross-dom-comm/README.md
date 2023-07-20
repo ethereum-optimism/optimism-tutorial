@@ -165,6 +165,12 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 1. Get the SDK (it is already in `node_modules`).
 
+   The SDK supports multiple OP Chains: OP, Base, etc.
+   To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
+   Chains that aren't officially supported just take a few extra steps.
+   Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
+   Once you do that, you can use the SDK normally.
+
    ```js
    sdk = require("@eth-optimism/sdk")
    ```
