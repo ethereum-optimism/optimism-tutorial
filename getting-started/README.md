@@ -389,7 +389,7 @@ forge create --mnemonic-path ./mnem.delme Greeter \
 #### Using the Optimism contract library
 
 This library is provided as an [npm package](https://www.npmjs.com/package/@eth-optimism/contracts), which is different from what forge expects.
-Here is how you can import it without importing the entire Optimism monorepo:
+Here is how you can import it without importing the entire OP-Stack monorepo:
 
 1. Install the JavaScript tools if you don't already have them: [Node.js](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/lang/en/).
 
