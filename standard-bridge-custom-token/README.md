@@ -105,7 +105,7 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 ### Transfer tokens
 
 Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) (the Optimism SDK object used to bridge assets).
-The SDK supports multiple OP Chains: OP, Base, Zora, etc.
+The SDK supports multiple OP Chains: OP, Base, etc.
 To see whether a specific OP Chain is supported directly, [see the documentation](https://sdk.optimism.io/enums/l2chainid).
 Chains that aren't officially supported just take a few extra steps.
 Get the L1 contract addresses, and [provide them to the SDK](https://stack.optimism.io/docs/build/sdk/#contract-addresses).
