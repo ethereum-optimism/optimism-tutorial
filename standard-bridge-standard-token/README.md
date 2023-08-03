@@ -74,16 +74,16 @@ If you do not need any special processing on L2, just the ability to deposit, tr
    In order to push the transaction through, then do something like:
 
    ```js
-       let deployTx = await optimismMintableERC20Factory.createOptimismMintableERC20(
-        process.env.L1_TOKEN_ADDRESS,
-        "Token Name on L2",
-        "L2-SYMBOL", 
-        {
-            maxFeePerGas: ethers.BigNumber.from(40000000000), // fallback to 40 gwei
-            maxPriorityFeePerGas: ethers.BigNumber.from(40000000000) // fallback to 40 gwei
-        }
-     );
-     ```
+   deployTx = await optimismMintableERC20Factory.createOptimismMintableERC20(
+   process.env.L1_TOKEN_ADDRESS,
+   "Token Name on L2",
+   "L2-SYMBOL", 
+   {
+      maxFeePerGas: ethers.BigNumber.from(40000000000), // fallback to 40 gwei
+      maxPriorityFeePerGas: ethers.BigNumber.from(40000000000) // fallback to 40 gwei
+   }
+   )
+   ```
 ## Transferring tokens 
 
 1. Get the token addresses.
