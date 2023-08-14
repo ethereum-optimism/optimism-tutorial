@@ -6,7 +6,6 @@
 ## Getting Started
 
 * [Getting started developing for OP Mainnet](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/getting-started)
-* [OP Mainnet + Alchemy](https://docs.alchemy.com/alchemy/introduction/getting-started)
 * [Writing your first contract on OP Mainnet (or OP Goerli)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/first-contract) - if you are just getting started with blockchain development
 
 
@@ -28,6 +27,5 @@
 
 ## Ecosystem
 
-- [Alchemy](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/alchemy)
 - [AttestationStation (Reputation primitive on OP Mainnet)](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/attestation-station)
 - [Tenderly](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/ecosystem/tenderly)
