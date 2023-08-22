@@ -8,8 +8,8 @@ require('dotenv').config();
 const words = process.env.MNEMONIC.match(/[a-zA-Z]+/g).length
 validLength = [12, 15, 18, 24]
 if (!validLength.includes(words)) {
-   console.log(`The mnemonic (${process.env.MNEMONIC}) is the wrong number of words`)
-   process.exit(-1)
+  console.log(`The mnemonic (${process.env.MNEMONIC}) is the wrong number of words`)
+  process.exit(-1)
 }
 
 module.exports = {
@@ -23,7 +23,17 @@ module.exports = {
       chainId: 10,
       url: `https://opt-mainnet.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
       accounts: { mnemonic: process.env.MNEMONIC }
-    }
+    },
+    'goerli': {
+      chainId: 5,
+      url: `https://eth-goerli.g.alchemy.com/v2/${process.env.L1_ALCHEMY_KEY}`,
+      accounts: { mnemonic: process.env.MNEMONIC },
+    },
+    'mainnet': {
+      chainId: 1,
+      url: `https://eth-goerli.g.alchemy.com/v2/${process.env.L1_ALCHEMY_KEY}`,
+      accounts: { mnemonic: process.env.MNEMONIC }
+    },
   },
   solidity: '0.8.13',
 }

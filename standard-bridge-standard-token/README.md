@@ -222,3 +222,149 @@ Once you do that, you can use the SDK normally.
    await l1Contract.balanceOf(l1Wallet.address) 
    await l2Contract.balanceOf(l1Wallet.address)
    ```
+
+## For L2 native tokens(L2_TOKEN_ADDRESS). 
+The legacy API is preserved to ensure that existing applications will not experience any problems with the Bedrock StandardBridge contracts.
+1. Open the hardhat console.
+   ```js
+   yarn hardhat console --network goerli
+   ```
+1. Connect to `OptimismMintableERC20Factory`.
+   ```js
+   fname = "node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/universal/OptimismMintableERC20Factory.sol/OptimismMintableERC20Factory.json"
+   ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
+   optimismMintableERC20FactoryData = JSON.parse(ftext)
+   optimismMintableERC20Factory = new ethers.Contract(
+      "0x883dcF8B05364083D849D8bD226bC8Cb4c42F9C5", 
+      optimismMintableERC20FactoryData.abi, 
+      await ethers.getSigner())
+   ```
+1. Deploy the contract.
+   ```js
+   deployTx = await optimismMintableERC20Factory.createOptimismMintableERC20(
+      process.env.L2_TOKEN_ADDRESS,
+      "Token Name",
+      "L1-SYMBOL"
+   )
+   deployRcpt = await deployTx.wait()
+   ```
+1. Get the token addresses.
+   ```js
+   l2Addr = process.env.L2_TOKEN_ADDRESS
+   event = deployRcpt.events.filter(x => x.event == "OptimismMintableERC20Created")[0]
+   l1Addr = event.args.localToken
+   ```
+1. Get the data for `OptimismMintableERC20`:
+   ```js
+   fname = "node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/universal/OptimismMintableERC20.sol/OptimismMintableERC20.json"
+   ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
+   optimismMintableERC20Data = JSON.parse(ftext)
+   ```
+1. Get the L1 contract.
+   ```js
+   l1Contract = new ethers.Contract(l1Addr, optimismMintableERC20Data.abi, await ethers.getSigner())   
+   ```
+1. Get the L2 wallet.
+   ```js
+   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`
+   l2RpcProvider = new ethers.providers.JsonRpcProvider(l2Url)
+   hdNode = ethers.utils.HDNode.fromMnemonic(process.env.MNEMONIC)
+   privateKey = hdNode.derivePath(ethers.utils.defaultPath).privateKey
+   l2Wallet = new ethers.Wallet(privateKey, l2RpcProvider)
+   ```
+1. Get the L2 contract.
+   ```js
+   l2Factory = await ethers.getContractFactory("OptimismUselessToken")
+   l2Contract = new ethers.Contract(process.env.L2_TOKEN_ADDRESS, l2Factory.interface, l2Wallet)
+   ```
+1. Get tokens on L2 (and verify the balance)
+   ```js
+   faucetTx = await l2Contract.faucet()
+   faucetRcpt = await faucetTx.wait()
+   await l2Contract.balanceOf(l2Wallet.address)
+   ```
+1. Give the `l2StandardBridge` an allowance  
+   ```js
+   l2bridgeTx1 = await l2Contract.approve("0x4200000000000000000000000000000000000010", 1e9)
+   await l2bridgeTx1.wait()
+   ```
+1. Check your balances on L1 and L2
+   ```js
+   await l1Contract.balanceOf(l2Wallet.address) 
+   await l2Contract.balanceOf(l2Wallet.address)
+   ```
+1. Get the `l2StandardBridge` contract   
+   ```js
+   fname = "node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/L2/L2StandardBridge.sol/L2StandardBridge.json"
+   ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
+   l2StandardBridgeData = JSON.parse(ftext)
+   l2StandardBridge = new ethers.Contract(
+      "0x4200000000000000000000000000000000000010",
+      l2StandardBridgeData.abi,
+      l2Wallet)
+   ```
+1. Call the `bridgeERC20` interface of the `l2StandardBridge` on Layer 2.
+   ```js
+   l2bridgeTx2 = await l2StandardBridge.bridgeERC20(l2Addr, l1Addr, 1e9, 1, "0x")
+   await l2bridgeTx2.wait()
+   ```
+1. Import the `Optimism SDK`.  
+   ```js
+   optimismSDK = require("@eth-optimism/sdk")
+   ```
+1. Create the cross domain messenger.  
+   ```js
+   l1ChainId = (await ethers.provider.getNetwork()).chainId
+   l2ChainId = (await l2RpcProvider.getNetwork()).chainId
+   l1Wallet = await ethers.provider.getSigner()
+   crossChainMessenger = new optimismSDK.CrossChainMessenger({
+   l1ChainId: l1ChainId,
+   l2ChainId: l2ChainId,
+   l1SignerOrProvider: l1Wallet,
+   l2SignerOrProvider: l2Wallet
+   })
+   ```
+1. Wait until the root state is published on L1, and then prove the withdrawal. 
+   ```js
+   await crossChainMessenger.waitForMessageStatus(l2bridgeTx2.hash, optimismSDK.MessageStatus.READY_TO_PROVE)
+   l2bridgeTx3 = await crossChainMessenger.proveMessage(l2bridgeTx2.hash)
+   await l2bridgeTx3.wait()
+   ```
+1. Wait the fault challenge period 
+   ```js
+   await crossChainMessenger.waitForMessageStatus(l2bridgeTx2.hash, optimismSDK.MessageStatus.READY_FOR_RELAY)
+   l2bridgeTx4 = await crossChainMessenger.finalizeMessage(l2bridgeTx2.hash)
+   await l2bridgeTx4.wait()
+   ```
+1. Check your balances on L1 and L2.    
+   ```js
+   await l1Contract.balanceOf(l1Wallet.address) 
+   await l2Contract.balanceOf(l1Wallet.address)
+   ```
+1. Get the `l1StandardBridge` contract   
+   ```js
+   fname ="node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/L1/L1StandardBridge.sol/L1StandardBridge.json"
+   ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
+   l1StandardBridgeData = JSON.parse(ftext)
+   l1StandardBridge= new ethers.Contract(
+   "0x636Af16bf2f682dD3109e60102b8E1A089FedAa8", 
+   l1StandardBridgeData.abi, 
+   l1Wallet)
+   ```
+1. Call the `bridgeERC20` interface of `l1StandardBridge` on Layer 1   
+   ```js
+   l1bridgeTx =  await l1StandardBridge.bridgeERC20(l1Addr, l2Addr, 1e9, 1, "0x")
+   await l1bridgeTx.wait()
+   ```
+1. Wait for the bridge to be relayed.   
+   ```js
+   await crossChainMessenger.waitForMessageStatus(l1bridgeTx.hash, optimismSDK.MessageStatus.RELAYED)
+   ```
+1. Check your balances on L1 and L2.    
+   ```js
+   await l1Contract.balanceOf(l1Wallet.address) 
+   await l2Contract.balanceOf(l1Wallet.address)
+   ```
+
+
+
