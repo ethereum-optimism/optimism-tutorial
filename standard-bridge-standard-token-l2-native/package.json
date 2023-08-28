@@ -1,9 +1,9 @@
 {
-  "name": "standard-bridge-standard-token",
+  "name": "standard-bridge-standard-token-l2-native",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "compile": "hardhat compile && hardhat --network optimism compile"
+    "compile": "hardhat compile && hardhat --network optimism-goerli compile"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
