@@ -28,7 +28,7 @@ Alternatively, we have [other great providers](https://community.optimism.io/doc
 
 For development purposes we recommend you use either a local development node or [Optimism Goerli](https://goerli-explorer.optimism.io/).
 That way you don't need to spend real money.
-If you need ETH on OP Goerli for testing purposes, [you can use this faucet](https://optimismfaucet.xyz/).
+If you need ETH on OP Goerli for testing purposes, [you can use this faucet](https://app.optimism.io/faucet).
 
 
 
