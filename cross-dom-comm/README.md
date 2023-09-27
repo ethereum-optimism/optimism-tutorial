@@ -257,7 +257,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 #### Setup
 
-1. Install the `@eth-optimims/sdk` library (assuming you already have Node.js and yarn):
+1. Install the `@eth-optimism/sdk` library (assuming you already have Node.js and yarn):
 
    ```sh
    cd foundry/lib
