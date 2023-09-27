@@ -54,7 +54,7 @@ The free tier is sufficient for what we do in this tutorial.
 
    ![state changes](assets/state-changes.png)
 
-1. Select **Debugger** on the left bar to see the function trace (which functions ran, which functions called which, etc.), the stack trace (the current funtion and who called it), the source code, and the 
+1. Select **Debugger** on the left bar to see the function trace (which functions ran, which functions called which, etc.), the stack trace (the current function and who called it), the source code, and the 
 
    ![debugger](assets/debugger.png)
    
