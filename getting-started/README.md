@@ -49,7 +49,6 @@ The list of other differences is [here](https://community.optimism.io/docs/devel
 - [Hardhat](#hardhat)
 - [Remix](#remix)
 - [Truffle](#truffle)
-- [Waffle](#waffle)
 
 ### Hardhat
 
