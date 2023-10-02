@@ -3,9 +3,3 @@ node_modules
 #Hardhat files
 cache
 artifacts
-
-node_modules
-
-#Hardhat files
-cache
-artifacts

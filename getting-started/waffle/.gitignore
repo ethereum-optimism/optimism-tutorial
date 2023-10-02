@@ -3,7 +3,6 @@
 **/.DS_Store
 .idea
 .vscode
-.idea
 dist
 flatten
 build
